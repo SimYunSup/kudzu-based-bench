@@ -1,0 +1,189 @@
+{
+  "measuredAt": "2026-07-24T07:17:45.417Z",
+  "machine": {
+    "ko": "Apple M1 Max · 10코어 · RAM 64 GB · darwin/arm64 · Node v24.17.0",
+    "en": "Apple M1 Max · 10 cores · 64 GB RAM · darwin/arm64 · Node v24.17.0"
+  },
+  "rows": [
+    {
+      "label": "Eleventy",
+      "version": "3.1.6",
+      "name": "Eleventy 3.1.6",
+      "based": "Node (Nunjucks)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 0.9,
+      "totalBytes": 2773996,
+      "jsBytes": 15351,
+      "totalSize": "2.6 MB",
+      "jsSize": "15.0 KB",
+      "fileCount": 142,
+      "originDiff": null
+    },
+    {
+      "label": "Hugo",
+      "version": "0.161.0",
+      "name": "Hugo 0.161.0",
+      "based": "Go (templates)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 0.9,
+      "totalBytes": 2705271,
+      "jsBytes": 15178,
+      "totalSize": "2.6 MB",
+      "jsSize": "14.8 KB",
+      "fileCount": 142,
+      "originDiff": null
+    },
+    {
+      "label": "Kudzu",
+      "version": "0.5.8",
+      "name": "Kudzu 0.5.8",
+      "based": "Kudzu (JSX, no vDOM)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 0.9,
+      "totalBytes": 2719672,
+      "jsBytes": 16303,
+      "totalSize": "2.6 MB",
+      "jsSize": "15.9 KB",
+      "fileCount": 145,
+      "originDiff": null
+    },
+    {
+      "label": "Astro",
+      "version": "7.1.3",
+      "name": "Astro 7.1.3",
+      "based": "Astro islands (vanilla)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 1.8,
+      "totalBytes": 4302703,
+      "jsBytes": 102301,
+      "totalSize": "4.1 MB",
+      "jsSize": "99.9 KB",
+      "fileCount": 152,
+      "originDiff": null
+    },
+    {
+      "label": "VitePress",
+      "version": "1.6.4",
+      "name": "VitePress 1.6.4",
+      "based": "Vue",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 2.2,
+      "totalBytes": 8937053,
+      "jsBytes": 4815836,
+      "totalSize": "8.5 MB",
+      "jsSize": "4.6 MB",
+      "fileCount": 416,
+      "originDiff": null
+    },
+    {
+      "label": "Docusaurus",
+      "version": "3.10.2",
+      "name": "Docusaurus 3.10.2",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "seconds": 2.5,
+      "totalBytes": 5276741,
+      "jsBytes": 2366350,
+      "totalSize": "5.0 MB",
+      "jsSize": "2.3 MB",
+      "fileCount": 284,
+      "originDiff": null
+    },
+    {
+      "label": "React Router",
+      "version": "8.3.0",
+      "name": "React Router 8.3.0",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 지원",
+        "en": "SSG-capable"
+      },
+      "ok": true,
+      "seconds": 3,
+      "totalBytes": 7162280,
+      "jsBytes": 331164,
+      "totalSize": "6.8 MB",
+      "jsSize": "323.4 KB",
+      "fileCount": 285,
+      "originDiff": null
+    },
+    {
+      "label": "Next.js Pages Router",
+      "version": "16.2.11",
+      "name": "Next.js Pages Router 16.2.11",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 지원",
+        "en": "SSG-capable"
+      },
+      "ok": true,
+      "seconds": 3.8,
+      "totalBytes": 6765704,
+      "jsBytes": 541645,
+      "totalSize": "6.5 MB",
+      "jsSize": "529.0 KB",
+      "fileCount": 303,
+      "originDiff": null
+    },
+    {
+      "label": "Next.js App Router",
+      "version": "16.2.11",
+      "name": "Next.js App Router 16.2.11",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 지원",
+        "en": "SSG-capable"
+      },
+      "ok": true,
+      "seconds": 4.4,
+      "totalBytes": 15134925,
+      "jsBytes": 652338,
+      "totalSize": "14.4 MB",
+      "jsSize": "637.0 KB",
+      "fileCount": 1374,
+      "originDiff": null
+    },
+    {
+      "label": "TanStack Start",
+      "version": "1.168.32",
+      "name": "TanStack Start 1.168.32",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 지원",
+        "en": "SSG-capable"
+      },
+      "ok": true,
+      "seconds": 7.5,
+      "totalBytes": 6835072,
+      "jsBytes": 341450,
+      "totalSize": "6.5 MB",
+      "jsSize": "333.4 KB",
+      "fileCount": 146,
+      "originDiff": null
+    }
+  ]
+}

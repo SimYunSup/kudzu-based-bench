@@ -334,6 +334,38 @@ async function main() {
   await injectInto("README.md", "ko");
   await injectInto("README.en.md", "en");
 
+  // Emit the same measurements as machine-readable JSON for the landing page
+  // (landing/index.html) to fetch and render — so the on-site benchmark table
+  // refreshes automatically on every `build:stats` run without hand-editing
+  // HTML. Sorted identically (build time asc) to the README table.
+  const benchmark = {
+    measuredAt,
+    machine: { ko: specKo, en: specEn },
+    rows: sortedRows.map(({ variant, ok, seconds, stats }) => {
+      const version = versionOf(variant.appDir, variant.versionDep);
+      return {
+        label: variant.label,
+        version,
+        name: version ? `${variant.label} ${version}` : variant.label,
+        based: variant.based,
+        kind: variant.kind,
+        ok,
+        seconds: seconds === null ? null : Number(seconds.toFixed(1)),
+        totalBytes: ok ? stats.totalBytes : null,
+        jsBytes: ok ? stats.jsBytes : null,
+        totalSize: ok ? formatBytes(stats.totalBytes) : null,
+        jsSize: ok ? formatBytes(stats.jsBytes) : null,
+        fileCount: ok ? stats.fileCount : null,
+        originDiff: originDiff[variant.diffLabel ?? variant.label] ?? null,
+      };
+    }),
+  };
+  await writeFile(
+    path.join(repoRoot, "landing", "benchmark.json"),
+    `${JSON.stringify(benchmark, null, 2)}\n`,
+  );
+  console.log(`build-stats: landing/benchmark.json updated (${measuredAt})`);
+
   if (anyFailure) {
     console.error("build-stats: one or more builds failed");
     process.exit(1);

@@ -34,18 +34,18 @@ Type — **SSG-focused**: a tool whose reason for existing is static-site output
 <!-- build-stats:start -->
 | Variant | Based | Type | Build (s) | Total size | JS size | Files | Origin diff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Kudzu 0.5.8 | Kudzu (JSX, no vDOM) | SSG-focused | 0.9 | 2.6 MB | 15.9 KB | 146 | 0.112% |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 1.3 | 2.6 MB | 15.0 KB | 143 | 0.115% |
-| Hugo 0.161.0 | Go (templates) | SSG-focused | 1.3 | 2.6 MB | 14.8 KB | 143 | 0.112% |
-| Docusaurus 3.10.2 | React | SSG-focused | 2.7 | 5.0 MB | 2.3 MB | 285 | 0.117% |
-| VitePress 1.6.4 | Vue | SSG-focused | 2.7 | 8.5 MB | 4.6 MB | 417 | 0.115% |
-| React Router 8.3.0 | React | SSG-capable | 3.5 | 6.8 MB | 323.4 KB | 286 | 0.118% |
-| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 4.1 | 5.1 MB | 99.9 KB | 157 | 0.069% |
-| Next.js Pages Router 16.2.11 | React | SSG-capable | 4.3 | 6.5 MB | 528.9 KB | 304 | 0.116% |
-| Next.js App Router 16.2.11 | React | SSG-capable | 5.0 | 14.4 MB | 637.1 KB | 1375 | 0.115% |
-| TanStack Start 1.168.32 | React | SSG-capable | 8.1 | 6.5 MB | 333.4 KB | 147 | 0.114% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 0.9 | 2.6 MB | 15.0 KB | 142 | - |
+| Hugo 0.161.0 | Go (templates) | SSG-focused | 0.9 | 2.6 MB | 14.8 KB | 142 | - |
+| Kudzu 0.5.8 | Kudzu (JSX, no vDOM) | SSG-focused | 0.9 | 2.6 MB | 15.9 KB | 145 | - |
+| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 1.8 | 4.1 MB | 99.9 KB | 152 | - |
+| VitePress 1.6.4 | Vue | SSG-focused | 2.2 | 8.5 MB | 4.6 MB | 416 | - |
+| Docusaurus 3.10.2 | React | SSG-focused | 2.5 | 5.0 MB | 2.3 MB | 284 | - |
+| React Router 8.3.0 | React | SSG-capable | 3.0 | 6.8 MB | 323.4 KB | 285 | - |
+| Next.js Pages Router 16.2.11 | React | SSG-capable | 3.8 | 6.5 MB | 529.0 KB | 303 | - |
+| Next.js App Router 16.2.11 | React | SSG-capable | 4.4 | 14.4 MB | 637.0 KB | 1374 | - |
+| TanStack Start 1.168.32 | React | SSG-capable | 7.5 | 6.5 MB | 333.4 KB | 146 | - |
 
-_Measured locally via `pnpm run build:stats` (manual refresh); varies with content volume and machine. Sorted by build time asc. "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M1 Max · 10 cores · 64 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-07-24T00:43:51.374Z_
+_Measured locally via `pnpm run build:stats` (manual refresh); varies with content volume and machine. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M1 Max · 10 cores · 64 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-07-24T07:17:45.417Z_
 <!-- build-stats:end -->
 
 ### CI snapshot (reference)

@@ -33,34 +33,21 @@
 특징(Type) 분류 — **SSG 특화**: 정적 사이트 출력이 존재 목적인 도구. **SSG 지원**: 범용 앱 프레임워크지만 정적 export를 지원하는 도구.
 
 <!-- build-stats:start -->
-| 변형 | 기반 | 특징 | 빌드 시간(s) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
+| 변형 | 기반 | 특징 | 빌드 시간(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 0.9 | 2.6 MB | 15.0 KB | 142 | - |
-| Hugo 0.161.0 | Go (templates) | SSG 특화 | 0.9 | 2.6 MB | 14.8 KB | 142 | - |
-| Kudzu 0.5.8 | Kudzu (JSX, no vDOM) | SSG 특화 | 0.9 | 2.6 MB | 15.9 KB | 145 | - |
-| Astro 7.1.3 | Astro islands (vanilla) | SSG 특화 | 1.8 | 4.1 MB | 99.9 KB | 152 | - |
-| VitePress 1.6.4 | Vue | SSG 특화 | 2.2 | 8.5 MB | 4.6 MB | 416 | - |
-| Docusaurus 3.10.2 | React | SSG 특화 | 2.5 | 5.0 MB | 2.3 MB | 284 | - |
-| React Router 8.3.0 | React | SSG 지원 | 3.0 | 6.8 MB | 323.4 KB | 285 | - |
-| Next.js Pages Router 16.2.11 | React | SSG 지원 | 3.8 | 6.5 MB | 529.0 KB | 303 | - |
-| Next.js App Router 16.2.11 | React | SSG 지원 | 4.4 | 14.4 MB | 637.0 KB | 1374 | - |
-| TanStack Start 1.168.32 | React | SSG 지원 | 7.5 | 6.5 MB | 333.4 KB | 146 | - |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 615 | 287.2 KB | 15.0 KB | 9 | 0.400% |
+| Kudzu 0.5.8 | Kudzu (JSX, no vDOM) | SSG 특화 | 621 | 284.9 KB | 15.9 KB | 12 | 0.395% |
+| Hugo 0.161.0 | Go (templates) | SSG 특화 | 840 | 284.6 KB | 14.8 KB | 9 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG 특화 | 1132 | 380.5 KB | 112.5 KB | 17 | 0.402% |
+| Astro 7.1.3 | Astro islands (vanilla) | SSG 특화 | 1586 | 417.7 KB | 99.9 KB | 19 | 0.320% |
+| React Router 8.3.0 | React | SSG 지원 | 1852 | 596.0 KB | 321.7 KB | 17 | 0.405% |
+| Docusaurus 3.10.2 | React | SSG 특화 | 1978 | 558.7 KB | 288.4 KB | 17 | 0.403% |
+| TanStack Start 1.168.32 | React | SSG 지원 | 2353 | 601.6 KB | 333.4 KB | 13 | 0.399% |
+| Next.js Pages Router 16.2.11 | React | SSG 지원 | 2862 | 801.6 KB | 528.1 KB | 37 | 0.403% |
+| Next.js App Router 16.2.11 | React | SSG 지원 | 3650 | 1.0 MB | 636.9 KB | 54 | 0.401% |
 
-_로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M1 Max · 10코어 · RAM 64 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-07-24T07:17:45.417Z_
+_로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-07-24T15:26:22.128Z_
 <!-- build-stats:end -->
-
-### CI 측정 스냅숏 (참고)
-
-GitHub Actions ubuntu-latest(2코어)에서 실콘텐츠 123 포스트로 마지막 측정한 수치입니다(4개 변형 시절). 콘텐츠가 실려도 순수 빌드는 십수 초 이내이고, 콘텐츠 스케일에 가장 민감한 변형은 프리렌더가 페이지 수에 비례하는 TanStack(로컬 대비 ×5.1)입니다. 과거 CI 수치(RR 312.8s 등)는 빌드가 아니라 Notion 페치 시간이었습니다(프리페치 캐시 도입 후 분리 측정).
-
-| 변형 | 빌드 시간(s) | 총 출력 크기 | JS 크기 | 파일 수 | 로컬 대비 |
-| --- | --- | --- | --- | --- | --- |
-| Astro 7.x | 7.9 | 5.0 MB | 99.9 KB | 157 | ×3.3 |
-| React Router 7.x | 8.9 | 6.8 MB | 322.8 KB | 286 | ×3.4 |
-| TanStack 1.x | 15.9 | 6.4 MB | 332.8 KB | 147 | ×5.1 |
-| Kudzu 0.5.x | 1.4 | 2.5 MB | 15.9 KB | 146 | ×1.8 |
-
-_2026-07-23 측정 스냅숏(수동 유지, 당시 4개 변형·React Router v7 시절). 출력 크기·파일 수 차이는 콘텐츠 유무 때문이고, JS 크기는 콘텐츠와 무관하게 동일합니다. 현행 변형·버전은 위 표를 참조._
 
 ## 리팩토링에서 발견한 실전 결함·제약
 

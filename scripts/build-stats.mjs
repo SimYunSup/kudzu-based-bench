@@ -237,7 +237,7 @@ async function main() {
   for (const variant of variants) {
     if (skipBuild) {
       const stats = collectDirStats(variant.outDir);
-      rows.push({ variant, ok: true, seconds: null, stats });
+      rows.push({ variant, ok: true, ms: null, stats });
       continue;
     }
 
@@ -247,23 +247,23 @@ async function main() {
     console.log(`build-stats: building ${variant.pkg}`);
     const start = process.hrtime.bigint();
     const ok = runBuild(variant.pkg);
-    const seconds = Number(process.hrtime.bigint() - start) / 1e9;
+    const ms = Number(process.hrtime.bigint() - start) / 1e6;
 
     if (!ok) {
       anyFailure = true;
-      rows.push({ variant, ok: false, seconds, stats: null });
+      rows.push({ variant, ok: false, ms, stats: null });
       continue;
     }
     const stats = collectDirStats(variant.outDir);
-    rows.push({ variant, ok: true, seconds, stats });
+    rows.push({ variant, ok: true, ms, stats });
   }
 
   const originDiff = loadOriginDiff();
   // Sort by build time ascending (fastest first); un-measured (--skip-build,
-  // seconds=null) and failed builds sink to the bottom.
+  // ms=null) and failed builds sink to the bottom.
   const sortedRows = [...rows].sort((a, b) => {
-    const sa = a.seconds == null || !a.ok ? Infinity : a.seconds;
-    const sb = b.seconds == null || !b.ok ? Infinity : b.seconds;
+    const sa = a.ms == null || !a.ok ? Infinity : a.ms;
+    const sb = b.ms == null || !b.ok ? Infinity : b.ms;
     return sa - sb;
   });
   const measuredAt = new Date().toISOString();
@@ -280,12 +280,12 @@ async function main() {
   // language, then inject it between the markers in that language's README.
   const L = {
     ko: {
-      header: "| 변형 | 기반 | 특징 | 빌드 시간(s) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
+      header: "| 변형 | 기반 | 특징 | 빌드 시간(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
       kind: (v) => v.kind.ko,
       footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
     },
     en: {
-      header: "| Variant | Based | Type | Build (s) | Total size | JS size | Files | Origin diff |",
+      header: "| Variant | Based | Type | Build (ms) | Total size | JS size | Files | Origin diff |",
       kind: (v) => v.kind.en,
       footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh); varies with content volume and machine. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
     },
@@ -294,12 +294,12 @@ async function main() {
 
   function renderTable(lang) {
     const t = L[lang];
-    const tableRows = sortedRows.map(({ variant, ok, seconds, stats }) => {
+    const tableRows = sortedRows.map(({ variant, ok, ms, stats }) => {
       const version = versionOf(variant.appDir, variant.versionDep);
       const name = version ? `${variant.label} ${version}` : variant.label;
       const based = variant.based;
       const kind = t.kind(variant);
-      const time = seconds === null ? "-" : seconds.toFixed(1);
+      const time = ms === null ? "-" : String(Math.round(ms));
       const diff = originDiff[variant.diffLabel ?? variant.label] ?? "-";
       if (!ok) {
         return `| ${name} | ${based} | ${kind} | ${time} | ❌ | ❌ | ❌ | ${diff} |`;

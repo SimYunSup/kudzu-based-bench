@@ -63,6 +63,31 @@ const NETWORK = {
 /** Delays after first paint at which the impatient tap is simulated. */
 const CLICK_DELAYS = [0, 100, 300, 500, 1000];
 
+/**
+ * Degradation conditions for the resilience track.
+ *
+ * These are not hypotheticals: an ad blocker, a captive-portal proxy, a
+ * corporate MITM box, a CDN partial outage, or a subway tunnel all produce
+ * one of these three states on a real shopper's device. What a storefront
+ * still lets them do in that state is a product property, and no
+ * framework benchmark measures it.
+ */
+const DEGRADATIONS = {
+  "js-blocked": { label: "JS 전면 차단", block: true },
+  "js-slow": { label: "스크립트 2s 지연", delayMs: 2000 },
+  "chunk-404": { label: "스크립트 1개 유실", dropNth: 1 }
+};
+
+/** Journey capabilities probed under each degradation. */
+const CAPABILITIES = [
+  { key: "readContent", label: "상품 정보 읽기" },
+  { key: "navigate", label: "카테고리 이동" },
+  { key: "openDetail", label: "상세 진입" },
+  { key: "filter", label: "검색 필터" },
+  { key: "selectVariant", label: "옵션 선택" },
+  { key: "addToCart", label: "장바구니 담기" }
+];
+
 function parseArgs(argv) {
   const options = { variant: "shop-kudzu", runs: 5, cpu: 4, net: "slow4g", throttle: true, out: "bench" };
   for (let index = 0; index < argv.length; index++) {
@@ -305,6 +330,114 @@ async function runSession(browser, origin, variant, options) {
   return { steps, clickLoss };
 }
 
+/**
+ * Probe which journey capabilities survive one degraded script environment.
+ *
+ * Runs in a fresh context with a request route installed before any
+ * navigation, so the very first document already sees the condition.
+ */
+async function runDegradation(browser, origin, variant, key) {
+  const condition = DEGRADATIONS[key];
+  const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  const page = await context.newPage();
+  const url = suffix => `${origin}${BASE_PATH}/${variant}${suffix}`;
+  let scriptCount = 0;
+
+  await page.route("**/*.js", async route => {
+    if (condition.block) return route.abort();
+    if (condition.dropNth !== undefined) {
+      scriptCount++;
+      // Drop one script from the middle of the graph rather than the first:
+      // losing the entry point is a different (and less interesting) failure
+      // than losing one chunk a CDN failed to serve.
+      if (scriptCount === condition.dropNth + 1) return route.abort();
+      return route.continue();
+    }
+    if (condition.delayMs) await new Promise(resolve => setTimeout(resolve, condition.delayMs));
+    return route.continue();
+  });
+
+  const settle = async () => {
+    await page.waitForLoadState("domcontentloaded");
+    // Enough for a healthy variant to boot, short enough that the 2 s delay
+    // condition is still observably degraded.
+    await page.waitForTimeout(1500);
+  };
+  const can = async body => {
+    try {
+      return Boolean(await body());
+    } catch {
+      return false;
+    }
+  };
+
+  const result = {};
+
+  await page.goto(url("/product/p-00000/"), { waitUntil: "commit" });
+  await settle();
+  result.readContent = await can(() =>
+    page.evaluate(() => /[0-9]/.test(document.querySelector(".product-price")?.textContent || ""))
+  );
+  result.selectVariant = await can(async () => {
+    // The pressed option and the price are already correct in the served
+    // HTML, so "one option is pressed" proves nothing. The probe only passes
+    // if the *selection moved*, which requires a live handler.
+    const before = await page.evaluate(() => {
+      const pressed = [...document.querySelectorAll("fieldset:nth-of-type(2) .option")].find(node => node.getAttribute("aria-pressed") === "true");
+      return `${pressed?.textContent}|${document.querySelector(".product-price")?.textContent}`;
+    });
+    await page.evaluate(() => {
+      const options = [...document.querySelectorAll("fieldset:nth-of-type(2) .option")].filter(
+        node => !node.disabled && node.getAttribute("aria-pressed") !== "true"
+      );
+      options[options.length - 1]?.click();
+    });
+    await page.waitForTimeout(300);
+    const after = await page.evaluate(() => {
+      const pressed = [...document.querySelectorAll("fieldset:nth-of-type(2) .option")].find(node => node.getAttribute("aria-pressed") === "true");
+      return `${pressed?.textContent}|${document.querySelector(".product-price")?.textContent}`;
+    });
+    return after !== before;
+  });
+  result.addToCart = await can(async () => {
+    await page.evaluate(() => localStorage.removeItem("otw-cart"));
+    await page.click(".add-to-cart", { timeout: 2000 });
+    await page.waitForTimeout(400);
+    return page.evaluate(() => localStorage.getItem("otw-cart") !== null);
+  });
+
+  // Navigation is probed as a real anchor click, because "the link still
+  // works with JS off" is exactly the property being measured.
+  result.navigate = await can(async () => {
+    await page.click(".menu-link", { timeout: 2000 });
+    await page.waitForLoadState("domcontentloaded");
+    return page.evaluate(() => document.querySelectorAll("a.tile").length > 0);
+  });
+
+  await page.goto(url("/search/"), { waitUntil: "commit" });
+  await settle();
+  result.filter = await can(async () => {
+    await page.evaluate(() => {
+      const field = document.querySelector("#q");
+      field.value = "스웨터";
+      field.dispatchEvent(new InputEvent("input", { bubbles: true }));
+    });
+    await page.waitForTimeout(400);
+    return page.evaluate(() => {
+      const titles = [...document.querySelectorAll(".tile-title")].map(node => node.textContent || "");
+      return titles.length > 0 && titles.length < 40 && titles.every(title => title.includes("스웨터"));
+    });
+  });
+  result.openDetail = await can(async () => {
+    await page.click("a.tile", { timeout: 2000 });
+    await page.waitForLoadState("domcontentloaded");
+    return page.evaluate(() => document.querySelector(".product-price") !== null);
+  });
+
+  await context.close();
+  return result;
+}
+
 const median = values => {
   const sorted = [...values].sort((left, right) => left - right);
   return sorted.length % 2 ? sorted[(sorted.length - 1) / 2] : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
@@ -352,6 +485,11 @@ async function main() {
     });
     const firstReliable = loss.find(entry => entry.lossPct === 0);
 
+    // Resilience runs once per condition: the outcomes are boolean, so extra
+    // repetitions buy nothing that the 1.5 s settle window does not already.
+    const resilience = {};
+    for (const key of Object.keys(DEGRADATIONS)) resilience[key] = await runDegradation(browser, origin, options.variant, key);
+
     const report = {
       variant: options.variant,
       runs: options.runs,
@@ -359,7 +497,8 @@ async function main() {
       measuredAt: new Date().toISOString(),
       steps: rows,
       clickLoss: loss,
-      timeToFirstReliableClickMs: firstReliable ? firstReliable.delay : null
+      timeToFirstReliableClickMs: firstReliable ? firstReliable.delay : null,
+      resilience
     };
 
     mkdirSync(path.join(repoRoot, options.out), { recursive: true });
@@ -380,6 +519,16 @@ async function main() {
     console.log("\nimpatient tap (add-to-cart at first paint + delay)");
     for (const entry of loss) console.log(`  +${String(entry.delay).padStart(4)} ms   loss ${String(entry.lossPct).padStart(5)}%   (${entry.attempts} attempts)`);
     console.log(`\ntime to first reliable click: ${report.timeToFirstReliableClickMs === null ? "never within 1000 ms" : `${report.timeToFirstReliableClickMs} ms after first paint`}`);
+
+    console.log("\n열화 내성 (살아남는 기능)");
+    const header = CAPABILITIES.map(entry => entry.label.padStart(13)).join("");
+    console.log("".padEnd(18) + header);
+    for (const [key, condition] of Object.entries(DEGRADATIONS)) {
+      const cells = CAPABILITIES.map(entry => (resilience[key][entry.key] ? "O" : "X").padStart(13)).join("");
+      console.log(condition.label.padEnd(18) + cells);
+    }
+    const survived = Object.values(resilience).flatMap(row => CAPABILITIES.map(entry => row[entry.key]));
+    console.log(`  생존 ${survived.filter(Boolean).length} / ${survived.length}`);
     console.log(`\nwrote ${path.relative(repoRoot, file)}`);
   } finally {
     await browser.close();

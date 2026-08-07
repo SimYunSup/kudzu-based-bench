@@ -1,0 +1,27 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProductDetail from "../../components/ProductDetail";
+import { catalog, productOptions } from "../../lib/catalog";
+
+export function getStaticPaths() {
+  return catalog.products.map(product => ({ params: { handle: product.handle } }));
+}
+
+const { handle } = Astro.params;
+const product = catalog.products.find(entry => entry.handle === handle)!;
+const { sizes, colors, defaultSize, defaultColor } = productOptions(product);
+---
+
+<Layout title={`${product.title} — OTW Store`}>
+  <ProductDetail
+    handle={product.handle}
+    title={product.title}
+    descriptionHtml={product.descriptionHtml}
+    imageAlt={product.featuredImage.altText}
+    colors={colors}
+    sizes={sizes}
+    defaultColor={defaultColor}
+    defaultSize={defaultSize}
+    client:load
+  />
+</Layout>

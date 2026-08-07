@@ -1,0 +1,19 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { catalog } from "../lib/catalog";
+
+/** Policy pages (`/shipping`, `/returns`). */
+export function getStaticPaths() {
+  return catalog.pages.map(page => ({ params: { page: page.handle } }));
+}
+
+const { page: handle } = Astro.params;
+const page = catalog.pages.find(entry => entry.handle === handle)!;
+---
+
+<Layout title={`${page.title} — OTW Store`}>
+  <main class="policy">
+    <h1>{page.title}</h1>
+    <article set:html={page.bodyHtml} />
+  </main>
+</Layout>

@@ -26,6 +26,15 @@
 - `packages/notion-loader` — Notion을 Astro Content Layer로 불러오는 로더 패키지(`@otw/notion-loader`).
 - `packages/notion-content` — 프레임워크 중립 Notion 콘텐츠 페처(`@otw/notion-content`). astro를 제외한 모든 변형이 빌드 타임에 사용합니다.
 
+커머스 픽스처(뉴스레터와 별개, 상호작용 측정용):
+
+- `packages/commerce-data` — 결정론적 카탈로그 생성기(`@otw/commerce-data`). 시드가 고정이라 같은 크기는 항상 같은 바이트를 만듭니다. `OTW_CATALOG_SIZE`로 100/1,000/10,000 전환.
+- `apps/shop-kudzu` — Kudzu 0.8.15. 네이티브 문서 내비게이션.
+- `apps/shop-astro` — Astro 7 + React 아일랜드 3개(`client:load`).
+- `apps/shop-react-router` — React Router v8 framework mode, 전 라우트 prerender.
+- `apps/shop-tanstack` — TanStack Start 정적 prerender.
+- `apps/shop-next-app` — Next.js App Router `output: "export"`.
+
 ## 빌드 벤치마크
 
 로컬에서 `pnpm run build:stats`를 돌리면 아래 표가 자동 갱신됩니다(scripts/build-stats.mjs). CI 자동 측정은 제거했습니다 — 공유 러너의 성능 편차로 수치 신뢰도가 낮고, 봇 커밋이 브랜치를 오염시키기 때문입니다.
@@ -49,6 +58,86 @@
 _로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-07-24T15:26:22.128Z_
 <!-- build-stats:end -->
 
+## 커머스 벤치마크
+
+뉴스레터 변형은 상호작용이 없어 렌더링 아키텍처 차이가 드러나지 않습니다. Next.js Commerce 수준의 상점(홈 · 검색 · 컬렉션 · 상품 상세 · 정책 · 결제)을 다섯 프레임워크에 **같은 DOM·같은 동작 계약**으로 구현하고, 실제 세션을 재생해 측정합니다.
+
+```bash
+pnpm run build:shop     # 다섯 변형 빌드 (OTW_CATALOG_SIZE=100|1000|10000)
+pnpm run shop:bench     # 세션 재생 + 클릭 유실률 + 열화 내성
+pnpm run shop:assets    # 라우트별 JS 무게 (브라우저가 실제로 받은 바이트)
+pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
+```
+
+### Cold LCP / Warm LCP를 쓰지 않는 이유
+
+사람은 "cold 방문"과 "warm 방문"을 하지 않습니다. 한 세션 안에서 첫 페이지는 빈 캐시로 열고, 이후 네댓 페이지는 그 캐시를 물려받으며 이동합니다. 두 버킷으로 쪼개면 비용이 세션에 어떻게 분포하는지가 사라집니다. 게다가 커머스의 LCP는 상품 사진이고, 이 픽스처의 이미지는 전 변형 바이트 동일이라 프레임워크에 대해 아무것도 말해주지 않습니다.
+
+대신 네 가지를 잽니다.
+
+| 지표 | 정의 |
+| --- | --- |
+| contentReady | navigationStart → 그 단계의 핵심 텍스트(상품명·가격)가 DOM에 존재 |
+| actReady | 컨트롤이 **실제로 동작하기까지**. 50 ms 간격 재시도로 측정하며 프레임워크 내부 신호는 보지 않음 |
+| stepLatency | 성공한 dispatch → next paint. INP와 같은 정의 |
+| 클릭 유실률 | 첫 페인트 + Δ에 "담기"를 눌렀을 때 무시되는 비율 |
+
+### 세션 재생 (5세션 중앙값, 4x CPU · Slow 4G)
+
+| 변형 | 진입 contentReady | 리스팅 첫 조작 actReady | 정렬 stepLatency | 담기 stepLatency | 첫 신뢰 클릭 |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Kudzu 0.8.15 | 173 ms | **950 ms** | 2.2 ms | 0.6 ms | **첫 페인트 +100 ms** |
+| Astro 7 (islands) | 239 ms | 901 ms | 7.4 ms | 1.8 ms | 1,000 ms 내 없음 |
+| React Router v8 | 181 ms | 2,208 ms | 21.3 ms | 1.5 ms | 1,000 ms 내 없음 |
+| TanStack Start | 181 ms | 2,953 ms | 6.4 ms | 1.9 ms | 1,000 ms 내 없음 |
+| Next.js App Router | 174 ms | 2,967 ms | 29.5 ms | 1.6 ms | 1,000 ms 내 없음 |
+
+**contentReady는 사실상 동률입니다.** 다섯 다 완성된 HTML을 보내니 당연합니다. 차이는 전부 "조작 가능해지기까지"에 몰려 있고, 그게 이 픽스처가 존재하는 이유입니다.
+
+### 라우트별 초기 JavaScript (KB gzip)
+
+브라우저가 실제로 내려받은 바이트입니다. import 그래프 정적 분석은 프레임워크마다 결과가 달라집니다 — Astro는 아일랜드 런타임을 인라인 부트스트랩 안의 동적 `import()`로 가져오기 때문에, 정적 크롤러로는 60 KB짜리를 1.8 KB로 잘못 셉니다.
+
+| 변형 | 홈 | 검색 | 상품 | 결제 | 총 출력(이미지 제외) |
+| --- | ---: | ---: | ---: | ---: | ---: |
+| Kudzu | **4.6** | 9.3 | 4.9 | **4.6** | 1.20 MB |
+| Astro | 60.6 | 61.0 | 61.1 | 60.6 | 1.75 MB |
+| React Router | 104.2 | 104.2 | 104.5 | 104.1 | 1.12 MB |
+| TanStack | 104.0 | 103.9 | 104.1 | 103.6 | 1.62 MB |
+| Next.js | 145.5 | 146.2 | 145.2 | 144.4 | 4.83 MB |
+
+Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +4.7 KB). 나머지는 결제 페이지에서도 홈과 같은 무게를 냅니다. Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다.
+
+### 열화 내성
+
+여섯 기능(정보 읽기 · 카테고리 이동 · 상세 진입 · 필터 · 옵션 선택 · 담기)이 세 조건에서 몇 개나 살아남는지. 광고 차단, 캡티브 포털, CDN 부분 장애, 지하철 터널이 실제로 만드는 상태입니다.
+
+| 변형 | JS 전면 차단 | 스크립트 2s 지연 | 스크립트 1개 유실 | 합계 |
+| --- | ---: | ---: | ---: | ---: |
+| Kudzu | 3/6 | 6/6 | 6/6 | **15/18** |
+| Astro | 3/6 | 3/6 | 6/6 | 12/18 |
+| TanStack | 3/6 | 1/6 | 5/6 | 9/18 |
+| Next.js | 3/6 | 1/6 | 4/6 | 8/18 |
+| React Router | 3/6 | 1/6 | 4/6 | 8/18 |
+
+JS를 완전히 끄면 다섯 다 "읽기·이동·상세 진입"만 남습니다(정적 문서 + 네이티브 앵커). 갈리는 건 스크립트가 늦거나 하나 빠졌을 때입니다.
+
+### 카탈로그 스케일 (클린 / 증분, 중앙값)
+
+증분은 상품 하나의 가격만 바꾼 뒤 재빌드입니다. 야간 재고·가격 배치의 실제 비용이고, "N페이지를 M초에" 같은 헤드라인이 빠뜨리는 숫자입니다.
+
+| 변형 | 100개 | 1,000개 | 페이지당(1,000개) |
+| --- | ---: | ---: | ---: |
+| Astro | 1,436 / 1,403 ms | **1,833 / 1,938 ms** | 1.83 ms |
+| TanStack | 2,169 / 2,212 ms | 3,090 / 3,213 ms | 3.09 ms |
+| React Router | 1,883 / 1,978 ms | 3,257 / 3,371 ms | 3.26 ms |
+| Next.js | 3,616 / 3,789 ms | 4,716 / 5,832 ms | 4.72 ms |
+| Kudzu | **1,536 / 1,567 ms** | 5,963 / 6,211 ms | 5.96 ms |
+
+**Kudzu는 여기서 집니다.** 100개에서 가장 빠르고 1,000개에서 가장 느립니다. 상품마다 effect 모듈과 native 핸들러 모듈을 따로 emit하므로 빌드 비용 동인은 페이지 렌더링이 아니라 라우트별 capability ESM emission입니다. 증분 빌드를 지원하는 변형은 하나도 없습니다 — 다섯 다 클린과 증분이 같습니다.
+
+_측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 원본 JSON은 `bench/`에 있습니다(git 추적 제외)._
+
 ## 리팩토링에서 발견한 실전 결함·제약
 
 프레임워크 자체에 이슈로 올릴 만한(업스트림 버그이거나 문서화되지 않은 제약) 것만 추립니다. 우리 앱 설정/이력(모노레포 workspace 추론, deprecated API 사용 등)이나 프레임워크가 의도한 정상 제약은 제외했습니다.
@@ -69,6 +158,10 @@ _로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·�
 - `pnpm run origin:diff` — 라이브 원본(ones-to-watch.ethansup.net) 대비 배포 변형 픽셀 diff.
 - `pnpm run visual:diff` — 로컬 빌드 변형 간 픽셀 diff(astro 기준).
 - `pnpm run test:e2e` — Playwright e2e(변형 × 5 시나리오).
+- `pnpm run build:shop` — 커머스 픽스처 다섯 변형 빌드(`OTW_CATALOG_SIZE`로 카탈로그 크기 지정).
+- `pnpm run shop:bench -- --variant shop-kudzu` — 세션 재생·클릭 유실률·열화 내성 → `bench/<variant>.json`.
+- `pnpm run shop:assets` — 라우트별 초기 JS를 브라우저에서 실측 → `bench/shop-assets.json`.
+- `pnpm run shop:scale -- --sizes 100,1000,10000` — 카탈로그 크기별 클린·증분 빌드 시간 → `bench/shop-scale.json`.
 
 ## 개발
 

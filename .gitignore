@@ -27,6 +27,17 @@ apps/next-pages/.next/
 apps/shop-next-app/out/
 apps/shop-next-app/.next/
 apps/shop-next-app/public/commerce/
+apps/shop-react-router/build/
+apps/shop-react-router/.react-router/
+apps/shop-react-router/public/commerce/
+apps/shop-tanstack/dist/
+apps/shop-tanstack/.tanstack/
+apps/shop-tanstack/.nitro/
+apps/shop-tanstack/.output/
+apps/shop-tanstack/public/commerce/
+apps/shop-astro/dist/
+apps/shop-astro/.astro/
+apps/shop-astro/public/commerce/
 packages/notion-content/dist/
 # local artifacts of the scripts/ benches and e2e runs
 site/

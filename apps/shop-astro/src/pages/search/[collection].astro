@@ -1,0 +1,39 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { LISTING_LIMIT, catalog, toTile } from "../../lib/catalog";
+
+/**
+ * Collection listing. Static by contract — filter and sort live on /search
+ * only, because Kudzu cannot drive a selector pipeline from route props.
+ */
+export function getStaticPaths() {
+  return catalog.collections.map(collection => ({ params: { collection: collection.handle } }));
+}
+
+const { collection: handle } = Astro.params;
+const collection = catalog.collections.find(entry => entry.handle === handle)!;
+const rows = catalog.products
+  .filter(product => product.collection === collection.handle)
+  .slice(0, LISTING_LIMIT)
+  .map(toTile);
+---
+
+<Layout title={`${collection.title} — OTW Store`}>
+  <main class="search">
+    <header class="collection-header">
+      <h1>{collection.title}</h1>
+      <p>{collection.description}</p>
+    </header>
+    <div class="tile-grid">
+      {rows.map(row => (
+        <a class="tile" href={row.href}>
+          <div class="tile-image">
+            <img src={row.imageUrl} alt={row.imageAlt} width="800" height="800" loading="lazy" />
+          </div>
+          <h3 class="tile-title">{row.title}</h3>
+          <p class="tile-price">{row.priceLabel}</p>
+        </a>
+      ))}
+    </div>
+  </main>
+</Layout>

@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { catalog, toTile } from "../lib/catalog";
+import { withBase } from "../lib/site";
+
+const FEATURED = catalog.products.slice(0, 9).map(toTile);
+const COLLECTIONS = catalog.collections.map(collection => ({
+  handle: collection.handle,
+  title: collection.title,
+  description: collection.description,
+  href: withBase(`/search/${collection.handle}`),
+  countLabel: `${collection.productHandles.length}개`
+}));
+---
+
+<Layout title="OTW Store — 커머스 벤치마크 픽스처">
+  <main class="home">
+    <section class="hero">
+      <h1>이번 시즌</h1>
+      <p>같은 상점을 프레임워크마다 정적으로 빌드해 성능을 비교합니다.</p>
+      <a class="hero-cta" href={withBase("/search")}>
+        전체 상품 보기
+      </a>
+    </section>
+
+    <section class="collections">
+      <h2>컬렉션</h2>
+      <div class="collection-list">
+        {COLLECTIONS.map(link => (
+          <a class="collection-card" href={link.href}>
+            <h3>{link.title}</h3>
+            <p>{link.description}</p>
+            <span class="collection-count">{link.countLabel}</span>
+          </a>
+        ))}
+      </div>
+    </section>
+
+    <section class="featured">
+      <h2>추천 상품</h2>
+      <div class="tile-grid">
+        {FEATURED.map(tile => (
+          <a class="tile" href={tile.href}>
+            <div class="tile-image">
+              <img src={tile.imageUrl} alt={tile.imageAlt} width="800" height="800" loading="lazy" />
+            </div>
+            <h3 class="tile-title">{tile.title}</h3>
+            <p class="tile-price">{tile.priceLabel}</p>
+          </a>
+        ))}
+      </div>
+    </section>
+  </main>
+</Layout>

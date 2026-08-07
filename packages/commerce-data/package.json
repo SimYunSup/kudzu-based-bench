@@ -1,0 +1,26 @@
+{
+  "name": "@otw/commerce-data",
+  "type": "module",
+  "version": "0.0.1",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "default": "./dist/index.js"
+    },
+    "./images": {
+      "types": "./dist/images.d.ts",
+      "default": "./dist/images.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json"
+  },
+  "dependencies": {
+    "pngjs": "^7.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24",
+    "@types/pngjs": "^6",
+    "typescript": "^5.9.0"
+  }
+}

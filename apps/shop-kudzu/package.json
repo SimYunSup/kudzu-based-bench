@@ -1,0 +1,16 @@
+{
+  "name": "@otw/shop-kudzu",
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "dev": "node scripts/gen-catalog.mjs && kudzu dev",
+    "build": "node scripts/gen-catalog.mjs && kudzu build"
+  },
+  "dependencies": {
+    "@kudzujs/core": "^0.8.15",
+    "@otw/commerce-data": "workspace:*"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.0"
+  }
+}

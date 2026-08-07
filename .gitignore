@@ -7,6 +7,11 @@ apps/tanstack-router/.nitro/
 apps/tanstack-router/.tanstack/
 apps/kudzu/dist/
 apps/kudzu/.kudzu/
+apps/kudzu/src/generated/
+apps/shop-kudzu/dist/
+apps/shop-kudzu/.kudzu/
+apps/shop-kudzu/src/generated/
+packages/commerce-data/dist/
 apps/hugo/public/
 apps/hugo/resources/
 apps/hugo/.hugo_build.lock
@@ -19,6 +24,9 @@ apps/next-app/out/
 apps/next-app/.next/
 apps/next-pages/out/
 apps/next-pages/.next/
+apps/shop-next-app/out/
+apps/shop-next-app/.next/
+apps/shop-next-app/public/commerce/
 packages/notion-content/dist/
 # local artifacts of the scripts/ benches and e2e runs
 site/

@@ -1,4 +1,4 @@
-import { fetchNewsEntries } from "@otw/notion-content";
+import entries from "../../../generated/entries";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 
@@ -14,7 +14,6 @@ export const metadata = {
 };
 
 export async function getStaticPaths() {
-  const entries = await fetchNewsEntries();
 
   // Notion page ids are UUIDs (hyphens, no slash/query/hash characters), so
   // they satisfy Kudzu's single-safe-path-segment rule for route params

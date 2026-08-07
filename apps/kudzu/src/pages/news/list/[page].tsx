@@ -1,4 +1,4 @@
-import { fetchNewsEntries } from "@otw/notion-content";
+import entries from "../../../generated/entries";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
 import PostCard, { type PostCardData } from "../../../components/PostCard";
@@ -24,7 +24,6 @@ export const metadata = {
 // calls inside JSX expressions as reactive-binding captures and rejects
 // imported helpers like siteUrl, so props carry only serializable data.
 export async function getStaticPaths() {
-  const entries = await fetchNewsEntries();
   const pageCount = Math.max(1, Math.ceil(entries.length / PAGE_SIZE));
 
   return Array.from({ length: pageCount }, (_, index) => {

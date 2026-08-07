@@ -1,4 +1,4 @@
-import { fetchNewsEntries } from "@otw/notion-content";
+import entries from "../generated/entries";
 import Header from "../components/Header";
 import Footer from "../components/Footer";
 import PostCard, { type PostCardData } from "../components/PostCard";
@@ -16,6 +16,17 @@ const ARCHIVE_URL = siteUrl("news/list/1");
 // dist/.
 const SEARCH_SCRIPT_URL = siteUrl("search.js");
 
+// Also precomputed at module scope: inside the component body Kudzu's
+// collection analysis treats an array expression as a candidate reactive
+// list, and this page has no state at all.
+const RECENT_CARDS: PostCardData[] = entries.slice(0, RECENT_COUNT).map(entry => ({
+  id: entry.id,
+  title: entry.title,
+  date: entry.date,
+  coverUrl: entry.coverUrl,
+  href: siteUrl(`news/post/${entry.id}`)
+}));
+
 export const metadata = {
   title: "Ones To Watch for FrontEnd",
   description: "매주 프론트엔드 소식을 정리해서 보내드립니다.",
@@ -23,19 +34,9 @@ export const metadata = {
   icon: "/favicon.svg"
 };
 
-// Static build-time component: Kudzu awaits the default export when it runs
-// a function type (framework/core.mjs renderNode), so pages may fetch data
-// directly instead of routing through getStaticPaths when no params exist.
-export default async function HomePage() {
-  const entries = await fetchNewsEntries();
-  const cards: PostCardData[] = entries.slice(0, RECENT_COUNT).map(entry => ({
-    id: entry.id,
-    title: entry.title,
-    date: entry.date,
-    coverUrl: entry.coverUrl,
-    href: siteUrl(`news/post/${entry.id}`)
-  }));
-
+// Static build-time component: Kudzu runs the default export at build time
+// and the page has no browser capability, so it emits zero JavaScript.
+export default function HomePage() {
   return (
     <>
       <Header />
@@ -110,7 +111,7 @@ export default async function HomePage() {
             </div>
           </div>
           <div className="post-list">
-            {cards.map(card => (
+            {RECENT_CARDS.map(card => (
               <PostCard key={card.id} post={card} />
             ))}
           </div>

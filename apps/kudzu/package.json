@@ -3,11 +3,11 @@
   "type": "module",
   "version": "0.0.1",
   "scripts": {
-    "dev": "kudzu dev",
-    "build": "kudzu build"
+    "dev": "node scripts/gen-content.mjs && kudzu dev",
+    "build": "node scripts/gen-content.mjs && kudzu build"
   },
   "dependencies": {
-    "@kudzujs/core": "^0.5.8",
+    "@kudzujs/core": "^0.8.15",
     "@otw/notion-content": "workspace:*",
     "@pickhealer/munja": "^0.1.0"
   },

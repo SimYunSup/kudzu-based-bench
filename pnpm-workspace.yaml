@@ -10,8 +10,7 @@ allowBuilds:
   sharp: true
   workerd: true
 minimumReleaseAgeExclude:
-  - '@kudzujs/core@0.5.2'
+  - '@kudzujs/core@0.8.15'
   - '@react-router/dev@8.3.0'
   - '@react-router/node@8.3.0'
   - react-router@8.3.0
-  - '@kudzujs/core@0.5.8'

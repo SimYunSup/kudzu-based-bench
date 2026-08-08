@@ -1,34 +1,11 @@
 {
-  "measuredAt": "2026-08-08T02:22:07.272Z",
+  "measuredAt": "2026-08-08T05:52:12.716Z",
   "runs": 3,
   "machine": {
     "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
     "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
   },
   "rows": [
-    {
-      "label": "Hugo",
-      "version": "0.161.0",
-      "name": "Hugo 0.161.0",
-      "based": "Go (templates)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "ms": 689,
-      "samples": [
-        692,
-        677,
-        689
-      ],
-      "totalBytes": 2705587,
-      "jsBytes": 15178,
-      "totalSize": "2.6 MB",
-      "jsSize": "14.8 KB",
-      "fileCount": 142,
-      "originDiff": "0.395%"
-    },
     {
       "label": "Eleventy",
       "version": "3.1.6",
@@ -39,18 +16,53 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 698,
-      "samples": [
-        698,
-        691,
-        702
+      "cold": 708,
+      "warm": 706,
+      "coldSamples": [
+        708,
+        702,
+        709
       ],
-      "totalBytes": 2800635,
-      "jsBytes": 15351,
-      "totalSize": "2.7 MB",
+      "warmSamples": [
+        708,
+        705,
+        706
+      ],
+      "totalBytes": 2778575,
+      "jsBytes": 15331,
+      "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
       "fileCount": 142,
       "originDiff": "0.400%"
+    },
+    {
+      "label": "Hugo",
+      "version": "0.161.0",
+      "name": "Hugo 0.161.0",
+      "based": "Go (templates)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "cold": 708,
+      "warm": 702,
+      "coldSamples": [
+        708,
+        714,
+        700
+      ],
+      "warmSamples": [
+        702,
+        696,
+        706
+      ],
+      "totalBytes": 2685017,
+      "jsBytes": 15158,
+      "totalSize": "2.6 MB",
+      "jsSize": "14.8 KB",
+      "fileCount": 142,
+      "originDiff": "0.395%"
     },
     {
       "label": "Kudzu",
@@ -62,14 +74,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 821,
-      "samples": [
-        821,
-        830,
-        817
+      "cold": 841,
+      "warm": 843,
+      "coldSamples": [
+        839,
+        842,
+        841
       ],
-      "totalBytes": 2719970,
-      "jsBytes": 15349,
+      "warmSamples": [
+        843,
+        841,
+        843
+      ],
+      "totalBytes": 2699170,
+      "jsBytes": 15329,
       "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
       "fileCount": 141,
@@ -85,14 +103,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 1721,
-      "samples": [
-        1721,
-        1721,
-        1711
+      "cold": 1764,
+      "warm": 1753,
+      "coldSamples": [
+        1764,
+        1743,
+        1772
       ],
-      "totalBytes": 8938179,
-      "jsBytes": 4816646,
+      "warmSamples": [
+        1760,
+        1738,
+        1753
+      ],
+      "totalBytes": 8906579,
+      "jsBytes": 4813616,
       "totalSize": "8.5 MB",
       "jsSize": "4.6 MB",
       "fileCount": 416,
@@ -108,16 +132,22 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 2159,
-      "samples": [
-        2176,
-        2157,
-        2159
+      "cold": 2225,
+      "warm": 2252,
+      "coldSamples": [
+        2225,
+        2250,
+        2214
       ],
-      "totalBytes": 7163394,
-      "jsBytes": 331164,
+      "warmSamples": [
+        2253,
+        2252,
+        2232
+      ],
+      "totalBytes": 7125924,
+      "jsBytes": 330794,
       "totalSize": "6.8 MB",
-      "jsSize": "323.4 KB",
+      "jsSize": "323.0 KB",
       "fileCount": 285,
       "originDiff": "0.405%"
     },
@@ -131,16 +161,22 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 3092,
-      "samples": [
-        3118,
-        3092,
-        3064
+      "cold": 3137,
+      "warm": 3173,
+      "coldSamples": [
+        3137,
+        3142,
+        3135
       ],
-      "totalBytes": 6765981,
-      "jsBytes": 540824,
-      "totalSize": "6.5 MB",
-      "jsSize": "528.1 KB",
+      "warmSamples": [
+        3183,
+        3145,
+        3173
+      ],
+      "totalBytes": 6729541,
+      "jsBytes": 540274,
+      "totalSize": "6.4 MB",
+      "jsSize": "527.6 KB",
       "fileCount": 303,
       "originDiff": "0.403%"
     },
@@ -154,15 +190,21 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 3458,
-      "samples": [
-        3463,
-        3413,
-        3458
+      "cold": 3601,
+      "warm": 3639,
+      "coldSamples": [
+        3610,
+        3601,
+        3581
       ],
-      "totalBytes": 15136889,
-      "jsBytes": 652225,
-      "totalSize": "14.4 MB",
+      "warmSamples": [
+        3682,
+        3639,
+        3636
+      ],
+      "totalBytes": 14914609,
+      "jsBytes": 652165,
+      "totalSize": "14.2 MB",
       "jsSize": "636.9 KB",
       "fileCount": 1374,
       "originDiff": "0.401%"
@@ -177,14 +219,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 4179,
-      "samples": [
-        4592,
-        4158,
-        4179
+      "cold": 4865,
+      "warm": 2546,
+      "coldSamples": [
+        4865,
+        5114,
+        4175
       ],
-      "totalBytes": 4967361,
-      "jsBytes": 102301,
+      "warmSamples": [
+        2580,
+        2452,
+        2546
+      ],
+      "totalBytes": 4915622,
+      "jsBytes": 102261,
       "totalSize": "4.7 MB",
       "jsSize": "99.9 KB",
       "fileCount": 152,
@@ -200,14 +248,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 5056,
-      "samples": [
-        5106,
-        4973,
-        5056
+      "cold": 5152,
+      "warm": 1774,
+      "coldSamples": [
+        5243,
+        5152,
+        5132
       ],
-      "totalBytes": 5266650,
-      "jsBytes": 2355793,
+      "warmSamples": [
+        1774,
+        1778,
+        1717
+      ],
+      "totalBytes": 5237662,
+      "jsBytes": 2350215,
       "totalSize": "5.0 MB",
       "jsSize": "2.2 MB",
       "fileCount": 284,
@@ -223,16 +277,22 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 5658,
-      "samples": [
-        5677,
-        5628,
-        5658
+      "cold": 5828,
+      "warm": 5826,
+      "coldSamples": [
+        5828,
+        5831,
+        5805
       ],
-      "totalBytes": 6836004,
-      "jsBytes": 341450,
+      "warmSamples": [
+        5826,
+        5863,
+        5810
+      ],
+      "totalBytes": 6805474,
+      "jsBytes": 341270,
       "totalSize": "6.5 MB",
-      "jsSize": "333.4 KB",
+      "jsSize": "333.3 KB",
       "fileCount": 146,
       "originDiff": "0.399%"
     }

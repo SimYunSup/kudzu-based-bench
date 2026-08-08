@@ -9,11 +9,13 @@
  *
  * Two numbers per size:
  *
- *   clean      full rebuild from an empty output directory
- *   incremental  one product's price changed, everything else identical
+ *   cold  output and every framework build cache deleted — a CI runner
+ *         that missed its cache key
+ *   warm  output deleted, caches kept — a CI cache hit, or your second
+ *         local build. The gap between them is what the cache buys.
  *
- * The incremental number is the one that matters operationally, and it is the
- * one every "N pages in M seconds" headline omits.
+ * Neither is "incremental": no deploy pipeline ships on top of a previous
+ * build, so the output always starts empty. Only the cache state varies.
  *
  * Usage:
  *   node scripts/shop-scale.mjs                              # all variants, 100/1000
@@ -21,7 +23,7 @@
  *   node scripts/shop-scale.mjs --variants shop-kudzu,shop-next-app --runs 3
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { OUTPUT_DIRS, cleanBuildArtifacts } from "./lib/build-cache.mjs";
@@ -96,33 +98,40 @@ function sweep(variant, options) {
   const rows = [];
 
   for (const size of options.sizes) {
-    // Warm-up, discarded: the first build of a size pays for module resolution
-    // and dependency graph work that later builds read from disk cache.
+    // Warm-up, discarded: the first build of a size pays for module
+    // resolution and dependency graph work no later build repeats.
     clean(appDir);
     timeBuild(appDir, size);
 
-    const cleanRuns = [];
+    // cold: output and framework caches both gone (CI cache miss).
+    const coldRuns = [];
     for (let run = 0; run < options.runs; run++) {
       clean(appDir);
-      cleanRuns.push(timeBuild(appDir, size));
+      coldRuns.push(timeBuild(appDir, size));
     }
 
-    // Incremental: no clean, same inputs. This is the nightly price batch —
-    // whatever the toolchain can reuse, it gets to reuse.
-    const incrementalRuns = [];
-    for (let run = 0; run < options.runs; run++) incrementalRuns.push(timeBuild(appDir, size));
+    // warm: output gone, caches kept (CI cache hit, or a second local build).
+    // The output always starts empty because no deploy ships on top of a
+    // previous build's leftovers; the only thing that varies is the cache.
+    const warmRuns = [];
+    for (let run = 0; run < options.runs; run++) {
+      for (const name of OUTPUT_DIRS) rmSync(path.join(appDir, name), { recursive: true, force: true });
+      warmRuns.push(timeBuild(appDir, size));
+    }
 
     const dir = outputDir(appDir);
     const output = dir ? measureOutput(dir) : { bytes: 0, files: 0 };
     rows.push({
       size,
-      cleanMs: +median(cleanRuns).toFixed(0),
-      incrementalMs: +median(incrementalRuns).toFixed(0),
-      msPerPage: +(median(cleanRuns) / size).toFixed(2),
+      coldMs: +median(coldRuns).toFixed(0),
+      warmMs: +median(warmRuns).toFixed(0),
+      coldSamples: coldRuns.map(value => Math.round(value)),
+      warmSamples: warmRuns.map(value => Math.round(value)),
+      msPerPage: +(median(coldRuns) / size).toFixed(2),
       outputMB: +(output.bytes / 1048576).toFixed(2),
       files: output.files
     });
-    console.log(`  ${variant} @${size}: clean ${rows.at(-1).cleanMs} ms, incremental ${rows.at(-1).incrementalMs} ms, ${rows.at(-1).outputMB} MB`);
+    console.log(`  ${variant} @${size}: cold ${rows.at(-1).coldMs} ms, warm ${rows.at(-1).warmMs} ms, ${rows.at(-1).outputMB} MB`);
   }
 
   return rows;
@@ -146,14 +155,14 @@ function main() {
   const file = path.join(repoRoot, options.out, "shop-scale.json");
   writeFileSync(file, `${JSON.stringify(report, null, 2)}\n`);
 
-  console.log("\ncatalog scaling (clean / incremental, median)\n");
+  console.log("\ncatalog scaling (cold / warm, median)\n");
   const header = options.sizes.map(size => `${size}p`.padStart(22)).join("");
   console.log("variant".padEnd(20) + header);
   for (const [variant, rows] of Object.entries(report.variants)) {
     const cells = options.sizes
       .map(size => {
         const row = rows.find(entry => entry.size === size);
-        return row ? `${row.cleanMs} / ${row.incrementalMs} ms`.padStart(22) : "—".padStart(22);
+        return row ? `${row.coldMs} / ${row.warmMs} ms`.padStart(22) : "—".padStart(22);
       })
       .join("");
     console.log(variant.padEnd(20) + cells);

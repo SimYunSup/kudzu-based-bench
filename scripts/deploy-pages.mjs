@@ -67,6 +67,14 @@ if (!skipBuild) {
   run("pnpm", ["run", "build:all"], {
     env: { NOTION_CONTENT_CACHE: path.join(repoRoot, "notion-cache", "news-entries.json") },
   });
+  // The commerce fixture is deployed alongside the newsletter variants. It
+  // takes no Notion input — its catalog is generated deterministically — so
+  // it builds after, independent of the prefetch above.
+  run("pnpm", ["run", "build:shop"]);
+  // Refresh the landing page's commerce table from whatever measurements are
+  // already in bench/. Missing ones are skipped rather than fatal, so a
+  // deploy never depends on having just run the browser benchmarks.
+  run("pnpm", ["run", "shop:report"], { allowFail: true });
 }
 
 assembleSite(repoRoot, siteDir, { toolName: "deploy-pages" });

@@ -96,14 +96,16 @@ export const MIME_TYPES = {
 };
 
 /**
- * Rebuild site/ from the ten variant build outputs (including the
+ * Rebuild site/ from every variant's build output (including the
  * react-router two-step merge + cleanup) via node:fs. This is the single
  * source of truth for the Pages artifact layout — scripts/deploy-pages.mjs
  * publishes exactly what this assembles.
  *
  * @param {string} repoRoot absolute path to the monorepo root
  * @param {string} siteDir absolute path to assemble the Pages artifact into
- * @param {{ toolName?: string }} [opts] error-message prefix (defaults to "site-server")
+ * @param {{ toolName?: string, shop?: boolean }} [opts] error-message prefix
+ *   (defaults to "site-server") and whether to include the commerce fixture
+ *   (defaults to true, skipped when those apps have not been built)
  */
 export function assembleSite(repoRoot, siteDir, opts = {}) {
   const toolName = opts.toolName ?? "site-server";
@@ -120,6 +122,29 @@ export function assembleSite(repoRoot, siteDir, opts = {}) {
     "next-app": path.join(repoRoot, "apps/next-app/out"),
     "next-pages": path.join(repoRoot, "apps/next-pages/out"),
   };
+
+  // Commerce fixture. Optional rather than required: it is a separate
+  // benchmark with its own build command, and `pnpm run build:all` (which
+  // only covers the newsletter variants) must keep working on its own.
+  const shopSources = {
+    "shop-kudzu": path.join(repoRoot, "apps/shop-kudzu/dist"),
+    "shop-astro": path.join(repoRoot, "apps/shop-astro/dist"),
+    "shop-tanstack": path.join(repoRoot, "apps/shop-tanstack/dist"),
+    "shop-next-app": path.join(repoRoot, "apps/shop-next-app/out"),
+  };
+  // shop-react-router already hoists its own output flat (see that app's
+  // scripts/flatten-build.mjs), so unlike the newsletter react-router it
+  // needs no merge here.
+  const shopReactRouter = path.join(repoRoot, "apps/shop-react-router/build/client");
+  const includeShop = opts.shop !== false
+    && Object.values(shopSources).every(existsSync)
+    && existsSync(shopReactRouter);
+  if (includeShop) {
+    Object.assign(distSources, shopSources, { "shop-react-router": shopReactRouter });
+  } else if (opts.shop) {
+    console.error(`${toolName}: commerce variants requested but not built. Run \`pnpm run build:shop\` first.`);
+    process.exit(1);
+  }
   const reactRouterClient = path.join(repoRoot, "apps/react-router/build/client");
   const landingDir = path.join(repoRoot, "landing");
 

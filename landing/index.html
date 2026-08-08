@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Ones To Watch for FrontEnd — Framework Variants</title>
+  <title>kudzu-based-bench — 같은 사이트, 15가지 빌드</title>
   <meta name="description" content="같은 뉴스레터 사이트를 열 가지 프레임워크로 각각 빌드한 리팩토링 실험장입니다." />
   <link rel="icon" href="/kudzu-based-bench/astro/favicon.svg" type="image/svg+xml" />
   <style>
@@ -203,11 +203,12 @@
 </head>
 <body>
   <main>
-    <p class="mono-eyebrow">// one newsletter, ten frameworks</p>
-    <h1>Ones To Watch<br />for FrontEnd</h1>
+    <p class="mono-eyebrow">// same site, fifteen builds</p>
+    <h1>kudzu-based<br />bench</h1>
     <p class="sub">
-      같은 Notion 기반 뉴스레터 사이트를 열 가지 프레임워크로 각각 정적 빌드한
-      리팩토링 실험장입니다. 아래에서 변형을 골라 들어가세요.
+      같은 사이트를 여러 프레임워크로 정적 빌드해 무엇이 실제로 달라지는지 재는
+      곳입니다. 뉴스레터 픽스처 열 가지는 아래에서 골라 들어가고, 상호작용을 재는
+      커머스 픽스처 다섯 가지는 페이지 아래 표에 있습니다.
     </p>
     <ul class="variants">
       <li>
@@ -273,12 +274,14 @@
     </ul>
     <section class="bench" aria-labelledby="bench-title">
       <div class="bench-head">
-        <h2 class="bench-title" id="bench-title">빌드 벤치마크</h2>
+        <h2 class="bench-title" id="bench-title">뉴스레터 빌드 벤치마크</h2>
         <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#readme">전체 표 →</a>
       </div>
       <p class="bench-note">
-        같은 콘텐츠를 열 가지 프레임워크로 정적 빌드했을 때의 클린 빌드 시간과
-        출력 크기입니다. 빌드 시간 오름차순 정렬. 총 출력 크기·파일 수는
+        같은 콘텐츠를 열 가지 프레임워크로 정적 빌드한 결과입니다.
+        <strong>cold</strong>는 프레임워크 빌드 캐시까지 지운 상태(CI 캐시 미스),
+        <strong>warm</strong>은 캐시를 남긴 상태(CI 캐시 히트) — 둘의 차이가 그
+        도구의 캐시가 실제로 벌어주는 시간입니다. cold 오름차순. 총 크기·파일 수는
         이미지 자산을 제외합니다(변형별 이미지 처리 방식이 달라 공정 비교를 위함).
       </p>
       <div class="bench-scroll">
@@ -288,7 +291,8 @@
               <th scope="col">변형</th>
               <th scope="col">기반</th>
               <th scope="col">특징</th>
-              <th scope="col" class="col-num">빌드(ms)</th>
+              <th scope="col" class="col-num">cold(ms)</th>
+              <th scope="col" class="col-num">warm(ms)</th>
               <th scope="col" class="col-num">총 크기</th>
               <th scope="col" class="col-num">JS 크기</th>
               <th scope="col" class="col-num">파일 수</th>
@@ -296,11 +300,43 @@
             </tr>
           </thead>
           <tbody id="bench-body">
-            <tr><td class="bench-empty" colspan="8">벤치마크 데이터를 불러오는 중…</td></tr>
+            <tr><td class="bench-empty" colspan="9">벤치마크 데이터를 불러오는 중…</td></tr>
           </tbody>
         </table>
       </div>
       <p class="bench-foot" id="bench-foot"></p>
+    </section>
+    <section class="bench" aria-labelledby="shop-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="shop-title">커머스 벤치마크</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#커머스-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        같은 상점(홈·검색·상품·결제)을 다섯 프레임워크로 빌드하고 실제 세션을
+        재생해 측정합니다. Cold/Warm LCP 대신 <strong>내용이 보이기까지</strong>와
+        <strong>실제로 눌리기까지</strong>를 나눠 잽니다. 첫 신뢰 클릭은 첫 페인트
+        이후 담기 버튼이 100% 동작하기 시작하는 시점 — 그 전에 누른 건 유실됩니다.
+        4x CPU · Slow 4G, 5세션 중앙값.
+      </p>
+      <div class="bench-scroll">
+        <table class="bench-table">
+          <thead>
+            <tr>
+              <th scope="col">변형</th>
+              <th scope="col">기반</th>
+              <th scope="col" class="col-num">내용 표시</th>
+              <th scope="col" class="col-num">조작 가능</th>
+              <th scope="col" class="col-num">첫 신뢰 클릭</th>
+              <th scope="col" class="col-num">홈 JS</th>
+              <th scope="col" class="col-num">열화 내성</th>
+            </tr>
+          </thead>
+          <tbody id="shop-body">
+            <tr><td class="bench-empty" colspan="7">커머스 데이터를 불러오는 중…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-foot" id="shop-foot"></p>
     </section>
     <footer>
       <a href="https://github.com/SimYunSup/kudzu-based-bench">GitHub 저장소</a>
@@ -337,7 +373,8 @@
           kindSpan.textContent = row.kind && row.kind.ko ? row.kind.ko : "";
           kindTd.appendChild(kindSpan);
           tr.appendChild(kindTd);
-          tr.appendChild(cell(row.ok && row.ms != null ? String(row.ms) : "-", "col-num"));
+          tr.appendChild(cell(row.ok && row.cold != null ? String(row.cold) : "-", "col-num"));
+          tr.appendChild(cell(row.ok && row.warm != null ? String(row.warm) : "-", "col-num"));
           tr.appendChild(cell(row.ok ? (row.totalSize ?? "-") : "❌", "col-num"));
           tr.appendChild(cell(row.ok ? (row.jsSize ?? "-") : "❌", "col-num"));
           tr.appendChild(cell(row.ok && row.fileCount != null ? String(row.fileCount) : "-", "col-num"));
@@ -352,7 +389,67 @@
         body.replaceChildren();
         const tr = document.createElement("tr");
         tr.appendChild(cell("벤치마크 데이터를 불러오지 못했습니다. README의 표를 참고하세요.", "bench-empty"));
-        tr.firstChild.colSpan = 8;
+        tr.firstChild.colSpan = 9;
+        body.appendChild(tr);
+        foot.textContent = "";
+      }
+    })();
+
+    // Commerce table from landing/commerce.json, joined by
+    // `pnpm run shop:report` out of the three bench/ outputs.
+    (async () => {
+      const body = document.getElementById("shop-body");
+      const foot = document.getElementById("shop-foot");
+      const cell = (text, cls) => {
+        const td = document.createElement("td");
+        if (cls) td.className = cls;
+        td.textContent = text;
+        return td;
+      };
+      const ms = (value) => (value == null ? "-" : `${Math.round(value)} ms`);
+      try {
+        const res = await fetch("./commerce.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        body.replaceChildren();
+        for (const row of data.rows) {
+          const tr = document.createElement("tr");
+          const nameTd = document.createElement("td");
+          nameTd.className = "col-name";
+          // Every commerce variant is deployed as a sibling of this page, so
+          // the name doubles as the way in. Relative, because the deploy base
+          // is a repo-name prefix this file should not have to know.
+          const link = document.createElement("a");
+          link.href = "." + row.path;
+          link.textContent = row.label;
+          nameTd.appendChild(link);
+          tr.appendChild(nameTd);
+          tr.appendChild(cell(row.based));
+          tr.appendChild(cell(ms(row.entryContentReadyMs), "col-num"));
+          tr.appendChild(cell(ms(row.listingActReadyMs), "col-num"));
+          tr.appendChild(cell(
+            row.firstReliableClickMs == null ? "5s 내 없음" : `+${row.firstReliableClickMs} ms`,
+            "col-num"
+          ));
+          tr.appendChild(cell(
+            row.homeJsGzip == null ? "-" : `${(row.homeJsGzip / 1024).toFixed(1)} KB`,
+            "col-num"
+          ));
+          tr.appendChild(cell(
+            row.resilienceTotal == null ? "-" : `${row.resilienceTotal}/${row.resilienceMax}`,
+            "col-num"
+          ));
+          body.appendChild(tr);
+        }
+        foot.textContent =
+          "내용 표시 = 상품명·가격이 DOM에 나타나기까지. 조작 가능 = 목록 페이지의 첫 조작이 실제로 먹히기까지. " +
+          "홈 JS = 브라우저가 실제로 받은 초기 JavaScript(gzip). 열화 내성 = JS 차단·2초 지연·스크립트 1개 유실 세 조건에서 살아남는 기능 수. " +
+          (data.measuredAt ? "측정 시각: " + data.measuredAt : "");
+      } catch {
+        body.replaceChildren();
+        const tr = document.createElement("tr");
+        tr.appendChild(cell("커머스 데이터를 불러오지 못했습니다. README를 참고하세요.", "bench-empty"));
+        tr.firstChild.colSpan = 7;
         body.appendChild(tr);
         foot.textContent = "";
       }

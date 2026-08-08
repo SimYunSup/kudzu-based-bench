@@ -272,52 +272,71 @@ async function main() {
   for (const variant of variants) {
     if (skipBuild) {
       const stats = collectDirStats(variant.outDir);
-      rows.push({ variant, ok: true, ms: null, samples: [], stats });
+      rows.push({ variant, ok: true, cold: null, warm: null, coldSamples: [], warmSamples: [], stats });
       continue;
     }
 
-    // One discarded warm-up, then `runs` measured clean builds.
+    // Two states a real build actually happens in:
     //
-    // A single timing is not a measurement here. Back-to-back runs of this
-    // very script moved Astro between 6,483 ms and 3,197 ms and Docusaurus
-    // between 6,957 ms and 2,311 ms, purely on cold vs warm module and
-    // dependency caches — enough to reorder most of the table. The warm-up
-    // pays that cost once so the samples compare like with like.
-    console.log(`build-stats: building ${variant.pkg} (warm-up + ${runs} measured)`);
+    //   cold  no caches at all — a CI runner that missed its cache key, or
+    //         the first build after a dependency bump.
+    //   warm  output gone, caches intact — a CI cache hit, or your second
+    //         `pnpm build` locally.
+    //
+    // Publishing only one of them hides the interesting number, which is the
+    // gap: how much a framework's cache actually buys. Both are clean in the
+    // sense that matters — the output directory always starts empty, because
+    // no deploy pipeline ships on top of a previous build's leftovers.
+    //
+    // Cold runs come first so the last of them leaves the caches populated,
+    // which is exactly the state the warm runs need.
+    console.log(`build-stats: building ${variant.pkg} (warm-up + ${runs} cold + ${runs} warm)`);
     cleanVariant(variant);
     if (!runBuild(variant.pkg)) {
       anyFailure = true;
-      rows.push({ variant, ok: false, ms: null, samples: [], stats: null });
+      rows.push({ variant, ok: false, cold: null, warm: null, coldSamples: [], warmSamples: [], stats: null });
       continue;
     }
 
-    const samples = [];
-    let failed = false;
-    for (let run = 0; run < runs; run++) {
-      cleanVariant(variant);
-      const start = process.hrtime.bigint();
-      const ok = runBuild(variant.pkg);
-      samples.push(Number(process.hrtime.bigint() - start) / 1e6);
-      if (!ok) {
-        failed = true;
-        break;
+    const measure = (prepare) => {
+      const samples = [];
+      for (let run = 0; run < runs; run++) {
+        prepare();
+        const start = process.hrtime.bigint();
+        const ok = runBuild(variant.pkg);
+        samples.push(Number(process.hrtime.bigint() - start) / 1e6);
+        if (!ok) return null;
       }
-    }
+      return samples;
+    };
 
-    if (failed) {
+    const coldSamples = measure(() => cleanVariant(variant));
+    const warmSamples = coldSamples && measure(() => rmSync(variant.outDir, { recursive: true, force: true }));
+
+    if (!coldSamples || !warmSamples) {
       anyFailure = true;
-      rows.push({ variant, ok: false, ms: null, samples, stats: null });
+      rows.push({ variant, ok: false, cold: null, warm: null, coldSamples: coldSamples ?? [], warmSamples: [], stats: null });
       continue;
     }
-    rows.push({ variant, ok: true, ms: median(samples), samples, stats: collectDirStats(variant.outDir) });
+    rows.push({
+      variant,
+      ok: true,
+      cold: median(coldSamples),
+      warm: median(warmSamples),
+      coldSamples,
+      warmSamples,
+      stats: collectDirStats(variant.outDir)
+    });
   }
 
   const originDiff = loadOriginDiff();
-  // Sort by build time ascending (fastest first); un-measured (--skip-build,
-  // ms=null) and failed builds sink to the bottom.
+  // Sort by cold build ascending (fastest first). Cold is the ranking key
+  // because it is the number a fresh CI runner pays and the one a framework
+  // cannot hide behind its own cache; un-measured (--skip-build) and failed
+  // builds sink to the bottom.
   const sortedRows = [...rows].sort((a, b) => {
-    const sa = a.ms == null || !a.ok ? Infinity : a.ms;
-    const sb = b.ms == null || !b.ok ? Infinity : b.ms;
+    const sa = a.cold == null || !a.ok ? Infinity : a.cold;
+    const sb = b.cold == null || !b.ok ? Infinity : b.cold;
     return sa - sb;
   });
   const measuredAt = new Date().toISOString();
@@ -334,31 +353,31 @@ async function main() {
   // language, then inject it between the markers in that language's README.
   const L = {
     ko: {
-      header: "| 변형 | 기반 | 특징 | 빌드 시간(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
+      header: "| 변형 | 기반 | 특징 | cold(ms) | warm(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
       kind: (v) => v.kind.ko,
-      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신). 빌드 시간은 변형마다 워밍업 1회를 버리고 클린 빌드 ${runs}회를 잰 **중앙값**이며, 콘텐츠 양·머신에 따라 변동합니다. 회차별 원본값은 \`landing/benchmark.json\`의 \`samples\`에 있습니다. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
+      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 ${runs}회를 잰 중앙값이며, 회차별 원본값은 \`landing/benchmark.json\`의 \`coldSamples\`·\`warmSamples\`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
     },
     en: {
-      header: "| Variant | Based | Type | Build (ms) | Total size | JS size | Files | Origin diff |",
+      header: "| Variant | Based | Type | Cold (ms) | Warm (ms) | Total size | JS size | Files | Origin diff |",
       kind: (v) => v.kind.en,
-      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh). Build time is the **median** of ${runs} clean builds per variant after one discarded warm-up, and still varies with content volume and machine. Per-run values are in \`samples\` in \`landing/benchmark.json\`. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
+      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of ${runs} runs after one discarded warm-up; per-run values are in \`coldSamples\`/\`warmSamples\` in \`landing/benchmark.json\`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
     },
   };
-  const divider = "| --- | --- | --- | --- | --- | --- | --- | --- |";
+  const divider = "| --- | --- | --- | --- | --- | --- | --- | --- | --- |";
 
   function renderTable(lang) {
     const t = L[lang];
-    const tableRows = sortedRows.map(({ variant, ok, ms, stats }) => {
+    const tableRows = sortedRows.map(({ variant, ok, cold, warm, stats }) => {
       const version = versionOf(variant.appDir, variant.versionDep);
       const name = version ? `${variant.label} ${version}` : variant.label;
       const based = variant.based;
       const kind = t.kind(variant);
-      const time = ms === null ? "-" : String(Math.round(ms));
+      const time = (value) => (value === null ? "-" : String(Math.round(value)));
       const diff = originDiff[variant.diffLabel ?? variant.label] ?? "-";
       if (!ok) {
-        return `| ${name} | ${based} | ${kind} | ${time} | ❌ | ❌ | ❌ | ${diff} |`;
+        return `| ${name} | ${based} | ${kind} | ${time(cold)} | ${time(warm)} | ❌ | ❌ | ❌ | ${diff} |`;
       }
-      return `| ${name} | ${based} | ${kind} | ${time} | ${formatBytes(stats.totalBytes)} | ${formatBytes(stats.jsBytes)} | ${stats.fileCount} | ${diff} |`;
+      return `| ${name} | ${based} | ${kind} | ${time(cold)} | ${time(warm)} | ${formatBytes(stats.totalBytes)} | ${formatBytes(stats.jsBytes)} | ${stats.fileCount} | ${diff} |`;
     });
     return [t.header, divider, ...tableRows, "", t.footnote].join("\n");
   }
@@ -396,10 +415,7 @@ async function main() {
     measuredAt,
     runs,
     machine: { ko: specKo, en: specEn },
-    // `ms`, not `seconds`: this emitter predates the second->millisecond
-    // conversion and destructuring the old name yielded undefined, which
-    // crashed the run after all ten builds had already been paid for.
-    rows: sortedRows.map(({ variant, ok, ms, samples, stats }) => {
+    rows: sortedRows.map(({ variant, ok, cold, warm, coldSamples, warmSamples, stats }) => {
       const version = versionOf(variant.appDir, variant.versionDep);
       return {
         label: variant.label,
@@ -408,10 +424,12 @@ async function main() {
         based: variant.based,
         kind: variant.kind,
         ok,
-        ms: ms === null ? null : Math.round(ms),
+        cold: cold === null ? null : Math.round(cold),
+        warm: warm === null ? null : Math.round(warm),
         // Raw per-run timings, so a suspicious median can be checked against
         // its spread instead of taken on faith.
-        samples: samples.map((value) => Math.round(value)),
+        coldSamples: coldSamples.map((value) => Math.round(value)),
+        warmSamples: warmSamples.map((value) => Math.round(value)),
         totalBytes: ok ? stats.totalBytes : null,
         jsBytes: ok ? stats.jsBytes : null,
         totalSize: ok ? formatBytes(stats.totalBytes) : null,

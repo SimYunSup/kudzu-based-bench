@@ -57,20 +57,20 @@ Run `pnpm run build:stats` locally to refresh the table below (scripts/build-sta
 Type — **SSG-focused**: a tool whose reason for existing is static-site output. **SSG-capable**: a general-purpose app framework that also supports static export.
 
 <!-- build-stats:start -->
-| Variant | Based | Type | Build (ms) | Total size | JS size | Files | Origin diff |
-| --- | --- | --- | --- | --- | --- | --- | --- |
-| Hugo 0.161.0 | Go (templates) | SSG-focused | 689 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 698 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG-focused | 821 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG-focused | 1721 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG-capable | 2159 | 6.8 MB | 323.4 KB | 285 | 0.405% |
-| Next.js Pages Router 16.2.11 | React | SSG-capable | 3092 | 6.5 MB | 528.1 KB | 303 | 0.403% |
-| Next.js App Router 16.2.11 | React | SSG-capable | 3458 | 14.4 MB | 636.9 KB | 1374 | 0.401% |
-| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 4179 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Docusaurus 3.10.2 | React | SSG-focused | 5056 | 5.0 MB | 2.2 MB | 284 | 0.403% |
-| TanStack Start 1.168.32 | React | SSG-capable | 5658 | 6.5 MB | 333.4 KB | 146 | 0.399% |
+| Variant | Based | Type | Cold (ms) | Warm (ms) | Total size | JS size | Files | Origin diff |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 708 | 706 | 2.6 MB | 15.0 KB | 142 | 0.400% |
+| Hugo 0.161.0 | Go (templates) | SSG-focused | 708 | 702 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG-focused | 841 | 843 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG-focused | 1764 | 1753 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| React Router 8.3.0 | React | SSG-capable | 2225 | 2252 | 6.8 MB | 323.0 KB | 285 | 0.405% |
+| Next.js Pages Router 16.2.11 | React | SSG-capable | 3137 | 3173 | 6.4 MB | 527.6 KB | 303 | 0.403% |
+| Next.js App Router 16.2.11 | React | SSG-capable | 3601 | 3639 | 14.2 MB | 636.9 KB | 1374 | 0.401% |
+| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 4865 | 2546 | 4.7 MB | 99.9 KB | 152 | 0.320% |
+| Docusaurus 3.10.2 | React | SSG-focused | 5152 | 1774 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| TanStack Start 1.168.32 | React | SSG-capable | 5828 | 5826 | 6.5 MB | 333.3 KB | 146 | 0.399% |
 
-_Measured locally via `pnpm run build:stats` (manual refresh). Build time is the **median** of 3 clean builds per variant after one discarded warm-up, and still varies with content volume and machine. Per-run values are in `samples` in `landing/benchmark.json`. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-08T02:22:07.272Z_
+_Measured locally via `pnpm run build:stats` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of 3 runs after one discarded warm-up; per-run values are in `coldSamples`/`warmSamples` in `landing/benchmark.json`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-08T05:52:12.716Z_
 <!-- build-stats:end -->
 
 ## Commerce Benchmark
@@ -139,19 +139,19 @@ How many of six capabilities (read info · browse category · open detail · fil
 
 With JS fully off all five keep exactly read, browse, and open-detail — static documents plus native anchors. They diverge when scripts are merely late or one chunk is missing.
 
-### Catalog scaling (clean / incremental, median)
+### Catalog scaling (cold / warm, median)
 
-Incremental means one product's price changed and nothing else. That is the real cost of a nightly inventory batch, and the number every "N pages in M seconds" headline omits. Median of three runs after one discarded warm-up, and "clean" deletes the framework build caches as well as the output directory.
+**Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit). Neither is "incremental": no deploy ships on top of a previous build, so the output always starts empty and only the cache state varies. Median of three runs after one discarded warm-up.
 
 | Variant | 100 | 1,000 | Per page (1,000) |
 | --- | ---: | ---: | ---: |
-| Astro | 1,396 / 1,378 ms | **1,822 / 1,908 ms** | 1.82 ms |
-| TanStack | 2,162 / 2,156 ms | 3,043 / 3,124 ms | 3.04 ms |
-| React Router | 1,851 / 1,875 ms | 3,193 / 3,195 ms | 3.19 ms |
-| Next.js | 3,587 / 3,761 ms | 4,632 / 5,638 ms | 4.63 ms |
-| Kudzu | **1,526 / 1,529 ms** | 5,829 / 6,034 ms | 5.83 ms |
+| Astro | 1,406 / 1,375 ms | **1,815 / 1,785 ms** | 1.82 ms |
+| TanStack | 2,153 / 2,136 ms | 3,038 / 3,031 ms | 3.04 ms |
+| React Router | 1,873 / 1,863 ms | 3,200 / 3,104 ms | 3.20 ms |
+| Next.js | 3,536 / 3,628 ms | 4,668 / 5,159 ms | 4.67 ms |
+| Kudzu | **1,536 / 1,514 ms** | 5,848 / 5,866 ms | 5.85 ms |
 
-**Kudzu loses here** — second only to Astro at 100 products, last at 1,000, and the steepest curve of the five at 3.8x against Astro's 1.3x. It emits a separate effect module and native handler module per product, so build cost is driven by per-route capability ESM emission rather than by page rendering. No variant supports incremental builds: clean and incremental are the same everywhere.
+**Kudzu loses here** — second only to Astro at 100 products, last at 1,000, and the steepest curve of the five at 3.8x against Astro's 1.3x. It emits a separate effect module and native handler module per product, so build cost is driven by per-route capability ESM emission rather than by page rendering. In the commerce fixture all five score the same cold and warm. The only caches that do real work are Docusaurus (66% faster warm) and Astro (48%) in the newsletter fixture, and only because those have image and content pipelines to cache.
 
 _Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Raw JSON lands in `bench/` (git-ignored)._
 

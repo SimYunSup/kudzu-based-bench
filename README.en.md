@@ -1,40 +1,56 @@
-![thumbnail](./apps/web/public/images/thumbnail.png)
-
-# Ones To Watch For FrontEnd (KR) — Monorepo
+# kudzu-based-bench
 
 **English** · [한국어](./README.md)
 
-**Ones to Watch for FE** is a site that curates noteworthy blogs. It started as a personal record of interest and highlights posts that can be insightful for frontend developers.
+A pnpm workspace monorepo that builds the same site with many frameworks to measure **what actually differs**.
 
-This repo is a pnpm workspace monorepo that statically builds the same Notion-backed newsletter site with **ten different frameworks** and deploys them all to one GitHub Pages site.
+Two fixtures:
+
+- **Newsletter** — the Notion content behind [Ones to Watch for FE](https://ones-to-watch.ethansup.net), built ten ways. Content-heavy, so it measures build cost and output size.
+- **Commerce** — a Next.js Commerce-sized storefront, built five ways. Rendering architecture only shows up once there is interaction to measure.
+
+The name is kudzu because [kudzu](https://github.com/kudzujs/kudzu) is where this started, not because the repo is built with it. All fifteen variants are measured, and the axes kudzu loses are published unchanged.
+
+One opinion about method: **synthetic operations are not measured** — no 1,000-row reverse, no ops/sec. They have no real-world counterpart, and in 2026 every framework is already fast enough on that axis. Sessions are replayed instead, and only what a user can observe counts as a result.
 
 ## Structure
 
-- `landing/` — variant-picker landing page deployed at the site root (`https://simyunsup.github.io/kudzu-based-bench/`).
-- `apps/web` — static Astro site. Deployed at `/astro/`.
-- `apps/react-router` — React Router v8 (framework mode, prerender) port. `/react-router/`.
-- `apps/tanstack-router` — TanStack Start (static prerender) port. `/tanstack/`.
-- `apps/kudzu` — [kudzu](https://github.com/kudzujs/kudzu) port. `/kudzu/`.
-- `apps/hugo` — Hugo (Go binary, hugo-bin) port. `/hugo/`.
-- `apps/vitepress` — VitePress custom-theme port. `/vitepress/`.
-- `apps/docusaurus` — Docusaurus custom-plugin port. `/docusaurus/`.
-- `apps/eleventy` — Eleventy (11ty) v3 port. `/eleventy/`.
-- `apps/next-app` — Next.js App Router (output:export) port. `/next-app/`.
-- `apps/next-pages` — Next.js Pages Router (output:export) port. `/next-pages/`.
-- `apps/crawler` — Cloudflare Queue worker for newsletter thumbnail/bookmark crawling.
-- `packages/notion-loader` — loader package that pulls Notion into Astro's Content Layer (`@otw/notion-loader`).
-- `packages/notion-content` — framework-neutral Notion content fetcher (`@otw/notion-content`), used at build time by every variant except astro.
+`landing/` — variant-picker landing page deployed at the site root (`https://simyunsup.github.io/kudzu-based-bench/`).
 
-Commerce fixture (separate from the newsletter; this is what measures interaction):
+**Newsletter fixture** — same Notion content, ten builds
 
+| App | Tool | Deploy path |
+| --- | --- | --- |
+| `apps/web` | Astro (islands) | `/astro/` |
+| `apps/react-router` | React Router v8 (framework mode, prerender) | `/react-router/` |
+| `apps/tanstack-router` | TanStack Start (static prerender) | `/tanstack/` |
+| `apps/kudzu` | [kudzu](https://github.com/kudzujs/kudzu) | `/kudzu/` |
+| `apps/hugo` | Hugo (Go binary, hugo-bin) | `/hugo/` |
+| `apps/vitepress` | VitePress custom theme | `/vitepress/` |
+| `apps/docusaurus` | Docusaurus custom plugin | `/docusaurus/` |
+| `apps/eleventy` | Eleventy (11ty) v3 | `/eleventy/` |
+| `apps/next-app` | Next.js App Router (`output: "export"`) | `/next-app/` |
+| `apps/next-pages` | Next.js Pages Router (`output: "export"`) | `/next-pages/` |
+
+**Commerce fixture** — same storefront, five builds. Home · search (filter/sort) · collection · product detail (options, add to cart) · policy · checkout, all under one shared DOM and behaviour contract.
+
+| App | Tool | Deploy path |
+| --- | --- | --- |
+| `apps/shop-kudzu` | Kudzu 0.8.15, native document navigation | `/shop-kudzu/` |
+| `apps/shop-astro` | Astro 7 with three React islands (`client:load`) | `/shop-astro/` |
+| `apps/shop-react-router` | React Router v8, every route prerendered | `/shop-react-router/` |
+| `apps/shop-tanstack` | TanStack Start static prerender | `/shop-tanstack/` |
+| `apps/shop-next-app` | Next.js App Router `output: "export"` | `/shop-next-app/` |
+
+**Shared packages**
+
+- `packages/notion-content` — framework-neutral Notion content fetcher (`@otw/notion-content`), used at build time by every newsletter variant except astro.
+- `packages/notion-loader` — loader that pulls Notion into Astro's Content Layer (`@otw/notion-loader`).
 - `packages/commerce-data` — deterministic catalog generator (`@otw/commerce-data`). The seed is fixed, so a given size always produces the same bytes. `OTW_CATALOG_SIZE` switches between 100/1,000/10,000.
-- `apps/shop-kudzu` — Kudzu 0.8.15, native document navigation.
-- `apps/shop-astro` — Astro 7 with three React islands (`client:load`).
-- `apps/shop-react-router` — React Router v8 framework mode, every route prerendered.
-- `apps/shop-tanstack` — TanStack Start static prerender.
-- `apps/shop-next-app` — Next.js App Router `output: "export"`.
+- `apps/crawler` — Cloudflare Queue worker for newsletter thumbnail/bookmark crawling.
 
-## Build Benchmark
+
+## Newsletter Build Benchmark
 
 Run `pnpm run build:stats` locally to refresh the table below (scripts/build-stats.mjs). CI measurement was removed — shared-runner variance made numbers unreliable and the bot commit polluted branches.
 
@@ -145,12 +161,20 @@ Only defects worth filing upstream — genuine framework bugs or undocumented co
 
 1. **TanStack Start — SPA transition hangs forever on subpath deploys (real bug)**
    `@tanstack/start-static-server-functions` fetches the prerendered server-function cache from the origin root (`/__tsr/staticServerFnCache/...`) as an absolute path. On a `/<repo>/` subpath deploy like GitHub Pages that request 404s, the route stays pending, and the client transition never completes (deep links are fine since they're prerendered HTML → not reproducible in local dev). This repo works around it by vendoring the middleware base-aware (`apps/tanstack-router/src/lib/staticFunctionMiddleware.ts`, prefixing `import.meta.env.BASE_URL`).
+   **Rechecked 2026-08-08: still unfixed.** The latest `1.167.24` (published 2026-08-07) contains no `BASE_URL`, `basepath`, `baseUrl`, or `import.meta.env` anywhere in `dist/`. The workaround is still required.
 2. **Next.js App Router — `output: "export"` build fails when `generateStaticParams()` returns an empty array**
    Pages Router (`getStaticPaths` → `paths: []`, `fallback: false`) accepts an empty collection, but App Router kills the static-export build if a dynamic route yields zero paths. This repo defends against it with a sentinel path (`_none`) + `dynamicParams = false` + `notFound()` when the collection is empty (`apps/next-app/src/app/news/post/[id]/page.tsx`). A case of the same framework's two routers behaving differently in the same situation.
 3. **VitePress — dynamic routes cannot emit directory-style pretty URLs**
    `[page].md` dynamic routes always emit flat `<param>.html` files regardless of `cleanUrls` (no `/news/list/1/index.html` form). Because GitHub Pages serves extensionless requests as `.html`, `cleanUrls: true` matches the URL contract of the other variants, but the trailing-slash behavior differs.
 4. **Docusaurus — a custom plugin's `addRoute` paths must be baseUrl-prefixed**
    `<BrowserRouter>` is mounted without a basename (core `clientEntry.js`), so the client matches the full URL including baseUrl. If a plugin registers unprefixed paths (`/`, `/news/list/1`) via `addRoute`, SSG (which drives StaticRouter directly) is fine, but on hydration nothing matches and it falls back to the catch-all `@theme/NotFound` → React #418. Register with `normalizeUrl([baseUrl, path])` (same transform as core content plugins / `useBaseUrl`).
+
+5. **React Router v8 — `ssr: false` prerender nests one level below the basename**
+   The basename has to be the full deploy path for client routing to match the served URL, but the prerender plugin applies that basename to the output path too, so real pages land at `build/client/<basename>/<route>/index.html`. A generic SPA fallback shell takes the `build/client` root instead, so serving that directory as the document root gives you an empty home page. Worked around with a post-build hoist (`apps/shop-react-router/scripts/flatten-build.mjs`).
+6. **TanStack Start — static output lands in `dist/client`**
+   The default multi-environment build splits into `dist/client` (static) and `dist/server` (an unused server bundle). Uploading `dist` to a static host is off by one directory. Pinned with `environments.client.build.outDir` (`apps/shop-tanstack/vite.config.ts`). As a bonus, the `dist/server` bundle bakes in the build machine's absolute paths.
+7. **Kudzu 0.8.x — six syntax boundaries hit while compiling the storefront**
+   All recorded as comments in `apps/shop-kudzu`. In short: (a) package imports outside a JSX event handler are rejected outright, so build-time data has to be code-generated into a relative module; (b) `.map()` over an imported array is claimed by the keyed-list analysis even outside JSX and then rejected, so reshaping uses a `for` loop; (c) a row component cannot take a whole-object prop, so rows are inlined as intrinsic markup; (d) a selector pipeline (`filter`/`toSorted`) only accepts a literal-emitted relative import as its source — a `const` alias inside the component is validated as a scalar and rejected, and `useState(rows)` hands over a signal, failing at render with `rows.filter is not a function`; (e) `new CustomEvent` is rejected, so one component cannot notify another; (f) `navigation` groups require enumerating every member route, which does not fit a `getStaticPaths` catalog.
 
 ## Verification tools (local only)
 

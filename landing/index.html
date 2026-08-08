@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Ones To Watch for FrontEnd — Framework Variants</title>
   <meta name="description" content="같은 뉴스레터 사이트를 열 가지 프레임워크로 각각 빌드한 리팩토링 실험장입니다." />
-  <link rel="icon" href="/ones-to-watch-refactor-test/astro/favicon.svg" type="image/svg+xml" />
+  <link rel="icon" href="/kudzu-based-bench/astro/favicon.svg" type="image/svg+xml" />
   <style>
     /* Same editorial token system as the variant apps (apps/web global.css). */
     :root {
@@ -211,61 +211,61 @@
     </p>
     <ul class="variants">
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/astro/">
+        <a class="variant" href="/kudzu-based-bench/astro/">
           <span class="name">astro</span>
           <span class="desc">원본 구현 — Content Layer + 정적 빌드, RSS·사이트맵·검색 포함</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/react-router/">
+        <a class="variant" href="/kudzu-based-bench/react-router/">
           <span class="name">react-router</span>
           <span class="desc">React Router v8 framework mode, ssr:false + prerender</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/tanstack/">
+        <a class="variant" href="/kudzu-based-bench/tanstack/">
           <span class="name">tanstack</span>
           <span class="desc">TanStack Start, 정적 prerender + static server functions</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/kudzu/">
+        <a class="variant" href="/kudzu-based-bench/kudzu/">
           <span class="name">kudzu</span>
           <span class="desc">HTML-first TSX 실험 프레임워크, getStaticPaths 정적 출력</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/hugo/">
+        <a class="variant" href="/kudzu-based-bench/hugo/">
           <span class="name">hugo</span>
           <span class="desc">Go 바이너리 SSG — 데이터 파일 + Go 템플릿, 비-Node 툴체인</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/vitepress/">
+        <a class="variant" href="/kudzu-based-bench/vitepress/">
           <span class="name">vitepress</span>
           <span class="desc">Vite + Vue 커스텀 테마, 동적 라우트 paths 로더</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/docusaurus/">
+        <a class="variant" href="/kudzu-based-bench/docusaurus/">
           <span class="name">docusaurus</span>
           <span class="desc">React 문서 프레임워크 — 커스텀 플러그인으로 라우트 생성</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/eleventy/">
+        <a class="variant" href="/kudzu-based-bench/eleventy/">
           <span class="name">eleventy</span>
           <span class="desc">11ty v3 — Nunjucks 템플릿 + 전역 데이터 파일, 클라이언트 JS 0</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/next-app/">
+        <a class="variant" href="/kudzu-based-bench/next-app/">
           <span class="name">next-app</span>
           <span class="desc">Next.js App Router, output:export + generateStaticParams</span>
         </a>
       </li>
       <li>
-        <a class="variant" href="/ones-to-watch-refactor-test/next-pages/">
+        <a class="variant" href="/kudzu-based-bench/next-pages/">
           <span class="name">next-pages</span>
           <span class="desc">Next.js Pages Router, output:export + getStaticPaths</span>
         </a>
@@ -274,7 +274,7 @@
     <section class="bench" aria-labelledby="bench-title">
       <div class="bench-head">
         <h2 class="bench-title" id="bench-title">빌드 벤치마크</h2>
-        <a class="bench-repo" href="https://github.com/SimYunSup/ones-to-watch-refactor-test#readme">전체 표 →</a>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#readme">전체 표 →</a>
       </div>
       <p class="bench-note">
         같은 콘텐츠를 열 가지 프레임워크로 정적 빌드했을 때의 클린 빌드 시간과
@@ -303,7 +303,7 @@
       <p class="bench-foot" id="bench-foot"></p>
     </section>
     <footer>
-      <a href="https://github.com/SimYunSup/ones-to-watch-refactor-test">GitHub 저장소</a>
+      <a href="https://github.com/SimYunSup/kudzu-based-bench">GitHub 저장소</a>
       · 원본: <a href="https://ones-to-watch.ethansup.net">ones-to-watch.ethansup.net</a>
     </footer>
   </main>

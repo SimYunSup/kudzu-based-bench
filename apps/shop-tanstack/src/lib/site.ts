@@ -1,7 +1,7 @@
 // `basePath` prefixes router links automatically, but not hand-authored
 // <img src> values coming out of the catalog data. Those go through here so
 // every variant emits the same absolute paths.
-export const BASE = "/ones-to-watch-refactor-test/shop-tanstack";
+export const BASE = "/kudzu-based-bench/shop-tanstack";
 
 export function assetUrl(path: string): string {
   return `${BASE}/${path.replace(/^\//, "")}`;

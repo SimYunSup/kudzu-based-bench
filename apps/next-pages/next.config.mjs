@@ -1,5 +1,5 @@
 // Project-page deployment: this app is served from
-// https://simyunsup.github.io/ones-to-watch-refactor-test/next-pages/ alongside
+// https://simyunsup.github.io/kudzu-based-bench/next-pages/ alongside
 // the other framework variants. `basePath` prefixes next/link, next/image, and
 // next/head-generated URLs automatically, but not hand-authored asset paths
 // (the search.js <script> src, the favicon <link>, or the fetch()/import
@@ -17,7 +17,7 @@
 /** @type {import("next").NextConfig} */
 const nextConfig = {
   output: "export",
-  basePath: "/ones-to-watch-refactor-test/next-pages",
+  basePath: "/kudzu-based-bench/next-pages",
   trailingSlash: true,
   images: {
     // No next/image usage in this variant (plain <img>, matching the kudzu

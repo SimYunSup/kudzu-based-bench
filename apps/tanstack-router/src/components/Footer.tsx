@@ -4,52 +4,52 @@ const VARIANTS = [
   {
     key: "astro",
     label: "astro",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/astro/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/astro/",
   },
   {
     key: "react-router",
     label: "react-router",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/react-router/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/react-router/",
   },
   {
     key: "tanstack",
     label: "tanstack",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/tanstack/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/tanstack/",
   },
   {
     key: "kudzu",
     label: "kudzu",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/kudzu/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/kudzu/",
   },
   {
     key: "hugo",
     label: "hugo",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/hugo/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/hugo/",
   },
   {
     key: "vitepress",
     label: "vitepress",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/vitepress/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/vitepress/",
   },
   {
     key: "docusaurus",
     label: "docusaurus",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/docusaurus/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/docusaurus/",
   },
   {
     key: "eleventy",
     label: "eleventy",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/eleventy/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/eleventy/",
   },
   {
     key: "next-app",
     label: "next-app",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/next-app/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/next-app/",
   },
   {
     key: "next-pages",
     label: "next-pages",
-    href: "https://simyunsup.github.io/ones-to-watch-refactor-test/next-pages/",
+    href: "https://simyunsup.github.io/kudzu-based-bench/next-pages/",
   },
 ] as const;
 

@@ -25,7 +25,7 @@ import { gzipSync } from "node:zlib";
 import { chromium } from "playwright";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
-const BASE_PATH = "/ones-to-watch-refactor-test";
+const BASE_PATH = "/kudzu-based-bench";
 
 const ROUTES = {
   home: "/",

@@ -6,7 +6,7 @@ import react from "@astrojs/react";
 // ("directory") already yields `<path>/index.html`, so no extra config is
 // needed to get the trailing-slash shape the harness expects.
 export default defineConfig({
-  base: "/ones-to-watch-refactor-test/shop-astro",
+  base: "/kudzu-based-bench/shop-astro",
   output: "static",
   integrations: [react()],
 });

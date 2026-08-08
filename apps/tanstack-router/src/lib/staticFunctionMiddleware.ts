@@ -1,7 +1,7 @@
 // Vendored from @tanstack/start-static-server-functions@1.167.x with one fix:
 // the upstream middleware fetches the prerendered cache from the origin root
 // (`/__tsr/staticServerFnCache/...`), which 404s on a GitHub Pages project
-// site where the app lives under `/ones-to-watch-refactor-test/tanstack/`.
+// site where the app lives under `/kudzu-based-bench/tanstack/`.
 // The client fetch below prefixes Vite's BASE_URL so the cache resolves to
 // the same subdirectory the build actually publishes it to. The server-side
 // write path is unchanged (paths there are joined against

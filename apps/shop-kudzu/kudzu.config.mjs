@@ -14,7 +14,7 @@ import { writeCatalogImages } from "@otw/commerce-data/images";
 // standalone document. That is also the like-for-like comparison against the
 // other static variants.
 export default {
-  base: "/ones-to-watch-refactor-test/shop-kudzu",
+  base: "/kudzu-based-bench/shop-kudzu",
 
   // The 12 catalog images are generated, not committed, so every variant
   // writes byte-identical files. Pages may not import packages, but the

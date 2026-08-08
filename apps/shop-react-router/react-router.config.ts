@@ -4,7 +4,7 @@ import { catalog } from "./app/lib/catalog";
 export default {
   // GitHub Pages can't run SSR — fully static prerender.
   ssr: false,
-  basename: "/ones-to-watch-refactor-test/shop-react-router/",
+  basename: "/kudzu-based-bench/shop-react-router/",
   async prerender() {
     return [
       "/",

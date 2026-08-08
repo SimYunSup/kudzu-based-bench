@@ -237,7 +237,7 @@ async function localizeNotionImages(siteDir) {
         // Assets live at the site root (not under any variant dir) so every
         // variant shares one copy via the same Pages-absolute URL regardless
         // of its own base prefix.
-        const localSrc = `/ones-to-watch-refactor-test/assets/notion/${localName}`;
+        const localSrc = `/kudzu-based-bench/assets/notion/${localName}`;
 
         // Skip the download when this object key was already fetched in this
         // run: several differently-signed URLs can point at the same image and

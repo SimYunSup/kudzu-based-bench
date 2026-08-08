@@ -11,7 +11,7 @@ import path from "node:path";
 // config (apps/web/astro.config.mjs, apps/react-router/{react-router,vite}.config.ts,
 // apps/tanstack-router/vite.config.ts, apps/kudzu/kudzu.config.mjs) — this is
 // the GitHub Pages repo-name prefix every variant's routes are generated under.
-export const BASE_PATH = "/ones-to-watch-refactor-test";
+export const BASE_PATH = "/kudzu-based-bench";
 
 // astro is intentionally listed first: several consumers (visual-diff's
 // BASELINE_VARIANT) treat it as the reference variant, and the remaining
@@ -150,11 +150,11 @@ export function assembleSite(repoRoot, siteDir, opts = {}) {
   mkdirSync(reactRouterDir, { recursive: true });
   cpSync(reactRouterClient, reactRouterDir, { recursive: true });
   cpSync(
-    path.join(reactRouterClient, "ones-to-watch-refactor-test", "react-router"),
+    path.join(reactRouterClient, "kudzu-based-bench", "react-router"),
     reactRouterDir,
     { recursive: true },
   );
-  rmSync(path.join(reactRouterDir, "ones-to-watch-refactor-test"), { recursive: true, force: true });
+  rmSync(path.join(reactRouterDir, "kudzu-based-bench"), { recursive: true, force: true });
 
   console.log(`${toolName}: assembled site at ${siteDir}`);
   return siteDir;

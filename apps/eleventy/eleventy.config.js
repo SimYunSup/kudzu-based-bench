@@ -87,6 +87,6 @@ export default function (eleventyConfig) {
     // affects `--serve`'s local subpath emulation and `page.url` metadata)
     // and to document the deployment target, matching kudzu's `base` field
     // and hugo's `baseURL`.
-    pathPrefix: "/ones-to-watch-refactor-test/eleventy/"
+    pathPrefix: "/kudzu-based-bench/eleventy/"
   };
 }

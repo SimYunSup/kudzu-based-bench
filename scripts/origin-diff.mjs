@@ -5,7 +5,7 @@
 // script always hits the real deployment for the "origin" side.
 //
 // By default the "candidate" side is also the live deployment (GitHub
-// Pages: https://simyunsup.github.io/ones-to-watch-refactor-test/...), so
+// Pages: https://simyunsup.github.io/kudzu-based-bench/...), so
 // this compares two real, currently-deployed sites. Pass --target to point
 // the candidate side at a different base origin instead (e.g. a locally
 // served `site/` artifact from scripts/lib/site-server.mjs#startServer) —

@@ -1,7 +1,7 @@
 import type { NextConfig } from "next";
 
 // Project-page deployment: this app is served from
-// https://simyunsup.github.io/ones-to-watch-refactor-test/next-app/ alongside
+// https://simyunsup.github.io/kudzu-based-bench/next-app/ alongside
 // the other framework variants. `basePath` prefixes `next/link` hrefs,
 // `next/image` src, and Next's own /_next/* asset URLs automatically, but
 // not hand-authored asset paths (the search.js <script> src, the favicon
@@ -24,7 +24,7 @@ import type { NextConfig } from "next";
 // handled.
 const nextConfig: NextConfig = {
   output: "export",
-  basePath: "/ones-to-watch-refactor-test/next-app",
+  basePath: "/kudzu-based-bench/next-app",
   trailingSlash: true,
   // Required for static export: the default next/image loader needs a live
   // Node.js image-optimization server that doesn't exist in `out/` (docs:

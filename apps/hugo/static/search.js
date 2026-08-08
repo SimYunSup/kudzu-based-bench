@@ -7,9 +7,9 @@
 // would work with a relative "./munja/munja.js" too — but fetch() below
 // resolves relative to the *document's* URL, which differs per route depth
 // (home vs. news/list/2/…). An absolute BASE keeps both consistent.
-import init, { search_json } from "/ones-to-watch-refactor-test/hugo/munja/munja.js";
+import init, { search_json } from "/kudzu-based-bench/hugo/munja/munja.js";
 
-const BASE = "/ones-to-watch-refactor-test/hugo";
+const BASE = "/kudzu-based-bench/hugo";
 
 const escapeHtml = (s) =>
   s.replace(

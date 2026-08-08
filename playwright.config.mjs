@@ -22,7 +22,7 @@ export default defineConfig({
   ],
   webServer: {
     command: "node ./scripts/serve-site.mjs --port 4173",
-    url: "http://127.0.0.1:4173/ones-to-watch-refactor-test/astro/home",
+    url: "http://127.0.0.1:4173/kudzu-based-bench/astro/home",
     reuseExistingServer: true,
     timeout: 60_000,
   },

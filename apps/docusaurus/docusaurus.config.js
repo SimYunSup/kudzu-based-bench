@@ -1,5 +1,5 @@
 // Project-page deployment: this app is served from
-// https://simyunsup.github.io/ones-to-watch-refactor-test/docusaurus/
+// https://simyunsup.github.io/kudzu-based-bench/docusaurus/
 // alongside the other framework variants (see apps/kudzu/kudzu.config.mjs
 // for the identical convention). `url` + `baseUrl` are the two fields
 // Docusaurus requires for subpath hosting — see "Deployment > Configuration"
@@ -8,7 +8,7 @@ export default {
   title: "Ones To Watch for FrontEnd",
   tagline: "매주 프론트엔드 소식을 정리해서 보내드립니다.",
   url: "https://simyunsup.github.io",
-  baseUrl: "/ones-to-watch-refactor-test/docusaurus/",
+  baseUrl: "/kudzu-based-bench/docusaurus/",
   favicon: "/favicon.svg",
 
   // Fail the build on any broken link registered through `@docusaurus/Link`

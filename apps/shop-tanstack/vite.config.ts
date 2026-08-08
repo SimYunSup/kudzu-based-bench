@@ -7,8 +7,8 @@ import { buildCatalog, catalogSizeFromEnv } from "@otw/commerce-data";
 // whole build is served from one artifact, with this app mounted under its
 // own sub-path. No server runtime ships — every route must be a real static
 // HTML file at build time.
-const BASE = "/ones-to-watch-refactor-test/shop-tanstack/";
-const ROUTER_BASEPATH = "/ones-to-watch-refactor-test/shop-tanstack";
+const BASE = "/kudzu-based-bench/shop-tanstack/";
+const ROUTER_BASEPATH = "/kudzu-based-bench/shop-tanstack";
 
 // Catalog size is read from the same env var as every other variant so the
 // build-scaling track can sweep it uniformly.

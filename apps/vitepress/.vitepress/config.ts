@@ -1,5 +1,5 @@
 // Static GitHub Pages deploy: the whole build is served from one artifact
-// at https://simyunsup.github.io/ones-to-watch-refactor-test/, with this
+// at https://simyunsup.github.io/kudzu-based-bench/, with this
 // variant mounted under the /vitepress/ sub-path (matches
 // apps/{react-router,tanstack-router}/vite.config.ts's `base` and
 // apps/kudzu/kudzu.config.mjs's `base`).
@@ -16,7 +16,7 @@ export default defineConfig({
   title: "Ones To Watch for FrontEnd",
   description: "매주 프론트엔드 소식을 정리해서 보내드립니다.",
   lang: "ko",
-  base: "/ones-to-watch-refactor-test/vitepress/",
+  base: "/kudzu-based-bench/vitepress/",
 
   // outDir left at the VitePress default (.vitepress/dist) — every other
   // variant's build output lives at a framework-default location too
@@ -66,7 +66,7 @@ export default defineConfig({
   head: [
     [
       "link",
-      { rel: "icon", href: "/ones-to-watch-refactor-test/vitepress/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: "/kudzu-based-bench/vitepress/favicon.svg", type: "image/svg+xml" },
     ],
   ],
 

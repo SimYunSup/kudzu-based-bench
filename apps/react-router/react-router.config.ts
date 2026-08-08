@@ -5,7 +5,7 @@ import { PAGE_SIZE } from "./app/lib/pagination";
 export default {
   // GitHub Pages can't run SSR — fully static prerender.
   ssr: false,
-  basename: "/ones-to-watch-refactor-test/react-router/",
+  basename: "/kudzu-based-bench/react-router/",
   async prerender() {
     const entries = await fetchNewsEntries();
 

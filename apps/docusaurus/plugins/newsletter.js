@@ -34,7 +34,7 @@ function toCardData(entry) {
 // Docusaurus mounts its client <BrowserRouter> without a `basename` (see
 // @docusaurus/core client/clientEntry.js), so on hydration the router matches
 // routes against the FULL window.location.pathname — which includes baseUrl
-// (here "/ones-to-watch-refactor-test/docusaurus/"). Route paths handed to
+// (here "/kudzu-based-bench/docusaurus/"). Route paths handed to
 // addRoute must therefore be baseUrl-prefixed, exactly like the built-in
 // content plugins (which build paths via normalizeUrl([baseUrl, ...])) and like
 // the useBaseUrl() calls the route components already apply to every internal

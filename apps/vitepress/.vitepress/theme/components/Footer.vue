@@ -5,16 +5,16 @@
 // `variant-link` / `is-active` class names, since e2e/variants.spec.mjs
 // asserts on them.
 const VARIANTS = [
-  { key: "astro", label: "astro", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/astro/" },
-  { key: "react-router", label: "react-router", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/react-router/" },
-  { key: "tanstack", label: "tanstack", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/tanstack/" },
-  { key: "kudzu", label: "kudzu", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/kudzu/" },
-  { key: "hugo", label: "hugo", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/hugo/" },
-  { key: "vitepress", label: "vitepress", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/vitepress/" },
-  { key: "docusaurus", label: "docusaurus", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/docusaurus/" },
-  { key: "eleventy", label: "eleventy", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/eleventy/" },
-  { key: "next-app", label: "next-app", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/next-app/" },
-  { key: "next-pages", label: "next-pages", href: "https://simyunsup.github.io/ones-to-watch-refactor-test/next-pages/" },
+  { key: "astro", label: "astro", href: "https://simyunsup.github.io/kudzu-based-bench/astro/" },
+  { key: "react-router", label: "react-router", href: "https://simyunsup.github.io/kudzu-based-bench/react-router/" },
+  { key: "tanstack", label: "tanstack", href: "https://simyunsup.github.io/kudzu-based-bench/tanstack/" },
+  { key: "kudzu", label: "kudzu", href: "https://simyunsup.github.io/kudzu-based-bench/kudzu/" },
+  { key: "hugo", label: "hugo", href: "https://simyunsup.github.io/kudzu-based-bench/hugo/" },
+  { key: "vitepress", label: "vitepress", href: "https://simyunsup.github.io/kudzu-based-bench/vitepress/" },
+  { key: "docusaurus", label: "docusaurus", href: "https://simyunsup.github.io/kudzu-based-bench/docusaurus/" },
+  { key: "eleventy", label: "eleventy", href: "https://simyunsup.github.io/kudzu-based-bench/eleventy/" },
+  { key: "next-app", label: "next-app", href: "https://simyunsup.github.io/kudzu-based-bench/next-app/" },
+  { key: "next-pages", label: "next-pages", href: "https://simyunsup.github.io/kudzu-based-bench/next-pages/" },
 ] as const;
 
 const CURRENT_VARIANT = "vitepress";

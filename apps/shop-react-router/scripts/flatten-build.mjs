@@ -13,7 +13,7 @@ import { fileURLToPath } from "node:url";
 
 const appDir = join(dirname(fileURLToPath(import.meta.url)), "..");
 const clientDir = join(appDir, "build", "client");
-const nestedDir = join(clientDir, "ones-to-watch-refactor-test", "shop-react-router");
+const nestedDir = join(clientDir, "kudzu-based-bench", "shop-react-router");
 
 if (!existsSync(nestedDir)) {
   throw new Error(`flatten-build: expected prerendered output at ${nestedDir}`);
@@ -26,6 +26,6 @@ rmSync(join(clientDir, "index.html"), { force: true });
 for (const entry of readdirSync(nestedDir)) {
   cpSync(join(nestedDir, entry), join(clientDir, entry), { recursive: true });
 }
-rmSync(join(clientDir, "ones-to-watch-refactor-test"), { recursive: true, force: true });
+rmSync(join(clientDir, "kudzu-based-bench"), { recursive: true, force: true });
 
 console.log("flatten-build: hoisted prerendered routes to build/client/");

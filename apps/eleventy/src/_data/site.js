@@ -3,7 +3,7 @@
 // or the HtmlBasePlugin — see eleventy.config.js's `pathPrefix` comment for
 // why. Mirrors apps/kudzu/src/lib/site.ts's BASE/siteUrl() pattern.
 export default {
-  base: "/ones-to-watch-refactor-test/eleventy",
+  base: "/kudzu-based-bench/eleventy",
   currentVariant: "eleventy",
   // Baked in at build time, same as `{new Date().getFullYear()}` in
   // apps/kudzu/src/components/Footer.tsx (also computed once, at build

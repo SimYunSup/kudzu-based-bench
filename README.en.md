@@ -10,7 +10,7 @@ This repo is a pnpm workspace monorepo that statically builds the same Notion-ba
 
 ## Structure
 
-- `landing/` — variant-picker landing page deployed at the site root (`https://simyunsup.github.io/ones-to-watch-refactor-test/`).
+- `landing/` — variant-picker landing page deployed at the site root (`https://simyunsup.github.io/kudzu-based-bench/`).
 - `apps/web` — static Astro site. Deployed at `/astro/`.
 - `apps/react-router` — React Router v8 (framework mode, prerender) port. `/react-router/`.
 - `apps/tanstack-router` — TanStack Start (static prerender) port. `/tanstack/`.

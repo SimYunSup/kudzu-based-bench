@@ -3,7 +3,7 @@
 // (confirmed against framework/core.mjs — pages receive no base prop, and
 // build.mjs only threads `base` into renderPage's own metadata handling).
 // Every internal link in this app must be prefixed with this constant.
-export const BASE = "/ones-to-watch-refactor-test/kudzu";
+export const BASE = "/kudzu-based-bench/kudzu";
 
 export function siteUrl(path: string): string {
   return `${BASE}/${path.replace(/^\//, "")}`;

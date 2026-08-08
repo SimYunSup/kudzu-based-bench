@@ -1,5 +1,5 @@
 // Project-page deployment: this app is served from
-// https://simyunsup.github.io/ones-to-watch-refactor-test/kudzu/ alongside the
+// https://simyunsup.github.io/kudzu-based-bench/kudzu/ alongside the
 // other framework variants. `base` prefixes runtime, handler, stylesheet, and
 // icon URLs (see src/lib/site.ts for the matching constant used to prefix
 // hand-authored <a href> links, which base does not rewrite automatically).
@@ -12,7 +12,7 @@ import { entriesToSearchDocs, writeSearchIndexFile } from "@otw/notion-content/s
 const require = createRequire(import.meta.url);
 
 export default {
-  base: "/ones-to-watch-refactor-test/kudzu",
+  base: "/kudzu-based-bench/kudzu",
 
   // Munja search is vanilla-ESM only (see public/search.js) — kudzu's TSX
   // compiler rejects vendored npm packages and wasm imports inside page

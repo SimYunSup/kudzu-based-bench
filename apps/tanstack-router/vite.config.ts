@@ -5,12 +5,12 @@ import { fetchNewsEntries } from "@otw/notion-content";
 import { PAGE_SIZE } from "./src/lib/pagination";
 
 // Static GitHub Pages deploy: the whole build is served from one artifact
-// at https://simyunsup.github.io/ones-to-watch-refactor-test/, with this
+// at https://simyunsup.github.io/kudzu-based-bench/, with this
 // variant mounted under the /tanstack/ sub-path. GitHub Pages can't rewrite
 // requests, so every route must be emitted as a real static HTML file —
 // there is no SSR/edge runtime to fall back on at request time.
-const BASE = "/ones-to-watch-refactor-test/tanstack/";
-const ROUTER_BASEPATH = "/ones-to-watch-refactor-test/tanstack";
+const BASE = "/kudzu-based-bench/tanstack/";
+const ROUTER_BASEPATH = "/kudzu-based-bench/tanstack";
 
 // Build the exact set of pages the prerenderer must visit. `crawlLinks` (see
 // below) would eventually reach every post by following home -> "전체 보기"

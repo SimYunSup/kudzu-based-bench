@@ -78,7 +78,7 @@ export const pages: StaticPage[] = ${JSON.stringify(catalog.pages)};
 // signal object, so `rows.filter(...)` fails at render with
 // "items.filter is not a function". Emitting the literal here is the shape
 // the compiler accepts.
-const BASE = "/ones-to-watch-refactor-test/shop-kudzu";
+const BASE = "/kudzu-based-bench/shop-kudzu";
 const won = new Intl.NumberFormat("ko-KR");
 const tile = product => ({
   handle: product.handle,

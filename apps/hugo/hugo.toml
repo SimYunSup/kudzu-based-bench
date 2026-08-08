@@ -4,7 +4,7 @@
 # relURL/absURL call in layouts/ resolves correctly without a hand-rolled
 # BASE constant (unlike kudzu, whose framework does not rewrite
 # hand-authored <a href> values and needs one).
-baseURL = "https://simyunsup.github.io/ones-to-watch-refactor-test/hugo/"
+baseURL = "https://simyunsup.github.io/kudzu-based-bench/hugo/"
 languageCode = "ko-KR"
 title = "Ones To Watch for FrontEnd"
 

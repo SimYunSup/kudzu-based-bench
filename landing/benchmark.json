@@ -1,10 +1,34 @@
 {
-  "measuredAt": "2026-08-08T02:14:23.331Z",
+  "measuredAt": "2026-08-08T02:22:07.272Z",
+  "runs": 3,
   "machine": {
     "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
     "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
   },
   "rows": [
+    {
+      "label": "Hugo",
+      "version": "0.161.0",
+      "name": "Hugo 0.161.0",
+      "based": "Go (templates)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "ms": 689,
+      "samples": [
+        692,
+        677,
+        689
+      ],
+      "totalBytes": 2705587,
+      "jsBytes": 15178,
+      "totalSize": "2.6 MB",
+      "jsSize": "14.8 KB",
+      "fileCount": 142,
+      "originDiff": "0.395%"
+    },
     {
       "label": "Eleventy",
       "version": "3.1.6",
@@ -15,7 +39,12 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 852,
+      "ms": 698,
+      "samples": [
+        698,
+        691,
+        702
+      ],
       "totalBytes": 2800635,
       "jsBytes": 15351,
       "totalSize": "2.7 MB",
@@ -33,30 +62,17 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 922,
+      "ms": 821,
+      "samples": [
+        821,
+        830,
+        817
+      ],
       "totalBytes": 2719970,
       "jsBytes": 15349,
       "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
       "fileCount": 141,
-      "originDiff": "0.395%"
-    },
-    {
-      "label": "Hugo",
-      "version": "0.161.0",
-      "name": "Hugo 0.161.0",
-      "based": "Go (templates)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "ms": 961,
-      "totalBytes": 2705587,
-      "jsBytes": 15178,
-      "totalSize": "2.6 MB",
-      "jsSize": "14.8 KB",
-      "fileCount": 142,
       "originDiff": "0.395%"
     },
     {
@@ -69,31 +85,18 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "ms": 1789,
+      "ms": 1721,
+      "samples": [
+        1721,
+        1721,
+        1711
+      ],
       "totalBytes": 8938179,
       "jsBytes": 4816646,
       "totalSize": "8.5 MB",
       "jsSize": "4.6 MB",
       "fileCount": 416,
       "originDiff": "0.402%"
-    },
-    {
-      "label": "Docusaurus",
-      "version": "3.10.2",
-      "name": "Docusaurus 3.10.2",
-      "based": "React",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "ms": 2311,
-      "totalBytes": 5266650,
-      "jsBytes": 2355793,
-      "totalSize": "5.0 MB",
-      "jsSize": "2.2 MB",
-      "fileCount": 284,
-      "originDiff": "0.403%"
     },
     {
       "label": "React Router",
@@ -105,31 +108,18 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 2357,
+      "ms": 2159,
+      "samples": [
+        2176,
+        2157,
+        2159
+      ],
       "totalBytes": 7163394,
       "jsBytes": 331164,
       "totalSize": "6.8 MB",
       "jsSize": "323.4 KB",
       "fileCount": 285,
       "originDiff": "0.405%"
-    },
-    {
-      "label": "Astro",
-      "version": "7.1.3",
-      "name": "Astro 7.1.3",
-      "based": "Astro islands (vanilla)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "ms": 3197,
-      "totalBytes": 4946562,
-      "jsBytes": 102301,
-      "totalSize": "4.7 MB",
-      "jsSize": "99.9 KB",
-      "fileCount": 152,
-      "originDiff": "0.320%"
     },
     {
       "label": "Next.js Pages Router",
@@ -141,7 +131,12 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 3308,
+      "ms": 3092,
+      "samples": [
+        3118,
+        3092,
+        3064
+      ],
       "totalBytes": 6765981,
       "jsBytes": 540824,
       "totalSize": "6.5 MB",
@@ -159,13 +154,64 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 4244,
+      "ms": 3458,
+      "samples": [
+        3463,
+        3413,
+        3458
+      ],
       "totalBytes": 15136889,
       "jsBytes": 652225,
       "totalSize": "14.4 MB",
       "jsSize": "636.9 KB",
       "fileCount": 1374,
       "originDiff": "0.401%"
+    },
+    {
+      "label": "Astro",
+      "version": "7.1.3",
+      "name": "Astro 7.1.3",
+      "based": "Astro islands (vanilla)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "ms": 4179,
+      "samples": [
+        4592,
+        4158,
+        4179
+      ],
+      "totalBytes": 4967361,
+      "jsBytes": 102301,
+      "totalSize": "4.7 MB",
+      "jsSize": "99.9 KB",
+      "fileCount": 152,
+      "originDiff": "0.320%"
+    },
+    {
+      "label": "Docusaurus",
+      "version": "3.10.2",
+      "name": "Docusaurus 3.10.2",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "ms": 5056,
+      "samples": [
+        5106,
+        4973,
+        5056
+      ],
+      "totalBytes": 5266650,
+      "jsBytes": 2355793,
+      "totalSize": "5.0 MB",
+      "jsSize": "2.2 MB",
+      "fileCount": 284,
+      "originDiff": "0.403%"
     },
     {
       "label": "TanStack Start",
@@ -177,7 +223,12 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "ms": 5981,
+      "ms": 5658,
+      "samples": [
+        5677,
+        5628,
+        5658
+      ],
       "totalBytes": 6836004,
       "jsBytes": 341450,
       "totalSize": "6.5 MB",

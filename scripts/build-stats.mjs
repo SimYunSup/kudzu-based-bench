@@ -35,6 +35,19 @@ if (existsSync(contentCache)) process.env.NOTION_CONTENT_CACHE = contentCache;
 
 const skipBuild = process.argv.includes("--skip-build");
 
+// Measured clean builds per variant, after one discarded warm-up.
+// Three is the smallest count that gives a median rather than an average of
+// two; raise it with `--runs N` when a variant's spread looks suspicious.
+const runsFlag = process.argv.indexOf("--runs");
+const runs = runsFlag === -1 ? 3 : Math.max(1, Number(process.argv[runsFlag + 1]));
+
+const median = (values) => {
+  const sorted = [...values].sort((a, b) => a - b);
+  return sorted.length % 2
+    ? sorted[(sorted.length - 1) / 2]
+    : (sorted[sorted.length / 2 - 1] + sorted[sorted.length / 2]) / 2;
+};
+
 // Package that both react-router and tanstack (and kudzu) build against;
 // built once up front and excluded from the measured table.
 const contentPackage = "@otw/notion-content";
@@ -186,6 +199,41 @@ function collectDirStats(dir) {
   return stats;
 }
 
+// Build caches every variant keeps *outside* its output directory. Removing
+// only `outDir` left these in place, so what the table called a clean build
+// was really an incremental one — and each framework caches a different
+// amount, which is precisely the thing that must not vary. Astro was the
+// visible symptom (one run at 2,496 ms against two at ~3,900 ms, a 37%
+// spread, from a warm `node_modules/.astro` image cache) but Next, Vitepress,
+// Docusaurus, TanStack and Hugo all had their own.
+//
+// Names rather than per-variant config: the set is small, checking a path
+// that does not exist is free, and a new variant gets covered without
+// anyone remembering to add a field.
+const CACHE_DIRS = [
+  ".astro",
+  ".docusaurus",
+  ".kudzu",
+  ".next",
+  ".nitro",
+  ".output",
+  ".react-router",
+  ".tanstack",
+  ".vitepress/cache",
+  "resources",
+  "node_modules/.astro",
+  "node_modules/.cache",
+  "node_modules/.vite"
+];
+
+/** Remove a variant's output directory and every build cache it keeps. */
+function cleanVariant(variant) {
+  rmSync(variant.outDir, { recursive: true, force: true });
+  for (const name of CACHE_DIRS) {
+    rmSync(path.join(repoRoot, variant.appDir, name), { recursive: true, force: true });
+  }
+}
+
 /** Auto-format a byte count as B / KB / MB. */
 function formatBytes(bytes) {
   if (bytes < 1024) return `${bytes} B`;
@@ -253,25 +301,44 @@ async function main() {
   for (const variant of variants) {
     if (skipBuild) {
       const stats = collectDirStats(variant.outDir);
-      rows.push({ variant, ok: true, ms: null, stats });
+      rows.push({ variant, ok: true, ms: null, samples: [], stats });
       continue;
     }
 
-    // Clean output directory to guarantee a fresh build.
-    rmSync(variant.outDir, { recursive: true, force: true });
-
-    console.log(`build-stats: building ${variant.pkg}`);
-    const start = process.hrtime.bigint();
-    const ok = runBuild(variant.pkg);
-    const ms = Number(process.hrtime.bigint() - start) / 1e6;
-
-    if (!ok) {
+    // One discarded warm-up, then `runs` measured clean builds.
+    //
+    // A single timing is not a measurement here. Back-to-back runs of this
+    // very script moved Astro between 6,483 ms and 3,197 ms and Docusaurus
+    // between 6,957 ms and 2,311 ms, purely on cold vs warm module and
+    // dependency caches — enough to reorder most of the table. The warm-up
+    // pays that cost once so the samples compare like with like.
+    console.log(`build-stats: building ${variant.pkg} (warm-up + ${runs} measured)`);
+    cleanVariant(variant);
+    if (!runBuild(variant.pkg)) {
       anyFailure = true;
-      rows.push({ variant, ok: false, ms, stats: null });
+      rows.push({ variant, ok: false, ms: null, samples: [], stats: null });
       continue;
     }
-    const stats = collectDirStats(variant.outDir);
-    rows.push({ variant, ok: true, ms, stats });
+
+    const samples = [];
+    let failed = false;
+    for (let run = 0; run < runs; run++) {
+      cleanVariant(variant);
+      const start = process.hrtime.bigint();
+      const ok = runBuild(variant.pkg);
+      samples.push(Number(process.hrtime.bigint() - start) / 1e6);
+      if (!ok) {
+        failed = true;
+        break;
+      }
+    }
+
+    if (failed) {
+      anyFailure = true;
+      rows.push({ variant, ok: false, ms: null, samples, stats: null });
+      continue;
+    }
+    rows.push({ variant, ok: true, ms: median(samples), samples, stats: collectDirStats(variant.outDir) });
   }
 
   const originDiff = loadOriginDiff();
@@ -298,12 +365,12 @@ async function main() {
     ko: {
       header: "| 변형 | 기반 | 특징 | 빌드 시간(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
       kind: (v) => v.kind.ko,
-      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
+      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신). 빌드 시간은 변형마다 워밍업 1회를 버리고 클린 빌드 ${runs}회를 잰 **중앙값**이며, 콘텐츠 양·머신에 따라 변동합니다. 회차별 원본값은 \`landing/benchmark.json\`의 \`samples\`에 있습니다. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
     },
     en: {
       header: "| Variant | Based | Type | Build (ms) | Total size | JS size | Files | Origin diff |",
       kind: (v) => v.kind.en,
-      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh); varies with content volume and machine. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
+      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh). Build time is the **median** of ${runs} clean builds per variant after one discarded warm-up, and still varies with content volume and machine. Per-run values are in \`samples\` in \`landing/benchmark.json\`. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
     },
   };
   const divider = "| --- | --- | --- | --- | --- | --- | --- | --- |";
@@ -356,11 +423,12 @@ async function main() {
   // HTML. Sorted identically (build time asc) to the README table.
   const benchmark = {
     measuredAt,
+    runs,
     machine: { ko: specKo, en: specEn },
     // `ms`, not `seconds`: this emitter predates the second->millisecond
     // conversion and destructuring the old name yielded undefined, which
     // crashed the run after all ten builds had already been paid for.
-    rows: sortedRows.map(({ variant, ok, ms, stats }) => {
+    rows: sortedRows.map(({ variant, ok, ms, samples, stats }) => {
       const version = versionOf(variant.appDir, variant.versionDep);
       return {
         label: variant.label,
@@ -370,6 +438,9 @@ async function main() {
         kind: variant.kind,
         ok,
         ms: ms === null ? null : Math.round(ms),
+        // Raw per-run timings, so a suspicious median can be checked against
+        // its spread instead of taken on faith.
+        samples: samples.map((value) => Math.round(value)),
         totalBytes: ok ? stats.totalBytes : null,
         jsBytes: ok ? stats.jsBytes : null,
         totalSize: ok ? formatBytes(stats.totalBytes) : null,

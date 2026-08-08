@@ -43,18 +43,18 @@ Type — **SSG-focused**: a tool whose reason for existing is static-site output
 <!-- build-stats:start -->
 | Variant | Based | Type | Build (ms) | Total size | JS size | Files | Origin diff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 852 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG-focused | 922 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| Hugo 0.161.0 | Go (templates) | SSG-focused | 961 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG-focused | 1789 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| Docusaurus 3.10.2 | React | SSG-focused | 2311 | 5.0 MB | 2.2 MB | 284 | 0.403% |
-| React Router 8.3.0 | React | SSG-capable | 2357 | 6.8 MB | 323.4 KB | 285 | 0.405% |
-| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 3197 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Next.js Pages Router 16.2.11 | React | SSG-capable | 3308 | 6.5 MB | 528.1 KB | 303 | 0.403% |
-| Next.js App Router 16.2.11 | React | SSG-capable | 4244 | 14.4 MB | 636.9 KB | 1374 | 0.401% |
-| TanStack Start 1.168.32 | React | SSG-capable | 5981 | 6.5 MB | 333.4 KB | 146 | 0.399% |
+| Hugo 0.161.0 | Go (templates) | SSG-focused | 689 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 698 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG-focused | 821 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG-focused | 1721 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| React Router 8.3.0 | React | SSG-capable | 2159 | 6.8 MB | 323.4 KB | 285 | 0.405% |
+| Next.js Pages Router 16.2.11 | React | SSG-capable | 3092 | 6.5 MB | 528.1 KB | 303 | 0.403% |
+| Next.js App Router 16.2.11 | React | SSG-capable | 3458 | 14.4 MB | 636.9 KB | 1374 | 0.401% |
+| Astro 7.1.3 | Astro islands (vanilla) | SSG-focused | 4179 | 4.7 MB | 99.9 KB | 152 | 0.320% |
+| Docusaurus 3.10.2 | React | SSG-focused | 5056 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| TanStack Start 1.168.32 | React | SSG-capable | 5658 | 6.5 MB | 333.4 KB | 146 | 0.399% |
 
-_Measured locally via `pnpm run build:stats` (manual refresh); varies with content volume and machine. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-08T02:14:23.331Z_
+_Measured locally via `pnpm run build:stats` (manual refresh). Build time is the **median** of 3 clean builds per variant after one discarded warm-up, and still varies with content volume and machine. Per-run values are in `samples` in `landing/benchmark.json`. Sorted by build time asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-08T02:22:07.272Z_
 <!-- build-stats:end -->
 
 ## Commerce Benchmark

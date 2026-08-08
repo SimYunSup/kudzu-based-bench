@@ -17,6 +17,22 @@ const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const startMarker = "<!-- build-stats:start -->";
 const endMarker = "<!-- build-stats:end -->";
 
+// Credentials live in a root `.env` per the README, but nothing loaded it:
+// this is plain Node, not Vite. Without it every variant built an empty
+// collection and the table measured an empty site.
+try {
+  process.loadEnvFile(path.join(repoRoot, ".env"));
+} catch {
+  // No .env — variants build empty collections, which is still a valid table.
+}
+
+// Point the builds at the prefetched cache when `pnpm run prefetch:content`
+// has produced one. Without this each of the ten builds queries Notion
+// itself, which both trips the ~3 req/s rate limit and folds network time
+// into the build durations this script exists to measure.
+const contentCache = path.join(repoRoot, "notion-cache", "news-entries.json");
+if (existsSync(contentCache)) process.env.NOTION_CONTENT_CACHE = contentCache;
+
 const skipBuild = process.argv.includes("--skip-build");
 
 // Package that both react-router and tanstack (and kudzu) build against;

@@ -23,7 +23,10 @@
  *                  framework internals.
  *   clickLoss      share of add-to-cart clicks dispatched at FCP + delta
  *                  that do nothing. This is the impatient tap, and it is the
- *                  metric hydration frameworks structurally lose.
+ *                  metric hydration frameworks structurally lose. Measured in
+ *                  its own sessions, never inside the journey — sweeping the
+ *                  delay grid warms the module cache enough to erase the very
+ *                  gap the journey's actReady is trying to report.
  *   stepLatency    event -> next paint for each in-page interaction, the
  *                  same definition INP uses.
  *
@@ -60,8 +63,16 @@ const NETWORK = {
   fast4g: { latency: 40, download: (9 * 1024 * 1024) / 8, upload: (1.5 * 1024 * 1024) / 8 }
 };
 
-/** Delays after first paint at which the impatient tap is simulated. */
-const CLICK_DELAYS = [0, 100, 300, 500, 1000];
+/**
+ * Delays after first paint at which the impatient tap is simulated.
+ *
+ * The grid runs to 5 s because a 1 s ceiling saturates: every hydrating
+ * variant loses 100% of clicks at every point below it, which collapses a
+ * 3x spread in boot time into one indistinguishable "never" bucket. The
+ * upper points are coarse on purpose — past ~2 s the interesting question is
+ * no longer "how much longer" but "does it ever recover".
+ */
+const CLICK_DELAYS = [0, 100, 300, 500, 1000, 1500, 2000, 3000, 5000];
 
 /**
  * Degradation conditions for the resilience track.
@@ -260,33 +271,7 @@ async function runSession(browser, origin, variant, options) {
   // 1. Entry from an ad or search result: empty cache, deep link to a product.
   await visit("entry:product", "/product/p-00000/", ".product-price", "[0-9]");
 
-  // 2. The impatient tap. Reload the same URL per delay so the measurement
-  //    always starts from a real navigation, and keep the warmed cache
-  //    because that is what a repeat impression looks like.
-  const clickLoss = [];
-  for (const delay of CLICK_DELAYS) {
-    await page.goto(url("/product/p-00001/"), { waitUntil: "commit" });
-    const outcome = await page.evaluate(`(async delay => {
-      const paint = await new Promise(resolve => {
-        const entry = performance.getEntriesByName('first-contentful-paint')[0];
-        if (entry) return resolve(entry.startTime);
-        new PerformanceObserver((list, observer) => {
-          const found = list.getEntries().find(item => item.name === 'first-contentful-paint');
-          if (found) { observer.disconnect(); resolve(found.startTime); }
-        }).observe({ type: 'paint', buffered: true });
-      });
-      const wait = paint + delay - performance.now();
-      if (wait > 0) await new Promise(resolve => setTimeout(resolve, wait));
-      const before = localStorage.getItem('otw-cart');
-      document.querySelector('.add-to-cart')?.click();
-      await new Promise(resolve => setTimeout(resolve, 250));
-      return { delay, worked: localStorage.getItem('otw-cart') !== before };
-    })(${delay})`);
-    clickLoss.push(outcome);
-    await page.evaluate(() => localStorage.removeItem("otw-cart"));
-  }
-
-  // 3. In-session navigation to the listing, then the two real interactions.
+  // 2. In-session navigation to the listing, then the two real interactions.
   //    Actions dispatch the same events a user produces; verification always
   //    compares observable output against the pre-action baseline.
   await visit("nav:listing", "/search/", ".tile-title");
@@ -310,7 +295,7 @@ async function runSession(browser, origin, variant, options) {
     `() => { const titles = [...document.querySelectorAll('.tile-title')].map(node => node.textContent); return titles.length > 0 && titles.length < 40 && titles.every(title => title.includes('스웨터')); }`
   );
 
-  // 4. Listing -> detail -> variant -> add -> checkout.
+  // 3. Listing -> detail -> variant -> add -> checkout.
   await visit("nav:detail", "/product/p-00002/", ".product-price", "[0-9]");
   await interact(
     "selectVariant",
@@ -327,7 +312,53 @@ async function runSession(browser, origin, variant, options) {
   await visit("nav:checkout", "/checkout/", ".checkout h1");
 
   await context.close();
-  return { steps, clickLoss };
+  return steps;
+}
+
+/**
+ * The impatient tap, in its own session.
+ *
+ * This cannot share a context with the journey. Sweeping nine delays up to
+ * 5 s means twenty-odd extra seconds of repeated product-page loads, which
+ * warms the module cache enough that the journey's first interaction
+ * afterwards reads as instant — the probe would be measuring away the very
+ * gap it exists to expose. An earlier run had exactly that: Next's listing
+ * actReady collapsed from 2,967 ms to 0.1 ms purely from probe ordering.
+ *
+ * Each delay gets a fresh context so the cache state is identical across
+ * the grid, and every attempt starts from a real navigation.
+ */
+async function runClickLoss(browser, origin, variant, options) {
+  const url = suffix => `${origin}${BASE_PATH}/${variant}${suffix}`;
+  const outcomes = [];
+
+  for (const delay of CLICK_DELAYS) {
+    const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+    const page = await context.newPage();
+    await applyThrottling(page, options);
+    await page.goto(url("/product/p-00001/"), { waitUntil: "commit" });
+    outcomes.push(
+      await page.evaluate(`(async delay => {
+        const paint = await new Promise(resolve => {
+          const entry = performance.getEntriesByName('first-contentful-paint')[0];
+          if (entry) return resolve(entry.startTime);
+          new PerformanceObserver((list, observer) => {
+            const found = list.getEntries().find(item => item.name === 'first-contentful-paint');
+            if (found) { observer.disconnect(); resolve(found.startTime); }
+          }).observe({ type: 'paint', buffered: true });
+        });
+        const wait = paint + delay - performance.now();
+        if (wait > 0) await new Promise(resolve => setTimeout(resolve, wait));
+        const before = localStorage.getItem('otw-cart');
+        document.querySelector('.add-to-cart')?.click();
+        await new Promise(resolve => setTimeout(resolve, 250));
+        return { delay, worked: localStorage.getItem('otw-cart') !== before };
+      })(${delay})`)
+    );
+    await context.close();
+  }
+
+  return outcomes;
 }
 
 /**
@@ -463,9 +494,9 @@ async function main() {
     const sessions = [];
     for (let run = 0; run < options.runs; run++) sessions.push(await runSession(browser, origin, options.variant, options));
 
-    const stepNames = sessions[0].steps.map(entry => entry.step);
+    const stepNames = sessions[0].map(entry => entry.step);
     const rows = stepNames.map(name => {
-      const samples = sessions.map(session => session.steps.find(entry => entry.step === name));
+      const samples = sessions.map(session => session.find(entry => entry.step === name));
       const pick = key => samples.map(sample => sample[key]).filter(value => value !== undefined);
       const contentReady = pick("contentReady");
       const actReady = pick("actReady");
@@ -478,8 +509,10 @@ async function main() {
       };
     });
 
+    const clickRuns = [];
+    for (let run = 0; run < options.runs; run++) clickRuns.push(await runClickLoss(browser, origin, options.variant, options));
     const loss = CLICK_DELAYS.map(delay => {
-      const attempts = sessions.flatMap(session => session.clickLoss.filter(entry => entry.delay === delay));
+      const attempts = clickRuns.flatMap(outcomes => outcomes.filter(entry => entry.delay === delay));
       const failed = attempts.filter(entry => !entry.worked).length;
       return { delay, attempts: attempts.length, lossPct: +((failed / attempts.length) * 100).toFixed(1) };
     });

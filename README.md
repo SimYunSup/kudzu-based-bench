@@ -86,13 +86,15 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 
 | 변형 | 진입 contentReady | 리스팅 첫 조작 actReady | 정렬 stepLatency | 담기 stepLatency | 첫 신뢰 클릭 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu 0.8.15 | 173 ms | **950 ms** | 2.2 ms | 0.6 ms | **첫 페인트 +100 ms** |
-| Astro 7 (islands) | 239 ms | 901 ms | 7.4 ms | 1.8 ms | 1,000 ms 내 없음 |
-| React Router v8 | 181 ms | 2,208 ms | 21.3 ms | 1.5 ms | 1,000 ms 내 없음 |
-| TanStack Start | 181 ms | 2,953 ms | 6.4 ms | 1.9 ms | 1,000 ms 내 없음 |
-| Next.js App Router | 174 ms | 2,967 ms | 29.5 ms | 1.6 ms | 1,000 ms 내 없음 |
+| Kudzu 0.8.15 | 173 ms | **250 ms** | 2.3 ms | 1.0 ms | **첫 페인트 +300 ms** |
+| Astro 7 (islands) | 234 ms | 2,214 ms | 11.7 ms | 2.4 ms | +1,500 ms |
+| TanStack Start | 173 ms | 2,950 ms | 7.6 ms | 1.8 ms | +2,000 ms |
+| React Router v8 | 174 ms | 2,959 ms | 29.4 ms | 2.0 ms | +2,000 ms |
+| Next.js App Router | 175 ms | 3,768 ms | 29.9 ms | 2.1 ms | +3,000 ms |
 
 **contentReady는 사실상 동률입니다.** 다섯 다 완성된 HTML을 보내니 당연합니다. 차이는 전부 "조작 가능해지기까지"에 몰려 있고, 그게 이 픽스처가 존재하는 이유입니다.
+
+클릭 유실 측정은 저널리와 **별도 세션**에서 돕니다. Δ 격자를 5초까지 훑으면 상품 페이지를 스무 번 넘게 다시 열게 되고, 그 사이 모듈 캐시가 데워져서 뒤따르는 저널리의 actReady가 실제보다 훨씬 좋게 나옵니다(실제로 Next가 3,768 ms → 0.1 ms로 붕괴한 적이 있습니다).
 
 ### 라우트별 초기 JavaScript (KB gzip)
 
@@ -116,9 +118,9 @@ Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타�
 | --- | ---: | ---: | ---: | ---: |
 | Kudzu | 3/6 | 6/6 | 6/6 | **15/18** |
 | Astro | 3/6 | 3/6 | 6/6 | 12/18 |
-| TanStack | 3/6 | 1/6 | 5/6 | 9/18 |
-| Next.js | 3/6 | 1/6 | 4/6 | 8/18 |
-| React Router | 3/6 | 1/6 | 4/6 | 8/18 |
+| TanStack | 3/6 | 2/6 | 4/6 | 9/18 |
+| Next.js | 3/6 | 2/6 | 3/6 | 8/18 |
+| React Router | 3/6 | 2/6 | 3/6 | 8/18 |
 
 JS를 완전히 끄면 다섯 다 "읽기·이동·상세 진입"만 남습니다(정적 문서 + 네이티브 앵커). 갈리는 건 스크립트가 늦거나 하나 빠졌을 때입니다.
 

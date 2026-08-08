@@ -85,13 +85,15 @@ Four metrics instead:
 
 | Variant | Entry contentReady | First listing actReady | Sort stepLatency | Add stepLatency | First reliable click |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu 0.8.15 | 173 ms | **950 ms** | 2.2 ms | 0.6 ms | **first paint +100 ms** |
-| Astro 7 (islands) | 239 ms | 901 ms | 7.4 ms | 1.8 ms | none within 1,000 ms |
-| React Router v8 | 181 ms | 2,208 ms | 21.3 ms | 1.5 ms | none within 1,000 ms |
-| TanStack Start | 181 ms | 2,953 ms | 6.4 ms | 1.9 ms | none within 1,000 ms |
-| Next.js App Router | 174 ms | 2,967 ms | 29.5 ms | 1.6 ms | none within 1,000 ms |
+| Kudzu 0.8.15 | 173 ms | **250 ms** | 2.3 ms | 1.0 ms | **first paint +300 ms** |
+| Astro 7 (islands) | 234 ms | 2,214 ms | 11.7 ms | 2.4 ms | +1,500 ms |
+| TanStack Start | 173 ms | 2,950 ms | 7.6 ms | 1.8 ms | +2,000 ms |
+| React Router v8 | 174 ms | 2,959 ms | 29.4 ms | 2.0 ms | +2,000 ms |
+| Next.js App Router | 175 ms | 3,768 ms | 29.9 ms | 2.1 ms | +3,000 ms |
 
 **contentReady is effectively tied** — all five ship complete HTML. The entire difference sits in becoming operable, which is the reason this fixture exists.
+
+Click loss is measured in **separate sessions** from the journey. Sweeping the delay grid to 5 s means reopening the product page twenty-odd times, which warms the module cache enough to make the journey's following actReady look far better than it is — Next once collapsed from 3,768 ms to 0.1 ms purely from probe ordering.
 
 ### Initial JavaScript per route (KB gzip)
 
@@ -115,9 +117,9 @@ How many of six capabilities (read info · browse category · open detail · fil
 | --- | ---: | ---: | ---: | ---: |
 | Kudzu | 3/6 | 6/6 | 6/6 | **15/18** |
 | Astro | 3/6 | 3/6 | 6/6 | 12/18 |
-| TanStack | 3/6 | 1/6 | 5/6 | 9/18 |
-| Next.js | 3/6 | 1/6 | 4/6 | 8/18 |
-| React Router | 3/6 | 1/6 | 4/6 | 8/18 |
+| TanStack | 3/6 | 2/6 | 4/6 | 9/18 |
+| Next.js | 3/6 | 2/6 | 3/6 | 8/18 |
+| React Router | 3/6 | 2/6 | 3/6 | 8/18 |
 
 With JS fully off all five keep exactly read, browse, and open-detail — static documents plus native anchors. They diverge when scripts are merely late or one chunk is missing.
 

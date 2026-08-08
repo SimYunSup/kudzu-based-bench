@@ -44,18 +44,18 @@
 <!-- build-stats:start -->
 | 변형 | 기반 | 특징 | 빌드 시간(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
 | --- | --- | --- | --- | --- | --- | --- | --- |
-| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG 특화 | 1251 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 1258 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Hugo 0.161.0 | Go (templates) | SSG 특화 | 1417 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG 특화 | 2588 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG 지원 | 2785 | 6.8 MB | 323.4 KB | 285 | 0.405% |
-| Next.js Pages Router 16.2.11 | React | SSG 지원 | 3514 | 6.5 MB | 528.1 KB | 303 | 0.403% |
-| Next.js App Router 16.2.11 | React | SSG 지원 | 4405 | 14.4 MB | 636.9 KB | 1374 | 0.401% |
-| TanStack Start 1.168.32 | React | SSG 지원 | 6435 | 6.5 MB | 333.4 KB | 146 | 0.399% |
-| Astro 7.1.3 | Astro islands (vanilla) | SSG 특화 | 6483 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Docusaurus 3.10.2 | React | SSG 특화 | 6957 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 852 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Kudzu 0.8.15 | Kudzu (JSX, no vDOM) | SSG 특화 | 922 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| Hugo 0.161.0 | Go (templates) | SSG 특화 | 961 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG 특화 | 1789 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| Docusaurus 3.10.2 | React | SSG 특화 | 2311 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| React Router 8.3.0 | React | SSG 지원 | 2357 | 6.8 MB | 323.4 KB | 285 | 0.405% |
+| Astro 7.1.3 | Astro islands (vanilla) | SSG 특화 | 3197 | 4.7 MB | 99.9 KB | 152 | 0.320% |
+| Next.js Pages Router 16.2.11 | React | SSG 지원 | 3308 | 6.5 MB | 528.1 KB | 303 | 0.403% |
+| Next.js App Router 16.2.11 | React | SSG 지원 | 4244 | 14.4 MB | 636.9 KB | 1374 | 0.401% |
+| TanStack Start 1.168.32 | React | SSG 지원 | 5981 | 6.5 MB | 333.4 KB | 146 | 0.399% |
 
-_로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-08T02:08:56.782Z_
+_로컬에서 `pnpm run build:stats`로 측정(수동 갱신), 콘텐츠 양·머신에 따라 변동. 빌드 시간 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-08T02:14:23.331Z_
 <!-- build-stats:end -->
 
 ## 커머스 벤치마크

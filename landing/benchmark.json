@@ -1,8 +1,8 @@
 {
-  "measuredAt": "2026-07-24T07:17:45.417Z",
+  "measuredAt": "2026-08-08T02:14:23.331Z",
   "machine": {
-    "ko": "Apple M1 Max · 10코어 · RAM 64 GB · darwin/arm64 · Node v24.17.0",
-    "en": "Apple M1 Max · 10 cores · 64 GB RAM · darwin/arm64 · Node v24.17.0"
+    "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
+    "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
   },
   "rows": [
     {
@@ -15,13 +15,31 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "seconds": 0.9,
-      "totalBytes": 2773996,
+      "ms": 852,
+      "totalBytes": 2800635,
       "jsBytes": 15351,
-      "totalSize": "2.6 MB",
+      "totalSize": "2.7 MB",
       "jsSize": "15.0 KB",
       "fileCount": 142,
-      "originDiff": null
+      "originDiff": "0.400%"
+    },
+    {
+      "label": "Kudzu",
+      "version": "0.8.15",
+      "name": "Kudzu 0.8.15",
+      "based": "Kudzu (JSX, no vDOM)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "ms": 922,
+      "totalBytes": 2719970,
+      "jsBytes": 15349,
+      "totalSize": "2.6 MB",
+      "jsSize": "15.0 KB",
+      "fileCount": 141,
+      "originDiff": "0.395%"
     },
     {
       "label": "Hugo",
@@ -33,49 +51,13 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "seconds": 0.9,
-      "totalBytes": 2705271,
+      "ms": 961,
+      "totalBytes": 2705587,
       "jsBytes": 15178,
       "totalSize": "2.6 MB",
       "jsSize": "14.8 KB",
       "fileCount": 142,
-      "originDiff": null
-    },
-    {
-      "label": "Kudzu",
-      "version": "0.5.8",
-      "name": "Kudzu 0.5.8",
-      "based": "Kudzu (JSX, no vDOM)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "seconds": 0.9,
-      "totalBytes": 2719672,
-      "jsBytes": 16303,
-      "totalSize": "2.6 MB",
-      "jsSize": "15.9 KB",
-      "fileCount": 145,
-      "originDiff": null
-    },
-    {
-      "label": "Astro",
-      "version": "7.1.3",
-      "name": "Astro 7.1.3",
-      "based": "Astro islands (vanilla)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "seconds": 1.8,
-      "totalBytes": 4302703,
-      "jsBytes": 102301,
-      "totalSize": "4.1 MB",
-      "jsSize": "99.9 KB",
-      "fileCount": 152,
-      "originDiff": null
+      "originDiff": "0.395%"
     },
     {
       "label": "VitePress",
@@ -87,13 +69,13 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "seconds": 2.2,
-      "totalBytes": 8937053,
-      "jsBytes": 4815836,
+      "ms": 1789,
+      "totalBytes": 8938179,
+      "jsBytes": 4816646,
       "totalSize": "8.5 MB",
       "jsSize": "4.6 MB",
       "fileCount": 416,
-      "originDiff": null
+      "originDiff": "0.402%"
     },
     {
       "label": "Docusaurus",
@@ -105,13 +87,13 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "seconds": 2.5,
-      "totalBytes": 5276741,
-      "jsBytes": 2366350,
+      "ms": 2311,
+      "totalBytes": 5266650,
+      "jsBytes": 2355793,
       "totalSize": "5.0 MB",
-      "jsSize": "2.3 MB",
+      "jsSize": "2.2 MB",
       "fileCount": 284,
-      "originDiff": null
+      "originDiff": "0.403%"
     },
     {
       "label": "React Router",
@@ -123,13 +105,31 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "seconds": 3,
-      "totalBytes": 7162280,
+      "ms": 2357,
+      "totalBytes": 7163394,
       "jsBytes": 331164,
       "totalSize": "6.8 MB",
       "jsSize": "323.4 KB",
       "fileCount": 285,
-      "originDiff": null
+      "originDiff": "0.405%"
+    },
+    {
+      "label": "Astro",
+      "version": "7.1.3",
+      "name": "Astro 7.1.3",
+      "based": "Astro islands (vanilla)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "ms": 3197,
+      "totalBytes": 4946562,
+      "jsBytes": 102301,
+      "totalSize": "4.7 MB",
+      "jsSize": "99.9 KB",
+      "fileCount": 152,
+      "originDiff": "0.320%"
     },
     {
       "label": "Next.js Pages Router",
@@ -141,13 +141,13 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "seconds": 3.8,
-      "totalBytes": 6765704,
-      "jsBytes": 541645,
+      "ms": 3308,
+      "totalBytes": 6765981,
+      "jsBytes": 540824,
       "totalSize": "6.5 MB",
-      "jsSize": "529.0 KB",
+      "jsSize": "528.1 KB",
       "fileCount": 303,
-      "originDiff": null
+      "originDiff": "0.403%"
     },
     {
       "label": "Next.js App Router",
@@ -159,13 +159,13 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "seconds": 4.4,
-      "totalBytes": 15134925,
-      "jsBytes": 652338,
+      "ms": 4244,
+      "totalBytes": 15136889,
+      "jsBytes": 652225,
       "totalSize": "14.4 MB",
-      "jsSize": "637.0 KB",
+      "jsSize": "636.9 KB",
       "fileCount": 1374,
-      "originDiff": null
+      "originDiff": "0.401%"
     },
     {
       "label": "TanStack Start",
@@ -177,13 +177,13 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "seconds": 7.5,
-      "totalBytes": 6835072,
+      "ms": 5981,
+      "totalBytes": 6836004,
       "jsBytes": 341450,
       "totalSize": "6.5 MB",
       "jsSize": "333.4 KB",
       "fileCount": 146,
-      "originDiff": null
+      "originDiff": "0.399%"
     }
   ]
 }

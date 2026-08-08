@@ -357,7 +357,10 @@ async function main() {
   const benchmark = {
     measuredAt,
     machine: { ko: specKo, en: specEn },
-    rows: sortedRows.map(({ variant, ok, seconds, stats }) => {
+    // `ms`, not `seconds`: this emitter predates the second->millisecond
+    // conversion and destructuring the old name yielded undefined, which
+    // crashed the run after all ten builds had already been paid for.
+    rows: sortedRows.map(({ variant, ok, ms, stats }) => {
       const version = versionOf(variant.appDir, variant.versionDep);
       return {
         label: variant.label,
@@ -366,7 +369,7 @@ async function main() {
         based: variant.based,
         kind: variant.kind,
         ok,
-        seconds: seconds === null ? null : Number(seconds.toFixed(1)),
+        ms: ms === null ? null : Math.round(ms),
         totalBytes: ok ? stats.totalBytes : null,
         jsBytes: ok ? stats.jsBytes : null,
         totalSize: ok ? formatBytes(stats.totalBytes) : null,

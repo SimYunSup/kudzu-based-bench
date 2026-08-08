@@ -288,7 +288,7 @@
               <th scope="col">변형</th>
               <th scope="col">기반</th>
               <th scope="col">특징</th>
-              <th scope="col" class="col-num">빌드(s)</th>
+              <th scope="col" class="col-num">빌드(ms)</th>
               <th scope="col" class="col-num">총 크기</th>
               <th scope="col" class="col-num">JS 크기</th>
               <th scope="col" class="col-num">파일 수</th>
@@ -337,7 +337,7 @@
           kindSpan.textContent = row.kind && row.kind.ko ? row.kind.ko : "";
           kindTd.appendChild(kindSpan);
           tr.appendChild(kindTd);
-          tr.appendChild(cell(row.ok && row.seconds != null ? row.seconds.toFixed(1) : "-", "col-num"));
+          tr.appendChild(cell(row.ok && row.ms != null ? String(row.ms) : "-", "col-num"));
           tr.appendChild(cell(row.ok ? (row.totalSize ?? "-") : "❌", "col-num"));
           tr.appendChild(cell(row.ok ? (row.jsSize ?? "-") : "❌", "col-num"));
           tr.appendChild(cell(row.ok && row.fileCount != null ? String(row.fileCount) : "-", "col-num"));

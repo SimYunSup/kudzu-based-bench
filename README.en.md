@@ -125,17 +125,17 @@ With JS fully off all five keep exactly read, browse, and open-detail — static
 
 ### Catalog scaling (clean / incremental, median)
 
-Incremental means one product's price changed and nothing else. That is the real cost of a nightly inventory batch, and the number every "N pages in M seconds" headline omits.
+Incremental means one product's price changed and nothing else. That is the real cost of a nightly inventory batch, and the number every "N pages in M seconds" headline omits. Median of three runs after one discarded warm-up, and "clean" deletes the framework build caches as well as the output directory.
 
 | Variant | 100 | 1,000 | Per page (1,000) |
 | --- | ---: | ---: | ---: |
-| Astro | 1,436 / 1,403 ms | **1,833 / 1,938 ms** | 1.83 ms |
-| TanStack | 2,169 / 2,212 ms | 3,090 / 3,213 ms | 3.09 ms |
-| React Router | 1,883 / 1,978 ms | 3,257 / 3,371 ms | 3.26 ms |
-| Next.js | 3,616 / 3,789 ms | 4,716 / 5,832 ms | 4.72 ms |
-| Kudzu | **1,536 / 1,567 ms** | 5,963 / 6,211 ms | 5.96 ms |
+| Astro | 1,396 / 1,378 ms | **1,822 / 1,908 ms** | 1.82 ms |
+| TanStack | 2,162 / 2,156 ms | 3,043 / 3,124 ms | 3.04 ms |
+| React Router | 1,851 / 1,875 ms | 3,193 / 3,195 ms | 3.19 ms |
+| Next.js | 3,587 / 3,761 ms | 4,632 / 5,638 ms | 4.63 ms |
+| Kudzu | **1,526 / 1,529 ms** | 5,829 / 6,034 ms | 5.83 ms |
 
-**Kudzu loses here** — fastest at 100 products, slowest at 1,000. It emits a separate effect module and native handler module per product, so build cost is driven by per-route capability ESM emission rather than by page rendering. No variant supports incremental builds: clean and incremental are the same everywhere.
+**Kudzu loses here** — second only to Astro at 100 products, last at 1,000, and the steepest curve of the five at 3.8x against Astro's 1.3x. It emits a separate effect module and native handler module per product, so build cost is driven by per-route capability ESM emission rather than by page rendering. No variant supports incremental builds: clean and incremental are the same everywhere.
 
 _Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Raw JSON lands in `bench/` (git-ignored)._
 

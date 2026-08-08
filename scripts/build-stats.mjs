@@ -12,6 +12,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import os from "node:os";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+import { cleanBuildArtifacts } from "./lib/build-cache.mjs";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 const startMarker = "<!-- build-stats:start -->";
@@ -199,39 +200,9 @@ function collectDirStats(dir) {
   return stats;
 }
 
-// Build caches every variant keeps *outside* its output directory. Removing
-// only `outDir` left these in place, so what the table called a clean build
-// was really an incremental one — and each framework caches a different
-// amount, which is precisely the thing that must not vary. Astro was the
-// visible symptom (one run at 2,496 ms against two at ~3,900 ms, a 37%
-// spread, from a warm `node_modules/.astro` image cache) but Next, Vitepress,
-// Docusaurus, TanStack and Hugo all had their own.
-//
-// Names rather than per-variant config: the set is small, checking a path
-// that does not exist is free, and a new variant gets covered without
-// anyone remembering to add a field.
-const CACHE_DIRS = [
-  ".astro",
-  ".docusaurus",
-  ".kudzu",
-  ".next",
-  ".nitro",
-  ".output",
-  ".react-router",
-  ".tanstack",
-  ".vitepress/cache",
-  "resources",
-  "node_modules/.astro",
-  "node_modules/.cache",
-  "node_modules/.vite"
-];
-
 /** Remove a variant's output directory and every build cache it keeps. */
 function cleanVariant(variant) {
-  rmSync(variant.outDir, { recursive: true, force: true });
-  for (const name of CACHE_DIRS) {
-    rmSync(path.join(repoRoot, variant.appDir, name), { recursive: true, force: true });
-  }
+  cleanBuildArtifacts(path.join(repoRoot, variant.appDir), [variant.outDir]);
 }
 
 /** Auto-format a byte count as B / KB / MB. */

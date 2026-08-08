@@ -21,20 +21,20 @@
  *   node scripts/shop-scale.mjs --variants shop-kudzu,shop-next-app --runs 3
  */
 import { execFileSync } from "node:child_process";
-import { existsSync, mkdirSync, readdirSync, rmSync, statSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, statSync, writeFileSync } from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
+import { OUTPUT_DIRS, cleanBuildArtifacts } from "./lib/build-cache.mjs";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
-
-/** Every directory a supported variant might write its static output to. */
-const OUTPUT_DIRS = ["dist", "out", "build/client", ".next", ".output", ".kudzu", ".astro", ".tanstack"];
 
 function parseArgs(argv) {
   const options = {
     variants: ["shop-kudzu", "shop-next-app", "shop-react-router", "shop-tanstack", "shop-astro"],
     sizes: [100, 1000],
-    runs: 2,
+    // Three, not two: a median of two samples is just their average, which
+    // is exactly the statistic an outlier ruins. Matches build-stats.mjs.
+    runs: 3,
     out: "bench"
   };
   for (let index = 0; index < argv.length; index++) {
@@ -49,11 +49,11 @@ function parseArgs(argv) {
 }
 
 function clean(appDir) {
-  for (const name of OUTPUT_DIRS) rmSync(path.join(appDir, name), { recursive: true, force: true });
+  cleanBuildArtifacts(appDir, OUTPUT_DIRS.map(name => path.join(appDir, name)));
 }
 
 function outputDir(appDir) {
-  return ["dist", "out", "build/client"].map(name => path.join(appDir, name)).find(existsSync);
+  return OUTPUT_DIRS.map(name => path.join(appDir, name)).find(existsSync);
 }
 
 /** Total bytes and file count, excluding images so variants stay comparable. */

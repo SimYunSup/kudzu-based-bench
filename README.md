@@ -33,18 +33,18 @@
 <!-- build-stats:start -->
 | 변형 | 기반 | 특징 | cold(ms) | warm(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 693 | 692 | 2.6 MB | 15.0 KB | 142 | 0.400% |
-| Hugo 0.161.0 | Go (templates) | SSG 특화 | 696 | 692 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Kudzu 0.8.39 | Kudzu (JSX, no vDOM) | SSG 특화 | 794 | 788 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG 특화 | 1698 | 1700 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG 지원 | 2112 | 2126 | 6.8 MB | 323.0 KB | 285 | 0.405% |
-| Next.js Pages Router 16.3.0 | React | SSG 지원 | 3925 | 2980 | 6.4 MB | 529.9 KB | 304 | 0.403% |
-| Astro 7.2.1 | Astro islands (vanilla) | SSG 특화 | 4333 | 2602 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Next.js App Router 16.3.0 | React | SSG 지원 | 4559 | 3310 | 13.7 MB | 589.0 KB | 698 | 0.401% |
-| Docusaurus 3.10.2 | React | SSG 특화 | 4903 | 1529 | 5.0 MB | 2.2 MB | 284 | 0.403% |
-| TanStack Start 1.168.42 | React | SSG 지원 | 5627 | 5713 | 6.5 MB | 329.9 KB | 146 | 0.399% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 702 | 691 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Hugo 0.161.0 | Go (templates) | SSG 특화 | 710 | 691 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Kudzu 0.8.39 | Kudzu (JSX, no vDOM) | SSG 특화 | 785 | 789 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG 특화 | 1638 | 1644 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| React Router 8.3.0 | React | SSG 지원 | 2161 | 2122 | 6.8 MB | 323.0 KB | 285 | 0.405% |
+| Next.js Pages Router 16.3.0 | React | SSG 지원 | 3660 | 2687 | 6.4 MB | 529.9 KB | 304 | 0.403% |
+| Next.js App Router 16.3.0 | React | SSG 지원 | 4491 | 2961 | 13.7 MB | 589.0 KB | 698 | 0.401% |
+| TanStack Start 1.168.42 | React | SSG 지원 | 4847 | 4898 | 6.5 MB | 326.1 KB | 146 | 0.399% |
+| Docusaurus 3.10.2 | React | SSG 특화 | 4919 | 1574 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| Astro 7.2.1 | Astro islands (vanilla) | SSG 특화 | 6013 | 2483 | 3.1 MB | 99.9 KB | 152 | 0.320% |
 
-_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-12T04:00:34.758Z_
+_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-12T05:03:43.802Z_
 <!-- build-stats:end -->
 
 <details>
@@ -83,7 +83,7 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Kudzu | 170 ms | **250 ms** | 2.2 ms | 0.8 ms | **첫 페인트 +300 ms** |
 | Astro (islands) | 223 ms | 2,229 ms | 9.1 ms | 1.5 ms | +1,500 ms |
-| TanStack Start | 170 ms | 2,907 ms | 13.7 ms | 1.0 ms | +2,000 ms |
+| TanStack Start | 170 ms | 2,859 ms | 15.3 ms | 1.0 ms | +2,000 ms |
 | React Router v8 | 170 ms | 2,957 ms | 17.6 ms | 1.1 ms | +2,000 ms |
 | Next.js App Router | 178 ms | 3,537 ms | 26.8 ms | 0.9 ms | +3,000 ms |
 
@@ -96,7 +96,7 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 | Kudzu | 271 ms | 33 ms | 0/5 | 5/5 | **244.9 KB** | **34.4 KB** |
 | Astro (islands) | 222 ms | 34 ms | 0/5 | 5/5 | 529.9 KB | 193.1 KB |
 | React Router v8 | **185 ms** | 14 ms | 0/5 | 0/5 | 616.9 KB | 322.3 KB |
-| TanStack Start | **182 ms** | 13 ms | 0/5 | 0/5 | 618.3 KB | 320.6 KB |
+| TanStack Start | **182 ms** | 13 ms | 0/5 | 0/5 | 616.3 KB | 317.6 KB |
 | Next.js App Router | 360 ms | 46 ms | 0/5 | 5/5 | 792.1 KB | 455.5 KB |
 
 클라이언트 전환은 SPA 라우터가 실제로 이기는 축입니다(React Router·TanStack 182–185 ms). 대신 뒤로가기에서 정렬 상태를 버립니다 — 컴포넌트가 리마운트되며 select가 초기화되는 반면, 문서 내비게이션 쪽은 Chrome의 폼 복원이 살립니다. 세션 전송은 전 구간 CDP 실측이라 프리페치 낭비까지 포함하며, Kudzu와 Next 사이 스크립트 격차는 세션 전체 기준 13배입니다.
@@ -129,10 +129,10 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 | Kudzu | **4.7** | 9.4 | 4.9 | **4.7** | 1.14 MB |
 | Astro | 60.6 | 61.0 | 61.1 | 60.6 | 1.72 MB |
 | React Router | 104.3 | 104.2 | 104.4 | 103.9 | 1.09 MB |
-| TanStack | 104.0 | 103.9 | 104.1 | 103.6 | 1.62 MB |
+| TanStack | 101.7 | 101.7 | 101.9 | 101.3 | 1.66 MB |
 | Next.js | 134.2 | 134.8 | 133.8 | 132.8 | 4.24 MB |
 
-Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +4.7 KB). Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다. Next.js는 16.2 → 16.3에서 145 KB대 → 134 KB대로 줄었습니다.
+Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +4.7 KB). Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다. Next.js는 16.2 → 16.3에서 145 KB대 → 134 KB대로, TanStack은 vite 7 → 8 + @vitejs/plugin-react 6에서 104 KB대 → 101 KB대로 줄었습니다.
 
 ### 열화 내성
 
@@ -142,21 +142,23 @@ Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타�
 | --- | ---: | ---: | ---: | ---: |
 | Kudzu | 3/6 | 6/6 | 6/6 | **15/18** |
 | Astro | 3/6 | 3/6 | 6/6 | 12/18 |
-| TanStack | 3/6 | 2/6 | 4/6 | 9/18 |
+| TanStack | 3/6 | 2/6 | 3/6 | 8/18 |
 | Next.js | 3/6 | 2/6 | 3/6 | 8/18 |
 | React Router | 3/6 | 2/6 | 3/6 | 8/18 |
+
+TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐에 따라 실행 간 ±1 흔들립니다(3~4/6) — 청크 그래프가 콘텐츠 해시 순서에 민감해서입니다.
 
 ### 카탈로그 스케일 (cold / warm, 중앙값)
 
 | 변형 | 100개 | 1,000개 | 페이지당(1,000개) |
 | --- | ---: | ---: | ---: |
-| Astro | 1,372 / 1,334 ms | **1,796 / 1,734 ms** | 1.80 ms |
-| TanStack | 2,083 / 2,056 ms | 2,922 / 2,895 ms | 2.92 ms |
-| React Router | 1,794 / 1,810 ms | 2,949 / 2,963 ms | 2.95 ms |
-| Kudzu | **1,279 / 1,266 ms** | 3,493 / 3,514 ms | 3.49 ms |
-| Next.js | 4,615 / 3,334 ms | 5,637 / 4,858 ms | 5.64 ms |
+| Astro | 1,373 / 1,328 ms | **1,818 / 1,875 ms** | 1.82 ms |
+| TanStack | 1,582 / 1,552 ms | 2,471 / 2,490 ms | 2.47 ms |
+| React Router | 1,820 / 1,860 ms | 3,073 / 2,996 ms | 3.07 ms |
+| Kudzu | **1,279 / 1,275 ms** | 3,557 / 3,568 ms | 3.56 ms |
+| Next.js | 4,314 / 3,213 ms | 5,624 / 5,000 ms | 5.62 ms |
 
-여전히 Kudzu의 스케일 기울기가 제일 가파릅니다(100→1,000에서 2.7배, Astro 1.3배) — 상품마다 effect·native 핸들러 모듈을 따로 emit하므로 빌드 비용 동인이 라우트별 capability ESM emission이라서입니다. 다만 0.8.15 → 0.8.39에서 1,000개 절대값이 5.8초 → 3.5초로 개선돼 꼴찌 자리는 Next.js로 넘어갔고, Next 16.3은 커머스에서도 cold와 warm이 갈라지기 시작했습니다(나머지 넷은 여전히 동일 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Astro뿐).
+여전히 Kudzu의 스케일 기울기가 제일 가파릅니다(100→1,000에서 2.8배, Astro 1.3배) — 상품마다 effect·native 핸들러 모듈을 따로 emit하므로 빌드 비용 동인이 라우트별 capability ESM emission이라서입니다. 다만 0.8.15 → 0.8.39에서 1,000개 절대값이 5.8초 → 3.6초로 개선돼 꼴찌 자리는 Next.js로 넘어갔고, TanStack은 vite 7 → 8에서 빌드가 약 15–20% 빨라져 1,000개 2위입니다. Next 16.3은 커머스에서도 cold와 warm이 갈라지기 시작했습니다(나머지 넷은 여전히 동일 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Astro뿐).
 
 ## 폼 위저드 벤치마크
 
@@ -172,7 +174,7 @@ pnpm run form:bench     # 세션 재생 + ref 교차 검증 + 열화 내성
 | 변형 | 진입 contentReady | 조건부 필드 토글 | 다음 스텝 도착 | 상태 운반 완료 | 요약 렌더 |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Astro (inline script) | 198 ms | 0.8 ms | 180 ms | **200 ms** | 216 ms |
-| TanStack Start | 173 ms | 1.9 ms | 184 ms | **190 ms** | **176 ms** |
+| TanStack Start | 174 ms | 2.4 ms | 183 ms | **189 ms** | **173 ms** |
 | React Router v8 | 179 ms | 3.0 ms | **175 ms** | 399 ms | 370 ms |
 | Next.js App Router | 182 ms | 1.9 ms | 188 ms | 362 ms | 370 ms |
 | Kudzu | 180 ms | 0.7 ms | 179 ms | 702 ms | 520 ms |
@@ -184,8 +186,8 @@ pnpm run form:bench     # 세션 재생 + ref 교차 검증 + 열화 내성
 | 변형 | JS 전면 차단 | 스크립트 2s 지연 | 스크립트 1개 유실 | 합계 |
 | --- | ---: | ---: | ---: | ---: |
 | Astro | 5/5 | 5/5 | 5/5 | **15/15** |
-| TanStack | 2/5 | 2/5 | 5/5 | 9/15 |
 | Kudzu | 1/5 | 2/5 | 4/5 | 7/15 |
+| TanStack | 2/5 | 2/5 | 3/5 | 7/15 |
 | React Router | 1/5 | 1/5 | 4/5 | 6/15 |
 | Next.js | 1/5 | 1/5 | 4/5 | 6/15 |
 

@@ -33,18 +33,18 @@ Same Notion content, built ten ways. Running `pnpm run build:stats` locally refr
 <!-- build-stats:start -->
 | Variant | Based | Type | Cold (ms) | Warm (ms) | Total size | JS size | Files | Origin diff |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 693 | 692 | 2.6 MB | 15.0 KB | 142 | 0.400% |
-| Hugo 0.161.0 | Go (templates) | SSG-focused | 696 | 692 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Kudzu 0.8.39 | Kudzu (JSX, no vDOM) | SSG-focused | 794 | 788 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG-focused | 1698 | 1700 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG-capable | 2112 | 2126 | 6.8 MB | 323.0 KB | 285 | 0.405% |
-| Next.js Pages Router 16.3.0 | React | SSG-capable | 3925 | 2980 | 6.4 MB | 529.9 KB | 304 | 0.403% |
-| Astro 7.2.1 | Astro islands (vanilla) | SSG-focused | 4333 | 2602 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Next.js App Router 16.3.0 | React | SSG-capable | 4559 | 3310 | 13.7 MB | 589.0 KB | 698 | 0.401% |
-| Docusaurus 3.10.2 | React | SSG-focused | 4903 | 1529 | 5.0 MB | 2.2 MB | 284 | 0.403% |
-| TanStack Start 1.168.42 | React | SSG-capable | 5627 | 5713 | 6.5 MB | 329.9 KB | 146 | 0.399% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 702 | 691 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Hugo 0.161.0 | Go (templates) | SSG-focused | 710 | 691 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Kudzu 0.8.39 | Kudzu (JSX, no vDOM) | SSG-focused | 785 | 789 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG-focused | 1638 | 1644 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| React Router 8.3.0 | React | SSG-capable | 2161 | 2122 | 6.8 MB | 323.0 KB | 285 | 0.405% |
+| Next.js Pages Router 16.3.0 | React | SSG-capable | 3660 | 2687 | 6.4 MB | 529.9 KB | 304 | 0.403% |
+| Next.js App Router 16.3.0 | React | SSG-capable | 4491 | 2961 | 13.7 MB | 589.0 KB | 698 | 0.401% |
+| TanStack Start 1.168.42 | React | SSG-capable | 4847 | 4898 | 6.5 MB | 326.1 KB | 146 | 0.399% |
+| Docusaurus 3.10.2 | React | SSG-focused | 4919 | 1574 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| Astro 7.2.1 | Astro islands (vanilla) | SSG-focused | 6013 | 2483 | 3.1 MB | 99.9 KB | 152 | 0.320% |
 
-_Measured locally via `pnpm run build:stats` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of 3 runs after one discarded warm-up; per-run values are in `coldSamples`/`warmSamples` in `landing/benchmark.json`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-12T04:00:34.758Z_
+_Measured locally via `pnpm run build:stats` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of 3 runs after one discarded warm-up; per-run values are in `coldSamples`/`warmSamples` in `landing/benchmark.json`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-12T05:03:43.802Z_
 <!-- build-stats:end -->
 
 <details>
@@ -83,7 +83,7 @@ pnpm run shop:scale     # build time by catalog size
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Kudzu | 170 ms | **250 ms** | 2.2 ms | 0.8 ms | **first paint +300 ms** |
 | Astro (islands) | 223 ms | 2,229 ms | 9.1 ms | 1.5 ms | +1,500 ms |
-| TanStack Start | 170 ms | 2,907 ms | 13.7 ms | 1.0 ms | +2,000 ms |
+| TanStack Start | 170 ms | 2,859 ms | 15.3 ms | 1.0 ms | +2,000 ms |
 | React Router v8 | 170 ms | 2,957 ms | 17.6 ms | 1.1 ms | +2,000 ms |
 | Next.js App Router | 178 ms | 3,537 ms | 26.8 ms | 0.9 ms | +3,000 ms |
 
@@ -96,7 +96,7 @@ A session doesn't only move forward. Products are opened from the listing with a
 | Kudzu | 271 ms | 33 ms | 0/5 | 5/5 | **244.9 KB** | **34.4 KB** |
 | Astro (islands) | 222 ms | 34 ms | 0/5 | 5/5 | 529.9 KB | 193.1 KB |
 | React Router v8 | **185 ms** | 14 ms | 0/5 | 0/5 | 616.9 KB | 322.3 KB |
-| TanStack Start | **182 ms** | 13 ms | 0/5 | 0/5 | 618.3 KB | 320.6 KB |
+| TanStack Start | **182 ms** | 13 ms | 0/5 | 0/5 | 616.3 KB | 317.6 KB |
 | Next.js App Router | 360 ms | 46 ms | 0/5 | 5/5 | 792.1 KB | 455.5 KB |
 
 Client-side transitions are the one axis where SPA routers genuinely win (React Router · TanStack at 182–185 ms). In exchange, they drop sort state on back navigation — the component remounts and the select resets, whereas the document-navigation variants keep it because Chrome's form restoration carries it over. Session transfer is CDP-measured across the whole session, so it includes prefetch waste, and the script gap between Kudzu and Next is 13x over the full session.
@@ -129,10 +129,10 @@ Bytes the browser actually downloaded. Static import-graph analysis gives a diff
 | Kudzu | **4.7** | 9.4 | 4.9 | **4.7** | 1.14 MB |
 | Astro | 60.6 | 61.0 | 61.1 | 60.6 | 1.72 MB |
 | React Router | 104.3 | 104.2 | 104.4 | 103.9 | 1.09 MB |
-| TanStack | 104.0 | 103.9 | 104.1 | 103.6 | 1.62 MB |
+| TanStack | 101.7 | 101.7 | 101.9 | 101.3 | 1.66 MB |
 | Next.js | 134.2 | 134.8 | 133.8 | 132.8 | 4.24 MB |
 
-Only Kudzu varies by route (the search page's keyed-list runtime, +4.7 KB). Astro's island split is real, but as long as the cart badge lives in the global header, every route pays for the react-dom runtime. Next.js dropped from the 145 KB range to the 134 KB range going 16.2 → 16.3.
+Only Kudzu varies by route (the search page's keyed-list runtime, +4.7 KB). Astro's island split is real, but as long as the cart badge lives in the global header, every route pays for the react-dom runtime. Next.js dropped from the 145 KB range to the 134 KB range going 16.2 → 16.3, and TanStack from the 104 KB range to the 101 KB range with vite 7 → 8 + @vitejs/plugin-react 6.
 
 ### Degradation resilience
 
@@ -142,21 +142,23 @@ How many of six capabilities (read info · browse category · open detail · fil
 | --- | ---: | ---: | ---: | ---: |
 | Kudzu | 3/6 | 6/6 | 6/6 | **15/18** |
 | Astro | 3/6 | 3/6 | 6/6 | 12/18 |
-| TanStack | 3/6 | 2/6 | 4/6 | 9/18 |
+| TanStack | 3/6 | 2/6 | 3/6 | 8/18 |
 | Next.js | 3/6 | 2/6 | 3/6 | 8/18 |
 | React Router | 3/6 | 2/6 | 3/6 | 8/18 |
+
+TanStack's "1 script lost" cell wobbles ±1 between runs (3–4/6) depending on which chunk gets dropped — its chunk graph is sensitive to content-hash ordering.
 
 ### Catalog scaling (cold / warm, median)
 
 | Variant | 100 items | 1,000 items | Per page (1,000) |
 | --- | ---: | ---: | ---: |
-| Astro | 1,372 / 1,334 ms | **1,796 / 1,734 ms** | 1.80 ms |
-| TanStack | 2,083 / 2,056 ms | 2,922 / 2,895 ms | 2.92 ms |
-| React Router | 1,794 / 1,810 ms | 2,949 / 2,963 ms | 2.95 ms |
-| Kudzu | **1,279 / 1,266 ms** | 3,493 / 3,514 ms | 3.49 ms |
-| Next.js | 4,615 / 3,334 ms | 5,637 / 4,858 ms | 5.64 ms |
+| Astro | 1,373 / 1,328 ms | **1,818 / 1,875 ms** | 1.82 ms |
+| TanStack | 1,582 / 1,552 ms | 2,471 / 2,490 ms | 2.47 ms |
+| React Router | 1,820 / 1,860 ms | 3,073 / 2,996 ms | 3.07 ms |
+| Kudzu | **1,279 / 1,275 ms** | 3,557 / 3,568 ms | 3.56 ms |
+| Next.js | 4,314 / 3,213 ms | 5,624 / 5,000 ms | 5.62 ms |
 
-Kudzu's scaling slope is still the steepest (2.7x from 100 → 1,000 items; Astro grows 1.3x) — it emits a separate effect and native-handler module per product, so build cost is driven by per-route capability ESM emission. But 0.8.15 → 0.8.39 improved the 1,000-item absolute time from 5.8 s to 3.5 s, handing last place to Next.js, and Next 16.3 is the first variant whose commerce cold and warm builds diverge (the other four still tie — the only caches that do real work remain Docusaurus and Astro in the newsletter fixture).
+Kudzu's scaling slope is still the steepest (2.8x from 100 → 1,000 items; Astro grows 1.3x) — it emits a separate effect and native-handler module per product, so build cost is driven by per-route capability ESM emission. But 0.8.15 → 0.8.39 improved the 1,000-item absolute time from 5.8 s to 3.6 s, handing last place to Next.js, and TanStack got roughly 15–20% faster builds from vite 7 → 8, taking second place at 1,000 items. Next 16.3 is the first variant whose commerce cold and warm builds diverge (the other four still tie — the only caches that do real work remain Docusaurus and Astro in the newsletter fixture).
 
 ## Form Wizard Benchmark
 
@@ -172,7 +174,7 @@ pnpm run form:bench     # session replay + ref cross-check + degradation
 | Variant | Entry contentReady | Conditional field toggle | Next-step arrival | State transport complete | Summary render |
 | --- | ---: | ---: | ---: | ---: | ---: |
 | Astro (inline script) | 198 ms | 0.8 ms | 180 ms | **200 ms** | 216 ms |
-| TanStack Start | 173 ms | 1.9 ms | 184 ms | **190 ms** | **176 ms** |
+| TanStack Start | 174 ms | 2.4 ms | 183 ms | **189 ms** | **173 ms** |
 | React Router v8 | 179 ms | 3.0 ms | **175 ms** | 399 ms | 370 ms |
 | Next.js App Router | 182 ms | 1.9 ms | 188 ms | 362 ms | 370 ms |
 | Kudzu | 180 ms | 0.7 ms | 179 ms | 702 ms | 520 ms |
@@ -184,8 +186,8 @@ pnpm run form:bench     # session replay + ref cross-check + degradation
 | Variant | JS blocked | Scripts 2s late | 1 script lost | Total |
 | --- | ---: | ---: | ---: | ---: |
 | Astro | 5/5 | 5/5 | 5/5 | **15/15** |
-| TanStack | 2/5 | 2/5 | 5/5 | 9/15 |
 | Kudzu | 1/5 | 2/5 | 4/5 | 7/15 |
+| TanStack | 2/5 | 2/5 | 3/5 | 7/15 |
 | React Router | 1/5 | 1/5 | 4/5 | 6/15 |
 | Next.js | 1/5 | 1/5 | 4/5 | 6/15 |
 

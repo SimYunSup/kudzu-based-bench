@@ -11,7 +11,7 @@
     "@pickhealer/munja": "^0.1.1",
     "cheerio": "^1.2.0",
     "notion-rehype-k": "^1.1.6",
-    "rehype-katex": "^6.0.3",
+    "rehype-katex": "^7.0.1",
     "rehype-stringify": "^10.0.1",
     "unified": "^11.0.5"
   },

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-08-12T04:33:49.366Z",
+  "measuredAt": "2026-08-12T05:03:44.095Z",
   "sources": {
     "bench": [
       "shop-kudzu",
@@ -8,7 +8,7 @@
       "shop-tanstack",
       "shop-next-app"
     ],
-    "assets": "2026-08-12T04:21:35.192Z",
+    "assets": "2026-08-12T04:56:51.037Z",
     "scale": "2026-08-12T04:00:34.816Z"
   },
   "sizes": [
@@ -80,9 +80,9 @@
       },
       "resilienceTotal": 15,
       "resilienceMax": 18,
-      "homeJsGzip": 4816,
-      "searchJsGzip": 9629,
-      "checkoutJsGzip": 4815,
+      "homeJsGzip": 4815,
+      "searchJsGzip": 9638,
+      "checkoutJsGzip": 4813,
       "outputBytes": 1198940,
       "scale": [
         {
@@ -189,7 +189,7 @@
       "resilienceMax": 18,
       "homeJsGzip": 62028,
       "searchJsGzip": 62439,
-      "checkoutJsGzip": 62026,
+      "checkoutJsGzip": 62025,
       "outputBytes": 1805543,
       "scale": [
         {
@@ -295,8 +295,8 @@
       "resilienceTotal": 8,
       "resilienceMax": 18,
       "homeJsGzip": 106776,
-      "searchJsGzip": 106677,
-      "checkoutJsGzip": 106425,
+      "searchJsGzip": 106653,
+      "checkoutJsGzip": 106140,
       "outputBytes": 1139478,
       "scale": [
         {
@@ -342,9 +342,9 @@
       "label": "TanStack Start",
       "based": "React",
       "path": "/shop-tanstack/",
-      "entryContentReadyMs": 170.4,
-      "listingActReadyMs": 2907,
-      "sortLatencyMs": 13.7,
+      "entryContentReadyMs": 169.9,
+      "listingActReadyMs": 2858.8,
+      "sortLatencyMs": 15.3,
       "addLatencyMs": 1,
       "firstReliableClickMs": 2000,
       "clickLoss": [
@@ -397,14 +397,14 @@
       "resilience": {
         "js-blocked": 3,
         "js-slow": 2,
-        "chunk-404": 4
+        "chunk-404": 3
       },
-      "resilienceTotal": 9,
+      "resilienceTotal": 8,
       "resilienceMax": 18,
-      "homeJsGzip": 106464,
-      "searchJsGzip": 106389,
-      "checkoutJsGzip": 106046,
-      "outputBytes": 1701783,
+      "homeJsGzip": 104180,
+      "searchJsGzip": 104136,
+      "checkoutJsGzip": 103778,
+      "outputBytes": 1741011,
       "scale": [
         {
           "size": 100,
@@ -508,9 +508,9 @@
       },
       "resilienceTotal": 8,
       "resilienceMax": 18,
-      "homeJsGzip": 137410,
+      "homeJsGzip": 137365,
       "searchJsGzip": 138086,
-      "checkoutJsGzip": 136032,
+      "checkoutJsGzip": 135985,
       "outputBytes": 4443336,
       "scale": [
         {

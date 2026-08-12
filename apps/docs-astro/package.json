@@ -16,6 +16,6 @@
   "devDependencies": {
     "@types/node": "^24.13.3",
     "pagefind": "^1.5.2",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }

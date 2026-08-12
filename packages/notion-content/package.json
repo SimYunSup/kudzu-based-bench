@@ -21,7 +21,7 @@
     "@pickhealer/munja": "^0.1.1",
     "cheerio": "^1.2.0",
     "notion-rehype-k": "^1.1.6",
-    "rehype-katex": "^6.0.3",
+    "rehype-katex": "^7.0.1",
     "rehype-stringify": "^10.0.1",
     "unified": "^11.0.5",
     "unist-util-visit": "^5.1.0"
@@ -29,6 +29,6 @@
   "devDependencies": {
     "@types/hast": "^3.0.5",
     "@types/node": "^24.13.3",
-    "typescript": "^5.9.3"
+    "typescript": "^7.0.2"
   }
 }

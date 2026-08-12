@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-08-12T05:03:44.095Z",
+  "measuredAt": "2026-08-12T05:13:17.389Z",
   "sources": {
     "bench": [
       "shop-kudzu",
@@ -9,7 +9,7 @@
       "shop-next-app"
     ],
     "assets": "2026-08-12T04:56:51.037Z",
-    "scale": "2026-08-12T04:00:34.816Z"
+    "scale": "2026-08-12T05:04:43.342Z"
   },
   "sizes": [
     100,
@@ -88,16 +88,16 @@
         {
           "size": 100,
           "coldMs": 1279,
-          "warmMs": 1266,
+          "warmMs": 1275,
           "coldSamples": [
-            1287,
-            1279,
-            1273
+            1304,
+            1262,
+            1279
           ],
           "warmSamples": [
-            1266,
-            1246,
-            1357
+            1275,
+            1229,
+            1293
           ],
           "msPerPage": 12.79,
           "outputMB": 1.14,
@@ -105,19 +105,19 @@
         },
         {
           "size": 1000,
-          "coldMs": 3493,
-          "warmMs": 3514,
+          "coldMs": 3557,
+          "warmMs": 3568,
           "coldSamples": [
-            3492,
-            3499,
-            3493
+            3561,
+            3557,
+            3547
           ],
           "warmSamples": [
-            3514,
-            3526,
-            3479
+            3573,
+            3528,
+            3568
           ],
-          "msPerPage": 3.49,
+          "msPerPage": 3.56,
           "outputMB": 10.37,
           "files": 3044
         }
@@ -194,37 +194,37 @@
       "scale": [
         {
           "size": 100,
-          "coldMs": 1372,
-          "warmMs": 1334,
+          "coldMs": 1373,
+          "warmMs": 1328,
           "coldSamples": [
-            1372,
-            1390,
-            1371
+            1373,
+            1383,
+            1356
           ],
           "warmSamples": [
-            1336,
-            1334,
-            1334
+            1318,
+            1350,
+            1328
           ],
-          "msPerPage": 13.72,
+          "msPerPage": 13.73,
           "outputMB": 1.72,
           "files": 118
         },
         {
           "size": 1000,
-          "coldMs": 1796,
-          "warmMs": 1734,
+          "coldMs": 1818,
+          "warmMs": 1875,
           "coldSamples": [
-            2088,
-            1796,
-            1772
+            1838,
+            1783,
+            1818
           ],
           "warmSamples": [
-            1745,
-            1725,
-            1734
+            2020,
+            1875,
+            1744
           ],
-          "msPerPage": 1.8,
+          "msPerPage": 1.82,
           "outputMB": 13.95,
           "files": 1018
         }
@@ -301,37 +301,37 @@
       "scale": [
         {
           "size": 100,
-          "coldMs": 1794,
-          "warmMs": 1810,
+          "coldMs": 1820,
+          "warmMs": 1860,
           "coldSamples": [
-            1783,
-            1794,
-            1804
+            1797,
+            1820,
+            1854
           ],
           "warmSamples": [
-            1810,
-            1810,
-            1800
+            2407,
+            1850,
+            1860
           ],
-          "msPerPage": 17.94,
+          "msPerPage": 18.2,
           "outputMB": 1.09,
           "files": 125
         },
         {
           "size": 1000,
-          "coldMs": 2949,
-          "warmMs": 2963,
+          "coldMs": 3073,
+          "warmMs": 2996,
           "coldSamples": [
-            2949,
-            2946,
-            3016
+            2992,
+            3073,
+            3083
           ],
           "warmSamples": [
-            2963,
-            2941,
-            3005
+            3072,
+            2996,
+            2926
           ],
-          "msPerPage": 2.95,
+          "msPerPage": 3.07,
           "outputMB": 7.04,
           "files": 1025
         }
@@ -408,39 +408,39 @@
       "scale": [
         {
           "size": 100,
-          "coldMs": 2083,
-          "warmMs": 2056,
+          "coldMs": 1582,
+          "warmMs": 1552,
           "coldSamples": [
-            2075,
-            2096,
-            2083
+            1582,
+            1775,
+            1510
           ],
           "warmSamples": [
-            2084,
-            2026,
-            2056
+            1543,
+            1552,
+            1573
           ],
-          "msPerPage": 20.83,
-          "outputMB": 1.62,
-          "files": 130
+          "msPerPage": 15.82,
+          "outputMB": 1.66,
+          "files": 133
         },
         {
           "size": 1000,
-          "coldMs": 2922,
-          "warmMs": 2895,
+          "coldMs": 2471,
+          "warmMs": 2490,
           "coldSamples": [
-            2975,
-            2922,
-            2910
+            2555,
+            2471,
+            2321
           ],
           "warmSamples": [
-            2895,
-            2884,
-            2943
+            2383,
+            2490,
+            2811
           ],
-          "msPerPage": 2.92,
-          "outputMB": 9.86,
-          "files": 1030
+          "msPerPage": 2.47,
+          "outputMB": 10.18,
+          "files": 1033
         }
       ]
     },
@@ -515,37 +515,37 @@
       "scale": [
         {
           "size": 100,
-          "coldMs": 4615,
-          "warmMs": 3334,
+          "coldMs": 4314,
+          "warmMs": 3213,
           "coldSamples": [
-            4690,
-            4615,
-            4527
+            4309,
+            4397,
+            4314
           ],
           "warmSamples": [
-            3334,
-            3341,
-            3326
+            3213,
+            3330,
+            3168
           ],
-          "msPerPage": 46.15,
+          "msPerPage": 43.14,
           "outputMB": 4.24,
           "files": 576
         },
         {
           "size": 1000,
-          "coldMs": 5637,
-          "warmMs": 4858,
+          "coldMs": 5624,
+          "warmMs": 5000,
           "coldSamples": [
-            5668,
-            5618,
-            5637
+            5801,
+            5617,
+            5624
           ],
           "warmSamples": [
-            4813,
-            4858,
-            4873
+            5000,
+            4879,
+            5416
           ],
-          "msPerPage": 5.64,
+          "msPerPage": 5.62,
           "outputMB": 32.17,
           "files": 5076
         }

@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-08-08T05:57:12.429Z",
+  "measuredAt": "2026-08-12T04:33:49.366Z",
   "sources": {
     "bench": [
       "shop-kudzu",
@@ -8,8 +8,8 @@
       "shop-tanstack",
       "shop-next-app"
     ],
-    "assets": "2026-08-07T23:20:42.359Z",
-    "scale": "2026-08-08T05:52:38.858Z"
+    "assets": "2026-08-12T04:21:35.192Z",
+    "scale": "2026-08-12T04:00:34.816Z"
   },
   "sizes": [
     100,
@@ -21,10 +21,10 @@
       "label": "Kudzu",
       "based": "Kudzu (JSX, no vDOM)",
       "path": "/shop-kudzu/",
-      "entryContentReadyMs": 172.6,
-      "listingActReadyMs": 250.2,
-      "sortLatencyMs": 2.3,
-      "addLatencyMs": 1,
+      "entryContentReadyMs": 170,
+      "listingActReadyMs": 250.3,
+      "sortLatencyMs": 2.2,
+      "addLatencyMs": 0.8,
       "firstReliableClickMs": 300,
       "clickLoss": [
         {
@@ -80,44 +80,44 @@
       },
       "resilienceTotal": 15,
       "resilienceMax": 18,
-      "homeJsGzip": 4749,
-      "searchJsGzip": 9559,
-      "checkoutJsGzip": 4752,
-      "outputBytes": 1257694,
+      "homeJsGzip": 4816,
+      "searchJsGzip": 9629,
+      "checkoutJsGzip": 4815,
+      "outputBytes": 1198940,
       "scale": [
         {
           "size": 100,
-          "coldMs": 1536,
-          "warmMs": 1514,
+          "coldMs": 1279,
+          "warmMs": 1266,
           "coldSamples": [
-            1533,
-            1562,
-            1536
+            1287,
+            1279,
+            1273
           ],
           "warmSamples": [
-            1514,
-            1514,
-            1522
+            1266,
+            1246,
+            1357
           ],
-          "msPerPage": 15.36,
+          "msPerPage": 12.79,
           "outputMB": 1.14,
           "files": 344
         },
         {
           "size": 1000,
-          "coldMs": 5848,
-          "warmMs": 5866,
+          "coldMs": 3493,
+          "warmMs": 3514,
           "coldSamples": [
-            5835,
-            5848,
-            5858
+            3492,
+            3499,
+            3493
           ],
           "warmSamples": [
-            6432,
-            5813,
-            5866
+            3514,
+            3526,
+            3479
           ],
-          "msPerPage": 5.85,
+          "msPerPage": 3.49,
           "outputMB": 10.37,
           "files": 3044
         }
@@ -128,10 +128,10 @@
       "label": "Astro",
       "based": "Astro + React islands",
       "path": "/shop-astro/",
-      "entryContentReadyMs": 234.3,
-      "listingActReadyMs": 2213.5,
-      "sortLatencyMs": 11.7,
-      "addLatencyMs": 2.4,
+      "entryContentReadyMs": 222.8,
+      "listingActReadyMs": 2228.7,
+      "sortLatencyMs": 9.1,
+      "addLatencyMs": 1.5,
       "firstReliableClickMs": 1500,
       "clickLoss": [
         {
@@ -187,44 +187,44 @@
       },
       "resilienceTotal": 12,
       "resilienceMax": 18,
-      "homeJsGzip": 62062,
-      "searchJsGzip": 62476,
-      "checkoutJsGzip": 62058,
-      "outputBytes": 1831154,
+      "homeJsGzip": 62028,
+      "searchJsGzip": 62439,
+      "checkoutJsGzip": 62026,
+      "outputBytes": 1805543,
       "scale": [
         {
           "size": 100,
-          "coldMs": 1406,
-          "warmMs": 1375,
+          "coldMs": 1372,
+          "warmMs": 1334,
           "coldSamples": [
-            1402,
-            1406,
-            1406
+            1372,
+            1390,
+            1371
           ],
           "warmSamples": [
-            1368,
-            1376,
-            1375
+            1336,
+            1334,
+            1334
           ],
-          "msPerPage": 14.06,
+          "msPerPage": 13.72,
           "outputMB": 1.72,
           "files": 118
         },
         {
           "size": 1000,
-          "coldMs": 1815,
-          "warmMs": 1785,
+          "coldMs": 1796,
+          "warmMs": 1734,
           "coldSamples": [
-            1831,
-            1814,
-            1815
+            2088,
+            1796,
+            1772
           ],
           "warmSamples": [
-            1826,
-            1785,
-            1784
+            1745,
+            1725,
+            1734
           ],
-          "msPerPage": 1.82,
+          "msPerPage": 1.8,
           "outputMB": 13.95,
           "files": 1018
         }
@@ -235,10 +235,10 @@
       "label": "React Router",
       "based": "React",
       "path": "/shop-react-router/",
-      "entryContentReadyMs": 174.1,
-      "listingActReadyMs": 2959.2,
-      "sortLatencyMs": 29.4,
-      "addLatencyMs": 2,
+      "entryContentReadyMs": 170.2,
+      "listingActReadyMs": 2956.7,
+      "sortLatencyMs": 17.6,
+      "addLatencyMs": 1.1,
       "firstReliableClickMs": 2000,
       "clickLoss": [
         {
@@ -294,44 +294,44 @@
       },
       "resilienceTotal": 8,
       "resilienceMax": 18,
-      "homeJsGzip": 106661,
-      "searchJsGzip": 106662,
-      "checkoutJsGzip": 106557,
-      "outputBytes": 1172778,
+      "homeJsGzip": 106776,
+      "searchJsGzip": 106677,
+      "checkoutJsGzip": 106425,
+      "outputBytes": 1139478,
       "scale": [
         {
           "size": 100,
-          "coldMs": 1873,
-          "warmMs": 1863,
+          "coldMs": 1794,
+          "warmMs": 1810,
           "coldSamples": [
-            1883,
-            1866,
-            1873
+            1783,
+            1794,
+            1804
           ],
           "warmSamples": [
-            1887,
-            1863,
-            1852
+            1810,
+            1810,
+            1800
           ],
-          "msPerPage": 18.73,
+          "msPerPage": 17.94,
           "outputMB": 1.09,
           "files": 125
         },
         {
           "size": 1000,
-          "coldMs": 3200,
-          "warmMs": 3104,
+          "coldMs": 2949,
+          "warmMs": 2963,
           "coldSamples": [
-            3200,
-            3227,
-            3158
+            2949,
+            2946,
+            3016
           ],
           "warmSamples": [
-            3091,
-            3104,
-            3128
+            2963,
+            2941,
+            3005
           ],
-          "msPerPage": 3.2,
+          "msPerPage": 2.95,
           "outputMB": 7.04,
           "files": 1025
         }
@@ -342,10 +342,10 @@
       "label": "TanStack Start",
       "based": "React",
       "path": "/shop-tanstack/",
-      "entryContentReadyMs": 173.1,
-      "listingActReadyMs": 2950.2,
-      "sortLatencyMs": 7.6,
-      "addLatencyMs": 1.8,
+      "entryContentReadyMs": 170.4,
+      "listingActReadyMs": 2907,
+      "sortLatencyMs": 13.7,
+      "addLatencyMs": 1,
       "firstReliableClickMs": 2000,
       "clickLoss": [
         {
@@ -401,45 +401,45 @@
       },
       "resilienceTotal": 9,
       "resilienceMax": 18,
-      "homeJsGzip": 106487,
-      "searchJsGzip": 106410,
-      "checkoutJsGzip": 106076,
-      "outputBytes": 1696658,
+      "homeJsGzip": 106464,
+      "searchJsGzip": 106389,
+      "checkoutJsGzip": 106046,
+      "outputBytes": 1701783,
       "scale": [
         {
           "size": 100,
-          "coldMs": 2153,
-          "warmMs": 2136,
+          "coldMs": 2083,
+          "warmMs": 2056,
           "coldSamples": [
-            2117,
-            2153,
-            2164
+            2075,
+            2096,
+            2083
           ],
           "warmSamples": [
-            2168,
-            2136,
-            2133
+            2084,
+            2026,
+            2056
           ],
-          "msPerPage": 21.53,
-          "outputMB": 1.59,
+          "msPerPage": 20.83,
+          "outputMB": 1.62,
           "files": 130
         },
         {
           "size": 1000,
-          "coldMs": 3038,
-          "warmMs": 3031,
+          "coldMs": 2922,
+          "warmMs": 2895,
           "coldSamples": [
-            3037,
-            3099,
-            3038
+            2975,
+            2922,
+            2910
           ],
           "warmSamples": [
-            3031,
-            3004,
-            3087
+            2895,
+            2884,
+            2943
           ],
-          "msPerPage": 3.04,
-          "outputMB": 9.87,
+          "msPerPage": 2.92,
+          "outputMB": 9.86,
           "files": 1030
         }
       ]
@@ -449,10 +449,10 @@
       "label": "Next.js App Router",
       "based": "React",
       "path": "/shop-next-app/",
-      "entryContentReadyMs": 175.2,
-      "listingActReadyMs": 3768.4,
-      "sortLatencyMs": 29.9,
-      "addLatencyMs": 2.1,
+      "entryContentReadyMs": 177.8,
+      "listingActReadyMs": 3536.6,
+      "sortLatencyMs": 26.8,
+      "addLatencyMs": 0.9,
       "firstReliableClickMs": 3000,
       "clickLoss": [
         {
@@ -508,46 +508,46 @@
       },
       "resilienceTotal": 8,
       "resilienceMax": 18,
-      "homeJsGzip": 149035,
-      "searchJsGzip": 149734,
-      "checkoutJsGzip": 147821,
-      "outputBytes": 5067667,
+      "homeJsGzip": 137410,
+      "searchJsGzip": 138086,
+      "checkoutJsGzip": 136032,
+      "outputBytes": 4443336,
       "scale": [
         {
           "size": 100,
-          "coldMs": 3536,
-          "warmMs": 3628,
+          "coldMs": 4615,
+          "warmMs": 3334,
           "coldSamples": [
-            3740,
-            3510,
-            3536
+            4690,
+            4615,
+            4527
           ],
           "warmSamples": [
-            3646,
-            3628,
-            3623
+            3334,
+            3341,
+            3326
           ],
-          "msPerPage": 35.36,
-          "outputMB": 4.68,
-          "files": 1018
+          "msPerPage": 46.15,
+          "outputMB": 4.24,
+          "files": 576
         },
         {
           "size": 1000,
-          "coldMs": 4668,
-          "warmMs": 5159,
+          "coldMs": 5637,
+          "warmMs": 4858,
           "coldSamples": [
-            4668,
-            4646,
-            4777
+            5668,
+            5618,
+            5637
           ],
           "warmSamples": [
-            5291,
-            5152,
-            5159
+            4813,
+            4858,
+            4873
           ],
-          "msPerPage": 4.67,
-          "outputMB": 35.76,
-          "files": 9118
+          "msPerPage": 5.64,
+          "outputMB": 32.17,
+          "files": 5076
         }
       ]
     }

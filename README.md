@@ -235,7 +235,7 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 
 1. **TanStack Start — 서브경로 배포에서 SPA 전환 무한 대기 (실버그)**
    `@tanstack/start-static-server-functions`가 프리렌더된 서버 함수 캐시를 origin 루트(`/__tsr/staticServerFnCache/...`) 절대 경로로 fetch합니다. GitHub Pages처럼 `/<repo>/` 서브경로에 배포하면 이 요청이 404가 나면서 라우트가 pending에 갇혀 클라이언트 전환이 영영 끝나지 않습니다(딥링크는 프리렌더 HTML이라 정상 → 로컬 dev에선 재현 안 됨). 이 레포에서는 해당 미들웨어를 base-aware로 벤더링해 우회했습니다(`apps/tanstack-router/src/lib/staticFunctionMiddleware.ts`, `import.meta.env.BASE_URL` 접두).
-   **2026-08-08 재확인: 미수정.** 최신 `1.167.24`(2026-08-07 발행)의 `dist/`에 `BASE_URL`·`basepath`·`baseUrl`·`import.meta.env` 문자열이 하나도 없습니다. 우회는 계속 필요합니다.
+   **2026-08-08 재확인: 미수정** (`1.167.24` — `dist/`에 base 처리 문자열 전무). **2026-08-12 재확인 (`react-start 1.168.42` / `start-plugin-core 1.171.33`): 절반 해소.** base 무시 버그 자체는 사라졌습니다 — 문제의 `@tanstack/start-static-server-functions` 패키지가 제거되고 서버 함수 호출이 빌드 타임 define `TSS_SERVER_FN_BASE = joinPaths(["/", routerBasepath, serverFnBase, "/"])` 기반 RPC로 재설계되어 요청이 base-프리픽스됩니다(실측: 우회 제거 빌드에서 404 URL이 `/kudzu-based-bench/tanstack/_serverFn/<id>` — base는 정확). 대신 프리렌더 결과를 정적 JSON으로 폴백하는 메커니즘이 통째로 사라져, 서버 없는 정적 호스트에서는 클라이언트 전환이 라이브 RPC 404 → `Invariant failed`로 여전히 깨집니다(무한 pending에서 에러로 증상만 바뀜). 벤더링한 미들웨어는 이제 base 우회가 아니라 **정적 캐시 기능 자체**를 제공하는 역할로 계속 필요합니다.
 2. **Next.js App Router — `output: "export"`에서 `generateStaticParams()`가 빈 배열이면 빌드 실패**
    Pages Router(`getStaticPaths` → `paths: []`, `fallback: false`)는 빈 컬렉션을 그대로 허용하지만, App Router는 정적 export에서 동적 라우트가 최소 1개 경로를 내놓지 못하면 빌드가 죽습니다. 이 레포는 빈 컬렉션일 때 sentinel 경로(`_none`) + `dynamicParams = false` + `notFound()` 조합으로 방어합니다(`apps/next-app/src/app/news/post/[id]/page.tsx`). 같은 프레임워크의 두 라우터가 같은 상황에서 다르게 동작하는 사례.
 3. **VitePress — 동적 라우트는 디렉터리형 pretty URL을 만들 수 없음**

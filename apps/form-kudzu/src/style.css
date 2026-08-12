@@ -1,0 +1,17 @@
+/* Shared wizard styling for the form fixture. Kept byte-identical in
+   content across every variant so layout, paint, and interaction cost are
+   directly comparable. */
+.wizard{max-width:560px;margin:2rem auto;padding:0 1rem;font-family:system-ui,sans-serif;color:#1a1a1a}
+.wizard-progress{display:flex;gap:.5rem;list-style:none;padding:0;font-size:.85rem;color:#888}
+.wizard-progress li[aria-current="step"]{color:#1a1a1a;font-weight:600}
+.wizard-progress li+li::before{content:"→";margin-right:.5rem;color:#ccc}
+.field{margin:1rem 0}
+.field label{display:block;font-size:.9rem;margin-bottom:.25rem}
+.field input[type="text"],.field input[type="email"],.field select{width:100%;padding:.5rem;border:1px solid #ccc;border-radius:6px;font-size:1rem;box-sizing:border-box}
+fieldset.field{border:1px solid #e0e0e0;border-radius:6px;padding:.75rem}
+fieldset.field label{display:inline-flex;align-items:center;gap:.35rem;margin-right:1rem}
+.wizard-next{padding:.6rem 1.4rem;border:0;border-radius:6px;background:#1a1a1a;color:#fff;font-size:1rem;cursor:pointer}
+.wizard-back{margin-left:.75rem;font-size:.9rem;color:#666}
+.summary{border:1px solid #e0e0e0;border-radius:6px;padding:1rem;display:grid;grid-template-columns:6rem 1fr;gap:.5rem}
+.summary dt{color:#888;font-size:.9rem}.summary dd{margin:0}
+.done-ref{font-size:1.2rem;font-weight:700;letter-spacing:.05em}

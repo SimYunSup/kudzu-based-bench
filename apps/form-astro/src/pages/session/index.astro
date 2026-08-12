@@ -1,0 +1,64 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SESSIONS, DIET_OPTIONS } from "../../lib/wizard";
+---
+
+<Layout title="세션 선택 — 워크숍 신청">
+  <main class="wizard">
+    <ol class="wizard-progress">
+      <li>참가자 정보</li>
+      <li aria-current="step">세션 선택</li>
+      <li>확인</li>
+    </ol>
+    <form class="wizard-step" data-step="2" method="get" action="../review/">
+      <h1>세션 선택</h1>
+      <p class="field">
+        <label for="session">세션</label>
+        <select id="session" name="session" required>
+          <option value="">세션을 선택하세요</option>
+          {SESSIONS.map(session => (
+            <option value={session.id}>{session.id} — {session.title}</option>
+          ))}
+        </select>
+      </p>
+      <fieldset class="field">
+        <legend>식단 옵션</legend>
+        {DIET_OPTIONS.map(diet => (
+          <label><input type="checkbox" name="diet" value={diet.id} /> {diet.label}</label>
+        ))}
+      </fieldset>
+      <p class="field">
+        <label for="coupon">쿠폰 코드</label>
+        <input id="coupon" name="coupon" type="text" pattern="[A-Z]{4}-[0-9]{4}" placeholder="ABCD-1234" />
+      </p>
+      <div class="carried" hidden>
+        <input type="hidden" name="name" disabled />
+        <input type="hidden" name="email" disabled />
+        <input type="hidden" name="type" disabled />
+        <input type="hidden" name="team" disabled />
+      </div>
+      <button class="wizard-next" type="submit">다음</button>
+      <a class="wizard-back" href="../">이전</a>
+    </form>
+  </main>
+</Layout>
+
+<script>
+  // Carry step-1 values forward as hidden inputs, prefilled from the query
+  // string. Keys absent from the query stay disabled so they never
+  // pollute the next step's URL with an empty `key=` pair.
+  const params = new URLSearchParams(location.search);
+  const carried = document.querySelector(".carried");
+  const keys = ["name", "email", "type", "team"];
+  for (const key of keys) {
+    const input = carried?.querySelector<HTMLInputElement>(`input[name="${key}"]`);
+    if (!input) continue;
+    const value = params.get(key);
+    if (value !== null) {
+      input.value = value;
+      input.disabled = false;
+    } else {
+      input.disabled = true;
+    }
+  }
+</script>

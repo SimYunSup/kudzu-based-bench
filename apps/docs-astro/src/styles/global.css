@@ -1,0 +1,174 @@
+/* Docs fixture styling — plain and functional. Layout/typography is not
+   part of the cross-framework DOM contract, only class names/structure are,
+   so this file is free to differ from the other docs-* variants. */
+:root {
+  --ink: #16150f;
+  --muted: #6c6a5e;
+  --line: #e3e0d6;
+  --bg: #fbfaf6;
+  --accent: #2f5d3a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+  line-height: 1.6;
+}
+
+a {
+  color: inherit;
+}
+
+/* Header */
+.doc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.9rem 1.5rem;
+  border-bottom: 1px solid var(--line);
+}
+
+.doc-header-title {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.doc-header #search {
+  min-width: 16rem;
+}
+
+/* Home */
+.home {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem;
+}
+
+.site-title {
+  font-size: 2rem;
+  margin: 0 0 1.5rem;
+}
+
+.section-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+}
+
+.section-card {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+}
+
+.section-card h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.section-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Guide layout */
+.doc-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  gap: 2rem;
+  max-width: 1080px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  font-size: 0.9rem;
+}
+
+.sidebar-group {
+  margin-bottom: 1.25rem;
+}
+
+.sidebar-group h2 {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+  margin: 0 0 0.4rem;
+}
+
+.sidebar-group ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar-group li a {
+  display: block;
+  padding: 0.2rem 0;
+  text-decoration: none;
+  color: var(--muted);
+}
+
+.sidebar-group li a[aria-current="page"] {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.doc-title {
+  margin: 0 0 1.25rem;
+  font-size: 1.75rem;
+}
+
+.doc-body h2 {
+  margin: 1.75rem 0 0.75rem;
+  font-size: 1.25rem;
+}
+
+.doc-body p {
+  margin: 0 0 1rem;
+  color: var(--ink);
+}
+
+.doc-body pre {
+  background: #1a1a1a;
+  color: #f5f5f0;
+  padding: 1rem;
+  border-radius: 6px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.doc-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 2.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--line);
+}
+
+.doc-prev,
+.doc-next {
+  text-decoration: none;
+  color: var(--accent);
+  font-size: 0.9rem;
+}
+
+.doc-next {
+  margin-left: auto;
+}

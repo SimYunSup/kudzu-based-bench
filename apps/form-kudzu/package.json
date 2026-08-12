@@ -1,0 +1,16 @@
+{
+  "name": "@otw/form-kudzu",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "kudzu dev",
+    "build": "kudzu build"
+  },
+  "dependencies": {
+    "@kudzujs/core": "^0.8.39"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

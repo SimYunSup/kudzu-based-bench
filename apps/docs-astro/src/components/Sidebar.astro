@@ -1,0 +1,34 @@
+---
+import { corpus, docHref } from "../lib/docs";
+import { withBase } from "../lib/site";
+
+interface Props {
+  currentSlug: string;
+}
+
+const { currentSlug } = Astro.props;
+---
+
+<nav class="sidebar">
+  {
+    corpus.sections.map(section => (
+      <div class="sidebar-group">
+        <h2>{section.title}</h2>
+        <ul>
+          {corpus.pages
+            .filter(page => page.section === section.handle)
+            .map(page => (
+              <li>
+                <a
+                  href={withBase(docHref(page))}
+                  aria-current={page.slug === currentSlug ? "page" : undefined}
+                >
+                  {page.title}
+                </a>
+              </li>
+            ))}
+        </ul>
+      </div>
+    ))
+  }
+</nav>

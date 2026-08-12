@@ -29,6 +29,21 @@
  *                  gap the journey's actReady is trying to report.
  *   stepLatency    event -> next paint for each in-page interaction, the
  *                  same definition INP uses.
+ *   navLatency     gesture -> target content visible, for two real
+ *                  navigations: opening a product from the grid with an
+ *                  actual anchor click (a router intercepts it, a document
+ *                  site loads a new page) and history.back() to the grid.
+ *                  Timed on a wall clock parked in sessionStorage, the only
+ *                  clock that survives a document swap and also exists for
+ *                  a same-document router transition.
+ *   backState      what survived the detail round trip: the filter text,
+ *                  the sort order, the scroll position. Commerce's most
+ *                  common gesture is back, and no forward-only replay sees
+ *                  what it destroys.
+ *   sessionBytes   every byte the browser pulled over the whole session,
+ *                  from CDP. Per-route JS (shop-assets) cannot see prefetch
+ *                  waste; a router that speculatively fetches payloads for
+ *                  links the shopper never follows pays here.
  *
  * Everything is measured in-page. External CDP polling adds 40+ ms to short
  * operations (see kudzu's own PERFORMANCE.md, which discarded a run for
@@ -156,11 +171,13 @@ function startServer(distDir, variant) {
 }
 
 async function applyThrottling(page, options) {
-  if (!options.throttle) return;
+  // The CDP session is created unconditionally: session transfer accounting
+  // needs the Network domain even in a --no-throttle run.
   const session = await page.context().newCDPSession(page);
+  await session.send("Network.enable");
+  if (!options.throttle) return session;
   await session.send("Emulation.setCPUThrottlingRate", { rate: options.cpu });
   const profile = NETWORK[options.net];
-  await session.send("Network.enable");
   await session.send("Network.emulateNetworkConditions", {
     offline: false,
     latency: profile.latency,
@@ -236,11 +253,47 @@ const INTERACT = `(actionSource, verifySource, budget) => new Promise(resolve =>
   attempt();
 })`;
 
+/**
+ * Arrival probe for real navigations (anchor click, history.back()).
+ *
+ * performance.now() restarts with the document and navigationStart does not
+ * exist for a same-document router transition, so the gesture timestamp is
+ * parked in sessionStorage (same-origin, survives the swap) and the probe
+ * reports wall-clock delta the moment the target content is in the DOM —
+ * in whichever document ends up rendering it.
+ */
+const NAV_ARRIVED = `(selector, pattern, budget) => new Promise(resolve => {
+  const t0 = Number(sessionStorage.getItem('bench-nav-t0'));
+  const matches = () => {
+    const node = document.querySelector(selector);
+    return node && node.textContent.trim() && (!pattern || new RegExp(pattern).test(node.textContent));
+  };
+  const done = () => resolve(Date.now() - t0);
+  if (matches()) return done();
+  const observer = new MutationObserver(() => { if (matches()) { observer.disconnect(); done(); } });
+  observer.observe(document, { childList: true, subtree: true, characterData: true });
+  setTimeout(() => { observer.disconnect(); resolve(null); }, budget);
+})`;
+
 /** One full shopping session in one fresh context. */
 async function runSession(browser, origin, variant, options) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
-  await applyThrottling(page, options);
+  const cdp = await applyThrottling(page, options);
+
+  // Whole-session transfer, straight from the network stack. The local
+  // server sends identity encoding, so wire bytes equal raw bytes: absolute
+  // numbers overstate a gzip host, but every variant is served identically
+  // and prefetch waste is visible regardless of encoding.
+  const transfer = { totalBytes: 0, scriptBytes: 0, requests: 0 };
+  const resourceTypes = new Map();
+  cdp.on("Network.responseReceived", event => resourceTypes.set(event.requestId, event.type));
+  cdp.on("Network.loadingFinished", event => {
+    transfer.totalBytes += event.encodedDataLength;
+    transfer.requests += 1;
+    if (resourceTypes.get(event.requestId) === "Script") transfer.scriptBytes += event.encodedDataLength;
+  });
+
   const url = suffix => `${origin}${BASE_PATH}/${variant}${suffix}`;
   const steps = [];
 
@@ -266,6 +319,28 @@ async function runSession(browser, origin, variant, options) {
     );
     if (!result.ok) throw new Error(`${label}: interaction never took effect within 8000 ms`);
     steps.push({ step: label, actReady: result.actReady, stepLatency: result.stepLatency });
+  };
+
+  // Real-gesture navigation (anchor click, history.back()). The probe is
+  // retried in a loop because an MPA navigation destroys the execution
+  // context the first evaluate started in; the retry lands in the new
+  // document, where the sessionStorage clock is still ticking.
+  const navigate = async (label, gestureSource, selector, pattern) => {
+    await page.evaluate(`sessionStorage.setItem('bench-nav-t0', String(Date.now())); (${gestureSource})();`);
+    const deadline = Date.now() + 20000;
+    for (;;) {
+      try {
+        const navMs = await page.evaluate(
+          `(${NAV_ARRIVED})(${JSON.stringify(selector)}, ${JSON.stringify(pattern ?? null)}, 15000)`
+        );
+        if (navMs === null) throw new Error(`${label}: target content never arrived within 15000 ms`);
+        steps.push({ step: label, navMs });
+        return;
+      } catch (error) {
+        if (String(error.message ?? error).includes("never arrived") || Date.now() > deadline) throw error;
+        await page.waitForTimeout(25);
+      }
+    }
   };
 
   // 1. Entry from an ad or search result: empty cache, deep link to a product.
@@ -295,8 +370,15 @@ async function runSession(browser, origin, variant, options) {
     `() => { const titles = [...document.querySelectorAll('.tile-title')].map(node => node.textContent); return titles.length > 0 && titles.length < 40 && titles.every(title => title.includes('스웨터')); }`
   );
 
-  // 3. Listing -> detail -> variant -> add -> checkout.
-  await visit("nav:detail", "/product/p-00002/", ".product-price", "[0-9]");
+  // 3. The shopper scrolls the grid, opens a product with a real anchor
+  //    click (a router intercepts it, a document site loads a page), buys,
+  //    and goes back expecting the grid exactly as they left it. The click
+  //    lands on the first filtered tile — the product identity differs from
+  //    the old fixed p-00002 deep link, but every detail page is the same
+  //    template over the same bytes, and a real shopper opens what the
+  //    filter surfaced.
+  await page.evaluate("window.scrollTo(0, 600)");
+  await navigate("nav:detail", "() => document.querySelector('a.tile').click()", ".product-price", "[0-9]");
   await interact(
     "selectVariant",
     "fieldset:nth-of-type(2) .option",
@@ -309,10 +391,22 @@ async function runSession(browser, origin, variant, options) {
     `() => document.querySelector('.add-to-cart').click()`,
     `() => Boolean(document.querySelector('.add-confirm'))`
   );
+  await navigate("back:listing", "() => history.back()", ".tile-title");
+  // What survived the round trip. Chrome restores scroll asynchronously
+  // after a document load, so sample after a settle delay.
+  const backState = await page.evaluate(`new Promise(resolve => setTimeout(() => {
+    const titles = [...document.querySelectorAll('.tile-title')].map(node => node.textContent || '');
+    resolve({
+      filterKept: (document.querySelector('#q')?.value || '') === '스웨터'
+        && titles.length > 0 && titles.length < 40 && titles.every(title => title.includes('스웨터')),
+      sortKept: document.querySelector('.search-controls select')?.value === 'price',
+      scrollRestored: Math.abs(window.scrollY - 600) < 100
+    });
+  }, 300))`);
   await visit("nav:checkout", "/checkout/", ".checkout h1");
 
   await context.close();
-  return steps;
+  return { steps, transfer, backState };
 }
 
 /**
@@ -494,20 +588,36 @@ async function main() {
     const sessions = [];
     for (let run = 0; run < options.runs; run++) sessions.push(await runSession(browser, origin, options.variant, options));
 
-    const stepNames = sessions[0].map(entry => entry.step);
+    const stepNames = sessions[0].steps.map(entry => entry.step);
     const rows = stepNames.map(name => {
-      const samples = sessions.map(session => session.find(entry => entry.step === name));
+      const samples = sessions.map(session => session.steps.find(entry => entry.step === name));
       const pick = key => samples.map(sample => sample[key]).filter(value => value !== undefined);
       const contentReady = pick("contentReady");
       const actReady = pick("actReady");
       const stepLatency = pick("stepLatency");
+      const nav = pick("navMs");
       return {
         step: name,
         contentReadyMs: contentReady.length ? +median(contentReady).toFixed(1) : null,
         actReadyMs: actReady.length ? +median(actReady).toFixed(1) : null,
-        stepLatencyMs: stepLatency.length ? +median(stepLatency).toFixed(1) : null
+        stepLatencyMs: stepLatency.length ? +median(stepLatency).toFixed(1) : null,
+        navMs: nav.length ? +median(nav).toFixed(1) : null
       };
     });
+
+    // Session-wide transfer and back-navigation state, aggregated across the
+    // measured sessions (booleans as survival counts, bytes as medians).
+    const sessionTransfer = {
+      totalKB: +(median(sessions.map(session => session.transfer.totalBytes)) / 1024).toFixed(1),
+      scriptKB: +(median(sessions.map(session => session.transfer.scriptBytes)) / 1024).toFixed(1),
+      requests: median(sessions.map(session => session.transfer.requests))
+    };
+    const backNavigation = {
+      sessions: sessions.length,
+      filterKept: sessions.filter(session => session.backState.filterKept).length,
+      sortKept: sessions.filter(session => session.backState.sortKept).length,
+      scrollRestored: sessions.filter(session => session.backState.scrollRestored).length
+    };
 
     const clickRuns = [];
     for (let run = 0; run < options.runs; run++) clickRuns.push(await runClickLoss(browser, origin, options.variant, options));
@@ -529,6 +639,8 @@ async function main() {
       throttling: options.throttle ? { cpu: `${options.cpu}x`, network: options.net } : "none",
       measuredAt: new Date().toISOString(),
       steps: rows,
+      sessionTransfer,
+      backNavigation,
       clickLoss: loss,
       timeToFirstReliableClickMs: firstReliable ? firstReliable.delay : null,
       resilience
@@ -539,16 +651,23 @@ async function main() {
     writeFileSync(file, `${JSON.stringify(report, null, 2)}\n`);
 
     console.log(`\n${options.variant} — ${options.runs} sessions, ${report.throttling === "none" ? "unthrottled" : `${options.cpu}x CPU / ${options.net}`}\n`);
-    console.log("step                content ready       act ready     step latency");
+    console.log("step                content ready       act ready     step latency              nav");
     for (const row of rows) {
       const cell = value => (value === null ? "—" : `${value} ms`);
       console.log(
         row.step.padEnd(20),
         cell(row.contentReadyMs).padStart(13),
         cell(row.actReadyMs).padStart(14),
-        cell(row.stepLatencyMs).padStart(16)
+        cell(row.stepLatencyMs).padStart(16),
+        cell(row.navMs).padStart(16)
       );
     }
+    console.log(`\nsession transfer: ${sessionTransfer.totalKB} KB total, ${sessionTransfer.scriptKB} KB script, ${sessionTransfer.requests} requests`);
+    console.log(
+      `back to listing: filter ${backNavigation.filterKept}/${backNavigation.sessions}, ` +
+      `sort ${backNavigation.sortKept}/${backNavigation.sessions}, ` +
+      `scroll ${backNavigation.scrollRestored}/${backNavigation.sessions} survived`
+    );
     console.log("\nimpatient tap (add-to-cart at first paint + delay)");
     for (const entry of loss) console.log(`  +${String(entry.delay).padStart(4)} ms   loss ${String(entry.lossPct).padStart(5)}%   (${entry.attempts} attempts)`);
     console.log(`\ntime to first reliable click: ${report.timeToFirstReliableClickMs === null ? "never within 1000 ms" : `${report.timeToFirstReliableClickMs} ms after first paint`}`);

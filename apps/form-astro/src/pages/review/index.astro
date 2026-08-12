@@ -1,0 +1,102 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import { SESSIONS, DIET_OPTIONS } from "../../lib/wizard";
+---
+
+<Layout title="확인 — 워크숍 신청">
+  <main class="wizard">
+    <ol class="wizard-progress">
+      <li>참가자 정보</li>
+      <li>세션 선택</li>
+      <li aria-current="step">확인</li>
+    </ol>
+    <form class="wizard-step" data-step="3" method="get" action="../done/">
+      <h1>신청 내용 확인</h1>
+      <dl class="summary">
+        <dt>이름</dt>
+        <dd class="summary-name"></dd>
+        <dt>이메일</dt>
+        <dd class="summary-email"></dd>
+        <dt>참가 유형</dt>
+        <dd class="summary-type"></dd>
+        <dt>팀 이름</dt>
+        <dd class="summary-team"></dd>
+        <dt>세션</dt>
+        <dd class="summary-session"></dd>
+        <dt>식단</dt>
+        <dd class="summary-diet"></dd>
+        <dt>쿠폰</dt>
+        <dd class="summary-coupon"></dd>
+      </dl>
+      <p class="field confirm-row">
+        <label><input id="confirm" name="confirm" type="checkbox" required /> 위 내용이 맞습니다</label>
+      </p>
+      <div class="carried" hidden>
+        <input type="hidden" name="name" disabled />
+        <input type="hidden" name="email" disabled />
+        <input type="hidden" name="type" disabled />
+        <input type="hidden" name="team" disabled />
+        <input type="hidden" name="session" disabled />
+        <input type="hidden" name="diet" disabled />
+        <input type="hidden" name="coupon" disabled />
+      </div>
+      <button class="wizard-next" type="submit">신청하기</button>
+      <a class="wizard-back" href="../session/">이전</a>
+    </form>
+  </main>
+</Layout>
+
+<script define:vars={{ SESSIONS, DIET_OPTIONS }}>
+  // Render the read-only summary and re-carry every collected value as
+  // hidden inputs (diet is multi-valued, so it's cloned once per value).
+  const params = new URLSearchParams(location.search);
+
+  const typeLabel = value => (value === "team" ? "팀" : value === "individual" ? "개인" : "");
+  const sessionLabel = value => {
+    const session = SESSIONS.find(entry => entry.id === value);
+    return session ? `${session.id} — ${session.title}` : "";
+  };
+  const dietLabel = values => {
+    if (!values.length) return "";
+    return values.map(value => DIET_OPTIONS.find(entry => entry.id === value)?.label ?? value).join(", ");
+  };
+
+  const setText = (selector, text) => {
+    const el = document.querySelector(selector);
+    if (el) el.textContent = text || "—";
+  };
+
+  setText(".summary-name", params.get("name"));
+  setText(".summary-email", params.get("email"));
+  setText(".summary-type", typeLabel(params.get("type")));
+  setText(".summary-team", params.get("team"));
+  setText(".summary-session", sessionLabel(params.get("session")));
+  setText(".summary-diet", dietLabel(params.getAll("diet")));
+  setText(".summary-coupon", params.get("coupon"));
+
+  const carried = document.querySelector(".carried");
+  const singleKeys = ["name", "email", "type", "team", "session", "coupon"];
+  for (const key of singleKeys) {
+    const input = carried?.querySelector(`input[name="${key}"]`);
+    if (!input) continue;
+    const value = params.get(key);
+    if (value !== null) {
+      input.value = value;
+      input.disabled = false;
+    } else {
+      input.disabled = true;
+    }
+  }
+
+  const dietTemplate = carried?.querySelector('input[name="diet"]');
+  const dietValues = params.getAll("diet");
+  if (dietTemplate) {
+    dietTemplate.remove();
+    for (const value of dietValues) {
+      const clone = dietTemplate.cloneNode();
+      clone.value = value;
+      clone.disabled = false;
+      carried.appendChild(clone);
+    }
+  }
+</script>

@@ -1,0 +1,23 @@
+---
+// Pagefind writes its default UI bundle straight into the build output
+// (dist/pagefind/pagefind-ui.{js,css}) — it does not exist until the
+// `pagefind --site dist` step chained after `astro build` runs, so these
+// tags must stay untouched by Astro's own script/style processing.
+import { withBase } from "../lib/site";
+---
+
+<header class="doc-header">
+  <a class="doc-header-title" href={withBase("/")}>Vine 문서</a>
+  <div id="search"></div>
+</header>
+
+<link rel="stylesheet" href={withBase("/pagefind/pagefind-ui.css")} />
+<script is:inline src={withBase("/pagefind/pagefind-ui.js")}></script>
+<script is:inline>
+  window.addEventListener("DOMContentLoaded", () => {
+    if (typeof PagefindUI !== "undefined") {
+      // eslint-disable-next-line no-undef -- global from pagefind-ui.js
+      new PagefindUI({ element: "#search", showSubResults: true });
+    }
+  });
+</script>

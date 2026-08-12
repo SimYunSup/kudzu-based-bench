@@ -103,9 +103,10 @@ export const MIME_TYPES = {
  *
  * @param {string} repoRoot absolute path to the monorepo root
  * @param {string} siteDir absolute path to assemble the Pages artifact into
- * @param {{ toolName?: string, shop?: boolean }} [opts] error-message prefix
- *   (defaults to "site-server") and whether to include the commerce fixture
- *   (defaults to true, skipped when those apps have not been built)
+ * @param {{ toolName?: string, shop?: boolean, form?: boolean, docs?: boolean }} [opts]
+ *   error-message prefix (defaults to "site-server") and whether to include
+ *   the commerce / form-wizard / docs fixtures (each defaults to true,
+ *   skipped when those apps have not been built)
  */
 export function assembleSite(repoRoot, siteDir, opts = {}) {
   const toolName = opts.toolName ?? "site-server";
@@ -145,6 +146,40 @@ export function assembleSite(repoRoot, siteDir, opts = {}) {
     console.error(`${toolName}: commerce variants requested but not built. Run \`pnpm run build:shop\` first.`);
     process.exit(1);
   }
+
+  // Form-wizard fixture, same optional pattern as the commerce fixture.
+  // form-react-router flattens its own output (scripts/flatten-build.mjs).
+  const formSources = {
+    "form-kudzu": path.join(repoRoot, "apps/form-kudzu/dist"),
+    "form-astro": path.join(repoRoot, "apps/form-astro/dist"),
+    "form-tanstack": path.join(repoRoot, "apps/form-tanstack/dist"),
+    "form-next-app": path.join(repoRoot, "apps/form-next-app/out"),
+    "form-react-router": path.join(repoRoot, "apps/form-react-router/build/client"),
+  };
+  const includeForm = opts.form !== false && Object.values(formSources).every(existsSync);
+  if (includeForm) {
+    Object.assign(distSources, formSources);
+  } else if (opts.form) {
+    console.error(`${toolName}: form variants requested but not built. Run \`pnpm run build:form\` first.`);
+    process.exit(1);
+  }
+
+  // Docs+search fixture, same optional pattern.
+  const docsSources = {
+    "docs-kudzu": path.join(repoRoot, "apps/docs-kudzu/dist"),
+    "docs-astro": path.join(repoRoot, "apps/docs-astro/dist"),
+    "docs-eleventy": path.join(repoRoot, "apps/docs-eleventy/_site"),
+    "docs-docusaurus": path.join(repoRoot, "apps/docs-docusaurus/build"),
+    "docs-vitepress": path.join(repoRoot, "apps/docs-vitepress/.vitepress/dist"),
+  };
+  const includeDocs = opts.docs !== false && Object.values(docsSources).every(existsSync);
+  if (includeDocs) {
+    Object.assign(distSources, docsSources);
+  } else if (opts.docs) {
+    console.error(`${toolName}: docs variants requested but not built. Run \`pnpm run build:docs\` first.`);
+    process.exit(1);
+  }
+
   const reactRouterClient = path.join(repoRoot, "apps/react-router/build/client");
   const landingDir = path.join(repoRoot, "landing");
 

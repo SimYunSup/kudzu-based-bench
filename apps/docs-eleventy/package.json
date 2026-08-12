@@ -1,0 +1,16 @@
+{
+  "name": "@otw/docs-eleventy",
+  "private": true,
+  "type": "module",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "eleventy && pagefind --site _site"
+  },
+  "dependencies": {
+    "@otw/docs-data": "workspace:*"
+  },
+  "devDependencies": {
+    "@11ty/eleventy": "^3.1.6",
+    "pagefind": "^1.5.2"
+  }
+}

@@ -338,6 +338,44 @@
       </div>
       <p class="bench-foot" id="shop-foot"></p>
     </section>
+    <section class="bench" aria-labelledby="form-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="form-title">폼 위저드 픽스처</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#폼-위저드-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        같은 3단계 신청 위저드(네이티브 GET 폼 체인 + 쿼리스트링 상태 운반)를 다섯
+        프레임워크로 구현했습니다. 점진적 향상 — 스크립트가 늦거나 빠졌을 때 무엇이
+        살아남는지 — 이 판정 기준입니다. 완주 결과 레퍼런스 코드는 다섯 변형이
+        바이트 동일해야 합니다.
+      </p>
+      <ul class="variants">
+        <li><a class="variant" href="/kudzu-based-bench/form-kudzu/"><span class="name">form-kudzu</span><span class="desc">네이티브 폼 + effect 모듈 프리필</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-astro/"><span class="name">form-astro</span><span class="desc">정적 마크업 + 페이지별 인라인 스크립트</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-react-router/"><span class="name">form-react-router</span><span class="desc">언컨트롤드 폼 + useEffect 프리필, 전 라우트 prerender</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-tanstack/"><span class="name">form-tanstack</span><span class="desc">validateSearch 타입드 서치 파라미터 + 커스텀 서치 코덱</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-next-app/"><span class="name">form-next-app</span><span class="desc">App Router 클라이언트 컴포넌트 + Suspense 경계 useSearchParams</span></a></li>
+      </ul>
+    </section>
+    <section class="bench" aria-labelledby="docs-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="docs-title">문서 + 검색 픽스처</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#문서--검색-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        결정론 코퍼스(기본 120페이지)로 만든 같은 문서 사이트에 클라이언트 검색을
+        얹었습니다. 검색 첫 결과까지의 지연과 그때까지 내려받은 인덱스 바이트가
+        판정 기준입니다. kudzu·astro·eleventy는 Pagefind, docusaurus·vitepress는
+        각자의 내장 로컬 검색.
+      </p>
+      <ul class="variants">
+        <li><a class="variant" href="/kudzu-based-bench/docs-kudzu/"><span class="name">docs-kudzu</span><span class="desc">codegen 상대 모듈 + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-astro/"><span class="name">docs-astro</span><span class="desc">getStaticPaths + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-eleventy/"><span class="name">docs-eleventy</span><span class="desc">pagination 전역 데이터 + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-docusaurus/"><span class="name">docs-docusaurus</span><span class="desc">표준 docs 플러그인 + @easyops-cn 로컬 검색</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-vitepress/"><span class="name">docs-vitepress</span><span class="desc">기본 테마 + 내장 local search (minisearch)</span></a></li>
+      </ul>
+    </section>
     <footer>
       <a href="https://github.com/SimYunSup/kudzu-based-bench">GitHub 저장소</a>
       · 원본: <a href="https://ones-to-watch.ethansup.net">ones-to-watch.ethansup.net</a>

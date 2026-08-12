@@ -1,0 +1,18 @@
+{
+  "name": "@otw/docs-docusaurus",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "build": "node scripts/gen-docs.mjs && docusaurus build"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.2",
+    "@docusaurus/preset-classic": "^3.10.2",
+    "@docusaurus/plugin-content-docs": "^3.10.2",
+    "@easyops-cn/docusaurus-search-local": "^0.55.3",
+    "@mdx-js/react": "^3.1.1",
+    "@otw/docs-data": "workspace:*",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  }
+}

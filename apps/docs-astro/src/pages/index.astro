@@ -1,0 +1,28 @@
+---
+import Layout from "../components/Layout.astro";
+import { corpus, docHref } from "../lib/docs";
+import { withBase } from "../lib/site";
+
+// corpus.pages is built section-by-section (see @otw/docs-data getDocs), so
+// the first match for a section handle is that section's first page.
+const CARDS = corpus.sections.map(section => ({
+  section,
+  href: withBase(docHref(corpus.pages.find(page => page.section === section.handle)!))
+}));
+---
+
+<Layout title="Vine 문서">
+  <main class="home">
+    <h1 class="site-title">Vine 문서</h1>
+    <div class="section-cards">
+      {
+        CARDS.map(({ section, href }) => (
+          <a class="section-card" href={href}>
+            <h2>{section.title}</h2>
+            <p>{section.description}</p>
+          </a>
+        ))
+      }
+    </div>
+  </main>
+</Layout>

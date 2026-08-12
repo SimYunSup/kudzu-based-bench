@@ -1,0 +1,33 @@
+---
+import Layout from "../../layouts/Layout.astro";
+---
+
+<Layout title="신청 완료 — 워크숍 신청">
+  <main class="wizard">
+    <h1 class="done-title">신청 완료</h1>
+    <p class="done-ref"></p>
+    <p class="done-summary">확인 메일을 <span class="done-email"></span>로 보냈습니다.</p>
+    <a class="done-home" href="../">처음으로</a>
+  </main>
+</Layout>
+
+<script>
+  // Must byte-for-byte match every other form-* variant's refCode().
+  function refCode(params: URLSearchParams): string {
+    const keys = ["name", "email", "type", "team", "session", "diet", "coupon"];
+    const canonical = keys.map(k => `${k}=${params.getAll(k).join(",")}`).join("|");
+    let h = 2166136261;
+    for (let i = 0; i < canonical.length; i += 1) {
+      h ^= canonical.charCodeAt(i);
+      h = Math.imul(h, 16777619);
+    }
+    return "REF-" + (h >>> 0).toString(16).toUpperCase().padStart(8, "0");
+  }
+
+  const params = new URLSearchParams(location.search);
+  const refEl = document.querySelector(".done-ref");
+  if (refEl) refEl.textContent = refCode(params);
+
+  const emailEl = document.querySelector(".done-email");
+  if (emailEl) emailEl.textContent = params.get("email") ?? "";
+</script>

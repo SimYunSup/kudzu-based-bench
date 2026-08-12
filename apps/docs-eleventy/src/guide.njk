@@ -1,0 +1,50 @@
+---
+pagination:
+  data: docs.pages
+  size: 1
+  alias: doc
+permalink: "/guide/{{ doc.section }}/{{ doc.slug }}/"
+layout: base.njk
+eleventyComputed:
+  title: "{{ doc.title }} | Vine 문서"
+  description: "{{ doc.description }}"
+---
+{#- `doc` is this template's pagination alias (see front matter above),
+    deliberately not named `page` — that would shadow Eleventy's own
+    built-in `page` global (page.url, page.date, ...). #}
+<main class="doc-page">
+  <nav class="sidebar">
+    {%- for section in docs.sections %}
+    <div class="sidebar-group">
+      <p class="sidebar-section-title">{{ section.title }}</p>
+      <ul>
+        {%- for p in docs.pages %}
+        {%- if p.section == section.handle %}
+        <li>
+          <a
+            href="{{ site.base }}/guide/{{ p.section }}/{{ p.slug }}/"
+            {%- if p.section == doc.section and p.slug == doc.slug %} aria-current="page"{% endif %}
+            >{{ p.title }}</a
+          >
+        </li>
+        {%- endif %}
+        {%- endfor %}
+      </ul>
+    </div>
+    {%- endfor %}
+  </nav>
+  <div class="doc-content" data-pagefind-body>
+    <h1 class="doc-title">{{ doc.title }}</h1>
+    <article class="doc-body">{{ doc.body | markdown | safe }}</article>
+    <nav class="doc-pager">
+      {%- if doc.order > 0 %}
+      {%- set prevDoc = docs.pages[doc.order - 1] %}
+      <a class="doc-prev" href="{{ site.base }}/guide/{{ prevDoc.section }}/{{ prevDoc.slug }}/">← {{ prevDoc.title }}</a>
+      {%- endif %}
+      {%- if doc.order < docs.pages.length - 1 %}
+      {%- set nextDoc = docs.pages[doc.order + 1] %}
+      <a class="doc-next" href="{{ site.base }}/guide/{{ nextDoc.section }}/{{ nextDoc.slug }}/">{{ nextDoc.title }} →</a>
+      {%- endif %}
+    </nav>
+  </div>
+</main>

@@ -1,0 +1,8 @@
+# Not added to the repo root .gitignore (owned by the orchestrator) —
+# scoped here instead since it's identical in spirit to every other app's
+# entries there (build output + generator artifacts).
+docs/
+src/generated/
+build/
+.docusaurus/
+node_modules/

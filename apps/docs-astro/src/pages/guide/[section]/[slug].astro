@@ -1,0 +1,38 @@
+---
+import Layout from "../../../components/Layout.astro";
+import Sidebar from "../../../components/Sidebar.astro";
+import { corpus, docHref, neighbors } from "../../../lib/docs";
+import { renderBody } from "../../../lib/markdown";
+import { withBase } from "../../../lib/site";
+
+export function getStaticPaths() {
+  return corpus.pages.map(page => ({ params: { section: page.section, slug: page.slug } }));
+}
+
+const { section, slug } = Astro.params;
+const page = corpus.pages.find(entry => entry.section === section && entry.slug === slug)!;
+const { prev, next } = neighbors(page);
+const bodyHtml = renderBody(page);
+---
+
+<Layout title={`${page.title} — Vine 문서`}>
+  <div class="doc-layout">
+    <Sidebar currentSlug={page.slug} />
+    <div class="doc-main" data-pagefind-body>
+      <h1 class="doc-title">{page.title}</h1>
+      <article class="doc-body" set:html={bodyHtml} />
+      <nav class="doc-pager">
+        {prev && (
+          <a class="doc-prev" href={withBase(docHref(prev))}>
+            ← {prev.title}
+          </a>
+        )}
+        {next && (
+          <a class="doc-next" href={withBase(docHref(next))}>
+            {next.title} →
+          </a>
+        )}
+      </nav>
+    </div>
+  </div>
+</Layout>

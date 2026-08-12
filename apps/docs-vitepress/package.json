@@ -1,0 +1,18 @@
+{
+  "name": "@otw/docs-vitepress",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "node scripts/gen-docs.mjs && vitepress dev",
+    "build": "node scripts/gen-docs.mjs && vitepress build"
+  },
+  "dependencies": {
+    "@otw/docs-data": "workspace:*",
+    "vitepress": "^1.6.4",
+    "vue": "^3.5.41"
+  },
+  "devDependencies": {
+    "typescript": "^5.9.3"
+  }
+}

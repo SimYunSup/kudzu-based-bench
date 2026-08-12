@@ -1,0 +1,30 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{{ title }}</title>
+    {%- if description %}
+    <meta name="description" content="{{ description }}" />
+    {%- endif %}
+    <link rel="stylesheet" href="{{ site.base }}/style.css" />
+    {#- Pagefind's own build output — written after Eleventy by this app's
+        "build" script (`eleventy && pagefind --site _site`), so these paths
+        don't exist yet when Eleventy renders this HTML, only once the full
+        build script finishes. #}
+    <link rel="stylesheet" href="{{ site.base }}/pagefind/pagefind-ui.css" />
+  </head>
+  <body>
+    <header class="doc-header">
+      <a class="doc-header-home" href="{{ site.base }}/">Vine 문서</a>
+      <div id="search"></div>
+    </header>
+    {{ content | safe }}
+    <script src="{{ site.base }}/pagefind/pagefind-ui.js"></script>
+    <script>
+      window.addEventListener("DOMContentLoaded", () => {
+        new PagefindUI({ element: "#search", showSubResults: true });
+      });
+    </script>
+  </body>
+</html>

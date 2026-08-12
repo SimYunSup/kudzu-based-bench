@@ -1,0 +1,56 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout title="참가자 정보 — 워크숍 신청">
+  <main class="wizard">
+    <ol class="wizard-progress">
+      <li aria-current="step">참가자 정보</li>
+      <li>세션 선택</li>
+      <li>확인</li>
+    </ol>
+    <form class="wizard-step" data-step="1" method="get" action="session/">
+      <h1>참가자 정보</h1>
+      <p class="field">
+        <label for="name">이름</label>
+        <input id="name" name="name" type="text" required minlength="2" autocomplete="name" />
+      </p>
+      <p class="field">
+        <label for="email">이메일</label>
+        <input id="email" name="email" type="email" required autocomplete="email" />
+      </p>
+      <fieldset class="field">
+        <legend>참가 유형</legend>
+        <label><input type="radio" name="type" value="individual" checked /> 개인</label>
+        <label><input type="radio" name="type" value="team" /> 팀</label>
+      </fieldset>
+      <p class="field team-row">
+        <label for="team-name">팀 이름</label>
+        <input id="team-name" name="team" type="text" />
+      </p>
+      <button class="wizard-next" type="submit">다음</button>
+    </form>
+  </main>
+</Layout>
+
+<script>
+  // Progressive enhancement: JS-off leaves the team-name field always
+  // visible and optional. JS-on hides/disables it for the individual
+  // default and requires it once "team" is picked.
+  const teamRow = document.querySelector<HTMLElement>(".team-row");
+  const teamInput = document.querySelector<HTMLInputElement>("#team-name");
+  const typeRadios = document.querySelectorAll<HTMLInputElement>('input[name="type"]');
+
+  function syncTeamRow() {
+    const checked = document.querySelector<HTMLInputElement>('input[name="type"]:checked');
+    const isTeam = checked?.value === "team";
+    if (teamRow) teamRow.hidden = !isTeam;
+    if (teamInput) {
+      teamInput.disabled = !isTeam;
+      teamInput.required = isTeam;
+    }
+  }
+
+  typeRadios.forEach(radio => radio.addEventListener("change", syncTeamRow));
+  syncTeamRow();
+</script>

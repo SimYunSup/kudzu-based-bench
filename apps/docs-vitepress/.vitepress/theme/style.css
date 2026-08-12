@@ -1,0 +1,46 @@
+/* Home page only — guide pages rely entirely on the default theme's own
+   styles (.vp-doc, .VPSidebar, etc.), matching every other markup contract
+   patched in .vitepress/config.ts rather than restyled here. */
+.site-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+}
+
+.site-tagline {
+  margin-top: 0.5rem;
+  color: var(--vp-c-text-2);
+  font-size: 1.1rem;
+}
+
+.section-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+.section-card {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--vp-c-divider);
+  border-radius: 8px;
+  color: inherit;
+  transition: border-color 0.25s;
+}
+
+.section-card:hover {
+  border-color: var(--vp-c-brand-1);
+}
+
+.section-card h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.05rem;
+  border: none;
+  padding: 0;
+}
+
+.section-card p {
+  margin: 0;
+  color: var(--vp-c-text-2);
+  font-size: 0.9rem;
+}

@@ -1,0 +1,17 @@
+---
+layout: base.njk
+title: Vine 문서
+description: Vine 프레임워크 공식 문서.
+permalink: /
+---
+<main class="home">
+  <h1 class="site-title">Vine 문서</h1>
+  <div class="section-grid">
+    {%- for section in docs.sectionEntry %}
+    <a class="section-card" href="{{ site.base }}/guide/{{ section.handle }}/{{ section.firstSlug }}/">
+      <h2>{{ section.title }}</h2>
+      <p>{{ section.description }}</p>
+    </a>
+    {%- endfor %}
+  </div>
+</main>

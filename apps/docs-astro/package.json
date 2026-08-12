@@ -1,0 +1,21 @@
+{
+  "name": "@otw/docs-astro",
+  "type": "module",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build && pagefind --site dist",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@otw/docs-data": "workspace:*",
+    "astro": "^7.2.1"
+  },
+  "devDependencies": {
+    "@types/node": "^24.13.3",
+    "pagefind": "^1.5.2",
+    "typescript": "^5.9.3"
+  }
+}

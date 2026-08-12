@@ -1,0 +1,58 @@
+/* Docs fixture's own minimal styling. Not shared with the form-* fixture's
+   wizard.css (different DOM contract) and not ported from apps/docusaurus'
+   kudzu-matched style.css (different visual target — this is a plain docs
+   site, not a newsletter port). Docusaurus's classic theme (Infima) already
+   supplies typography/spacing for `.markdown`/sidebar/pagination-nav; this
+   file only adds the classes the docs fixture's DOM contract requires. */
+
+.site-title {
+  margin: 2rem 0 1.5rem;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.section-card {
+  display: block;
+  padding: 1.25rem;
+  border: 1px solid var(--ifm-toc-border-color);
+  border-radius: 8px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease;
+}
+
+.section-card:hover {
+  border-color: var(--ifm-color-primary);
+  text-decoration: none;
+}
+
+.section-card h2 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+}
+
+.section-card p {
+  margin: 0;
+  font-size: 0.9rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.doc-title {
+  margin-top: 0;
+}
+
+.doc-body {
+  margin-top: 1rem;
+}
+
+.doc-prev,
+.doc-next {
+  display: inline-block;
+  margin: 2rem 1rem 0 0;
+  font-weight: 600;
+}

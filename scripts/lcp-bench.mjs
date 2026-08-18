@@ -159,33 +159,46 @@ function parseArgs(argv) {
  *
  * This is the one place this harness deliberately departs from its sibling
  * benches, and the reason is a measured defect in the tooling, not taste.
- * Under `Network.emulateNetworkConditions` this Chromium build stops
- * reporting a late-arriving image as an LCP candidate at all: the hero photo
- * finishes at 7,531 ms, the browser paints it, and the only candidate ever
- * emitted is the product title from the first frame. The same page, delayed
- * the same amount by the *server* instead, reports `IMG` correctly. Measured
- * both ways on the same build (Chromium 151):
+ * While `Network.emulateNetworkConditions` is active, this Chromium reports
+ * no image LCP candidate at all — not "a late one is missed": an image that
+ * finishes in 20 ms under an effectively unlimited emulated link is dropped
+ * just the same, and the only candidate ever emitted is the product title.
+ * Disable emulation, or produce the same delay in the server, and `IMG` is
+ * reported normally. Measured on Chromium 151, headless_shell and
+ * `channel: "chromium"` alike:
  *
- *   no throttling                image at   20 ms -> IMG candidate
- *   CPU 4x only                  image at   15 ms -> IMG candidate
- *   CDP Slow 4G                  image at 7531 ms -> title only
- *   CDP Slow 4G + CPU 4x         image at 7542 ms -> title only
- *   server-paced 3 s delay       image at 3016 ms -> IMG candidate
+ *   no emulation                        image at    8 ms -> IMG candidate
+ *   CPU 4x only, no emulation           image at   15 ms -> IMG candidate
+ *   CDP emulation, 50 Mbps / 0 ms       image at   20 ms -> title only
+ *   CDP emulation, Slow 4G              image at  529 ms -> title only
+ *   CDP emulation, Slow 4G + CPU 4x     image at 7542 ms -> title only
+ *   server-side 3 s delay               image at 3014 ms -> IMG candidate
+ *   server-paced Slow 4G (this harness) image at 7166 ms -> IMG candidate
  *
- * An LCP harness that cannot see image candidates measures nothing on a
- * storefront, so the network is modelled here: one shared token bucket for
- * the whole page load (bandwidth is shared in reality, so per-response
- * pacing would overstate throughput by the number of parallel requests) plus
- * a fixed first-byte delay per request. CPU throttling stays on CDP, where
- * it is well behaved.
+ * A storefront's LCP element is a photograph, so a harness that cannot see
+ * image candidates measures nothing here. The network is therefore modelled
+ * in the server: one shared token bucket for the whole page load (bandwidth
+ * is shared in reality, so per-response pacing would overstate throughput by
+ * the number of parallel requests) plus a fixed first-byte delay per
+ * request. CPU throttling stays on CDP, where it is well behaved.
+ *
+ * Consequence for the numbers: absolute LCP here is not comparable with the
+ * sibling benches' CDP-throttled figures. Bytes-over-link dominates, and it
+ * lands where the arithmetic says — the photo finishes at
+ * bytesBeforeLcp / 204.6 KB/s (measured) against a 200 KB/s budget.
  */
 function createBucket(bytesPerSecond) {
-  let available = bytesPerSecond;
+  // Starts empty, and never banks more than a 64 KB burst. Seeding it with a
+  // full second of tokens handed the first ~200 KB out for free, which showed
+  // up as an effective 227 KB/s against a 200 KB/s budget — a 13% error on
+  // every LCP figure, and the largest error in the model.
+  const CEILING = 64 * 1024;
+  let available = 0;
   let last = Date.now();
   return async function take(bytes) {
     for (;;) {
       const now = Date.now();
-      available = Math.min(bytesPerSecond, available + ((now - last) / 1000) * bytesPerSecond);
+      available = Math.min(CEILING, available + ((now - last) / 1000) * bytesPerSecond);
       last = now;
       if (available >= bytes) {
         available -= bytes;
@@ -318,6 +331,17 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
     const navigation = performance.getEntriesByType("navigation")[0];
     const last = candidates.length ? candidates[candidates.length - 1] : null;
     const resource = last && last.url ? performance.getEntriesByName(new URL(last.url, location.href).href)[0] : null;
+
+    // Everything that finished downloading before the LCP element did. On a
+    // bandwidth-limited connection these bytes are the LCP element's
+    // competition, so publishing them turns "the photo queues behind the
+    // bundles" from a story into a number that can be checked per variant.
+    const lcpAt = last ? last.ms : Infinity;
+    const before = performance
+      .getEntriesByType("resource")
+      .filter(entry => entry.responseEnd > 0 && entry.responseEnd <= lcpAt);
+    const sum = entries => entries.reduce((total, entry) => total + (entry.encodedBodySize || entry.transferSize || 0), 0);
+
     resolve({
       fcpMs: paint ? +paint.startTime.toFixed(1) : null,
       loadEventMs: navigation && navigation.loadEventEnd ? +navigation.loadEventEnd.toFixed(1) : null,
@@ -325,7 +349,9 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
       lcp: last,
       // Same-origin resources, so encodedBodySize is populated without a
       // Timing-Allow-Origin dance.
-      lcpBytes: resource ? resource.encodedBodySize || resource.transferSize || null : null
+      lcpBytes: resource ? resource.encodedBodySize || resource.transferSize || null : null,
+      bytesBeforeLcp: sum(before),
+      scriptBytesBeforeLcp: sum(before.filter(entry => entry.initiatorType === "script" || /\\.m?js(\\?|$)/.test(entry.name)))
     });
   };
 
@@ -423,13 +449,17 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
         lcpUrl: last.lcp.url,
         lcpBytes: last.lcpBytes,
         lcpCandidates: median(samples.map(sample => sample.candidates.length)),
-        lcpFirstCandidateMs: +median(samples.map(sample => sample.candidates[0].ms)).toFixed(1)
+        lcpFirstCandidateMs: +median(samples.map(sample => sample.candidates[0].ms)).toFixed(1),
+        // The LCP element's competition for bandwidth: bytes that finished
+        // downloading before it did.
+        bytesBeforeLcp: Math.round(median(samples.map(sample => sample.bytesBeforeLcp))),
+        scriptBytesBeforeLcp: Math.round(median(samples.map(sample => sample.scriptBytesBeforeLcp)))
       };
       rows.push(row);
       console.log(
         `  ${row.route.padEnd(8)} FCP ${String(row.fcpMs).padStart(8)} ms   LCP ${String(row.lcpMs).padStart(8)} ms   ` +
           `${row.lcpKind} ${row.lcpElement}${row.lcpBytes ? ` (${(row.lcpBytes / 1024).toFixed(1)} KB)` : ""}` +
-          `${row.lcpCandidates > 1 ? `   후보 ${row.lcpCandidates}개, 첫 후보 ${row.lcpFirstCandidateMs} ms` : ""}`
+          `   LCP 전 ${(row.bytesBeforeLcp / 1024).toFixed(1)} KB(스크립트 ${(row.scriptBytesBeforeLcp / 1024).toFixed(1)} KB)`
       );
     }
   } finally {

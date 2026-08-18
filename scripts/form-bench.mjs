@@ -392,16 +392,24 @@ async function runDegradation(browser, origin, variant, key) {
   const url = suffix => `${origin}${BASE_PATH}/${variant}${suffix}`;
   let scriptCount = 0;
 
-  await page.route("**/*.js", async route => {
-    if (condition.block) return route.abort();
-    if (condition.dropNth !== undefined) {
-      scriptCount++;
-      if (scriptCount === condition.dropNth + 1) return route.abort();
+  // Matcher, not a glob: `**/*.js` misses a retry with a cache-busting query.
+  // Astro's island loader re-requests a failed island script as
+  // `client.<hash>.js?astro-retry=<timestamp>`, which does not end in `.js`,
+  // so a glob-blocked run delivered the island runtime anyway. An ad blocker
+  // or a CDN outage matches by path, not by query.
+  await page.route(
+    requestUrl => /\.m?js$/.test(requestUrl.pathname),
+    async route => {
+      if (condition.block) return route.abort();
+      if (condition.dropNth !== undefined) {
+        scriptCount++;
+        if (scriptCount === condition.dropNth + 1) return route.abort();
+        return route.continue();
+      }
+      if (condition.delayMs) await new Promise(resolve => setTimeout(resolve, condition.delayMs));
       return route.continue();
     }
-    if (condition.delayMs) await new Promise(resolve => setTimeout(resolve, condition.delayMs));
-    return route.continue();
-  });
+  );
 
   const settle = async () => {
     await page.waitForLoadState("domcontentloaded");

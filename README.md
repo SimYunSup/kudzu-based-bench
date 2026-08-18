@@ -141,17 +141,23 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 
 <img src="assets/charts/ko/lcp-vs-actready.svg" width="880" alt="커머스 상품 상세: 21 KB 타일과 1.4 MB 사진 조건의 LCP, 그리고 리스팅 actReady">
 
-LCP를 헤드라인에 안 뒀던 이유가 데이터로 확인됩니다. 기본 픽스처(21 KB 타일)에서 상품 상세 LCP는 320–540 ms에 몰려 있고 스프레드가 1.7배인데, 같은 다섯 빌드의 "조작 가능해지기까지"는 250 ms와 3,537 ms로 **14.1배** 벌어집니다. LCP가 재는 건 사진이 도착하는 시간이고, 그 사진은 다섯 변형이 md5까지 같은 파일입니다.
+LCP를 헤드라인에 안 뒀던 이유가 데이터로 확인됩니다. 기본 픽스처(21 KB 타일)에서 상품 상세 LCP는 316–504 ms에 몰려 있고 스프레드가 1.6배인데, 같은 다섯 빌드의 "조작 가능해지기까지"는 250 ms와 3,537 ms로 **14.1배** 벌어집니다. LCP가 재는 건 사진이 도착하는 시간이고, 그 사진은 다섯 변형이 md5까지 같은 파일(`584e3d7f`, 1,483,575 B)입니다.
 
-그래서 사진을 실제 상점 무게(1.4 MB)로 올려서 다시 쟀습니다(`OTW_IMAGE_WEIGHT=heavy`). LCP는 6.5–10.2초로 뛰지만 순서를 만드는 건 여전히 프레임워크의 렌더링이 아니라 **대역폭 경쟁**입니다: 같은 파이프를 스크립트가 먼저 쓰기 때문에, 세션 스크립트 34 KB인 Kudzu의 사진이 455 KB인 Next.js보다 3.7초 먼저 도착합니다. 즉 LCP는 여기서 "JS를 얼마나 보내는가"를 우회적으로 재는 지표입니다 — 그걸 직접 재는 표가 이미 아래에 있습니다.
+그래서 사진을 실제 상점 무게(1.4 MB)로 올려서 다시 쟀습니다(`OTW_IMAGE_WEIGHT=heavy`). LCP는 7.2–10.9초로 뛰지만 순서를 만드는 건 프레임워크의 렌더링이 아니라 **대역폭 경쟁**이고, 이건 추론이 아니라 두 가지로 실측했습니다.
+
+첫째, 사진이 도착하는 시점은 그때까지 내려온 총 바이트를 링크 속도로 나눈 값입니다. `landing/lcp.json`의 `bytesBeforeLcp`로 검산됩니다 — Kudzu 1,466 KB / 7,168 ms, Astro 1,639 KB / 8,008 ms, TanStack 1,767 KB / 8,640 ms, React Router 1,771 KB / 8,656 ms는 전부 **204 KB/s**(서버 페이싱 예산 200 KB/s)로 떨어집니다. Next.js만 2,020 KB / 10,896 ms = 185 KB/s로 약 1초 선 위에 있습니다(스크립트 요청이 7개라 왕복이 더 붙지만, 이 1초의 원인은 따로 분리하지 않았습니다).
+
+둘째, 스크립트 요청을 전부 차단하면 다섯 변형이 **7,092–7,112 ms, 스프레드 1.00배**로 붙습니다(같은 빌드·같은 페이싱, `*.js` 경로 매칭으로 차단, 차단된 스크립트 Kudzu 3개 · Astro 13개 · React Router 8개 · TanStack 4개 · Next 7개). 렌더링이 원인이라면 스크립트를 없앤다고 다섯이 20 ms 안으로 수렴하지 않습니다. 즉 LCP는 여기서 "JS를 얼마나 보내는가"를 우회적으로 재는 지표입니다 — 그걸 직접 재는 표가 이미 아래에 있습니다.
+
+무거운 사진을 리스팅 그리드에는 적용하지 않았습니다. 측정해 보면 홈 한 번 로드에 사진 9장 12.7 MB, `load` 이벤트까지 **63.7초**가 걸립니다 — 실제 상점도 그리드에 원본을 올리지 않으므로 heavy 조건은 상품 상세 라우트만 잽니다.
 
 <img src="assets/charts/ko/lcp-by-fixture.svg" width="880" alt="픽스처별 진입 라우트에서 브라우저가 고른 LCP 요소와 시간">
 
-LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트인 픽스처**입니다. 문서 딥링크에서 브라우저가 고른 건 본문 `p`이고, Eleventy 352 ms 대 VitePress 1,140 ms로 3.2배 차이가 납니다 — 마크업이 완성돼 오는지, 클라이언트가 본문을 다시 그리는지가 그대로 드러납니다.
+LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트인 픽스처**입니다. 문서 딥링크에서 브라우저가 고른 건 본문 `p`(Eleventy만 `article.doc-body`)이고, Eleventy 348 ms 대 VitePress 1,960 ms로 5.6배 차이가 납니다. 원인은 하이드레이션이 아닙니다 — 확인해 보니 **다섯 변형 모두 본문 텍스트가 정적 HTML에 들어 있고, 스크립트를 전부 차단해도 텍스트는 그려집니다**(Eleventy 352 ms · Kudzu 372 ms · Astro 344 ms · Docusaurus 620 ms · VitePress 1,396 ms). 갈리는 건 첫 페인트를 막는 자원 체인의 길이입니다: 같은 페이지에서 Eleventy는 요청 2개로 317 ms에 마지막 바이트를 받고, VitePress는 요청 5개(js 1 · css 2)로 1,310 ms에 받습니다. RTT 150 ms 링크에서 이 왕복 수가 그대로 LCP가 됩니다.
 
 뉴스레터 픽스처는 이 벤치에서 뺐습니다. 홈의 최대 요소가 Notion 이미지이고 변형마다 이미지 파이프라인이 다르므로(sharp / unoptimized / 원본 복사) LCP가 프레임워크가 아니라 이미지 도구를 재게 됩니다. 그 픽스처의 Lighthouse LCP는 `pnpm run perf:bench`가 냅니다.
 
-측정에서 걸린 함정 하나는 그대로 기록해 둡니다: **CDP `Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 아예 보고하지 않습니다.** 1.4 MB 사진이 7,531 ms에 도착해 화면에 그려져도 후보는 첫 프레임의 제목뿐입니다. 같은 지연을 서버에서 만들면 정상적으로 `IMG`가 잡힙니다. 그래서 이 벤치만 대역폭을 CDP가 아니라 서버(공유 토큰 버킷)로 모델링합니다 — 조건별 측정표는 `scripts/lcp-bench.mjs` 주석에 있습니다.
+측정에서 걸린 함정 하나는 그대로 기록해 둡니다: **CDP `Network.emulateNetworkConditions`가 켜져 있는 동안 이 크로미움은 이미지 LCP 후보를 아예 보고하지 않습니다.** "늦게 온 이미지를 놓친다"가 아니라 전부입니다 — 50 Mbps · 지연 0으로 에뮬레이션을 켜 두면 20 ms에 끝난 이미지조차 후보에 없고, 후보는 첫 프레임의 제목뿐입니다. 에뮬레이션을 끄거나 같은 지연을 서버에서 만들면 `IMG`가 정상적으로 잡힙니다(headless_shell과 `channel: "chromium"` 둘 다 동일, Chromium 151). 그래서 이 벤치만 대역폭을 CDP가 아니라 서버(공유 토큰 버킷)로 모델링합니다 — 조건별 측정표는 `scripts/lcp-bench.mjs` 주석에 있습니다. 대신 이 벤치의 절대값은 CDP로 스로틀하는 형제 벤치들과 직접 비교할 수 없습니다.
 
 <details>
 <summary>전 픽스처 · 전 라우트 LCP 측정치</summary>
@@ -160,38 +166,38 @@ LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트�
 <!-- lcp:start -->
 | 픽스처 | 라우트 | 이미지 | 변형 | FCP | LCP | LCP−FCP | LCP 요소 | LCP 자원 |
 | --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: |
-| 커머스 | 홈 | 21 KB 타일 | Astro | 212 ms | 364 ms | 152 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | Kudzu | 356 ms | 512 ms | 156 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | React Router | 512 ms | 732 ms | 236 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | TanStack | 356 ms | 980 ms | 636 ms | 이미지 `img` | 21.8 KB |
-| 커머스 | 홈 | 21 KB 타일 | Next.js | 368 ms | 1068 ms | 700 ms | 이미지 `img` | 22.2 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | Astro | 212 ms | 320 ms | 104 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | TanStack | 352 ms | 352 ms | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | Kudzu | 356 ms | 356 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | Kudzu | 356 ms | 528 ms | 172 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | Astro | 208 ms | 584 ms | 376 ms | 이미지 `img` | 21.3 KB |
+| 커머스 | 홈 | 21 KB 타일 | TanStack | 352 ms | 608 ms | 256 ms | 이미지 `img` | 21.3 KB |
+| 커머스 | 홈 | 21 KB 타일 | Next.js | 356 ms | 748 ms | 392 ms | 이미지 `img` | 22.2 KB |
+| 커머스 | 홈 | 21 KB 타일 | React Router | 504 ms | 1680 ms | 1176 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Astro | 208 ms | 316 ms | 112 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | TanStack | 348 ms | 348 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Kudzu | 352 ms | 352 ms | 0 ms | 이미지 `img` | 20.5 KB |
 | 커머스 | 상품 상세 | 21 KB 타일 | Next.js | 356 ms | 356 ms | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | React Router | 540 ms | 540 ms | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Kudzu | 356 ms | 512 ms | 156 ms | 이미지 `img` | 21.7 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Astro | 220 ms | 632 ms | 404 ms | 이미지 `img` | 21.7 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Next.js | 360 ms | 648 ms | 288 ms | 이미지 `img` | 22.0 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | React Router | 508 ms | 732 ms | 224 ms | 이미지 `img` | 21.7 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | TanStack | 356 ms | 984 ms | 628 ms | 이미지 `img` | 21.7 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | Kudzu | 356 ms | 6484 ms | 6128 ms | 이미지 `img` | 1448.8 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | Astro | 212 ms | 7328 ms | 7116 ms | 이미지 `img` | 1448.8 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | TanStack | 360 ms | 7952 ms | 7592 ms | 이미지 `img` | 1448.8 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | React Router | 508 ms | 7968 ms | 7456 ms | 이미지 `img` | 1448.8 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | Next.js | 352 ms | 10208 ms | 9848 ms | 이미지 `img` | 1448.8 KB |
-| 문서 | 문서 딥링크 | — | Eleventy | 352 ms | 352 ms | 0 ms | 텍스트 `article.doc-body` | — |
-| 문서 | 문서 딥링크 | — | Kudzu | 372 ms | 372 ms | 0 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | Astro | 192 ms | 380 ms | 184 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | Docusaurus | 392 ms | 392 ms | 0 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | VitePress | 1140 ms | 1140 ms | 0 ms | 텍스트 `p` | — |
-| 폼 위저드 | 1단계 | — | Astro | 196 ms | 196 ms | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | Kudzu | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
+| 커머스 | 상품 상세 | 21 KB 타일 | React Router | 504 ms | 504 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Astro | 216 ms | 524 ms | 304 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Kudzu | 356 ms | 548 ms | 192 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Next.js | 360 ms | 692 ms | 320 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | TanStack | 352 ms | 1096 ms | 744 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | React Router | 500 ms | 1696 ms | 1192 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Kudzu | 356 ms | 7168 ms | 6816 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Astro | 204 ms | 8008 ms | 7804 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | TanStack | 352 ms | 8640 ms | 8288 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | React Router | 500 ms | 8656 ms | 8140 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Next.js | 376 ms | 10896 ms | 10520 ms | 이미지 `img` | 1448.8 KB |
+| 문서 | 문서 딥링크 | — | Eleventy | 348 ms | 348 ms | 0 ms | 텍스트 `article.doc-body` | — |
+| 문서 | 문서 딥링크 | — | Kudzu | 368 ms | 368 ms | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Docusaurus | 540 ms | 540 ms | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Astro | 192 ms | 676 ms | 484 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | VitePress | 1960 ms | 1960 ms | 0 ms | 텍스트 `p` | — |
+| 폼 위저드 | 1단계 | — | Astro | 192 ms | 192 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Kudzu | 340 ms | 340 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | TanStack | 340 ms | 340 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Next.js | 340 ms | 340 ms | 0 ms | 텍스트 `h1` | — |
 | 폼 위저드 | 1단계 | — | React Router | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | TanStack | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | Next.js | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
 
-_`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 워밍업 1회를 버리고 5회를 잰 중앙값이며, 회차별 원본값은 `landing/lcp.json`의 `lcpSamples`에 있습니다. 브라우저 정의 그대로 `PerformanceObserver('largest-contentful-paint')`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. 하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). "이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(`OTW_IMAGE_WEIGHT`) — 기본은 21 KB 타일, `heavy`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. 대역폭은 CDP가 아니라 서버에서 모델링합니다(`Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — `scripts/lcp-bench.mjs` 주석에 측정표가 있습니다). 4x CPU · slow4g (server-paced) · 1280×900. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-18T05:11:57.406Z_
+_`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 워밍업 1회를 버리고 5회를 잰 중앙값이며, 회차별 원본값은 `landing/lcp.json`의 `lcpSamples`에 있습니다. 브라우저 정의 그대로 `PerformanceObserver('largest-contentful-paint')`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. 하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). "이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(`OTW_IMAGE_WEIGHT`) — 기본은 21 KB 타일, `heavy`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. 대역폭은 CDP가 아니라 서버에서 모델링합니다(`Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — `scripts/lcp-bench.mjs` 주석에 측정표가 있습니다). 4x CPU · slow4g (server-paced) · 1280×900. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-18T06:10:38.797Z_
 <!-- lcp:end -->
 
 </details>
@@ -328,6 +334,8 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
    기본 다중 환경 빌드가 `dist/client`(정적)와 `dist/server`(쓰지 않는 서버 번들)로 나눕니다. 정적 호스트에 그대로 올리면 한 단계 어긋납니다. `environments.client.build.outDir`로 고정했습니다(`apps/shop-tanstack/vite.config.ts`). 덤으로 `dist/server` 번들에는 빌드 머신의 절대 경로가 그대로 구워집니다.
 8. **Kudzu 0.8.x — 커머스·폼·문서를 컴파일하며 만난 문법 경계 7개**
    전부 `apps/shop-kudzu`·`apps/form-kudzu`·`apps/docs-kudzu` 소스에 주석으로 남겼습니다. 요약: (a) JSX 이벤트 핸들러 밖의 패키지 import 전면 거부 → 빌드 타임 데이터를 codegen으로 상대 모듈화해야 함, (b) imported 배열의 `.map()`은 JSX 밖에서도 keyed-list로 가로채여 거부 → `for` 루프, (c) 행 컴포넌트에 객체 prop 불가 → intrinsic 마크업 인라인, (d) 선택자 파이프라인(`filter`/`toSorted`)의 소스는 literal로 emit된 상대 import 배열만 가능, (e) `new CustomEvent` 거부로 컴포넌트 간 상태 통지 불가, (f) `navigation` 그룹이 멤버 라우트 전수 열거를 요구해 `getStaticPaths` 카탈로그에 적용 불가, (g) 핸들러·effect 안의 자유 식별자를 빌드 타임 캡처로 평가 — 지역 헬퍼 함수는 "not serializable"로, `instanceof HTMLElement` 같은 DOM 전역 참조는 빌드 렌더 중 `ReferenceError`로 거부. 핸들러 본문은 인라인 + 속성 조작(`setAttribute`)으로 내려가야 합니다.
+9. **Astro — 아일랜드 스크립트 실패 시 쿼리스트링을 붙여 재요청(측정 하네스를 조용히 무력화)**
+   아일랜드 로더는 실패한 스크립트를 `client.<hash>.js?astro-retry=<timestamp>`로 다시 요청합니다. 이 URL은 `.js`로 끝나지 않으므로 `page.route("**/*.js")`류의 글롭 차단을 그대로 통과하고, 광고 차단·CDN 장애를 모델링하는 조건에서 180 KB 아일랜드 런타임이 전부 도착합니다. 이 저장소의 `shop-bench.mjs`·`form-bench.mjs` 열화 내성 트랙이 이 글롭을 쓰고 있었고, 실측으로 확인한 뒤(차단 시도 후에도 스크립트 바이트 190 KB 도착) **경로(pathname) 매칭으로 고쳤습니다**. 다시 측정한 결과 점수 자체는 변하지 않았습니다(커머스 Astro 12/18, 폼 Astro 15/15, 대조군 폼 TanStack 7/15 — 전부 기존 게시값과 동일) — 재요청이 도착해도 1.5초 관측 창 안에서 기능이 되살아나지는 않았기 때문입니다. 프레임워크 버그는 아니지만, 요청 차단으로 열화를 모델링하는 어떤 측정에도 영향을 주는 문서화되지 않은 동작입니다.
 
 ## 검증 도구 (로컬 전용)
 

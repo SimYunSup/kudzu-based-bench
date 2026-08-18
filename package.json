@@ -27,6 +27,8 @@
     "visual:diff": "node ./scripts/visual-diff.mjs",
     "origin:diff": "node ./scripts/origin-diff.mjs",
     "perf:bench": "node ./scripts/perf-bench.mjs",
+    "lcp:bench": "node ./scripts/lcp-bench.mjs",
+    "charts": "node ./scripts/charts.mjs",
     "deploy:pages": "node ./scripts/deploy-pages.mjs",
     "test:e2e": "playwright test"
   },

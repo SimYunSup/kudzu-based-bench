@@ -13,6 +13,20 @@
 | [폼 위저드](#폼-위저드-벤치마크) | 5 | 점진적 향상, 스텝 간 상태 운반 | `build:form` · `form:bench` |
 | [문서 + 검색](#문서--검색-벤치마크) | 5 | 클라이언트 검색 지연, 인덱스 비용 | `build:docs` · `docs:bench` |
 
+## 한눈에 보기
+
+<img src="assets/charts/ko/commerce-session.svg" width="880" alt="커머스: 진입 contentReady와 리스팅 actReady 비교">
+
+<img src="assets/charts/ko/route-js.svg" width="880" alt="커머스 라우트별 초기 JavaScript(gzip)">
+
+<img src="assets/charts/ko/build-time.svg" width="880" alt="뉴스레터 10변형의 cold/warm 빌드 시간">
+
+<img src="assets/charts/ko/output-js.svg" width="880" alt="뉴스레터 10변형이 출력하는 JS 총량(로그 스케일)">
+
+<img src="assets/charts/ko/resilience.svg" width="880" alt="커머스 열화 내성: 조건별 생존 기능 개수">
+
+LCP는 [LCP](#lcp) 절에 두 조건으로 따로 있습니다. 전부 커밋된 측정치(`landing/benchmark.json`·`commerce.json`·`lcp.json`)에서 `pnpm run charts`가 생성하므로, 벤치를 다시 돌리지 않아도 같은 그림이 나옵니다.
+
 <details>
 <summary>이름과 측정 철학</summary>
 
@@ -102,7 +116,7 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 클라이언트 전환은 SPA 라우터가 실제로 이기는 축입니다(React Router·TanStack 182–185 ms). 대신 뒤로가기에서 정렬 상태를 버립니다 — 컴포넌트가 리마운트되며 select가 초기화되는 반면, 문서 내비게이션 쪽은 Chrome의 폼 복원이 살립니다. 세션 전송은 전 구간 CDP 실측이라 프리페치 낭비까지 포함하며, Kudzu와 Next 사이 스크립트 격차는 세션 전체 기준 13배입니다.
 
 <details>
-<summary>측정 세부: 지표 정의, Cold/Warm LCP를 쓰지 않는 이유, 뒤로가기 각주</summary>
+<summary>측정 세부: 지표 정의, cold/warm으로 쪼개지 않는 이유, 뒤로가기 각주</summary>
 
 | 지표 | 정의 |
 | --- | --- |
@@ -112,12 +126,74 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 | nav (클릭·뒤로가기) | 제스처 → 대상 콘텐츠 표시. sessionStorage 벽시계로 문서 스왑·라우터 전환 동일 측정 |
 | 클릭 유실률 | 첫 페인트 + Δ에 "담기"를 눌렀을 때 무시되는 비율 |
 | 세션 전송 | 세션 전 구간 CDP `Network` 실측 바이트(로컬 서버는 무압축 서빙 — 전 변형 동일 조건) |
+| LCP | 브라우저 정의 그대로 — `PerformanceObserver('largest-contentful-paint')`의 마지막 후보. 별도 하네스(`pnpm run lcp:bench`)로 재고 [LCP](#lcp) 절에 있습니다 |
 
-사람은 "cold 방문"과 "warm 방문"을 하지 않습니다. 한 세션 안에서 첫 페이지는 빈 캐시로 열고, 이후 페이지는 그 캐시를 물려받습니다. 두 버킷으로 쪼개면 비용이 세션에 어떻게 분포하는지가 사라지고, 커머스의 LCP는 상품 사진인데 이 픽스처의 이미지는 전 변형 바이트 동일이라 프레임워크에 대해 아무것도 말해주지 않습니다.
+사람은 "cold 방문"과 "warm 방문"을 하지 않습니다. 한 세션 안에서 첫 페이지는 빈 캐시로 열고, 이후 페이지는 그 캐시를 물려받습니다. 두 버킷으로 쪼개면 비용이 세션에 어떻게 분포하는지가 사라집니다. LCP를 이 표에 넣지 않는 이유는 따로입니다 — 이 픽스처에서 LCP 요소는 다섯 변형이 바이트 동일한 상품 사진이라 순위가 프레임워크를 가르지 못하고, 실측과 근거는 [LCP](#lcp) 절에 있습니다.
 
 클릭 유실 측정은 저널리와 **별도 세션**입니다. Δ 격자를 5초까지 훑으면 모듈 캐시가 데워져 뒤따르는 저널리의 actReady가 실제보다 훨씬 좋게 나옵니다(실제로 Next가 3,768 ms → 0.1 ms로 붕괴한 적이 있습니다).
 
 뒤로가기 상태는 도착 +300 ms 시점 샘플입니다. 필터(검색어 입력값 + 그리드 축소 상태)는 다섯 변형 모두 유실 — URL에 싣지 않는 컴포넌트 상태라서입니다. 스크롤 복원은 같은 창에서 다섯 변형 모두 미복원으로 측정되어 표에서 뺐습니다(CDP 스로틀링 하에서 복원 타이밍이 창 밖일 수 있어 변형 간 차이를 못 가르는 축).
+</details>
+
+### LCP
+
+"번들 크기랑 LCP도 재봤냐"는 이 저장소가 가장 많이 받는 질문입니다. 번들은 처음부터 재고 있었고(위 표의 `JS 크기`, 아래 라우트별 초기 JS, 세션 총 전송), LCP는 **재지 않고 이유만 적어둔 상태**였습니다. 그래서 실제로 쟀습니다 — `pnpm run lcp:bench`.
+
+<img src="assets/charts/ko/lcp-vs-actready.svg" width="880" alt="커머스 상품 상세: 21 KB 타일과 1.4 MB 사진 조건의 LCP, 그리고 리스팅 actReady">
+
+LCP를 헤드라인에 안 뒀던 이유가 데이터로 확인됩니다. 기본 픽스처(21 KB 타일)에서 상품 상세 LCP는 320–540 ms에 몰려 있고 스프레드가 1.7배인데, 같은 다섯 빌드의 "조작 가능해지기까지"는 250 ms와 3,537 ms로 **14.1배** 벌어집니다. LCP가 재는 건 사진이 도착하는 시간이고, 그 사진은 다섯 변형이 md5까지 같은 파일입니다.
+
+그래서 사진을 실제 상점 무게(1.4 MB)로 올려서 다시 쟀습니다(`OTW_IMAGE_WEIGHT=heavy`). LCP는 6.5–10.2초로 뛰지만 순서를 만드는 건 여전히 프레임워크의 렌더링이 아니라 **대역폭 경쟁**입니다: 같은 파이프를 스크립트가 먼저 쓰기 때문에, 세션 스크립트 34 KB인 Kudzu의 사진이 455 KB인 Next.js보다 3.7초 먼저 도착합니다. 즉 LCP는 여기서 "JS를 얼마나 보내는가"를 우회적으로 재는 지표입니다 — 그걸 직접 재는 표가 이미 아래에 있습니다.
+
+<img src="assets/charts/ko/lcp-by-fixture.svg" width="880" alt="픽스처별 진입 라우트에서 브라우저가 고른 LCP 요소와 시간">
+
+LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트인 픽스처**입니다. 문서 딥링크에서 브라우저가 고른 건 본문 `p`이고, Eleventy 352 ms 대 VitePress 1,140 ms로 3.2배 차이가 납니다 — 마크업이 완성돼 오는지, 클라이언트가 본문을 다시 그리는지가 그대로 드러납니다.
+
+뉴스레터 픽스처는 이 벤치에서 뺐습니다. 홈의 최대 요소가 Notion 이미지이고 변형마다 이미지 파이프라인이 다르므로(sharp / unoptimized / 원본 복사) LCP가 프레임워크가 아니라 이미지 도구를 재게 됩니다. 그 픽스처의 Lighthouse LCP는 `pnpm run perf:bench`가 냅니다.
+
+측정에서 걸린 함정 하나는 그대로 기록해 둡니다: **CDP `Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 아예 보고하지 않습니다.** 1.4 MB 사진이 7,531 ms에 도착해 화면에 그려져도 후보는 첫 프레임의 제목뿐입니다. 같은 지연을 서버에서 만들면 정상적으로 `IMG`가 잡힙니다. 그래서 이 벤치만 대역폭을 CDP가 아니라 서버(공유 토큰 버킷)로 모델링합니다 — 조건별 측정표는 `scripts/lcp-bench.mjs` 주석에 있습니다.
+
+<details>
+<summary>전 픽스처 · 전 라우트 LCP 측정치</summary>
+
+
+<!-- lcp:start -->
+| 픽스처 | 라우트 | 이미지 | 변형 | FCP | LCP | LCP−FCP | LCP 요소 | LCP 자원 |
+| --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: |
+| 커머스 | 홈 | 21 KB 타일 | Astro | 212 ms | 364 ms | 152 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | Kudzu | 356 ms | 512 ms | 156 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | React Router | 512 ms | 732 ms | 236 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | TanStack | 356 ms | 980 ms | 636 ms | 이미지 `img` | 21.8 KB |
+| 커머스 | 홈 | 21 KB 타일 | Next.js | 368 ms | 1068 ms | 700 ms | 이미지 `img` | 22.2 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Astro | 212 ms | 320 ms | 104 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | TanStack | 352 ms | 352 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Kudzu | 356 ms | 356 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Next.js | 356 ms | 356 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | React Router | 540 ms | 540 ms | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Kudzu | 356 ms | 512 ms | 156 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Astro | 220 ms | 632 ms | 404 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Next.js | 360 ms | 648 ms | 288 ms | 이미지 `img` | 22.0 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | React Router | 508 ms | 732 ms | 224 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | TanStack | 356 ms | 984 ms | 628 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Kudzu | 356 ms | 6484 ms | 6128 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Astro | 212 ms | 7328 ms | 7116 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | TanStack | 360 ms | 7952 ms | 7592 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | React Router | 508 ms | 7968 ms | 7456 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Next.js | 352 ms | 10208 ms | 9848 ms | 이미지 `img` | 1448.8 KB |
+| 문서 | 문서 딥링크 | — | Eleventy | 352 ms | 352 ms | 0 ms | 텍스트 `article.doc-body` | — |
+| 문서 | 문서 딥링크 | — | Kudzu | 372 ms | 372 ms | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Astro | 192 ms | 380 ms | 184 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Docusaurus | 392 ms | 392 ms | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | VitePress | 1140 ms | 1140 ms | 0 ms | 텍스트 `p` | — |
+| 폼 위저드 | 1단계 | — | Astro | 196 ms | 196 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Kudzu | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | React Router | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | TanStack | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Next.js | 344 ms | 344 ms | 0 ms | 텍스트 `h1` | — |
+
+_`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 워밍업 1회를 버리고 5회를 잰 중앙값이며, 회차별 원본값은 `landing/lcp.json`의 `lcpSamples`에 있습니다. 브라우저 정의 그대로 `PerformanceObserver('largest-contentful-paint')`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. 하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). "이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(`OTW_IMAGE_WEIGHT`) — 기본은 21 KB 타일, `heavy`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. 대역폭은 CDP가 아니라 서버에서 모델링합니다(`Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — `scripts/lcp-bench.mjs` 주석에 측정표가 있습니다). 4x CPU · slow4g (server-paced) · 1280×900. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-18T05:11:57.406Z_
+<!-- lcp:end -->
+
 </details>
 
 ### 라우트별 초기 JavaScript (KB gzip)
@@ -237,7 +313,7 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 
 1. **TanStack Start — 서브경로 배포에서 SPA 전환 무한 대기 (실버그)**
    `@tanstack/start-static-server-functions`가 프리렌더된 서버 함수 캐시를 origin 루트(`/__tsr/staticServerFnCache/...`) 절대 경로로 fetch합니다. GitHub Pages처럼 `/<repo>/` 서브경로에 배포하면 이 요청이 404가 나면서 라우트가 pending에 갇혀 클라이언트 전환이 영영 끝나지 않습니다(딥링크는 프리렌더 HTML이라 정상 → 로컬 dev에선 재현 안 됨). 이 레포에서는 해당 미들웨어를 base-aware로 벤더링해 우회했습니다(`apps/tanstack-router/src/lib/staticFunctionMiddleware.ts`, `import.meta.env.BASE_URL` 접두).
-   **2026-08-08 재확인: 미수정** (`1.167.24` — `dist/`에 base 처리 문자열 전무). **2026-08-12 재확인 (`react-start 1.168.42` / `start-plugin-core 1.171.33`): 절반 해소.** base 무시 버그 자체는 사라졌습니다 — 문제의 `@tanstack/start-static-server-functions` 패키지가 제거되고 서버 함수 호출이 빌드 타임 define `TSS_SERVER_FN_BASE = joinPaths(["/", routerBasepath, serverFnBase, "/"])` 기반 RPC로 재설계되어 요청이 base-프리픽스됩니다(실측: 우회 제거 빌드에서 404 URL이 `/kudzu-based-bench/tanstack/_serverFn/<id>` — base는 정확). 대신 프리렌더 결과를 정적 JSON으로 폴백하는 메커니즘이 통째로 사라져, 서버 없는 정적 호스트에서는 클라이언트 전환이 라이브 RPC 404 → `Invariant failed`로 여전히 깨집니다(무한 pending에서 에러로 증상만 바뀜). 벤더링한 미들웨어는 이제 base 우회가 아니라 **정적 캐시 기능 자체**를 제공하는 역할로 계속 필요합니다.
+   **2026-08-08 재확인: 미수정** (`1.167.24` — `dist/`에 base 처리 문자열 전무). **2026-08-12 재확인 (`react-start 1.168.42` / `start-plugin-core 1.171.33` / `start-static-server-functions 1.167.26` = npm `latest`): 미수정.** 직전 기록의 "패키지가 제거되고 정적 폴백 메커니즘이 사라졌다"는 서술은 오독이라 철회합니다 — 이 패키지는 애초에 `react-start`의 의존성이 아니라 옵트인 패키지였고, 지금도 현재 버전에 맞춰 릴리스됩니다(deps `start-client-core 1.170.21`, peer `react-start ^1.168.42`, 경고 없이 설치됨). 벤더링 사본을 제거한 빌드에서 관측한 `_serverFn` 404는 정적 미들웨어를 아예 빼서 생긴 당연한 결과이지 새 업스트림 결함이 아닙니다. 실제 결함은 그대로입니다: **같은 클라이언트 번들 안에서** 라이브 RPC는 `TSS_SERVER_FN_BASE` define으로 `/kudzu-based-bench/tanstack/_serverFn/<id>`처럼 base가 정확한데, 정적 캐시만 `/__tsr/staticServerFnCache/<sha1>.json` 루트 절대 경로로 남아 404가 납니다(증상은 무한 pending에서 `Seroval Error` → 에러 바운더리로 바뀜). 업스트림 이슈 [#6152](https://github.com/TanStack/router/issues/6152)와 수정 PR [#5970](https://github.com/TanStack/router/pull/5970)이 열려 있고(미머지, `mergeable_state: clean`), `2.0.0-alpha.2`에도 미반영입니다. 최소 재현·검증: [SimYunSup/example-list@`tanstack-start/static-server-fn-basepath`](https://github.com/SimYunSup/example-list/tree/tanstack-start/static-server-fn-basepath) — fetch 경로에만 `process.env.TSS_ROUTER_BASEPATH`를 붙이면 200으로 복구됩니다(쓰기 경로는 `TSS_CLIENT_OUTPUT_DIR` 기준이라 같이 붙이면 한 겹 더 중첩).
 2. **Next.js App Router — `output: "export"`에서 `generateStaticParams()`가 빈 배열이면 빌드 실패**
    Pages Router(`getStaticPaths` → `paths: []`, `fallback: false`)는 빈 컬렉션을 그대로 허용하지만, App Router는 정적 export에서 동적 라우트가 최소 1개 경로를 내놓지 못하면 빌드가 죽습니다. 이 레포는 빈 컬렉션일 때 sentinel 경로(`_none`) + `dynamicParams = false` + `notFound()` 조합으로 방어합니다(`apps/next-app/src/app/news/post/[id]/page.tsx`). 같은 프레임워크의 두 라우터가 같은 상황에서 다르게 동작하는 사례.
 3. **VitePress — 동적 라우트는 디렉터리형 pretty URL을 만들 수 없음**
@@ -264,6 +340,8 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 - `pnpm run form:bench -- --variant form-kudzu` — 폼 위저드 → `bench/form-<variant>.json`.
 - `pnpm run docs:bench -- --variant docs-kudzu` — 문서 검색 → `bench/docs-<variant>.json`.
 - `pnpm run shop:report` — 커머스 측정치를 `landing/commerce.json`으로 병합.
+- `pnpm run lcp:bench` — 커머스·문서·폼 진입 라우트의 FCP/LCP + 브라우저가 고른 LCP 요소 → `landing/lcp.json`, README `LCP` 표 갱신. `--routes product --runs 3`으로 라우트를 좁히고, `OTW_IMAGE_WEIGHT=heavy`로 빌드하면 1.4 MB 사진 조건을 잰다. `--readme-only`는 재측정 없이 표만 다시 렌더.
+- `pnpm run charts` — 커밋된 측정치에서 README용 SVG 막대 그래프 재생성 → `assets/charts/{ko,en}/`.
 
 ## 개발
 

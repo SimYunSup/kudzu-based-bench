@@ -64,6 +64,15 @@ if (!skipBuild) {
   // prefetch job provided — RR v8's prerender has a hard 10s per-request
   // timeout that a live full-database fetch would blow past).
   run("pnpm", ["run", "prefetch:content"]);
+  // Astro's content layer persists its Notion entries in
+  // node_modules/.astro/data-store.json, and those entries carry Notion's
+  // presigned S3 URLs, which expire an hour after they were minted
+  // (X-Amz-Expires=3600). Reusing the store on a later day rebuilds the astro
+  // variant with URLs that are already dead: localizeNotionImages then gets a
+  // 403 for each one and has to leave the expired URL in the output, so the
+  // deployed post images 404 in the reader's browser. The fetch is a minute;
+  // drop the store and let this build mint fresh URLs.
+  rmSync(path.join(repoRoot, "apps/web/node_modules/.astro/data-store.json"), { force: true });
   run("pnpm", ["run", "build:all"], {
     env: { NOTION_CONTENT_CACHE: path.join(repoRoot, "notion-cache", "news-entries.json") },
   });
@@ -155,7 +164,11 @@ async function collectTextFiles(dir) {
       if (dirent.isDirectory()) return collectTextFiles(full);
       // Only rewrite text formats that can carry a Notion URL. Downloaded
       // images live under assets/notion/ and are binary, so they never match.
-      return /\.(html|js|json|txt)$/i.test(dirent.name) ? [full] : [];
+      // `.data` is React Router v8's turbo-stream payload for a prerendered
+      // route — plain text, and it carries every cover URL the route's loader
+      // returned. Leaving it out kept expired URLs in the client's data fetch
+      // even when the matching HTML had been rewritten.
+      return /\.(html|js|json|txt|data)$/i.test(dirent.name) ? [full] : [];
     }),
   );
   return nested.flat();

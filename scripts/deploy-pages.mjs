@@ -75,6 +75,10 @@ if (!skipBuild) {
   // already in bench/. Missing ones are skipped rather than fatal, so a
   // deploy never depends on having just run the browser benchmarks.
   run("pnpm", ["run", "shop:report"], { allowFail: true });
+  // Same for the form wizard: landing/form.json is what the charts and the
+  // landing page read, and bench/ is gitignored, so the publish step has to
+  // run here too or a deploy ships a stale copy.
+  run("pnpm", ["run", "form:report"], { allowFail: true });
 }
 
 assembleSite(repoRoot, siteDir, { toolName: "deploy-pages" });

@@ -3,6 +3,7 @@ import { iteratePaginatedAPI, isFullBlock } from "@notionhq/client";
 import type { Client } from "@notionhq/client";
 import * as transformedPropertySchema from "./schemas/transformed-properties";
 import { fileToImageAsset, fileToUrl } from "./format";
+import normalizeProperties from "./normalize-properties";
 
 // #region Processor
 import notionRehype from "notion-rehype-k";
@@ -17,6 +18,9 @@ const baseProcessor = unified()
   .use(notionRehype, {
     enableBlockId: true,
   }) // Parse Notion blocks to rehype AST
+  // notion-rehype-k's list wrappers carry no `properties`, which rehype-katex
+  // dereferences unguarded — normalize before it runs, never after.
+  .use(normalizeProperties)
   .use(
     // @ts-ignore
     rehypeKatex

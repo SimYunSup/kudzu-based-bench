@@ -5,6 +5,7 @@ import { unified } from "unified";
 import notionRehype from "notion-rehype-k";
 import rehypeKatex from "rehype-katex";
 import bookmarkPlugin from "./bookmark-plugin.js";
+import normalizeProperties from "./normalize-properties.js";
 import { extractTocHeadings } from "./toc.js";
 import type { NewsHeading } from "./types.js";
 
@@ -21,6 +22,9 @@ const baseProcessor = unified()
     notionRehype,
     { enableBlockId: true }
   ) // Parse Notion blocks to a hast tree
+  // notion-rehype-k's list wrappers carry no `properties`, which rehype-katex
+  // dereferences unguarded — normalize before it runs, never after.
+  .use(normalizeProperties)
   .use(
     // @ts-ignore -- rehype-katex's plugin signature doesn't line up with this chain
     rehypeKatex

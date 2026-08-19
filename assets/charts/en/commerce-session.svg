@@ -15,10 +15,10 @@
 <text x="238.49742238307985" y="158.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">250 ms</text>
 <line x1="32" y1="171" x2="848" y2="171" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="203" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="189.12" y="180" width="36.83" height="16" rx="4" fill="#5e6ad2"/>
-<text x="233.95136119436754" y="192.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">223 ms</text>
-<rect x="189.12" y="200" width="368.43" height="16" rx="4" fill="#828fff"/>
-<text x="565.5493298648419" y="212.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">2,229 ms</text>
+<rect x="189.12" y="180" width="38.34" height="16" rx="4" fill="#5e6ad2"/>
+<text x="235.4556941695414" y="192.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">232 ms</text>
+<rect x="189.12" y="200" width="368.64" height="16" rx="4" fill="#828fff"/>
+<text x="565.764234575581" y="212.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">2,230 ms</text>
 <line x1="32" y1="225" x2="848" y2="225" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="257" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack Start</text>
 <rect x="189.12" y="234" width="28.09" height="16" rx="4" fill="#5e6ad2"/>

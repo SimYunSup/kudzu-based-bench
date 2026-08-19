@@ -1,5 +1,5 @@
 {
-  "measuredAt": "2026-08-12T05:13:17.389Z",
+  "measuredAt": "2026-08-19T00:14:46.854Z",
   "sources": {
     "bench": [
       "shop-kudzu",
@@ -128,10 +128,10 @@
       "label": "Astro",
       "based": "Astro + React islands",
       "path": "/shop-astro/",
-      "entryContentReadyMs": 222.8,
-      "listingActReadyMs": 2228.7,
-      "sortLatencyMs": 9.1,
-      "addLatencyMs": 1.5,
+      "entryContentReadyMs": 231.9,
+      "listingActReadyMs": 2230,
+      "sortLatencyMs": 8.8,
+      "addLatencyMs": 1.6,
       "firstReliableClickMs": 1500,
       "clickLoss": [
         {

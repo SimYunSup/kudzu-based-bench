@@ -6,80 +6,80 @@
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">브라우저가 무엇을 LCP로 골랐는가</text>
 <text x="32" y="112" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">커머스 — 홈</text>
 <text x="32" y="146" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="130" width="131.46" height="22" rx="4" fill="#5e6ad2"/>
-<text x="281.5412244897959" y="145.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">528 ms</text>
-<text x="333.22122448979593" y="145.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
+<rect x="142.08" y="130" width="196.02" height="22" rx="4" fill="#5e6ad2"/>
+<text x="346.09673640167364" y="145.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">768 ms</text>
+<text x="397.77673640167365" y="145.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
 <line x1="32" y1="161" x2="848" y2="161" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="186" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="170" width="145.4" height="22" rx="4" fill="#3e3e44"/>
-<text x="295.4840816326531" y="185.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">584 ms</text>
-<text x="347.1640816326531" y="185.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
+<rect x="142.08" y="170" width="237.87" height="22" rx="4" fill="#3e3e44"/>
+<text x="387.9544769874477" y="185.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">932 ms</text>
+<text x="439.6344769874477" y="185.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
 <line x1="32" y1="201" x2="848" y2="201" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="226" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
-<rect x="142.08" y="210" width="151.38" height="22" rx="4" fill="#3e3e44"/>
-<text x="301.4595918367347" y="225.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">608 ms</text>
-<text x="353.1395918367347" y="225.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
+<text x="32" y="226" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
+<rect x="142.08" y="210" width="277.69" height="22" rx="4" fill="#3e3e44"/>
+<text x="427.77037656903764" y="225.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,088 ms</text>
+<text x="494.01037656903765" y="225.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
 <line x1="32" y1="241" x2="848" y2="241" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="266" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
-<rect x="142.08" y="250" width="186.24" height="22" rx="4" fill="#3e3e44"/>
-<text x="336.31673469387755" y="265.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">748 ms</text>
-<text x="387.99673469387756" y="265.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
+<text x="32" y="266" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
+<rect x="142.08" y="250" width="278.71" height="22" rx="4" fill="#3e3e44"/>
+<text x="428.7912970711297" y="265.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,092 ms</text>
+<text x="495.0312970711297" y="265.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
 <line x1="32" y1="281" x2="848" y2="281" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="306" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="142.08" y="290" width="418.29" height="22" rx="4" fill="#3e3e44"/>
-<text x="568.3657142857141" y="305.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,680 ms</text>
-<text x="634.6057142857142" y="305.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
+<rect x="142.08" y="290" width="348.13" height="22" rx="4" fill="#3e3e44"/>
+<text x="498.21389121338905" y="305.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,364 ms</text>
+<text x="564.453891213389" y="305.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">이미지 img</text>
 <line x1="32" y1="321" x2="848" y2="321" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="342" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">문서 — 딥링크</text>
 <text x="32" y="376" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Eleventy</text>
-<rect x="142.08" y="360" width="86.64" height="22" rx="4" fill="#5e6ad2"/>
-<text x="236.7248979591837" y="375.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">348 ms</text>
-<text x="288.4048979591837" y="375.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 article.doc-body</text>
+<rect x="142.08" y="360" width="88.82" height="22" rx="4" fill="#5e6ad2"/>
+<text x="238.9000836820084" y="375.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">348 ms</text>
+<text x="290.5800836820084" y="375.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 article.doc-body</text>
 <line x1="32" y1="391" x2="848" y2="391" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="416" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="400" width="91.62" height="22" rx="4" fill="#3e3e44"/>
-<text x="241.7044897959184" y="415.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">368 ms</text>
-<text x="293.3844897959184" y="415.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
+<rect x="142.08" y="400" width="93.92" height="22" rx="4" fill="#3e3e44"/>
+<text x="244.00468619246863" y="415.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">368 ms</text>
+<text x="295.68468619246863" y="415.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
 <line x1="32" y1="431" x2="848" y2="431" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="456" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
-<rect x="142.08" y="440" width="134.45" height="22" rx="4" fill="#3e3e44"/>
-<text x="284.52897959183673" y="455.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">540 ms</text>
-<text x="336.20897959183674" y="455.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
+<text x="32" y="456" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
+<rect x="142.08" y="440" width="173.56" height="22" rx="4" fill="#3e3e44"/>
+<text x="323.6364853556485" y="455.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">680 ms</text>
+<text x="375.3164853556485" y="455.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
 <line x1="32" y1="471" x2="848" y2="471" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="496" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="480" width="168.31" height="22" rx="4" fill="#3e3e44"/>
-<text x="318.39020408163265" y="495.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">676 ms</text>
-<text x="370.07020408163265" y="495.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
+<text x="32" y="496" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
+<rect x="142.08" y="480" width="175.6" height="22" rx="4" fill="#3e3e44"/>
+<text x="325.6783263598326" y="495.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">688 ms</text>
+<text x="377.35832635983263" y="495.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
 <line x1="32" y1="511" x2="848" y2="511" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="536" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
 <rect x="142.08" y="520" width="488" height="22" rx="4" fill="#3e3e44"/>
-<text x="638.0799999999999" y="535.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,960 ms</text>
+<text x="638.0799999999999" y="535.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,912 ms</text>
 <text x="704.3199999999999" y="535.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 p</text>
 <line x1="32" y1="551" x2="848" y2="551" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="572" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">폼 위저드 — 1단계</text>
 <text x="32" y="606" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="590" width="47.8" height="22" rx="4" fill="#5e6ad2"/>
-<text x="197.88408163265308" y="605.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">192 ms</text>
-<text x="249.56408163265309" y="605.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
+<rect x="142.08" y="590" width="49" height="22" rx="4" fill="#5e6ad2"/>
+<text x="199.08418410041844" y="605.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">192 ms</text>
+<text x="250.76418410041845" y="605.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
 <line x1="32" y1="621" x2="848" y2="621" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="646" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="630" width="84.65" height="22" rx="4" fill="#3e3e44"/>
-<text x="234.7330612244898" y="645.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">340 ms</text>
-<text x="286.4130612244898" y="645.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
+<rect x="142.08" y="630" width="87.8" height="22" rx="4" fill="#3e3e44"/>
+<text x="237.87916317991633" y="645.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="289.55916317991637" y="645.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
 <line x1="32" y1="661" x2="848" y2="661" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="686" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
-<rect x="142.08" y="670" width="84.65" height="22" rx="4" fill="#3e3e44"/>
-<text x="234.7330612244898" y="685.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">340 ms</text>
-<text x="286.4130612244898" y="685.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
+<text x="32" y="686" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
+<rect x="142.08" y="670" width="87.8" height="22" rx="4" fill="#3e3e44"/>
+<text x="237.87916317991633" y="685.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="289.55916317991637" y="685.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
 <line x1="32" y1="701" x2="848" y2="701" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="726" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
-<rect x="142.08" y="710" width="84.65" height="22" rx="4" fill="#3e3e44"/>
-<text x="234.7330612244898" y="725.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">340 ms</text>
-<text x="286.4130612244898" y="725.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
+<text x="32" y="726" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
+<rect x="142.08" y="710" width="87.8" height="22" rx="4" fill="#3e3e44"/>
+<text x="237.87916317991633" y="725.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="289.55916317991637" y="725.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
 <line x1="32" y1="741" x2="848" y2="741" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="766" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="142.08" y="750" width="85.65" height="22" rx="4" fill="#3e3e44"/>
-<text x="235.72897959183675" y="765.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
-<text x="287.4089795918368" y="765.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
+<text x="32" y="766" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
+<rect x="142.08" y="750" width="87.8" height="22" rx="4" fill="#3e3e44"/>
+<text x="237.87916317991633" y="765.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="289.55916317991637" y="765.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">텍스트 h1</text>
 <text x="32" y="827" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">요소 이름은 브라우저가 실제로 고른 것이다. 커머스는 상품 사진, 문서·폼은 텍스트.</text>
 </svg>

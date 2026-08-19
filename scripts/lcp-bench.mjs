@@ -17,6 +17,26 @@
  *   - Docs LCP is text, and there the spread is real: a variant that
  *     re-renders its article body after hydration pushes its own LCP out.
  *
+ * What the reported figure is, exactly (measured, not suspected):
+ *   - On the commerce home and search routes the viewport holds several
+ *     equally sized 21 KB tiles, and LCP only advances for a *larger*
+ *     element, so the figure is "when the first tile arrived" and the
+ *     element behind it is whichever tile won that load's race. The winner
+ *     changes between loads (see `lcpSampleElements`); the timing does not,
+ *     because the link hands its bytes out in a fixed order. Do not read
+ *     the `lcpUrl` of a listing row as "the variant's hero".
+ *   - The paint follows the download, not the main thread: in every run of
+ *     the CDP trace the LCP entry lands within ~10 ms of the winning
+ *     image's `Network.loadingFinished`, and no long task appears before
+ *     it. On these fixtures LCP measures bandwidth contention — a variant
+ *     that spends 328 KB of the 200 KB/s link on its own bundle before the
+ *     first tile finishes cannot paint sooner, whatever its rendering
+ *     architecture.
+ *   - Spread is published, not assumed away: every row carries n, min–max
+ *     and CV, computed from `lcpSamples`. A row whose CV is in the double
+ *     digits is a row whose median should not be quoted alone — that is
+ *     how the token-handout defect below was found in the first place.
+ *
  * Deliberately NOT measured:
  *   - The newsletter fixture. Its largest element is a Notion image and
  *     every variant runs a different image pipeline (sharp / unoptimized /
@@ -186,6 +206,20 @@ function parseArgs(argv) {
  * sibling benches' CDP-throttled figures. Bytes-over-link dominates, and it
  * lands where the arithmetic says — the photo finishes at
  * bytesBeforeLcp / 204.6 KB/s (measured) against a 200 KB/s budget.
+ *
+ * How the tokens are handed out is not a detail. The first version let every
+ * in-flight response poll the bucket on its own timer, so whichever chunk
+ * loop happened to wake while tokens were banked took the pipe — a lottery
+ * run by timer jitter rather than a bandwidth share. It set the noise floor
+ * of the whole bench: on the commerce home route, where nine equally sized
+ * tiles and a client bundle are in flight together, React Router's LCP
+ * ranged 716–1900 ms across loads (CV ≈ 40%) purely on who won that
+ * lottery, and the published median swung 732 -> 1680 ms between two
+ * sessions of the same build. Handing tokens out in strict arrival order
+ * instead — one scheduler, one queue, next chunk enqueued only after the
+ * previous one is written, which is what a serial link does — put the same
+ * row at 1320–1552 ms (CV ≈ 5%) with no change to the fixtures, the
+ * throttling profile, or the aggregate rate.
  */
 function createBucket(bytesPerSecond) {
   // Starts empty, and never banks more than a 64 KB burst. Seeding it with a
@@ -195,18 +229,41 @@ function createBucket(bytesPerSecond) {
   const CEILING = 64 * 1024;
   let available = 0;
   let last = Date.now();
-  return async function take(bytes) {
-    for (;;) {
-      const now = Date.now();
-      available = Math.min(CEILING, available + ((now - last) / 1000) * bytesPerSecond);
-      last = now;
-      if (available >= bytes) {
-        available -= bytes;
-        return;
+  const queue = [];
+  let draining = false;
+
+  const refill = () => {
+    const now = Date.now();
+    available = Math.min(CEILING, available + ((now - last) / 1000) * bytesPerSecond);
+    last = now;
+  };
+
+  // One drain loop for the whole server: the head of the queue owns the link
+  // until its chunk is paid for, so concurrent transfers interleave in the
+  // order they asked rather than in the order their timers fired.
+  const drain = async () => {
+    if (draining) return;
+    draining = true;
+    while (queue.length) {
+      refill();
+      const head = queue[0];
+      if (available >= head.bytes) {
+        available -= head.bytes;
+        queue.shift();
+        head.resolve();
+        continue;
       }
-      const deficit = bytes - available;
-      await new Promise(resolve => setTimeout(resolve, Math.max(5, (deficit / bytesPerSecond) * 1000)));
+      const deficit = head.bytes - available;
+      await new Promise(resolve => setTimeout(resolve, Math.max(1, (deficit / bytesPerSecond) * 1000)));
     }
+    draining = false;
+  };
+
+  return function take(bytes) {
+    return new Promise(resolve => {
+      queue.push({ bytes, resolve });
+      drain();
+    });
   };
 }
 
@@ -219,7 +276,23 @@ function startServer(distDir, variant, options) {
   const prefix = `${BASE_PATH}/${variant}`;
   const profile = NETWORK[options.net];
   const take = options.throttle ? createBucket(profile.download) : null;
-  const CHUNK = 16 * 1024;
+  // One MTU per token grant, not 16 KB. The chunk size is the link's
+  // quantisation step, and a coarse one lets a single response grab a burst
+  // and cross the line before responses it is supposed to be sharing with:
+  // measured on the commerce home route, where six equally sized tiles are in
+  // flight, Kudzu's LCP came out in ~80 ms steps (508 · 548 · 612 · 688 ms,
+  // CV 12%) and 80 ms is exactly 16 KB at 200 KB/s. Per-run medians for that
+  // row, everything else held:
+  //
+  //   16384 B   508–688 ms   CV 12%     (bursty: a tile can finish at 508)
+  //    4096 B   508–792 ms   CV 17%     (half-quantised, worst of both)
+  //    1460 B   716–792 ms   CV  4%     (all six advance together)
+  //
+  // The tight figure is also the honest one: six transfers sharing 200 KB/s
+  // cannot deliver 126 KB before ~630 ms, so the 508 ms samples were the
+  // model's artefact, not the fixture's speed. React Router's home route
+  // lands at 1256–1376 ms (CV 3%) under the same change.
+  const CHUNK = 1460;
 
   const server = createServer(async (request, response) => {
     let pathname;
@@ -361,9 +434,21 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
   // load event — so a window that closed on "complete + quiet" alone would
   // report zero candidates for exactly the variants whose rendering is
   // slowest.
+  //
+  // It also has to wait out images that are still arriving. Lazy images do not
+  // block the load event, and the commerce hero is lazy in every variant: on
+  // the heavy condition \`load\` fired around 1 s while the 1.4 MB photograph
+  // still had six seconds of link time to go, the quiet window elapsed, and
+  // the probe published the product title at 352 ms as that variant's LCP
+  // (one sample in three, which is exactly how it hid). Any image that has
+  // started fetching and not finished can still take the candidacy, so the
+  // window stays open while one exists.
+  const imagesPending = () =>
+    Array.prototype.some.call(document.images, image => image.currentSrc && !image.complete);
   const tick = () => {
     const anchor = Math.max(lastCandidateAt, loadAt ?? 0);
-    const settled = candidates.length > 0 && loadAt !== null && performance.now() - anchor >= settleMs;
+    const settled =
+      candidates.length > 0 && loadAt !== null && !imagesPending() && performance.now() - anchor >= settleMs;
     if (settled || performance.now() >= budgetMs) return finish();
     setTimeout(tick, 100);
   };
@@ -398,6 +483,32 @@ const median = values => {
 };
 
 /**
+ * Per-run spread of a published figure, derived from `lcpSamples` at render
+ * time rather than stored: rows measured before this existed still get one,
+ * and a re-render can never disagree with the samples it was computed from.
+ *
+ * `cvPct` is the honest health indicator for this bench. A commerce listing
+ * row sits near 40% because its LCP element is whichever of nine equal-sized
+ * tiles won that load's download race (measured: React Router's home route
+ * ranges 0.7–2.0 s while Kudzu's holds 0.50–0.54 s), and a spread that comes
+ * from the fixture's structure does not shrink with more runs — at CV 40% it
+ * takes ~45 loads to pin the mean inside ±10%.
+ */
+const spreadOf = samples => {
+  const mean = samples.reduce((total, value) => total + value, 0) / samples.length;
+  const variance =
+    samples.length > 1
+      ? samples.reduce((total, value) => total + (value - mean) ** 2, 0) / (samples.length - 1)
+      : 0;
+  return {
+    n: samples.length,
+    min: Math.min(...samples),
+    max: Math.max(...samples),
+    cvPct: mean ? +((Math.sqrt(variance) / mean) * 100).toFixed(0) : 0
+  };
+};
+
+/**
  * Image weight condition of the build being served, read off the artifact
  * rather than off an env var: a heavy build measured in a shell without
  * OTW_IMAGE_WEIGHT set would otherwise be labelled "light" and quietly
@@ -426,7 +537,15 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
       const samples = [];
       for (let run = 0; run < options.runs; run++) samples.push(await runLoad(browser, origin, variant, route, options));
 
-      const last = samples[samples.length - 1];
+      const lcpMs = +median(samples.map(sample => sample.lcp.ms)).toFixed(1);
+      // Element and resource fields come from the run that produced the
+      // published median, not from the last run. On a listing grid the LCP
+      // element is whichever tile won that load's download race, so "the last
+      // run's element" regularly described a different image than the number
+      // printed next to it.
+      const representative = samples.reduce((best, sample) =>
+        Math.abs(sample.lcp.ms - lcpMs) < Math.abs(best.lcp.ms - lcpMs) ? sample : best
+      );
       const row = {
         fixture: fixtureKey,
         fixtureLabel: fixture.label,
@@ -441,13 +560,19 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
         // file: one global timestamp would date rows it never touched.
         measuredAt: new Date().toISOString(),
         fcpMs: +median(samples.map(sample => sample.fcpMs)).toFixed(1),
-        lcpMs: +median(samples.map(sample => sample.lcp.ms)).toFixed(1),
+        lcpMs,
         lcpSamples: samples.map(sample => sample.lcp.ms),
+        // What won each run. A row whose samples straddle 0.7 s and 2.0 s is
+        // not noisy instrumentation: it is a different tile finishing first
+        // each time, and that is only visible if the winner is recorded.
+        lcpSampleElements: samples.map(
+          sample => `${sample.lcp.element}${sample.lcp.url ? ` ${sample.lcp.url.split("/").pop()}` : ""}`
+        ),
         lcpDeltaFcpMs: +median(samples.map(sample => sample.lcp.ms - sample.fcpMs)).toFixed(1),
-        lcpKind: last.lcp.url ? "image" : "text",
-        lcpElement: last.lcp.element,
-        lcpUrl: last.lcp.url,
-        lcpBytes: last.lcpBytes,
+        lcpKind: representative.lcp.url ? "image" : "text",
+        lcpElement: representative.lcp.element,
+        lcpUrl: representative.lcp.url,
+        lcpBytes: representative.lcpBytes,
         lcpCandidates: median(samples.map(sample => sample.candidates.length)),
         lcpFirstCandidateMs: +median(samples.map(sample => sample.candidates[0].ms)).toFixed(1),
         // The LCP element's competition for bandwidth: bytes that finished
@@ -456,8 +581,10 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
         scriptBytesBeforeLcp: Math.round(median(samples.map(sample => sample.scriptBytesBeforeLcp)))
       };
       rows.push(row);
+      const spread = spreadOf(row.lcpSamples);
       console.log(
         `  ${row.route.padEnd(8)} FCP ${String(row.fcpMs).padStart(8)} ms   LCP ${String(row.lcpMs).padStart(8)} ms   ` +
+          `${spread.n}회 ${Math.round(spread.min)}–${Math.round(spread.max)} ms (CV ${spread.cvPct}%)   ` +
           `${row.lcpKind} ${row.lcpElement}${row.lcpBytes ? ` (${(row.lcpBytes / 1024).toFixed(1)} KB)` : ""}` +
           `   LCP 전 ${(row.bytesBeforeLcp / 1024).toFixed(1)} KB(스크립트 ${(row.scriptBytesBeforeLcp / 1024).toFixed(1)} KB)`
       );
@@ -478,12 +605,15 @@ const WEIGHT_LABEL = {
 
 const L = {
   ko: {
-    header: "| 픽스처 | 라우트 | 이미지 | 변형 | FCP | LCP | LCP−FCP | LCP 요소 | LCP 자원 |",
+    header: "| 픽스처 | 라우트 | 이미지 | 변형 | FCP | LCP | 회차 · 범위 | LCP−FCP | LCP 요소 | LCP 자원 |",
     element: row => (row.lcpKind === "image" ? `이미지 \`${row.lcpElement}\`` : `텍스트 \`${row.lcpElement}\``),
     bytes: row => (row.lcpBytes === null ? "—" : `${(row.lcpBytes / 1024).toFixed(1)} KB`),
+    spread: spread => `${spread.n}회 · ${Math.round(spread.min)}–${Math.round(spread.max)} ms · CV ${spread.cvPct}%`,
     footnote: report =>
-      `_\`pnpm run lcp:bench\`로 로컬 측정(수동 갱신). 워밍업 1회를 버리고 ${report.runs}회를 잰 중앙값이며, 회차별 원본값은 \`landing/lcp.json\`의 \`lcpSamples\`에 있습니다. ` +
-      `브라우저 정의 그대로 \`PerformanceObserver('largest-contentful-paint')\`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. ` +
+      `_\`pnpm run lcp:bench\`로 로컬 측정(수동 갱신). 각 행은 워밍업 1회를 버린 뒤 "회차 · 범위" 열의 회차만큼 재서 얻은 중앙값이며, 회차별 원본값은 \`landing/lcp.json\`의 \`lcpSamples\`, 회차별로 브라우저가 고른 요소는 \`lcpSampleElements\`에 있습니다. ` +
+      `**범위와 CV를 중앙값과 함께 읽으십시오.** 커머스 홈·검색 라우트는 뷰포트에 같은 크기의 21 KB 타일이 여러 장 깔려 있어 LCP가 "가장 먼저 도착한 타일"이고, 그 승자는 회차마다 바뀝니다(\`lcpSampleElements\`). 2026-08-19까지 이 표가 세션마다 흔들린 원인은 픽스처가 아니라 하네스였습니다 — 토큰 버킷을 응답별로 폴링해서 대역폭이 "먼저 깨어난 응답"에게 갔고(React Router 홈 716–1900 ms, CV 40%, 공개 중앙값이 두 세션 사이 732 → 1680 ms), 청크가 16 KB여서 링크가 버스트로 흘렀고(Kudzu 홈이 16 KB=80 ms 계단으로 508·548·612·688 ms), 프로브가 \`load\`에서 창을 닫아 lazy 히어로를 놓쳤습니다(heavy 조건에서 3회 중 1회가 제목 352 ms로 발행). 도착 순서 단일 큐 + MTU(1460 B) 페이싱 + "받는 중인 이미지가 있으면 창을 열어 둔다"로 고친 뒤 같은 React Router 행이 1252–1368 ms(CV 4%)입니다. 지금 남은 두 자릿수 CV 행(Kudzu 커머스 홈·검색)은 브라우저의 요청 순서가 회차마다 뒤집혀서이며, 그래서 15회로 잽니다. ` +
+      `LCP−FCP가 큰 행은 대역폭 경쟁을 읽는 자리입니다: 첫 타일이 도착하기 전에 자기 클라이언트 번들로 200 KB/s를 먼저 써버린 변형일수록 그만큼 늦게 그립니다(\`bytesBeforeLcp\`·\`scriptBytesBeforeLcp\` 참고). CPU가 아니라 링크가 병목이라, CDP 트레이스에서 LCP 항목은 매 회 승자 이미지의 \`Network.loadingFinished\` 뒤 ~10 ms에 붙고 그 앞에 롱태스크는 없습니다. ` +
+      `브라우저 정의 그대로 \`PerformanceObserver('largest-contentful-paint')\`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. "LCP 요소"·"LCP 자원" 열은 중앙값을 만든 회차의 것입니다(마지막 회차가 아니라). ` +
       `하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). ` +
       `"이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(\`OTW_IMAGE_WEIGHT\`) — 기본은 21 KB 타일, \`heavy\`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. ` +
       `대역폭은 CDP가 아니라 서버에서 모델링합니다(\`Network.emulateNetworkConditions\`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — \`scripts/lcp-bench.mjs\` 주석에 측정표가 있습니다). ` +
@@ -491,12 +621,15 @@ const L = {
       `측정 머신: ${report.machine.ko}. 측정 시각: ${report.measuredAt}_`
   },
   en: {
-    header: "| Fixture | Route | Image | Variant | FCP | LCP | LCP−FCP | LCP element | LCP resource |",
+    header: "| Fixture | Route | Image | Variant | FCP | LCP | Runs · range | LCP−FCP | LCP element | LCP resource |",
     element: row => (row.lcpKind === "image" ? `image \`${row.lcpElement}\`` : `text \`${row.lcpElement}\``),
     bytes: row => (row.lcpBytes === null ? "—" : `${(row.lcpBytes / 1024).toFixed(1)} KB`),
+    spread: spread => `${spread.n} · ${Math.round(spread.min)}–${Math.round(spread.max)} ms · CV ${spread.cvPct}%`,
     footnote: report =>
-      `_Measured locally via \`pnpm run lcp:bench\` (manual refresh). Median of ${report.runs} runs after one discarded warm-up; per-run values are in \`lcpSamples\` in \`landing/lcp.json\`. ` +
-      `Uses the browser's own definition — the **final** \`PerformanceObserver('largest-contentful-paint')\` candidate, so a hydration re-render that pushes the candidate later shows up here. ` +
+      `_Measured locally via \`pnpm run lcp:bench\` (manual refresh). Each row is the median of the loads counted in its "Runs · range" cell after one discarded warm-up; per-run values are in \`lcpSamples\` and the element the browser picked on each run is in \`lcpSampleElements\`, both in \`landing/lcp.json\`. ` +
+      `**Read the range and CV together with the median.** On the commerce home and search routes the viewport holds several equally sized 21 KB tiles, so LCP is "the first tile that arrived" and the element behind it is whichever tile won that load (\`lcpSampleElements\`). What made this table move between sessions until 2026-08-19 was the harness, not the fixture: the token bucket was polled per response, so bandwidth went to whichever response woke first (React Router's home route 716–1900 ms, CV 40%, its published median flipping 732 -> 1680 ms between two sessions); the 16 KB chunk let the link run in bursts (Kudzu's home route stepped in 16 KB = 80 ms stairs: 508, 548, 612, 688 ms); and the probe closed its window at \`load\`, missing the lazy hero (on the heavy condition one load in three published the title at 352 ms). With arrival-order queueing, MTU-sized (1460 B) pacing and a window that stays open while an image is still arriving, that same React Router row measures 1252–1368 ms (CV 4%). The double-digit CV rows that remain — Kudzu's commerce home and search — come from Chrome flipping its request order per load, which is why they are measured at 15 loads. ` +
+      `A large LCP−FCP is where bandwidth contention shows: a variant that spends the 200 KB/s link on its own client bundle before the first tile finishes paints exactly that much later (see \`bytesBeforeLcp\` and \`scriptBytesBeforeLcp\`). The link, not the CPU, is the bottleneck here — on the CDP trace the LCP entry lands ~10 ms after the winning image's \`Network.loadingFinished\` in every run, with no long task before it. ` +
+      `Uses the browser's own definition — the **final** \`PerformanceObserver('largest-contentful-paint')\` candidate, so a hydration re-render that pushes the candidate later shows up here. The "LCP element" and "LCP resource" columns come from the run that produced the published median, not from the last run. ` +
       `The harness never clicks or scrolls (the first input freezes LCP). ` +
       `The "Image" column is the commerce fixture's image-weight condition (\`OTW_IMAGE_WEIGHT\`): the default is a 21 KB tile, \`heavy\` is a 1.4 MB photograph, and in both conditions all five variants serve a file identical down to its md5. The docs and form fixtures have no images. ` +
       `Bandwidth is modelled in the server rather than through CDP (with \`Network.emulateNetworkConditions\` on, this Chromium never reports a late-arriving image as an LCP candidate — the measurement table is in \`scripts/lcp-bench.mjs\`). ` +
@@ -504,7 +637,7 @@ const L = {
       `Machine: ${report.machine.en}. Measured at ${report.measuredAt}_`
   }
 };
-const DIVIDER = "| --- | --- | --- | --- | ---: | ---: | ---: | --- | ---: |";
+const DIVIDER = "| --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | ---: |";
 
 function renderTable(report, lang) {
   const t = L[lang];
@@ -520,8 +653,8 @@ function renderTable(report, lang) {
   const rows = sorted.map(
     row =>
       `| ${row.fixtureLabel[lang]} | ${row.routeLabel[lang]} | ${WEIGHT_LABEL[lang][row.imageWeight ?? "none"]} | ` +
-      `${row.label} | ${Math.round(row.fcpMs)} ms | ${Math.round(row.lcpMs)} ms | ${Math.round(row.lcpDeltaFcpMs)} ms | ` +
-      `${t.element(row)} | ${t.bytes(row)} |`
+      `${row.label} | ${Math.round(row.fcpMs)} ms | ${Math.round(row.lcpMs)} ms | ${t.spread(spreadOf(row.lcpSamples))} | ` +
+      `${Math.round(row.lcpDeltaFcpMs)} ms | ${t.element(row)} | ${t.bytes(row)} |`
   );
   return [t.header, DIVIDER, ...rows, "", t.footnote(report)].join("\n");
 }
@@ -612,7 +745,10 @@ async function main() {
 
   const report = {
     measuredAt: merged.reduce((latest, row) => (row.measuredAt > latest ? row.measuredAt : latest), ""),
-    runs: options.runs,
+    // No global `runs`: rows merge across sessions, so a single count would
+    // mislabel every row it did not measure — the heavy-photograph rows are
+    // measured with `--runs 3` while the light ones use 5. Each row's count
+    // is `lcpSamples.length`, and the table prints it per row.
     throttling: options.throttle ? { cpu: `${options.cpu}x`, network: `${options.net} (server-paced)` } : "none",
     machine: {
       ko: `${cpuModel} · ${cpus.length}코어 · RAM ${totalGiB} GB · ${process.platform}/${process.arch} · Node ${process.version}`,

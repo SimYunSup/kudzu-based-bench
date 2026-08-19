@@ -1,12 +1,12 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="341" viewBox="0 0 880 341" role="img" aria-label="열화 내성 — 스크립트가 죽으면 무엇이 남는가">
-<title>열화 내성 — 스크립트가 죽으면 무엇이 남는가</title>
-<rect x="0" y="0" width="880" height="341" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="340" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">커머스 · 여섯 기능 × 세 조건</text>
-<text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">열화 내성 — 스크립트가 죽으면 무엇이 남는가</text>
-<text x="189.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">JS 전면 차단</text>
-<text x="316.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">스크립트 2s 지연</text>
-<text x="443.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">스크립트 1개 유실</text>
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="375" viewBox="0 0 880 375" role="img" aria-label="Commerce degradation resilience — what survives when scripts die">
+<title>Commerce degradation resilience — what survives when scripts die</title>
+<rect x="0" y="0" width="880" height="375" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="374" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">COMMERCE · SIX CAPABILITIES × THREE CONDITIONS</text>
+<text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">Commerce degradation resilience — what survives when scripts die</text>
+<text x="189.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">JS blocked</text>
+<text x="316.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">Scripts 2s late</text>
+<text x="443.12000000000006" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">1 script lost</text>
 <text x="32" y="135" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
 <rect x="189.12" y="122" width="14" height="14" rx="2" fill="#27a644"/>
 <rect x="206.12" y="122" width="14" height="14" rx="2" fill="#27a644"/>
@@ -111,6 +111,8 @@
 <rect x="511.12" y="258" width="14" height="14" rx="2" fill="#23252a"/>
 <rect x="528.12" y="258" width="14" height="14" rx="2" fill="#23252a"/>
 <text x="816.64" y="271" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">8/18</text>
-<text x="824" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">합계</text>
-<text x="32" y="321" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">칸은 생존 기능 개수(정보 읽기·카테고리 이동·상세 진입·필터·옵션 선택·담기). 어느 기능인지는 bench/shop-&lt;변형&gt;.json에 있다.</text>
+<text x="814.4" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">Total</text>
+<text x="32" y="355" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce fixture, 5 variants (apps/shop-*) · pnpm run shop:bench → landing/commerce.json · measured 2026-08-12–08-19</text>
+<text x="32" y="321" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Cells count surviving capabilities (read info, browse category, open detail, filter, select option, add to cart). Which</text>
+<text x="32" y="338" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">ones is in bench/shop-&lt;variant&gt;.json.</text>
 </svg>

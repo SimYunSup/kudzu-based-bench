@@ -1,5 +1,7 @@
 {
-  "measuredAt": "2026-08-19T00:14:46.854Z",
+  "measuredAt": "2026-08-19T01:41:35.401Z",
+  "benchMeasuredFrom": "2026-08-12T04:24:36.292Z",
+  "benchMeasuredAt": "2026-08-19T00:14:40.973Z",
   "sources": {
     "bench": [
       "shop-kudzu",
@@ -21,6 +23,7 @@
       "label": "Kudzu",
       "based": "Kudzu (JSX, no vDOM)",
       "path": "/shop-kudzu/",
+      "measuredAt": "2026-08-12T04:24:36.292Z",
       "entryContentReadyMs": 170,
       "listingActReadyMs": 250.3,
       "sortLatencyMs": 2.2,
@@ -128,6 +131,7 @@
       "label": "Astro",
       "based": "Astro + React islands",
       "path": "/shop-astro/",
+      "measuredAt": "2026-08-19T00:14:40.973Z",
       "entryContentReadyMs": 231.9,
       "listingActReadyMs": 2230,
       "sortLatencyMs": 8.8,
@@ -235,6 +239,7 @@
       "label": "React Router",
       "based": "React",
       "path": "/shop-react-router/",
+      "measuredAt": "2026-08-12T04:29:05.529Z",
       "entryContentReadyMs": 170.2,
       "listingActReadyMs": 2956.7,
       "sortLatencyMs": 17.6,
@@ -342,6 +347,7 @@
       "label": "TanStack Start",
       "based": "React",
       "path": "/shop-tanstack/",
+      "measuredAt": "2026-08-12T05:00:04.459Z",
       "entryContentReadyMs": 169.9,
       "listingActReadyMs": 2858.8,
       "sortLatencyMs": 15.3,
@@ -449,6 +455,7 @@
       "label": "Next.js App Router",
       "based": "React",
       "path": "/shop-next-app/",
+      "measuredAt": "2026-08-12T04:33:49.043Z",
       "entryContentReadyMs": 177.8,
       "listingActReadyMs": 3536.6,
       "sortLatencyMs": 26.8,

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="570" viewBox="0 0 880 570" role="img" aria-label="LCP가 갈리는 이유는 렌더링이 아니라 대역폭 경쟁이다">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="602" viewBox="0 0 880 602" role="img" aria-label="LCP가 갈리는 이유는 렌더링이 아니라 대역폭 경쟁이다">
 <title>LCP가 갈리는 이유는 렌더링이 아니라 대역폭 경쟁이다</title>
-<rect x="0" y="0" width="880" height="570" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="569" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<rect x="0" y="0" width="880" height="602" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="601" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">커머스 상품 상세 · 이미지 무게 두 조건 · 4x CPU · SLOW 4G(서버 페이싱)</text>
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">LCP가 갈리는 이유는 렌더링이 아니라 대역폭 경쟁이다</text>
 <rect x="32" y="85" width="10" height="10" rx="2" fill="#5e6ad2"/>
@@ -49,6 +49,8 @@
 <text x="774.48" y="454.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">10,892 ms</text>
 <rect x="189.12" y="462" width="187.47" height="16" rx="4" fill="#3e3e44"/>
 <text x="384.5870745501286" y="474.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">3,537 ms</text>
+<text x="32" y="567" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 커머스 상품 상세(apps/shop-*) · [pnpm run lcp:bench → landing/lcp.json · 2026-08-19 측정 · Apple M4 · 10코어 · RAM 16 GB ·</text>
+<text x="32" y="582" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">darwin/arm64 · Node v24.17.0] + [pnpm run shop:bench → landing/commerce.json · 2026-08-12~08-19 측정]</text>
 <text x="32" y="533" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">LCP 스프레드: 가벼운 타일 1.9배, 1.4 MB 사진 1.5배. 사진 바이트는 다섯 변형이 동일하다 — 순서를 만드는 건 같은 파이프를 먼저 쓰는</text>
 <text x="32" y="550" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">스크립트 무게다. actReady 스프레드는 14.1배.</text>
 </svg>

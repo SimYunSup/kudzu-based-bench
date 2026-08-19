@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="847" viewBox="0 0 880 847" role="img" aria-label="What the browser actually picked as LCP">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="879" viewBox="0 0 880 879" role="img" aria-label="What the browser actually picked as LCP">
 <title>What the browser actually picked as LCP</title>
-<rect x="0" y="0" width="880" height="847" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="846" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<rect x="0" y="0" width="880" height="879" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="878" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">LCP AT EACH FIXTURE'S ENTRY ROUTE · DEFAULT (LIGHT TILE) CONDITION · 4X CPU · SLOW 4G (SERVER-PACED)</text>
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">What the browser actually picked as LCP</text>
 <text x="32" y="112" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">Commerce — home</text>
@@ -81,5 +81,7 @@
 <rect x="142.08" y="750" width="89.44" height="22" rx="4" fill="#3e3e44"/>
 <text x="239.52000000000004" y="765.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
 <text x="291.20000000000005" y="765.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<text x="32" y="844" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce, docs and form entry routes · pnpm run lcp:bench → landing/lcp.json · measured 2026-08-19 · Apple M4 · 10 cores ·</text>
+<text x="32" y="859" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">16 GB RAM · darwin/arm64 · Node v24.17.0</text>
 <text x="32" y="827" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Element names are what the browser really chose: a product photo in commerce, text in docs and the form wizard.</text>
 </svg>

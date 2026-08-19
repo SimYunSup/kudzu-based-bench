@@ -9,8 +9,15 @@
  *
  *   pnpm run build:stats   -> landing/benchmark.json
  *   pnpm run shop:report   -> landing/commerce.json
+ *   pnpm run form:report   -> landing/form.json
  *   pnpm run lcp:bench     -> landing/lcp.json
  *   pnpm run charts        -> assets/charts/{ko,en}/*.svg
+ *
+ * Every card carries a provenance line built from those files: which fixture,
+ * which command measured it, which file it was read from, and the dates the
+ * browsers ran. Two charts titled "degradation resilience" measure different
+ * fixtures with different capability counts, and without that line a reader
+ * has no way to tell which one they are looking at.
  *
  * Design tokens are Linear's marketing system as captured in
  * home-butler/DESIGN.md: near-black canvas, surface ladder, hairline
@@ -115,6 +122,26 @@ function wrapText(value, size, maxWidth) {
 const TITLE_SIZE = 22;
 const TITLE_LEADING = 28;
 const FOOTNOTE_LEADING = 17;
+const SOURCE_SIZE = 11;
+const SOURCE_LEADING = 15;
+
+/**
+ * Footer geometry. Every chart carries a provenance line — which fixture, which
+ * command measured it, which committed file it was read from, when — because a
+ * chart title alone cannot tell the commerce fixture's six capabilities from
+ * the form wizard's five, and the two disagree about who wins.
+ *
+ * Returns the height the footer needs above its last baseline, so callers keep
+ * computing their own canvas height.
+ */
+function footerLayout({ footnote, source }) {
+  const footnoteLines = footnote ? wrapText(footnote, 12, WIDTH - PAD * 2) : [];
+  const sourceLines = source ? wrapText(source, SOURCE_SIZE, WIDTH - PAD * 2) : [];
+  const height =
+    footnoteLines.length * FOOTNOTE_LEADING +
+    (sourceLines.length ? (sourceLines.length - 1) * SOURCE_LEADING + FOOTNOTE_LEADING : 0);
+  return { footnoteLines, sourceLines, height };
+}
 
 /**
  * Header geometry, computed before anything is drawn so a two-line title or a
@@ -131,9 +158,10 @@ function headerLayout({ title, legend }) {
 
 /**
  * Card chrome shared by every chart: canvas, surface-1 panel with a hairline
- * border, eyebrow, wrapped title, optional legend row, wrapped footnote.
+ * border, eyebrow, wrapped title, optional legend row, wrapped footnote, and
+ * the provenance line.
  */
-function frame({ height, title, eyebrow, legend = [], footnoteLines = [], layout, body }) {
+function frame({ height, title, eyebrow, legend = [], footer, layout, body }) {
   const parts = [
     `<svg xmlns="http://www.w3.org/2000/svg" width="${WIDTH}" height="${height}" viewBox="0 0 ${WIDTH} ${height}" role="img" aria-label="${escapeText(title)}">`,
     `<title>${escapeText(title)}</title>`,
@@ -159,9 +187,23 @@ function frame({ height, title, eyebrow, legend = [], footnoteLines = [], layout
   }
 
   parts.push(body);
-  footnoteLines.forEach((entry, index) =>
+
+  // Footer stacks upward from the bottom padding: provenance last (mono, so it
+  // never reads as prose), footnote above it.
+  let baseline = height - 20;
+  footer.sourceLines.forEach((entry, index) =>
     parts.push(
-      text(PAD, height - 20 - (footnoteLines.length - 1 - index) * FOOTNOTE_LEADING, entry, {
+      text(PAD, baseline - (footer.sourceLines.length - 1 - index) * SOURCE_LEADING, entry, {
+        size: SOURCE_SIZE,
+        family: T.mono,
+        fill: T.inkTertiary
+      })
+    )
+  );
+  if (footer.sourceLines.length) baseline -= (footer.sourceLines.length - 1) * SOURCE_LEADING + FOOTNOTE_LEADING;
+  footer.footnoteLines.forEach((entry, index) =>
+    parts.push(
+      text(PAD, baseline - (footer.footnoteLines.length - 1 - index) * FOOTNOTE_LEADING, entry, {
         size: 12,
         fill: T.inkTertiary
       })
@@ -185,6 +227,7 @@ function barChart({
   title,
   eyebrow,
   footnote,
+  source,
   format,
   series = [],
   scale = "linear",
@@ -198,7 +241,7 @@ function barChart({
   const rowGap = 18;
   const legend = series.map((label, index) => ({ label, fill: SERIES_FILLS[index % SERIES_FILLS.length] }));
   const layout = headerLayout({ title, legend });
-  const footnoteLines = footnote ? wrapText(footnote, 12, WIDTH - PAD * 2) : [];
+  const footer = footerLayout({ footnote, source });
   // Log ticks live above the first row and need their own strip.
   const top = layout.bodyTop + (scale === "log" ? 22 : 0);
   // Gutters are measured, not guessed: a value label plus its optional note
@@ -217,8 +260,7 @@ function barChart({
   const rowHeight = seriesCount * barHeight + (seriesCount - 1) * seriesGap + rowGap;
   const groupHeaderHeight = groups ? 30 : 0;
   const groupCount = groups ? new Set(rows.map(row => row.group)).size : 0;
-  const height =
-    top + rows.length * rowHeight + groupCount * groupHeaderHeight + 24 + footnoteLines.length * FOOTNOTE_LEADING + 16;
+  const height = top + rows.length * rowHeight + groupCount * groupHeaderHeight + 24 + footer.height + 16;
 
   const values = rows.flatMap(row => row.values);
   const max = Math.max(...values);
@@ -294,26 +336,31 @@ function barChart({
     if (index < rows.length - 1) parts.push(line(PAD, y - rowGap / 2, WIDTH - PAD, y - rowGap / 2));
   });
 
-  return frame({ height, title, eyebrow, legend, footnoteLines, layout, body: parts.join("\n") });
+  return frame({ height, title, eyebrow, legend, footer, layout, body: parts.join("\n") });
 }
 
 /**
- * Degradation resilience: one 6-cell strip per condition, filled cells being
+ * Degradation resilience: one strip per condition, filled cells being
  * capabilities that survived. The published data carries counts, not
  * identities, so the cells are a count meter — the footnote says so.
+ *
+ * Cells per strip come from the data, not a constant: the commerce fixture
+ * probes six capabilities and the form wizard five, and hardcoding six drew
+ * the wizard's five-cell strips on a six-cell grid.
  */
-function resilienceChart({ rows, title, eyebrow, footnote, conditionLabels, totalLabel }) {
+function resilienceChart({ rows, title, eyebrow, footnote, source, conditionLabels, totalLabel }) {
   const labelWidth = 16 + Math.max(...rows.map(row => estWidth(row.label, 14)));
   const cell = 14;
   const cellGap = 3;
   const groupGap = 28;
   const layout = headerLayout({ title, legend: [] });
-  const footnoteLines = footnote ? wrapText(footnote, 12, WIDTH - PAD * 2) : [];
+  const footer = footerLayout({ footnote, source });
   // Condition labels sit above the first row of cells.
   const top = layout.bodyTop + 22;
   const rowHeight = 34;
-  const height = top + rows.length * rowHeight + 16 + footnoteLines.length * FOOTNOTE_LEADING + 16;
-  const stripWidth = 6 * cell + 5 * cellGap;
+  const height = top + rows.length * rowHeight + 16 + footer.height + 16;
+  const cellsPerStrip = Math.max(...rows.flatMap(row => row.conditions.map(condition => condition.total)));
+  const stripWidth = cellsPerStrip * cell + (cellsPerStrip - 1) * cellGap;
   const parts = [];
 
   const conditionX = index => PAD + labelWidth + index * (stripWidth + groupGap);
@@ -347,7 +394,7 @@ function resilienceChart({ rows, title, eyebrow, footnote, conditionLabels, tota
   });
 
   parts.push(text(WIDTH - PAD - estWidth(totalLabel, 12), top - 14, totalLabel, { size: 12, fill: T.inkSubtle, weight: 500 }));
-  return frame({ height, title, eyebrow, footnoteLines, layout, body: parts.join("\n") });
+  return frame({ height, title, eyebrow, footer, layout, body: parts.join("\n") });
 }
 
 // ---------------------------------------------------------------------- data
@@ -360,6 +407,7 @@ function readJson(relativePath) {
 
 const benchmark = readJson("landing/benchmark.json");
 const commerce = readJson("landing/commerce.json");
+const form = readJson("landing/form.json");
 const lcp = readJson("landing/lcp.json");
 
 const ms = value => `${Math.round(value).toLocaleString("en-US")} ms`;
@@ -382,11 +430,97 @@ const hasHeavy = lcp.rows.some(row => row.imageWeight === "heavy");
 const commerceByActReady = [...commerce.rows].sort((left, right) => left.listingActReadyMs - right.listingActReadyMs);
 const newsletterByCold = [...benchmark.rows].filter(row => row.ok).sort((left, right) => left.cold - right.cold);
 
+/**
+ * Provenance. Every chart says which fixture it measured, which command wrote
+ * the numbers, which committed file they were read from, and when the browsers
+ * actually ran — dates come from the bench's own clock, never from this
+ * script's, so regenerating charts cannot age a measurement forward.
+ */
+const dayOf = value => String(value ?? "").slice(0, 10);
+
+/** `2026-08-12`, or `2026-08-12~08-19` when variants were measured apart. */
+function measuredRange(from, to, lang) {
+  const first = dayOf(from);
+  const last = dayOf(to);
+  if (!first || first === last) return last || first || null;
+  if (!last) return first;
+  const tail = first.slice(0, 4) === last.slice(0, 4) ? last.slice(5) : last;
+  return `${first}${lang === "ko" ? "~" : "–"}${tail}`;
+}
+
+/** One published dataset: the command that measured it, the file, the dates. */
+function dataset(lang, { command, file, from, to, machine = null }) {
+  const range = measuredRange(from, to, lang);
+  return [`pnpm run ${command} → ${file}`, range && COPY[lang].source.measured(range), machine]
+    .filter(Boolean)
+    .join(" · ");
+}
+
+/**
+ * When a card mixes two datasets, each one is bracketed: the machine spec is
+ * itself dot-separated, so an unbracketed join reads as if the machine belonged
+ * to both benches.
+ */
+function sourceLine(lang, what, datasets) {
+  const rendered = datasets.map(entry => dataset(lang, entry));
+  const body = rendered.length > 1 ? rendered.map(entry => `[${entry}]`).join(" + ") : rendered[0];
+  return `${COPY[lang].source.lead}: ${what} · ${body}`;
+}
+
+/** Dataset descriptors, per chart, in the language-independent part. */
+const DATA = lang => ({
+  commerceBench: {
+    command: "shop:bench",
+    file: "landing/commerce.json",
+    from: commerce.benchMeasuredFrom,
+    to: commerce.benchMeasuredAt
+  },
+  // Route weight comes from the browser-measured assets pass, not the session
+  // replay, and that pass has its own clock.
+  commerceAssets: {
+    command: "shop:assets",
+    file: "landing/commerce.json",
+    from: commerce.sources?.assets,
+    to: commerce.sources?.assets
+  },
+  formBench: {
+    command: "form:bench",
+    file: "landing/form.json",
+    from: form.benchMeasuredFrom,
+    to: form.benchMeasuredAt
+  },
+  newsletter: {
+    command: "build:stats",
+    file: "landing/benchmark.json",
+    from: benchmark.measuredAt,
+    to: benchmark.measuredAt,
+    machine: benchmark.machine?.[lang] ?? null
+  },
+  lcp: {
+    command: "lcp:bench",
+    file: "landing/lcp.json",
+    from: lcp.rows.reduce((first, row) => (!first || row.measuredAt < first ? row.measuredAt : first), ""),
+    to: lcp.measuredAt,
+    machine: lcp.machine?.[lang] ?? null
+  }
+});
+
 /** How the LCP element is described in a row note. */
 const ELEMENT_KIND = { ko: { image: "이미지", text: "텍스트" }, en: { image: "image", text: "text" } };
 
 const COPY = {
   ko: {
+    source: {
+      lead: "측정",
+      measured: range => `${range} 측정`,
+      fixtures: {
+        commerce: "커머스 픽스처 5변형(apps/shop-*)",
+        form: "폼 위저드 픽스처 5변형(apps/form-*)",
+        newsletter: "뉴스레터 픽스처 10변형(apps/)",
+        lcpEntry: "커머스·문서·폼 진입 라우트",
+        lcpProduct: "커머스 상품 상세(apps/shop-*)"
+      }
+    },
     commerceSession: {
       eyebrow: "커머스 · 5세션 중앙값 · 4x CPU · SLOW 4G",
       title: "보이기까지 vs 조작 가능해지기까지",
@@ -424,15 +558,37 @@ const COPY = {
       title: "정적 사이트가 내보내는 JavaScript",
       footnote: "가로축은 로그 스케일 — 눈금 한 칸이 10배다. 15 KB와 4.6 MB는 300배 차이다."
     },
-    resilience: {
-      eyebrow: "커머스 · 여섯 기능 × 세 조건",
-      title: "열화 내성 — 스크립트가 죽으면 무엇이 남는가",
+    // Both fixtures are probed under the same three conditions, so the strip
+    // headers are shared; what differs is which capabilities are counted.
+    degradation: {
       conditions: ["JS 전면 차단", "스크립트 2s 지연", "스크립트 1개 유실"],
-      total: "합계",
+      total: "합계"
+    },
+    resilienceCommerce: {
+      eyebrow: "커머스 · 여섯 기능 × 세 조건",
+      title: "커머스 열화 내성 — 스크립트가 죽으면 무엇이 남는가",
       footnote: "칸은 생존 기능 개수(정보 읽기·카테고리 이동·상세 진입·필터·옵션 선택·담기). 어느 기능인지는 bench/shop-<변형>.json에 있다."
+    },
+    resilienceForm: {
+      eyebrow: "폼 위저드 · 다섯 기능 × 세 조건",
+      title: "폼 위저드 열화 내성 — 스크립트가 죽으면 무엇이 남는가",
+      footnote:
+        "칸은 생존 기능 개수(스텝 이동·상태 운반·조건부 토글·요약 렌더·레퍼런스 렌더). 어느 기능인지는 bench/form-<변형>.json에 있다. " +
+        "'JS 전면 차단'은 커머스와 동일하게 *.js 요청 차단이라, 페이지 로직을 외부 번들이 아니라 인라인 스크립트로 싣는 Astro에는 닿지 않는다 — 전 조건 생존은 그 아키텍처 결과다."
     }
   },
   en: {
+    source: {
+      lead: "Measured",
+      measured: range => `measured ${range}`,
+      fixtures: {
+        commerce: "commerce fixture, 5 variants (apps/shop-*)",
+        form: "form wizard fixture, 5 variants (apps/form-*)",
+        newsletter: "newsletter fixture, 10 variants (apps/)",
+        lcpEntry: "commerce, docs and form entry routes",
+        lcpProduct: "commerce product detail (apps/shop-*)"
+      }
+    },
     commerceSession: {
       eyebrow: "COMMERCE · MEDIAN OF 5 SESSIONS · 4X CPU · SLOW 4G",
       title: "Time to visible vs time to usable",
@@ -470,24 +626,51 @@ const COPY = {
       title: "JavaScript a static site ships",
       footnote: "The x axis is logarithmic — one gridline is 10x. 15 KB to 4.6 MB is a 300x spread."
     },
-    resilience: {
-      eyebrow: "COMMERCE · SIX CAPABILITIES × THREE CONDITIONS",
-      title: "Degradation resilience — what survives when scripts die",
+    // Both fixtures are probed under the same three conditions, so the strip
+    // headers are shared; what differs is which capabilities are counted.
+    degradation: {
       conditions: ["JS blocked", "Scripts 2s late", "1 script lost"],
-      total: "Total",
+      total: "Total"
+    },
+    resilienceCommerce: {
+      eyebrow: "COMMERCE · SIX CAPABILITIES × THREE CONDITIONS",
+      title: "Commerce degradation resilience — what survives when scripts die",
       footnote: "Cells count surviving capabilities (read info, browse category, open detail, filter, select option, add to cart). Which ones is in bench/shop-<variant>.json."
+    },
+    resilienceForm: {
+      eyebrow: "FORM WIZARD · FIVE CAPABILITIES × THREE CONDITIONS",
+      title: "Form wizard degradation resilience — what survives when scripts die",
+      footnote:
+        "Cells count surviving capabilities (advance step, carry state, conditional toggle, render summary, render reference). Which ones is in bench/form-<variant>.json. " +
+        "\"JS blocked\" blocks *.js requests, exactly as in commerce, so it never reaches Astro, which ships its page logic in an inline script instead of an external bundle — surviving every condition is that architecture, not a gap in the harness."
     }
   }
 };
 
 function chartsFor(lang) {
   const copy = COPY[lang];
+  const data = DATA(lang);
+  const where = copy.source.fixtures;
   // Both image-weight conditions are measured on the product detail route:
   // same markup, same layout, only the photograph's bytes differ, so the two
   // series are a controlled pair. (The heavy condition is not measured on the
   // listing grid — a store would never ship twelve full-size photographs into
   // a grid, and it costs a minute per load.)
   const productLcp = (variant, weight) => lcpRow("shop", "product", variant, weight);
+
+  /** Resilience rows: counts per condition, ordered best total first. */
+  const resilienceRows = report =>
+    [...report.rows]
+      .sort((left, right) => right.resilienceTotal - left.resilienceTotal)
+      .map(row => ({
+        label: row.label,
+        conditions: ["js-blocked", "js-slow", "chunk-404"].map(key => ({
+          survived: row.resilience[key],
+          total: row.resilienceMax / 3
+        })),
+        total: row.resilienceTotal,
+        max: row.resilienceMax
+      }));
 
   return {
     "commerce-session.svg": barChart({
@@ -496,6 +679,7 @@ function chartsFor(lang) {
         values: [row.entryContentReadyMs, row.listingActReadyMs]
       })),
       ...copy.commerceSession,
+      source: sourceLine(lang, where.commerce, [data.commerceBench]),
       format: ms
     }),
 
@@ -516,7 +700,10 @@ function chartsFor(lang) {
         light: spread("lcp", "light"),
         heavy: hasHeavy ? spread("lcp", "heavy") : null,
         act: spread("act")
-      })
+      }),
+      // Two datasets on one canvas: the LCP series and the actReady series come
+      // from different benches, and the label says which is which.
+      source: sourceLine(lang, where.lcpProduct, [data.lcp, data.commerceBench])
     }),
 
     "lcp-by-fixture.svg": barChart({
@@ -529,6 +716,7 @@ function chartsFor(lang) {
         note: `${ELEMENT_KIND[lang][row.lcpKind]} ${row.lcpElement}`
       })),
       ...copy.lcpByFixture,
+      source: sourceLine(lang, where.lcpEntry, [data.lcp]),
       series: [],
       format: ms
     }),
@@ -541,12 +729,14 @@ function chartsFor(lang) {
           values: [row.homeJsGzip / 1024, row.searchJsGzip / 1024, row.checkoutJsGzip / 1024]
         })),
       ...copy.routeJs,
+      source: sourceLine(lang, where.commerce, [data.commerceAssets]),
       format: kb
     }),
 
     "build-time.svg": barChart({
       rows: newsletterByCold.map(row => ({ label: row.label, values: [row.cold, row.warm] })),
       ...copy.buildTime,
+      source: sourceLine(lang, where.newsletter, [data.newsletter]),
       format: ms
     }),
 
@@ -556,6 +746,7 @@ function chartsFor(lang) {
         .sort((left, right) => left.jsBytes - right.jsBytes)
         .map(row => ({ label: row.label, values: [row.jsBytes / 1024] })),
       ...copy.outputJs,
+      source: sourceLine(lang, where.newsletter, [data.newsletter]),
       format: sizeLabel,
       scale: "log",
       // Ticks are exact powers of ten in KB; converting them to MB would print
@@ -563,23 +754,23 @@ function chartsFor(lang) {
       tickFormat: tick => `${tick.toLocaleString("en-US")} KB`
     }),
 
-    "resilience.svg": resilienceChart({
-      rows: [...commerce.rows]
-        .sort((left, right) => right.resilienceTotal - left.resilienceTotal)
-        .map(row => ({
-          label: row.label,
-          conditions: ["js-blocked", "js-slow", "chunk-404"].map(key => ({
-            survived: row.resilience[key],
-            total: row.resilienceMax / 3
-          })),
-          total: row.resilienceTotal,
-          max: row.resilienceMax
-        })),
-      eyebrow: copy.resilience.eyebrow,
-      title: copy.resilience.title,
-      conditionLabels: copy.resilience.conditions,
-      totalLabel: copy.resilience.total,
-      footnote: copy.resilience.footnote
+    // One chart per fixture. The two disagree about who wins — commerce counts
+    // six capabilities, the wizard five — so neither may stand in for "the"
+    // resilience number.
+    "resilience-commerce.svg": resilienceChart({
+      rows: resilienceRows(commerce),
+      ...copy.resilienceCommerce,
+      conditionLabels: copy.degradation.conditions,
+      totalLabel: copy.degradation.total,
+      source: sourceLine(lang, where.commerce, [data.commerceBench])
+    }),
+
+    "resilience-form.svg": resilienceChart({
+      rows: resilienceRows(form),
+      ...copy.resilienceForm,
+      conditionLabels: copy.degradation.conditions,
+      totalLabel: copy.degradation.total,
+      source: sourceLine(lang, where.form, [data.formBench])
     })
   };
 }

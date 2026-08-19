@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="437" viewBox="0 0 880 437" role="img" aria-label="Form wizard degradation resilience — what survives when scripts die">
+<title>Form wizard degradation resilience — what survives when scripts die</title>
+<rect x="0" y="0" width="880" height="437" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="436" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">FORM WIZARD · FIVE CAPABILITIES × THREE CONDITIONS</text>
+<text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">Form wizard degradation resilience — what survives when scripts</text>
+<text x="32" y="100" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">die</text>
+<text x="189.12000000000006" y="136" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">JS blocked</text>
+<text x="299.12000000000006" y="136" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">Scripts 2s late</text>
+<text x="409.12000000000006" y="136" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">1 script lost</text>
+<text x="32" y="163" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
+<rect x="189.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="206.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="223.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="240.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="257.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="299.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="316.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="333.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="350.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="367.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="409.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="426.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="443.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="460.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="477.12" y="150" width="14" height="14" rx="2" fill="#27a644"/>
+<text x="808.8" y="163" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#5e6ad2">15/15</text>
+<line x1="32" y1="174" x2="848" y2="174" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="197" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack Start</text>
+<rect x="189.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="206.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="223.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="240.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="257.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="299.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="316.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="333.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="350.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="367.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="409.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="426.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="443.12" y="184" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="460.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="477.12" y="184" width="14" height="14" rx="2" fill="#23252a"/>
+<text x="816.64" y="197" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">7/15</text>
+<line x1="32" y1="208" x2="848" y2="208" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="231" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
+<rect x="189.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="206.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="223.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="240.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="257.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="299.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="316.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="333.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="350.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="367.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="409.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="426.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="443.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="460.12" y="218" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="477.12" y="218" width="14" height="14" rx="2" fill="#23252a"/>
+<text x="816.64" y="231" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">7/15</text>
+<line x1="32" y1="242" x2="848" y2="242" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="265" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js App Router</text>
+<rect x="189.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="206.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="223.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="240.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="257.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="299.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="316.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="333.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="350.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="367.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="409.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="426.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="443.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="460.12" y="252" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="477.12" y="252" width="14" height="14" rx="2" fill="#23252a"/>
+<text x="816.64" y="265" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">6/15</text>
+<line x1="32" y1="276" x2="848" y2="276" stroke="#23252a" stroke-width="1"/>
+<text x="32" y="299" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
+<rect x="189.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="206.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="223.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="240.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="257.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="299.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="316.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="333.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="350.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="367.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<rect x="409.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="426.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="443.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="460.12" y="286" width="14" height="14" rx="2" fill="#27a644"/>
+<rect x="477.12" y="286" width="14" height="14" rx="2" fill="#23252a"/>
+<text x="816.64" y="299" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">6/15</text>
+<text x="814.4" y="136" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">Total</text>
+<text x="32" y="417" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: form wizard fixture, 5 variants (apps/form-*) · pnpm run form:bench → landing/form.json · measured 2026-08-12–08-18</text>
+<text x="32" y="349" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Cells count surviving capabilities (advance step, carry state, conditional toggle, render summary, render reference).</text>
+<text x="32" y="366" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Which ones is in bench/form-&lt;variant&gt;.json. "JS blocked" blocks *.js requests, exactly as in commerce, so it never</text>
+<text x="32" y="383" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">reaches Astro, which ships its page logic in an inline script instead of an external bundle — surviving every condition</text>
+<text x="32" y="400" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">is that architecture, not a gap in the harness.</text>
+</svg>

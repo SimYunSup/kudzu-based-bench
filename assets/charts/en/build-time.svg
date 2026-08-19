@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="740" viewBox="0 0 880 740" role="img" aria-label="Same content, ten builds">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="772" viewBox="0 0 880 772" role="img" aria-label="Same content, ten builds">
 <title>Same content, ten builds</title>
-<rect x="0" y="0" width="880" height="740" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="739" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<rect x="0" y="0" width="880" height="772" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="771" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">NEWSLETTER · MEDIAN OF 3 RUNS AFTER ONE DISCARDED WARM-UP</text>
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">Same content, ten builds</text>
 <rect x="32" y="85" width="10" height="10" rx="2" fill="#5e6ad2"/>
@@ -67,6 +67,8 @@
 <text x="781.76" y="624.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">6,013 ms</text>
 <rect x="204.8" y="632" width="234.95" height="16" rx="4" fill="#828fff"/>
 <text x="447.7455646100117" y="644.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">2,483 ms</text>
+<text x="32" y="737" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: newsletter fixture, 10 variants (apps/) · pnpm run build:stats → landing/benchmark.json · measured 2026-08-12 · Apple M4 ·</text>
+<text x="32" y="752" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0</text>
 <text x="32" y="703" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Cold clears the output and every framework build cache; warm clears only the output. The gap is what that tool's cache</text>
 <text x="32" y="720" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">buys.</text>
 </svg>

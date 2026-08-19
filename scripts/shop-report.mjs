@@ -63,6 +63,7 @@ function main() {
       label: variant.label,
       based: variant.based,
       path: `/${variant.key}/`,
+      measuredAt: bench?.measuredAt ?? null,
       entryContentReadyMs: step("entry:product", "contentReadyMs"),
       // The listing is the first page in the journey that needs its JavaScript
       // alive, so its actReady is where the boot cost actually shows up.
@@ -94,6 +95,11 @@ function main() {
 
   const report = {
     measuredAt: new Date().toISOString(),
+    // When the browsers actually ran, as opposed to when this file was joined.
+    // Charts label themselves with this, so it has to be the bench's clock —
+    // and variants get re-measured one at a time, hence a range.
+    benchMeasuredFrom: rows.reduce((first, row) => (!first || row.measuredAt < first ? row.measuredAt : first), ""),
+    benchMeasuredAt: rows.reduce((latest, row) => (row.measuredAt > latest ? row.measuredAt : latest), ""),
     sources: {
       bench: rows.filter((row) => row.clickLoss).map((row) => row.key),
       assets: assets ? assets.measuredAt : null,

@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="453" viewBox="0 0 880 453" role="img" aria-label="Time to visible vs time to usable">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="470" viewBox="0 0 880 470" role="img" aria-label="Time to visible vs time to usable">
 <title>Time to visible vs time to usable</title>
-<rect x="0" y="0" width="880" height="453" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="452" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<rect x="0" y="0" width="880" height="470" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="469" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">COMMERCE · MEDIAN OF 5 SESSIONS · 4X CPU · SLOW 4G</text>
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">Time to visible vs time to usable</text>
 <rect x="32" y="85" width="10" height="10" rx="2" fill="#5e6ad2"/>
@@ -37,5 +37,6 @@
 <text x="226.51235197647463" y="354.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">178 ms</text>
 <rect x="189.12" y="362" width="584.64" height="16" rx="4" fill="#828fff"/>
 <text x="781.76" y="374.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">3,537 ms</text>
+<text x="32" y="450" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce fixture, 5 variants (apps/shop-*) · pnpm run shop:bench → landing/commerce.json · measured 2026-08-12–08-19</text>
 <text x="32" y="433" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Every variant ships complete HTML, so "visible" is effectively a tie. The whole spread sits in "usable".</text>
 </svg>

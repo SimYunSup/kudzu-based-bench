@@ -10,7 +10,7 @@
 | --- | --- | --- | --- |
 | [뉴스레터](#뉴스레터-빌드-벤치마크) | 10 | 빌드 비용, 출력 크기 | `build:variants` · `build:stats` |
 | [커머스](#커머스-벤치마크) | 5 | 하이드레이션, 세션 상호작용, 열화 내성 | `build:shop` · `shop:bench` |
-| [폼 위저드](#폼-위저드-벤치마크) | 5 | 점진적 향상, 스텝 간 상태 운반 | `build:form` · `form:bench` |
+| [폼 위저드](#폼-위저드-벤치마크) | 5 | 점진적 향상, 스텝 간 상태 운반, 열화 내성 | `build:form` · `form:bench` |
 | [문서 + 검색](#문서--검색-벤치마크) | 5 | 클라이언트 검색 지연, 인덱스 비용 | `build:docs` · `docs:bench` |
 
 ## 한눈에 보기
@@ -23,9 +23,13 @@
 
 <img src="assets/charts/ko/output-js.svg" width="880" alt="뉴스레터 10변형이 출력하는 JS 총량(로그 스케일)">
 
-<img src="assets/charts/ko/resilience.svg" width="880" alt="커머스 열화 내성: 조건별 생존 기능 개수">
+<img src="assets/charts/ko/resilience-commerce.svg" width="880" alt="커머스 열화 내성: 조건별 생존 기능 개수(여섯 기능 × 세 조건)">
 
-LCP는 [LCP](#lcp) 절에 두 조건으로 따로 있습니다. 전부 커밋된 측정치(`landing/benchmark.json`·`commerce.json`·`lcp.json`)에서 `pnpm run charts`가 생성하므로, 벤치를 다시 돌리지 않아도 같은 그림이 나옵니다.
+<img src="assets/charts/ko/resilience-form.svg" width="880" alt="폼 위저드 열화 내성: 조건별 생존 기능 개수(다섯 기능 × 세 조건)">
+
+열화 내성은 픽스처마다 따로 있습니다 — 커머스는 여섯 기능 만점 18점, 폼 위저드는 다섯 기능 만점 15점이고 순위가 뒤집힙니다(커머스 Kudzu 15/18 1위, 폼 위저드 Astro 15/15 1위 · Kudzu 7/15). 두 그림을 한 지표로 합치지 않습니다.
+
+LCP는 [LCP](#lcp) 절에 두 조건으로 따로 있습니다. 전부 커밋된 측정치(`landing/benchmark.json`·`commerce.json`·`form.json`·`lcp.json`)에서 `pnpm run charts`가 생성하므로, 벤치를 다시 돌리지 않아도 같은 그림이 나옵니다. 각 그림 하단에는 어느 픽스처를 어느 명령으로 언제 측정했는지가 적혀 있습니다.
 
 <details>
 <summary>이름과 측정 철학</summary>
@@ -230,9 +234,9 @@ _`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 각 행은 워밍업 1회
 
 Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +4.7 KB). Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다. Next.js는 16.2 → 16.3에서 145 KB대 → 134 KB대로, TanStack은 vite 7 → 8 + @vitejs/plugin-react 6에서 104 KB대 → 101 KB대로 줄었습니다.
 
-### 열화 내성
+### 열화 내성 (정보 읽기 · 카테고리 이동 · 상세 진입 · 필터 · 옵션 선택 · 담기)
 
-여섯 기능(정보 읽기 · 카테고리 이동 · 상세 진입 · 필터 · 옵션 선택 · 담기)이 세 조건에서 몇 개나 살아남는지. 광고 차단, 캡티브 포털, CDN 부분 장애, 지하철 터널이 실제로 만드는 상태입니다.
+여섯 기능이 세 조건에서 몇 개나 살아남는지. 광고 차단, 캡티브 포털, CDN 부분 장애, 지하철 터널이 실제로 만드는 상태입니다. 만점은 18점이며, [폼 위저드의 열화 내성](#열화-내성-스텝-이동--상태-운반--조건부-토글--요약-렌더--레퍼런스-렌더)은 기능 축이 달라 만점 15점의 **다른 표**입니다 — 두 표의 순위는 뒤집힙니다.
 
 | 변형 | JS 전면 차단 | 스크립트 2s 지연 | 스크립트 1개 유실 | 합계 |
 | --- | ---: | ---: | ---: | ---: |
@@ -242,7 +246,7 @@ Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타�
 | Next.js | 3/6 | 2/6 | 3/6 | 8/18 |
 | React Router | 3/6 | 2/6 | 3/6 | 8/18 |
 
-TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐에 따라 실행 간 ±1 흔들립니다(3~4/6) — 청크 그래프가 콘텐츠 해시 순서에 민감해서입니다.
+TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐에 따라 실행 간 ±1 흔들립니다(3~4/6) — 청크 그래프가 콘텐츠 해시 순서에 민감해서입니다. 원본 JSON: `bench/shop-<변형>.json`, 발행본은 `landing/commerce.json`(그래프가 읽는 파일).
 
 ### 카탈로그 스케일 (cold / warm, 중앙값)
 
@@ -263,6 +267,7 @@ TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐�
 ```bash
 pnpm run build:form
 pnpm run form:bench     # 세션 재생 + ref 교차 검증 + 열화 내성
+pnpm run form:report    # 측정치를 landing/form.json으로 발행(그래프가 읽는 파일)
 ```
 
 ### 세션 재생 (5세션 중앙값, 4x CPU · Slow 4G)
@@ -279,6 +284,8 @@ pnpm run form:bench     # 세션 재생 + ref 교차 검증 + 열화 내성
 
 ### 열화 내성 (스텝 이동 · 상태 운반 · 조건부 토글 · 요약 렌더 · 레퍼런스 렌더)
 
+만점 15점입니다. [커머스의 열화 내성](#열화-내성-정보-읽기--카테고리-이동--상세-진입--필터--옵션-선택--담기)은 기능 축이 여섯 개라 만점 18점이고 순위도 뒤집힙니다(커머스는 Kudzu 15/18로 1위) — 두 표는 서로 대체하지 않습니다.
+
 | 변형 | JS 전면 차단 | 스크립트 2s 지연 | 스크립트 1개 유실 | 합계 |
 | --- | ---: | ---: | ---: | ---: |
 | Astro | 5/5 | 5/5 | 5/5 | **15/15** |
@@ -294,7 +301,7 @@ pnpm run form:bench     # 세션 재생 + ref 교차 검증 + 열화 내성
 
 - 도착 지표는 제출 직전 sessionStorage에 심은 벽시계 기준입니다. React Router·Next는 폼을 가로채지 않아 실제 문서 내비게이션이 일어나고, TanStack은 라우터가 가로챕니다 — navigationStart 기준으로 재면 두 경우가 비교 불능이라서입니다. URL 대기는 `commit` 기준(모듈 스크립트가 `load`를 수 초 늦추는 조건에서 성공한 내비게이션을 실패로 오판하지 않도록).
 - diet 체크박스처럼 같은 키가 반복되는 쿼리는 `URLSearchParams#getAll` 의미론으로 통일. TanStack은 기본 JSON 서치 코덱이 반복 키를 덮어쓰므로 커스텀 `parseSearch`/`stringifySearch`를 씁니다.
-- 원본 JSON: `bench/form-<variant>.json`.
+- 원본 JSON: `bench/form-<variant>.json`. 발행본은 `landing/form.json`(`pnpm run form:report`가 쓰고, `pnpm run charts`가 읽는 파일 — `bench/`는 커밋되지 않으므로 그래프는 발행본만 봅니다).
 </details>
 
 ## 문서 + 검색 벤치마크
@@ -362,8 +369,9 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 - `pnpm run form:bench -- --variant form-kudzu` — 폼 위저드 → `bench/form-<variant>.json`.
 - `pnpm run docs:bench -- --variant docs-kudzu` — 문서 검색 → `bench/docs-<variant>.json`.
 - `pnpm run shop:report` — 커머스 측정치를 `landing/commerce.json`으로 병합.
+- `pnpm run form:report` — 폼 위저드 측정치를 `landing/form.json`으로 발행(`bench/`는 커밋되지 않으므로 그래프는 이 파일을 읽는다).
 - `pnpm run lcp:bench` — 커머스·문서·폼 진입 라우트의 FCP/LCP + 브라우저가 고른 LCP 요소 → `landing/lcp.json`, README `LCP` 표 갱신. `--routes product --runs 3`으로 라우트를 좁히고, `OTW_IMAGE_WEIGHT=heavy`로 빌드하면 1.4 MB 사진 조건을 잰다. `--readme-only`는 재측정 없이 표만 다시 렌더.
-- `pnpm run charts` — 커밋된 측정치에서 README용 SVG 막대 그래프 재생성 → `assets/charts/{ko,en}/`.
+- `pnpm run charts` — 커밋된 측정치에서 README용 SVG 막대 그래프 재생성 → `assets/charts/{ko,en}/`. 각 그림에는 픽스처·측정 명령·읽은 파일·측정 날짜가 하단에 박힌다.
 
 ## 개발
 

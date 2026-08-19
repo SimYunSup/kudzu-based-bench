@@ -1,7 +1,7 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="880" height="579" viewBox="0 0 880 579" role="img" aria-label="정적 사이트가 내보내는 JavaScript">
+<svg xmlns="http://www.w3.org/2000/svg" width="880" height="611" viewBox="0 0 880 611" role="img" aria-label="정적 사이트가 내보내는 JavaScript">
 <title>정적 사이트가 내보내는 JavaScript</title>
-<rect x="0" y="0" width="880" height="579" rx="12" fill="#010102"/>
-<rect x="0.5" y="0.5" width="879" height="578" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
+<rect x="0" y="0" width="880" height="611" rx="12" fill="#010102"/>
+<rect x="0.5" y="0.5" width="879" height="610" rx="12" fill="#0f1011" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="40" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">뉴스레터 · 출력 JS 총량 · 로그 스케일</text>
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">정적 사이트가 내보내는 JavaScript</text>
 <line x1="204.8" y1="110" x2="204.8" y2="504" stroke="#23252a" stroke-width="1"/>
@@ -53,5 +53,7 @@
 <text x="32" y="498" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
 <rect x="204.8" y="482" width="535.81" height="22" rx="4" fill="#3e3e44"/>
 <text x="748.6147726217523" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
+<text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 뉴스레터 픽스처 10변형(apps/) · pnpm run build:stats → landing/benchmark.json · 2026-08-12 측정 · Apple M4 · 10코어 · RAM 16 GB ·</text>
+<text x="32" y="591" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">darwin/arm64 · Node v24.17.0</text>
 <text x="32" y="559" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">가로축은 로그 스케일 — 눈금 한 칸이 10배다. 15 KB와 4.6 MB는 300배 차이다.</text>
 </svg>

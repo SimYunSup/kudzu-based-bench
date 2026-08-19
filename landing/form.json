@@ -1,0 +1,144 @@
+{
+  "measuredAt": "2026-08-19T01:41:35.455Z",
+  "benchMeasuredFrom": "2026-08-12T04:17:25.795Z",
+  "benchMeasuredAt": "2026-08-18T06:13:46.858Z",
+  "sessions": 5,
+  "throttling": {
+    "cpu": "4x",
+    "network": "slow4g"
+  },
+  "capabilities": [
+    "stepAdvance",
+    "statePropagation",
+    "conditionalToggle",
+    "summaryRender",
+    "refRender"
+  ],
+  "rows": [
+    {
+      "key": "form-tanstack",
+      "label": "TanStack Start",
+      "based": "TanStack Start",
+      "path": "/form-tanstack/",
+      "measuredAt": "2026-08-18T06:13:46.858Z",
+      "entryContentReadyMs": 174.2,
+      "toggleLatencyMs": 1.8,
+      "arrivalMs": 181,
+      "stateReadyMs": 187,
+      "summaryReadyMs": 174,
+      "refReadyMs": 164,
+      "refIntegrity": {
+        "matchedRuns": 5,
+        "totalRuns": 5,
+        "expected": "REF-09D7A58B"
+      },
+      "resilience": {
+        "js-blocked": 2,
+        "js-slow": 2,
+        "chunk-404": 3
+      },
+      "resilienceTotal": 7,
+      "resilienceMax": 15
+    },
+    {
+      "key": "form-astro",
+      "label": "Astro",
+      "based": "Astro + inline script",
+      "path": "/form-astro/",
+      "measuredAt": "2026-08-18T06:13:06.887Z",
+      "entryContentReadyMs": 196.1,
+      "toggleLatencyMs": 0.8,
+      "arrivalMs": 177,
+      "stateReadyMs": 196,
+      "summaryReadyMs": 209,
+      "refReadyMs": 180,
+      "refIntegrity": {
+        "matchedRuns": 5,
+        "totalRuns": 5,
+        "expected": "REF-09D7A58B"
+      },
+      "resilience": {
+        "js-blocked": 5,
+        "js-slow": 5,
+        "chunk-404": 5
+      },
+      "resilienceTotal": 15,
+      "resilienceMax": 15
+    },
+    {
+      "key": "form-next-app",
+      "label": "Next.js App Router",
+      "based": "Next.js App Router",
+      "path": "/form-next-app/",
+      "measuredAt": "2026-08-12T04:19:09.572Z",
+      "entryContentReadyMs": 182,
+      "toggleLatencyMs": 1.9,
+      "arrivalMs": 188,
+      "stateReadyMs": 362,
+      "summaryReadyMs": 370,
+      "refReadyMs": 345,
+      "refIntegrity": {
+        "matchedRuns": 5,
+        "totalRuns": 5,
+        "expected": "REF-09D7A58B"
+      },
+      "resilience": {
+        "js-blocked": 1,
+        "js-slow": 1,
+        "chunk-404": 4
+      },
+      "resilienceTotal": 6,
+      "resilienceMax": 15
+    },
+    {
+      "key": "form-react-router",
+      "label": "React Router",
+      "based": "React Router v8",
+      "path": "/form-react-router/",
+      "measuredAt": "2026-08-12T04:18:10.894Z",
+      "entryContentReadyMs": 178.8,
+      "toggleLatencyMs": 3,
+      "arrivalMs": 175,
+      "stateReadyMs": 399,
+      "summaryReadyMs": 370,
+      "refReadyMs": 349,
+      "refIntegrity": {
+        "matchedRuns": 5,
+        "totalRuns": 5,
+        "expected": "REF-09D7A58B"
+      },
+      "resilience": {
+        "js-blocked": 1,
+        "js-slow": 1,
+        "chunk-404": 4
+      },
+      "resilienceTotal": 6,
+      "resilienceMax": 15
+    },
+    {
+      "key": "form-kudzu",
+      "label": "Kudzu",
+      "based": "Kudzu (JSX, no vDOM)",
+      "path": "/form-kudzu/",
+      "measuredAt": "2026-08-12T04:17:25.795Z",
+      "entryContentReadyMs": 180.3,
+      "toggleLatencyMs": 0.7,
+      "arrivalMs": 179,
+      "stateReadyMs": 702,
+      "summaryReadyMs": 520,
+      "refReadyMs": 502,
+      "refIntegrity": {
+        "matchedRuns": 5,
+        "totalRuns": 5,
+        "expected": "REF-09D7A58B"
+      },
+      "resilience": {
+        "js-blocked": 1,
+        "js-slow": 2,
+        "chunk-404": 4
+      },
+      "resilienceTotal": 7,
+      "resilienceMax": 15
+    }
+  ]
+}

@@ -18,6 +18,7 @@
     "shop:report": "node ./scripts/shop-report.mjs",
     "build:form": "pnpm --filter @otw/form-kudzu build && pnpm --filter @otw/form-astro build && pnpm --filter @otw/form-react-router build && pnpm --filter @otw/form-tanstack build && pnpm --filter @otw/form-next-app build",
     "form:bench": "node ./scripts/form-bench.mjs",
+    "form:report": "node ./scripts/form-report.mjs",
     "build:docs-data": "pnpm --filter @otw/docs-data build",
     "build:docs": "pnpm run build:docs-data && pnpm --filter @otw/docs-kudzu build && pnpm --filter @otw/docs-astro build && pnpm --filter @otw/docs-eleventy build && pnpm --filter @otw/docs-docusaurus build && pnpm --filter @otw/docs-vitepress build",
     "docs:bench": "node ./scripts/docs-bench.mjs",

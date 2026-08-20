@@ -112,7 +112,7 @@
 <rect x="528.12" y="258" width="14" height="14" rx="2" fill="#23252a"/>
 <text x="816.64" y="271" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">8/18</text>
 <text x="814.4" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">Total</text>
-<text x="32" y="355" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce fixture, 5 variants (apps/shop-*) · pnpm run shop:bench → landing/commerce.json · measured 2026-08-12–08-19</text>
+<text x="32" y="355" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce fixture, 5 variants (apps/shop-*) · pnpm run shop:bench → landing/commerce.json · measured 2026-08-20</text>
 <text x="32" y="321" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Cells count surviving capabilities (read info, browse category, open detail, filter, select option, add to cart). Which</text>
 <text x="32" y="338" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">ones is in bench/shop-&lt;variant&gt;.json.</text>
 </svg>

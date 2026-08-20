@@ -1,3 +1,9 @@
+// Kudzu 0.8.53+ emits a stylesheet only when a route's reachable source graph
+// imports it (route-aware CSS closure) — up to 0.8.39 it linked every file
+// under src/ on every page. Every storefront route renders this header, either
+// directly (checkout, policy pages) or through Shell, so importing the global
+// sheet here is the one edge that covers all six routes without changing DOM.
+import "../style.css";
 import { useEffect, useState } from "@kudzujs/core";
 import { menu } from "../generated/catalog";
 import { siteUrl } from "../lib/site";

@@ -30,6 +30,11 @@ import { OUTPUT_DIRS, cleanBuildArtifacts } from "./lib/build-cache.mjs";
 
 const repoRoot = fileURLToPath(new URL("..", import.meta.url));
 
+// The catalog size every other harness assumes, i.e. what
+// `pnpm run build:shop` produces with OTW_CATALOG_SIZE unset
+// (apps/shop-*/scripts/gen-catalog.mjs: "100 | 1000 | 10000, default 100").
+const DEFAULT_CATALOG_SIZE = 100;
+
 function parseArgs(argv) {
   const options = {
     variants: ["shop-kudzu", "shop-next-app", "shop-react-router", "shop-tanstack", "shop-astro"],
@@ -133,6 +138,15 @@ function sweep(variant, options) {
     });
     console.log(`  ${variant} @${size}: cold ${rows.at(-1).coldMs} ms, warm ${rows.at(-1).warmMs} ms, ${rows.at(-1).outputMB} MB`);
   }
+
+  // Leave the variant built at the default catalog size. The sweep's last
+  // build is the largest size in the list, and every later harness that reads
+  // apps/shop-*/<out> — shop-assets.mjs's "total output", lcp-bench.mjs's
+  // listing routes — would then measure a 1,000-product store against
+  // 100-product rows measured before the sweep ran. Restoring costs one build
+  // per variant and removes an ordering dependency between scripts.
+  clean(appDir);
+  timeBuild(appDir, DEFAULT_CATALOG_SIZE);
 
   return rows;
 }

@@ -6,82 +6,82 @@
 <text x="32" y="72" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="22" font-weight="600" fill="#f7f8f8">What the browser actually picked as LCP</text>
 <text x="32" y="112" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">Commerce — home</text>
 <text x="32" y="146" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="130" width="199.68" height="22" rx="4" fill="#5e6ad2"/>
-<text x="349.76" y="145.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">768 ms</text>
-<text x="401.44" y="145.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
+<rect x="142.08" y="130" width="205.49" height="22" rx="4" fill="#5e6ad2"/>
+<text x="355.57010438413363" y="145.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">792 ms</text>
+<text x="407.25010438413364" y="145.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
 <line x1="32" y1="161" x2="848" y2="161" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="186" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="170" width="242.32" height="22" rx="4" fill="#3e3e44"/>
-<text x="392.4" y="185.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">932 ms</text>
-<text x="444.08" y="185.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
+<rect x="142.08" y="170" width="244.93" height="22" rx="4" fill="#3e3e44"/>
+<text x="395.0075991649269" y="185.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">944 ms</text>
+<text x="446.6875991649269" y="185.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
 <line x1="32" y1="201" x2="848" y2="201" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="226" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
-<rect x="142.08" y="210" width="282.88" height="22" rx="4" fill="#3e3e44"/>
-<text x="432.96" y="225.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,088 ms</text>
-<text x="499.2" y="225.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
+<text x="32" y="226" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
+<rect x="142.08" y="210" width="283.33" height="22" rx="4" fill="#3e3e44"/>
+<text x="433.40726513569933" y="225.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,092 ms</text>
+<text x="499.64726513569934" y="225.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
 <line x1="32" y1="241" x2="848" y2="241" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="266" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
-<rect x="142.08" y="250" width="283.92" height="22" rx="4" fill="#3e3e44"/>
-<text x="434" y="265.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,092 ms</text>
-<text x="500.24" y="265.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
+<text x="32" y="266" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
+<rect x="142.08" y="250" width="284.37" height="22" rx="4" fill="#3e3e44"/>
+<text x="434.4450939457202" y="265.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,096 ms</text>
+<text x="500.6850939457202" y="265.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
 <line x1="32" y1="281" x2="848" y2="281" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="306" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="142.08" y="290" width="354.64" height="22" rx="4" fill="#3e3e44"/>
-<text x="504.7199999999999" y="305.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,364 ms</text>
-<text x="570.9599999999999" y="305.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
+<rect x="142.08" y="290" width="353.9" height="22" rx="4" fill="#3e3e44"/>
+<text x="503.97962421711895" y="305.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,364 ms</text>
+<text x="570.219624217119" y="305.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">image img</text>
 <line x1="32" y1="321" x2="848" y2="321" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="342" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">Docs — deep link</text>
 <text x="32" y="376" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Eleventy</text>
-<rect x="142.08" y="360" width="90.48" height="22" rx="4" fill="#5e6ad2"/>
-<text x="240.56" y="375.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">348 ms</text>
-<text x="292.24" y="375.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text article.doc-body</text>
+<rect x="142.08" y="360" width="90.29" height="22" rx="4" fill="#5e6ad2"/>
+<text x="240.3711064718163" y="375.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">348 ms</text>
+<text x="292.0511064718163" y="375.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text article.doc-body</text>
 <line x1="32" y1="391" x2="848" y2="391" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="416" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="400" width="95.68" height="22" rx="4" fill="#3e3e44"/>
-<text x="245.76000000000002" y="415.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">368 ms</text>
-<text x="297.44000000000005" y="415.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
+<rect x="142.08" y="400" width="98.59" height="22" rx="4" fill="#3e3e44"/>
+<text x="248.6737369519833" y="415.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">380 ms</text>
+<text x="300.3537369519833" y="415.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
 <line x1="32" y1="431" x2="848" y2="431" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="456" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="440" width="176.8" height="22" rx="4" fill="#3e3e44"/>
-<text x="326.88" y="455.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">680 ms</text>
-<text x="378.56" y="455.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
+<rect x="142.08" y="440" width="175.39" height="22" rx="4" fill="#3e3e44"/>
+<text x="325.4730688935282" y="455.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">676 ms</text>
+<text x="377.1530688935282" y="455.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
 <line x1="32" y1="471" x2="848" y2="471" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="496" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
-<rect x="142.08" y="480" width="178.88" height="22" rx="4" fill="#3e3e44"/>
-<text x="328.96000000000004" y="495.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">688 ms</text>
-<text x="380.64000000000004" y="495.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
+<rect x="142.08" y="480" width="189.92" height="22" rx="4" fill="#3e3e44"/>
+<text x="340.0026722338205" y="495.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">732 ms</text>
+<text x="391.6826722338205" y="495.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
 <line x1="32" y1="511" x2="848" y2="511" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="536" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
 <rect x="142.08" y="520" width="497.12" height="22" rx="4" fill="#3e3e44"/>
-<text x="647.1999999999999" y="535.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,912 ms</text>
+<text x="647.1999999999999" y="535.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">1,916 ms</text>
 <text x="713.4399999999999" y="535.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text p</text>
 <line x1="32" y1="551" x2="848" y2="551" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="572" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98" letter-spacing="0.4">Form wizard — step 1</text>
 <text x="32" y="606" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="142.08" y="590" width="49.92" height="22" rx="4" fill="#5e6ad2"/>
-<text x="200.00000000000003" y="605.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">192 ms</text>
-<text x="251.68000000000004" y="605.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<rect x="142.08" y="590" width="50.85" height="22" rx="4" fill="#5e6ad2"/>
+<text x="200.933611691023" y="605.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">196 ms</text>
+<text x="252.613611691023" y="605.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
 <line x1="32" y1="621" x2="848" y2="621" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="646" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="142.08" y="630" width="89.44" height="22" rx="4" fill="#3e3e44"/>
-<text x="239.52000000000004" y="645.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
-<text x="291.20000000000005" y="645.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<text x="32" y="646" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
+<rect x="142.08" y="630" width="89.25" height="22" rx="4" fill="#3e3e44"/>
+<text x="239.33327766179542" y="645.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="291.0132776617954" y="645.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
 <line x1="32" y1="661" x2="848" y2="661" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="686" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="142.08" y="670" width="89.44" height="22" rx="4" fill="#3e3e44"/>
-<text x="239.52000000000004" y="685.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
-<text x="291.20000000000005" y="685.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<text x="32" y="686" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
+<rect x="142.08" y="670" width="89.25" height="22" rx="4" fill="#3e3e44"/>
+<text x="239.33327766179542" y="685.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="291.0132776617954" y="685.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
 <line x1="32" y1="701" x2="848" y2="701" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="726" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack</text>
-<rect x="142.08" y="710" width="89.44" height="22" rx="4" fill="#3e3e44"/>
-<text x="239.52000000000004" y="725.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
-<text x="291.20000000000005" y="725.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<text x="32" y="726" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
+<rect x="142.08" y="710" width="89.25" height="22" rx="4" fill="#3e3e44"/>
+<text x="239.33327766179542" y="725.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
+<text x="291.0132776617954" y="725.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
 <line x1="32" y1="741" x2="848" y2="741" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="766" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js</text>
-<rect x="142.08" y="750" width="89.44" height="22" rx="4" fill="#3e3e44"/>
-<text x="239.52000000000004" y="765.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">344 ms</text>
-<text x="291.20000000000005" y="765.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
-<text x="32" y="844" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce, docs and form entry routes · pnpm run lcp:bench → landing/lcp.json · measured 2026-08-19 · Apple M4 · 10 cores ·</text>
-<text x="32" y="859" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">16 GB RAM · darwin/arm64 · Node v24.17.0</text>
+<text x="32" y="766" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
+<rect x="142.08" y="750" width="90.29" height="22" rx="4" fill="#3e3e44"/>
+<text x="240.3711064718163" y="765.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">348 ms</text>
+<text x="292.0511064718163" y="765.5" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">text h1</text>
+<text x="32" y="844" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: commerce, docs and form entry routes · pnpm run lcp:bench → landing/lcp.json · measured 2026-08-19–08-20 · Apple M4 · 10</text>
+<text x="32" y="859" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">cores · 16 GB RAM · darwin/arm64 · Node v24.17.0</text>
 <text x="32" y="827" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">Element names are what the browser really chose: a product photo in commerce, text in docs and the form wizard.</text>
 </svg>

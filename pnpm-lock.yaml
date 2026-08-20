@@ -117,8 +117,8 @@ importers:
   apps/docs-kudzu:
     dependencies:
       '@kudzujs/core':
-        specifier: ^0.8.39
-        version: 0.8.39
+        specifier: ^0.9.0
+        version: 0.9.0
       '@otw/docs-data':
         specifier: workspace:*
         version: link:../../packages/docs-data
@@ -209,8 +209,8 @@ importers:
   apps/form-kudzu:
     dependencies:
       '@kudzujs/core':
-        specifier: ^0.8.39
-        version: 0.8.39
+        specifier: ^0.9.0
+        version: 0.9.0
     devDependencies:
       typescript:
         specifier: ^7.0.2
@@ -328,8 +328,8 @@ importers:
   apps/kudzu:
     dependencies:
       '@kudzujs/core':
-        specifier: ^0.8.39
-        version: 0.8.39
+        specifier: ^0.9.0
+        version: 0.9.0
       '@otw/notion-content':
         specifier: workspace:*
         version: link:../../packages/notion-content
@@ -477,8 +477,8 @@ importers:
   apps/shop-kudzu:
     dependencies:
       '@kudzujs/core':
-        specifier: ^0.8.39
-        version: 0.8.39
+        specifier: ^0.9.0
+        version: 0.9.0
       '@otw/commerce-data':
         specifier: workspace:*
         version: link:../../packages/commerce-data
@@ -791,6 +791,13 @@ importers:
       unified:
         specifier: ^11.0.5
         version: 11.0.5
+      unist-util-visit:
+        specifier: ^5.1.0
+        version: 5.1.0
+    devDependencies:
+      '@types/hast':
+        specifier: ^3.0.5
+        version: 3.0.5
 
 packages:
 
@@ -3313,8 +3320,8 @@ packages:
   '@keyv/serialize@1.1.1':
     resolution: {integrity: sha512-dXn3FZhPv0US+7dtJsIi2R+c7qWYiReoEh5zUntWCf4oSpMNib8FDhSoed6m3QyZdx5hK7iLFkYk3rNxwt8vTA==}
 
-  '@kudzujs/core@0.8.39':
-    resolution: {integrity: sha512-o7ScM+72VNcVbrxA2NhILm+lZolaO+U+wPYQF4JdhMjdZoXva6oEgtEtkbLK51Q5fttApllsinXRiNfOe8oQMw==}
+  '@kudzujs/core@0.9.0':
+    resolution: {integrity: sha512-Sk14itdAhDIBp1A1S/+e8kV7FUKvdxfcT1vVFBCMX4q93mSeIUkip8yHO0bqDAbONeiqIkIn5WdF/9PVmkG7sQ==}
     engines: {node: '>=22'}
     hasBin: true
 
@@ -14136,7 +14143,7 @@ snapshots:
 
   '@keyv/serialize@1.1.1': {}
 
-  '@kudzujs/core@0.8.39':
+  '@kudzujs/core@0.9.0':
     dependencies:
       esbuild: 0.28.2
       typescript: 5.9.3

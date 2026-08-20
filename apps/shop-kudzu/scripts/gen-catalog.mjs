@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 // Materialize the commerce catalog as a relative TypeScript module.
 //
-// Kudzu 0.8.x rejects every package (non-relative) import referenced outside
+// Kudzu (0.8.x through 0.9.0, re-verified on 0.9.0) rejects every package
+// (non-relative) import referenced outside
 // a JSX event handler, so a compiled page cannot `import { buildCatalog }
 // from "@otw/commerce-data"`. The generator runs here instead and the pages
 // import ../generated/catalog — a relative module, which Kudzu does compile

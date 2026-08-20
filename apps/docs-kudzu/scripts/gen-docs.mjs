@@ -2,7 +2,8 @@
 // Materialize the Vine docs corpus (@otw/docs-data) as a relative
 // TypeScript module.
 //
-// Kudzu 0.8.x rejects every package (non-relative) import that is
+// Kudzu (0.8.x through 0.9.0, re-verified on 0.9.0) rejects every package
+// (non-relative) import that is
 // referenced outside a JSX event handler — see the `packageImportBindings`
 // guard in @kudzujs/core/framework/build.mjs. Pages therefore cannot call
 // `getDocs()` from "@otw/docs-data" directly; the generator runs here

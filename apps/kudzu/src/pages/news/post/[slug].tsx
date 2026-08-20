@@ -1,3 +1,8 @@
+// Post-body styles, scoped to .post-page/.markdown-body: this is the only
+// route that renders them, and Kudzu 0.8.53+ links a stylesheet exactly where
+// its source graph imports it. Astro's variant splits the same two sheets the
+// same way.
+import "../../../content.css";
 import entries from "../../../generated/entries";
 import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";

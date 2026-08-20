@@ -97,7 +97,7 @@
 <rect x="477.12" y="258" width="14" height="14" rx="2" fill="#23252a"/>
 <text x="816.64" y="271" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="14" font-weight="400" fill="#d0d6e0">6/15</text>
 <text x="824" y="108" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="500" fill="#8a8f98">합계</text>
-<text x="32" y="372" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 폼 위저드 픽스처 5변형(apps/form-*) · pnpm run form:bench → landing/form.json · 2026-08-12~08-18 측정</text>
+<text x="32" y="372" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 폼 위저드 픽스처 5변형(apps/form-*) · pnpm run form:bench → landing/form.json · 2026-08-20 측정</text>
 <text x="32" y="321" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">칸은 생존 기능 개수(스텝 이동·상태 운반·조건부 토글·요약 렌더·레퍼런스 렌더). 어느 기능인지는 bench/form-&lt;변형&gt;.json에 있다. 'JS</text>
 <text x="32" y="338" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">전면 차단'은 커머스와 동일하게 *.js 요청 차단이라, 페이지 로직을 외부 번들이 아니라 인라인 스크립트로 싣는 Astro에는 닿지 않는다 —</text>
 <text x="32" y="355" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">전 조건 생존은 그 아키텍처 결과다.</text>

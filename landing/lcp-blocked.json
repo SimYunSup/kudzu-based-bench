@@ -1,0 +1,253 @@
+{
+  "measuredAt": "2026-08-20T10:57:37.108Z",
+  "throttling": {
+    "cpu": "4x",
+    "network": "slow4g (server-paced)"
+  },
+  "machine": {
+    "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
+    "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
+  },
+  "rows": [
+    {
+      "blockedScripts": 1,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-astro",
+      "label": "Astro",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:19:37.260Z",
+      "fcpMs": 192,
+      "lcpMs": 352,
+      "lcpSamples": [
+        352,
+        348,
+        352
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 160,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 192,
+      "bytesBeforeLcp": 14482,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "blockedScripts": 1,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-eleventy",
+      "label": "Eleventy",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:19:44.898Z",
+      "fcpMs": 356,
+      "lcpMs": 356,
+      "lcpSamples": [
+        356,
+        356,
+        356
+      ],
+      "lcpSampleElements": [
+        "article.doc-body",
+        "article.doc-body",
+        "article.doc-body"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "article.doc-body",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 356,
+      "bytesBeforeLcp": 17317,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "blockedScripts": 2,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-docusaurus",
+      "label": "Docusaurus",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:19:53.515Z",
+      "fcpMs": 492,
+      "lcpMs": 492,
+      "lcpSamples": [
+        504,
+        492,
+        488
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 492,
+      "bytesBeforeLcp": 86389,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "blockedScripts": 4,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-vitepress",
+      "label": "VitePress",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:20:04.609Z",
+      "fcpMs": 1164,
+      "lcpMs": 1164,
+      "lcpSamples": [
+        1164,
+        1164,
+        1164
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 1164,
+      "bytesBeforeLcp": 181930,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "blockedScripts": 1,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-kudzu",
+      "label": "Kudzu",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:56:06.451Z",
+      "fcpMs": 376,
+      "lcpMs": 376,
+      "lcpSamples": [
+        376,
+        376,
+        384
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 376,
+      "bytesBeforeLcp": 2910,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "blockedScripts": 4,
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-kudzu",
+      "label": "Kudzu",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-20T10:57:37.108Z",
+      "fcpMs": 360,
+      "lcpMs": 7108,
+      "lcpSamples": [
+        7108,
+        7108,
+        7104
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 6744,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:55188/kudzu-based-bench/shop-kudzu/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 360,
+      "bytesBeforeLcp": 1488450,
+      "scriptBytesBeforeLcp": 0
+    }
+  ]
+}

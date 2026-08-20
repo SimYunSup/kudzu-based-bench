@@ -1,3 +1,8 @@
+// Kudzu 0.8.53+ emits a stylesheet only when a route's reachable source graph
+// imports it; up to 0.8.39 every file under src/ was linked on every page.
+// All three routes render this header, so the global sheet hangs here and the
+// post-body sheet hangs off the post route that actually uses it.
+import "../style.css";
 import { siteUrl } from "../lib/site";
 
 // Precomputed at module scope: Kudzu treats function calls inside JSX

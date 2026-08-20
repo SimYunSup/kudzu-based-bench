@@ -8,7 +8,7 @@
     "build": "node scripts/gen-docs.mjs && kudzu build && pagefind --site dist"
   },
   "dependencies": {
-    "@kudzujs/core": "^0.8.39",
+    "@kudzujs/core": "^0.9.0",
     "@otw/docs-data": "workspace:*"
   },
   "devDependencies": {

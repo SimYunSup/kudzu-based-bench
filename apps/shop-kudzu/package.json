@@ -7,7 +7,7 @@
     "build": "node scripts/gen-catalog.mjs && kudzu build"
   },
   "dependencies": {
-    "@kudzujs/core": "^0.8.39",
+    "@kudzujs/core": "^0.9.0",
     "@otw/commerce-data": "workspace:*"
   },
   "devDependencies": {

@@ -1,3 +1,7 @@
+// Kudzu 0.8.53+ emits a stylesheet only when a route's reachable source graph
+// imports it; up to 0.8.39 every file under src/ was linked on every page.
+// Both routes render through this shell, so one edge here covers the site.
+import "../style.css";
 import Header from "./Header";
 import { siteUrl } from "../lib/site";
 

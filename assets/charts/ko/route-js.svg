@@ -11,45 +11,45 @@
 <rect x="143" y="85" width="10" height="10" rx="2" fill="#3e3e44"/>
 <text x="159" y="94" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="13" font-weight="400" fill="#d0d6e0">결제</text>
 <text x="32" y="159" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Kudzu</text>
-<rect x="189.12" y="126" width="20.39" height="16" rx="4" fill="#5e6ad2"/>
-<text x="217.50614776298835" y="138.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">4.7 KB</text>
-<rect x="189.12" y="146" width="40.81" height="16" rx="4" fill="#828fff"/>
-<text x="237.92616659183415" y="158.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">9.4 KB</text>
-<rect x="189.12" y="166" width="20.38" height="16" rx="4" fill="#3e3e44"/>
-<text x="217.49767999652397" y="178.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">4.7 KB</text>
+<rect x="189.12" y="126" width="18.4" height="16" rx="4" fill="#5e6ad2"/>
+<text x="215.52418838459204" y="138.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">4.2 KB</text>
+<rect x="189.12" y="146" width="42.65" height="16" rx="4" fill="#828fff"/>
+<text x="239.77232061887037" y="158.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">9.8 KB</text>
+<rect x="189.12" y="166" width="18.4" height="16" rx="4" fill="#3e3e44"/>
+<text x="215.52418838459204" y="178.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">4.2 KB</text>
 <line x1="32" y1="191" x2="848" y2="191" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="233" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="189.12" y="200" width="262.62" height="16" rx="4" fill="#5e6ad2"/>
-<text x="459.7393091261967" y="212.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">60.6 KB</text>
-<rect x="189.12" y="220" width="264.36" height="16" rx="4" fill="#828fff"/>
-<text x="461.4794351346262" y="232.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">61.0 KB</text>
-<rect x="189.12" y="240" width="262.61" height="16" rx="4" fill="#3e3e44"/>
-<text x="459.72660747650013" y="252.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">60.6 KB</text>
+<rect x="189.12" y="200" width="262.67" height="16" rx="4" fill="#5e6ad2"/>
+<text x="459.7925718176419" y="212.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">60.6 KB</text>
+<rect x="189.12" y="220" width="264.42" height="16" rx="4" fill="#828fff"/>
+<text x="461.5415202306277" y="232.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">61.0 KB</text>
+<rect x="189.12" y="240" width="262.66" height="16" rx="4" fill="#3e3e44"/>
+<text x="459.78410233380174" y="252.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">60.6 KB</text>
 <line x1="32" y1="265" x2="848" y2="265" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="307" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack Start</text>
-<rect x="189.12" y="274" width="441.09" height="16" rx="4" fill="#5e6ad2"/>
-<text x="638.2059551294121" y="286.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.7 KB</text>
-<rect x="189.12" y="294" width="440.9" height="16" rx="4" fill="#828fff"/>
-<text x="638.0196642671958" y="306.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.7 KB</text>
-<rect x="189.12" y="314" width="439.38" height="16" rx="4" fill="#3e3e44"/>
-<text x="636.5039340700723" y="326.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.3 KB</text>
+<rect x="189.12" y="274" width="441.18" height="16" rx="4" fill="#5e6ad2"/>
+<text x="638.2954132321198" y="286.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.7 KB</text>
+<rect x="189.12" y="294" width="440.99" height="16" rx="4" fill="#828fff"/>
+<text x="638.109084587637" y="306.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.7 KB</text>
+<rect x="189.12" y="314" width="439.47" height="16" rx="4" fill="#3e3e44"/>
+<text x="636.5930469802547" y="326.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">101.3 KB</text>
 <line x1="32" y1="339" x2="848" y2="339" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="381" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="189.12" y="348" width="452.08" height="16" rx="4" fill="#5e6ad2"/>
-<text x="649.1971160001738" y="360.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">104.3 KB</text>
-<rect x="189.12" y="368" width="451.56" height="16" rx="4" fill="#828fff"/>
-<text x="648.6763483626146" y="380.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">104.2 KB</text>
-<rect x="189.12" y="388" width="449.38" height="16" rx="4" fill="#3e3e44"/>
-<text x="646.5043662645019" y="400.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">103.7 KB</text>
+<rect x="189.12" y="348" width="452.17" height="16" rx="4" fill="#5e6ad2"/>
+<text x="649.2888032566023" y="360.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">104.3 KB</text>
+<rect x="189.12" y="368" width="451.53" height="16" rx="4" fill="#828fff"/>
+<text x="648.6493572266729" y="380.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">104.1 KB</text>
+<rect x="189.12" y="388" width="449.84" height="16" rx="4" fill="#3e3e44"/>
+<text x="646.9596952005679" y="400.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">103.7 KB</text>
 <line x1="32" y1="413" x2="848" y2="413" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="455" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js App Router</text>
-<rect x="189.12" y="422" width="581.59" height="16" rx="4" fill="#5e6ad2"/>
-<text x="778.707370189592" y="434.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">134.1 KB</text>
+<rect x="189.12" y="422" width="581.72" height="16" rx="4" fill="#5e6ad2"/>
+<text x="778.8380280751567" y="434.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">134.1 KB</text>
 <rect x="189.12" y="442" width="584.64" height="16" rx="4" fill="#828fff"/>
 <text x="781.76" y="454.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">134.8 KB</text>
-<rect x="189.12" y="462" width="575.74" height="16" rx="4" fill="#3e3e44"/>
-<text x="772.8646113291716" y="474.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">132.8 KB</text>
-<text x="32" y="567" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 커머스 픽스처 5변형(apps/shop-*) · pnpm run shop:assets → landing/commerce.json · 2026-08-12 측정</text>
+<rect x="189.12" y="462" width="575.86" height="16" rx="4" fill="#3e3e44"/>
+<text x="772.9771452577902" y="474.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#f7f8f8">132.8 KB</text>
+<text x="32" y="567" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 커머스 픽스처 5변형(apps/shop-*) · pnpm run shop:assets → landing/commerce.json · 2026-08-20 측정</text>
 <text x="32" y="533" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">import 그래프 정적 분석이 아니라 실측. Astro는 아일랜드 런타임을 인라인 부트스트랩의 동적 import로 가져와 정적 크롤러가 60 KB를</text>
 <text x="32" y="550" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">1.8 KB로 잘못 센다.</text>
 </svg>

@@ -2,11 +2,13 @@
    apps/web/src/styles/content.css, trimmed of the TOC sidebar and reading
    progress bar (neither is implemented in this variant).
 
-   Kudzu links every src/ CSS file in deterministic *path-sorted* order
-   (kudzujs.cloud/docs#build) rather than import order, so this file cannot
-   rely on loading after style.css to win a shared ".container"/".title"
-   selector — instead it uses page-scoped class names (.post-page) that never
-   collide with style.css's generic utilities. */
+   Kudzu 0.8.53+ links a stylesheet where a route's source graph imports it
+   (this file from src/pages/news/post/[slug].tsx, style.css from
+   src/components/Header.tsx), and the emitted order follows that graph, not
+   import order in one page. So this file still cannot rely on loading after
+   style.css to win a shared ".container"/".title" selector — it uses
+   page-scoped class names (.post-page) that never collide with style.css's
+   generic utilities. */
 @import url("https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiFlat.css");
 
 .post-page {

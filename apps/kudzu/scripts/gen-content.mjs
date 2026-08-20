@@ -1,7 +1,9 @@
 #!/usr/bin/env node
 // Materialize the Notion newsletter entries as a relative TypeScript module.
 //
-// Kudzu 0.8.x rejects every package (non-relative) import that is referenced
+// Kudzu (0.8.x through 0.9.0, re-verified on 0.9.0: "Package import may only be
+// referenced directly inside JSX event handlers or owned effect setup/cleanup
+// callbacks") rejects every package (non-relative) import that is referenced
 // outside a JSX event handler — see the `packageImportBindings` guard in
 // @kudzujs/core/framework/build.mjs. Up to 0.5.x the pages could call
 // `fetchNewsEntries()` from `@otw/notion-content` directly at build time;

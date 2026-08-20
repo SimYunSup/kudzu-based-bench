@@ -1,3 +1,8 @@
+// Kudzu 0.8.53+ links a stylesheet only where a route's reachable source
+// graph imports it; up to 0.8.39 every file under src/ was linked on every
+// page. The wizard has no shared shell component, so each of the four step
+// pages carries the edge to the one global sheet it renders with.
+import "../../style.css";
 import { useEffect } from "@kudzujs/core";
 import { refCode, setText } from "../../lib/wizard";
 

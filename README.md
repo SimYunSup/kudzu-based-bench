@@ -51,18 +51,18 @@ LCP는 [LCP](#lcp) 절에 두 조건으로 따로 있습니다. 전부 커밋된
 <!-- build-stats:start -->
 | 변형 | 기반 | 특징 | cold(ms) | warm(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 702 | 691 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Hugo 0.161.0 | Go (templates) | SSG 특화 | 710 | 691 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Kudzu 0.8.39 | Kudzu (JSX, no vDOM) | SSG 특화 | 785 | 789 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG 특화 | 1638 | 1644 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG 지원 | 2161 | 2122 | 6.8 MB | 323.0 KB | 285 | 0.405% |
-| Next.js Pages Router 16.3.0 | React | SSG 지원 | 3660 | 2687 | 6.4 MB | 529.9 KB | 304 | 0.403% |
-| Next.js App Router 16.3.0 | React | SSG 지원 | 4491 | 2961 | 13.7 MB | 589.0 KB | 698 | 0.401% |
-| TanStack Start 1.168.42 | React | SSG 지원 | 4847 | 4898 | 6.5 MB | 326.1 KB | 146 | 0.399% |
-| Docusaurus 3.10.2 | React | SSG 특화 | 4919 | 1574 | 5.0 MB | 2.2 MB | 284 | 0.403% |
-| Astro 7.2.1 | Astro islands (vanilla) | SSG 특화 | 6013 | 2483 | 3.1 MB | 99.9 KB | 152 | 0.320% |
+| Hugo 0.161.0 | Go (templates) | SSG 특화 | 682 | 680 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 730 | 707 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Kudzu 0.9.0 | Kudzu (JSX, no vDOM) | SSG 특화 | 859 | 865 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| VitePress 1.6.4 | Vue | SSG 특화 | 1684 | 1695 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| React Router 8.3.0 | React | SSG 지원 | 2229 | 2250 | 6.8 MB | 323.0 KB | 285 | 0.405% |
+| Next.js Pages Router 16.3.0 | React | SSG 지원 | 3770 | 2744 | 6.4 MB | 529.9 KB | 304 | 0.403% |
+| Next.js App Router 16.3.0 | React | SSG 지원 | 4347 | 3112 | 13.7 MB | 589.0 KB | 698 | 0.401% |
+| TanStack Start 1.168.42 | React | SSG 지원 | 5012 | 5047 | 6.5 MB | 326.1 KB | 146 | 0.399% |
+| Astro 7.2.1 | Astro islands (vanilla) | SSG 특화 | 5081 | 3746 | 4.7 MB | 99.9 KB | 152 | 0.320% |
+| Docusaurus 3.10.2 | React | SSG 특화 | 5234 | 1780 | 5.0 MB | 2.2 MB | 284 | 0.403% |
 
-_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-12T05:03:43.802Z_
+_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-20T11:00:55.519Z_
 <!-- build-stats:end -->
 
 <details>
@@ -86,7 +86,7 @@ CI 자동 측정은 제거했습니다 — 공유 러너의 성능 편차로 수
 
 ## 커머스 벤치마크
 
-같은 상점을 5가지로 빌드(`apps/shop-*`, 배포 경로 `/shop-*/`): Kudzu 0.8.39 · Astro 7 + React 아일랜드 · React Router v8 · TanStack Start · Next.js App Router. 전부 완성된 HTML을 내보내므로 "내용이 보이기까지"는 동률이고, 차이는 전부 **조작 가능해지기까지**에 몰려 있습니다.
+같은 상점을 5가지로 빌드(`apps/shop-*`, 배포 경로 `/shop-*/`): Kudzu 0.9.0 · Astro 7 + React 아일랜드 · React Router v8 · TanStack Start · Next.js App Router. 전부 완성된 HTML을 내보내므로 "내용이 보이기까지"는 동률이고, 차이는 전부 **조작 가능해지기까지**에 몰려 있습니다.
 
 ```bash
 pnpm run build:shop     # OTW_CATALOG_SIZE=100|1000|10000
@@ -99,11 +99,13 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 
 | 변형 | 진입 contentReady | 리스팅 첫 조작 actReady | 정렬 stepLatency | 담기 stepLatency | 첫 신뢰 클릭 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | 170 ms | **250 ms** | 2.2 ms | 0.8 ms | **첫 페인트 +300 ms** |
-| Astro (islands) | 223 ms | 2,229 ms | 9.1 ms | 1.5 ms | +1,500 ms |
-| TanStack Start | 170 ms | 2,859 ms | 15.3 ms | 1.0 ms | +2,000 ms |
-| React Router v8 | 170 ms | 2,957 ms | 17.6 ms | 1.1 ms | +2,000 ms |
-| Next.js App Router | 178 ms | 3,537 ms | 26.8 ms | 0.9 ms | +3,000 ms |
+| Kudzu | 172 ms | **450 ms** | 2.4 ms | 0.7 ms | **첫 페인트 +300 ms** |
+| Astro (islands) | 235 ms | 2,220 ms | 9.8 ms | 1.8 ms | +1,500 ms |
+| TanStack Start | 178 ms | 2,900 ms | 7.6 ms | 1.5 ms | +2,000 ms |
+| React Router v8 | 179 ms | 2,958 ms | 30.4 ms | 1.3 ms | +2,000 ms |
+| Next.js App Router | 172 ms | 3,541 ms | 29.3 ms | 1.2 ms | +3,000 ms |
+
+Kudzu 0.8.39 → 0.9.0에서 리스팅 첫 조작이 250 ms → 450 ms로 밀렸습니다. 같은 머신·같은 세션에서 0.8.39를 다시 빌드해 확인한 회귀입니다(0.8.39 재측정: 진입 173 ms · actReady 251 ms · 옵션 선택 150 ms / 0.9.0: 172 · 450 · 301 ms). 원인은 아래 [카탈로그 스케일](#카탈로그-스케일-cold--warm-중앙값) 절의 런타임 패밀리 재편입니다 — 라우트별 초기 JS는 줄었지만 세션이 도는 다섯 라우트가 서로 다른 시그니처 패밀리를 받아 스크립트 왕복이 늘었습니다. 나머지 넷은 같은 세션에서 이전 게시값과 ±2% 안입니다.
 
 ### 내비게이션 계약 — 클릭 전환 · 뒤로가기 · 세션 전송
 
@@ -111,13 +113,13 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 
 | 변형 | 리스팅→상세 (클릭) | 뒤로가기 | 필터 생존 | 정렬 생존 | 세션 총 전송 | 그중 스크립트 |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | 271 ms | 33 ms | 0/5 | 5/5 | **244.9 KB** | **34.4 KB** |
-| Astro (islands) | 222 ms | 34 ms | 0/5 | 5/5 | 529.9 KB | 193.1 KB |
-| React Router v8 | **185 ms** | 14 ms | 0/5 | 0/5 | 616.9 KB | 322.3 KB |
-| TanStack Start | **182 ms** | 13 ms | 0/5 | 0/5 | 616.3 KB | 317.6 KB |
-| Next.js App Router | 360 ms | 46 ms | 0/5 | 5/5 | 792.1 KB | 455.5 KB |
+| Kudzu | 229 ms | 38 ms | 0/5 | 5/5 | **302.1 KB** | **47.3 KB** |
+| Astro (islands) | 227 ms | 37 ms | 0/5 | 5/5 | 541.0 KB | 193.1 KB |
+| React Router v8 | **186 ms** | 19 ms | 0/5 | 0/5 | 616.9 KB | 322.3 KB |
+| TanStack Start | **186 ms** | 15 ms | 0/5 | 0/5 | 616.3 KB | 317.6 KB |
+| Next.js App Router | 359 ms | 46 ms | 0/5 | 5/5 | 792.1 KB | 455.5 KB |
 
-클라이언트 전환은 SPA 라우터가 실제로 이기는 축입니다(React Router·TanStack 182–185 ms). 대신 뒤로가기에서 정렬 상태를 버립니다 — 컴포넌트가 리마운트되며 select가 초기화되는 반면, 문서 내비게이션 쪽은 Chrome의 폼 복원이 살립니다. 세션 전송은 전 구간 CDP 실측이라 프리페치 낭비까지 포함하며, Kudzu와 Next 사이 스크립트 격차는 세션 전체 기준 13배입니다.
+클라이언트 전환은 SPA 라우터가 실제로 이기는 축입니다(React Router·TanStack 둘 다 186 ms). 대신 뒤로가기에서 정렬 상태를 버립니다 — 컴포넌트가 리마운트되며 select가 초기화되는 반면, 문서 내비게이션 쪽은 Chrome의 폼 복원이 살립니다. 세션 전송은 전 구간 CDP 실측이라 프리페치 낭비까지 포함하며, Kudzu와 Next 사이 스크립트 격차는 세션 전체 기준 9.6배입니다(0.8.39에서는 13배 — Kudzu의 세션 스크립트가 34.4 → 47.3 KB로 늘었습니다).
 
 <details>
 <summary>측정 세부: 지표 정의, cold/warm으로 쪼개지 않는 이유, 뒤로가기 각주</summary>
@@ -145,23 +147,23 @@ pnpm run shop:scale     # 카탈로그 크기별 빌드 시간
 
 <img src="assets/charts/ko/lcp-vs-actready.svg" width="880" alt="커머스 상품 상세: 21 KB 타일과 1.4 MB 사진 조건의 LCP, 그리고 리스팅 actReady">
 
-LCP를 헤드라인에 안 뒀던 이유가 데이터로 확인됩니다. 기본 픽스처(21 KB 타일)에서 상품 상세 LCP는 320–600 ms에 몰려 있고 스프레드가 1.9배인데, 같은 다섯 빌드의 "조작 가능해지기까지"는 250 ms와 3,537 ms로 **14.1배** 벌어집니다. LCP가 재는 건 사진이 도착하는 시간이고, 그 사진은 다섯 변형이 md5까지 같은 파일(`584e3d7f`, 1,483,575 B)입니다.
+LCP를 헤드라인에 안 뒀던 이유가 데이터로 확인됩니다. 기본 픽스처(21 KB 타일)에서 상품 상세 LCP는 320–608 ms에 몰려 있고 스프레드가 1.9배인데, 같은 다섯 빌드의 "조작 가능해지기까지"는 450 ms와 3,541 ms로 **7.9배** 벌어집니다. LCP가 재는 건 사진이 도착하는 시간이고, 그 사진은 다섯 변형이 md5까지 같은 파일(`584e3d7f`, 1,483,575 B)입니다.
 
 그래서 사진을 실제 상점 무게(1.4 MB)로 올려서 다시 쟀습니다(`OTW_IMAGE_WEIGHT=heavy`). LCP는 7.2–10.9초로 뛰지만 순서를 만드는 건 프레임워크의 렌더링이 아니라 **대역폭 경쟁**이고, 이건 추론이 아니라 두 가지로 실측했습니다.
 
-첫째, 사진이 도착하는 시점은 그때까지 내려온 총 바이트를 링크 속도로 나눈 값입니다. `landing/lcp.json`의 `bytesBeforeLcp`로 검산됩니다 — Kudzu 1,466 KB / 7,168 ms, Astro 1,639 KB / 8,008 ms, TanStack 1,767 KB / 8,636 ms, React Router 1,771 KB / 8,656 ms는 전부 **204 KB/s**(서버 페이싱 예산 200 KB/s)로 떨어집니다. Next.js만 2,020 KB / 10,892 ms = 185 KB/s로 약 1초 선 위에 있습니다(스크립트 요청이 7개라 왕복이 더 붙지만, 이 1초의 원인은 따로 분리하지 않았습니다). 이 다섯 행은 3회 측정에서 회차 편차가 전부 CV 0%입니다 — 1.4 MB 한 장이 링크를 독차지하므로 도착 순서가 뒤집힐 여지가 없습니다.
+첫째, 사진이 도착하는 시점은 그때까지 내려온 총 바이트를 링크 속도로 나눈 값입니다. `landing/lcp.json`의 `bytesBeforeLcp`로 검산됩니다 — Kudzu 1,467 KB / 7,172 ms, Astro 1,639 KB / 8,008 ms, TanStack 1,767 KB / 8,636 ms, React Router 1,771 KB / 8,656 ms는 전부 **205 KB/s**(서버 페이싱 예산 200 KB/s)로 떨어집니다. Next.js만 2,020 KB / 10,892 ms = 185 KB/s로 약 1초 선 위에 있습니다(스크립트 요청이 7개라 왕복이 더 붙지만, 이 1초의 원인은 따로 분리하지 않았습니다). 회차 편차는 전부 CV 0%입니다 — 1.4 MB 한 장이 링크를 독차지하므로 도착 순서가 뒤집힐 여지가 없습니다. Kudzu 행만 0.9.0 빌드로 다시 쟀고(5회), 나머지 넷은 2026-08-19 세션의 값입니다.
 
-둘째, 스크립트 요청을 전부 차단하면 다섯 변형이 **7,092–7,112 ms, 스프레드 1.00배**로 붙습니다(같은 빌드·같은 페이싱, `*.js` 경로 매칭으로 차단, 차단된 스크립트 Kudzu 3개 · Astro 13개 · React Router 8개 · TanStack 4개 · Next 7개). 렌더링이 원인이라면 스크립트를 없앤다고 다섯이 20 ms 안으로 수렴하지 않습니다. 즉 LCP는 여기서 "JS를 얼마나 보내는가"를 우회적으로 재는 지표입니다 — 그걸 직접 재는 표가 이미 아래에 있습니다.
+둘째, 스크립트 요청을 전부 차단하면 다섯 변형이 **7,092–7,112 ms, 스프레드 1.00배**로 붙습니다(같은 빌드·같은 페이싱, `*.js` 경로 매칭으로 차단 — `pnpm run lcp:bench -- --block-scripts`가 `landing/lcp-blocked.json`에 따로 씁니다). 차단된 스크립트는 Kudzu 4개(0.9.0, 0.8.39에서는 3개) · Astro 13개 · React Router 8개 · TanStack 4개 · Next 7개이고, Kudzu 0.9.0의 차단 LCP는 7,108 ms로 이 범위 안입니다. 렌더링이 원인이라면 스크립트를 없앤다고 다섯이 20 ms 안으로 수렴하지 않습니다. 즉 LCP는 여기서 "JS를 얼마나 보내는가"를 우회적으로 재는 지표입니다 — 그걸 직접 재는 표가 이미 아래에 있습니다.
 
 무거운 사진을 리스팅 그리드에는 적용하지 않았습니다. 측정해 보면 홈 한 번 로드에 사진 9장 12.7 MB, `load` 이벤트까지 **63.7초**가 걸립니다 — 실제 상점도 그리드에 원본을 올리지 않으므로 heavy 조건은 상품 상세 라우트만 잽니다.
 
 <img src="assets/charts/ko/lcp-by-fixture.svg" width="880" alt="픽스처별 진입 라우트에서 브라우저가 고른 LCP 요소와 시간">
 
-LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트인 픽스처**입니다. 문서 딥링크에서 브라우저가 고른 건 본문 `p`(Eleventy만 `article.doc-body`)이고, Eleventy 348 ms 대 VitePress 1,912 ms로 5.5배 차이가 납니다. 여기서 갈리는 건 두 가지인데, 스크립트를 전부 차단해 분리했습니다(같은 빌드·같은 페이싱·같은 대역폭 모델, 3회 중앙값).
+LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트인 픽스처**입니다. 문서 딥링크에서 브라우저가 고른 건 본문 `p`(Eleventy만 `article.doc-body`)이고, Eleventy 348 ms 대 VitePress 1,916 ms로 5.5배 차이가 납니다. 여기서 갈리는 건 두 가지인데, 스크립트를 전부 차단해 분리했습니다(같은 빌드·같은 페이싱·같은 대역폭 모델, `--block-scripts`, 3회 중앙값).
 
-첫째는 첫 페인트를 막는 자원 체인이 언제 끝나는가입니다. `renderBlockingStatus === "blocking"`인 자원만 세면 문서까지 포함해 Eleventy 3개(css 2)·Kudzu 2개(css 1)·Docusaurus 2개(css 1)·VitePress 3개(css 2)이고, 그 마지막 바이트가 각각 312 ms · 312 ms · 608 ms · 1,824 ms에 도착합니다. LCP는 매번 그 뒤 40–85 ms에 붙습니다(352 · 368 · 692 · 1,908 ms — 차단 실험과 같은 세션의 값이라 아래 표의 중앙값과 몇 ms 차이가 납니다). 즉 요청 **개수**가 아니라 차단 자원이 200 KB/s 링크에서 자기 순서를 기다리는 시간이 값을 만듭니다.
+첫째는 첫 페인트를 막는 자원 체인이 언제 끝나는가입니다. `renderBlockingStatus === "blocking"`인 자원만 세면 문서까지 포함해 Eleventy 3개(css 2)·Kudzu 2개(css 1)·Docusaurus 2개(css 1)·VitePress 3개(css 2)이고, 2026-08-19 세션에서 그 마지막 바이트가 각각 312 ms · 312 ms · 608 ms · 1,824 ms에 도착했습니다. LCP는 매번 그 뒤 40–85 ms에 붙습니다. 즉 요청 **개수**가 아니라 차단 자원이 200 KB/s 링크에서 자기 순서를 기다리는 시간이 값을 만듭니다. Kudzu 0.9.0도 차단 자원은 문서 + `style.css` 두 개 그대로인데(0.8.53부터 스타일시트는 라우트의 소스 그래프가 import한 곳에만 붙습니다 — `apps/docs-kudzu/src/components/Shell.tsx`), LCP는 368 → 380 ms입니다.
 
-둘째는 스크립트입니다. 다섯 변형 모두 본문 텍스트는 정적 HTML에 있고 스크립트를 차단해도 그려지지만, 차단하면 LCP가 Astro 676 → 348 ms · Docusaurus 692 → 488 ms · VitePress 1,908 → 1,156 ms로 당겨집니다 — 하이드레이션 뒤 본문이 다시 그려져 LCP 후보가 뒤로 밀린 만큼입니다. Eleventy(352 → 352 ms)와 Kudzu(368 → 372 ms)는 움직이지 않습니다. Astro는 차단 자원이 문서 하나뿐(CSS 인라인)인데도 676 ms인 이유가 여기 있습니다.
+둘째는 스크립트입니다. 다섯 변형 모두 본문 텍스트는 정적 HTML에 있고 스크립트를 차단해도 그려지지만, 차단하면 LCP가 Astro 676 → 352 ms · Docusaurus 732 → 492 ms · VitePress 1,916 → 1,164 ms로 당겨집니다 — 하이드레이션 뒤 본문이 다시 그려져 LCP 후보가 뒤로 밀린 만큼입니다. Eleventy(348 → 356 ms)와 Kudzu(380 → 376 ms)는 움직이지 않습니다. Astro는 차단 자원이 문서 하나뿐(CSS 인라인)인데도 676 ms인 이유가 여기 있습니다.
 
 뉴스레터 픽스처는 이 벤치에서 뺐습니다. 홈의 최대 요소가 Notion 이미지이고 변형마다 이미지 파이프라인이 다르므로(sharp / unoptimized / 원본 복사) LCP가 프레임워크가 아니라 이미지 도구를 재게 됩니다. 그 픽스처의 Lighthouse LCP는 `pnpm run perf:bench`가 냅니다.
 
@@ -173,9 +175,11 @@ LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트�
 
 **(2) 청크가 16 KB여서 링크가 버스트로 흘렀습니다.** 청크 크기는 링크의 양자화 단위입니다. Kudzu 홈이 80 ms 계단(508 · 548 · 612 · 688 ms)으로 나왔고, 80 ms는 200 KB/s에서 정확히 16 KB입니다. 즉 타일 하나가 버스트를 잡아 같이 나눠 써야 할 응답들보다 먼저 결승선을 넘던 것입니다. 같은 행 기준 16384 B → CV 12%, 4096 B → CV 17%, **1460 B(1 MTU) → CV 4%**. 여섯 전송이 200 KB/s를 나눠 쓰면 126 KB가 ~630 ms 전에 도착할 수 없으므로, 빠른 쪽 508 ms 샘플이 모델의 인공물이었습니다.
 
-**(3) 프로브가 `load`에서 창을 닫아 히어로 이미지를 놓쳤습니다.** lazy 이미지는 `load`를 막지 않고 커머스 히어로는 다섯 변형 모두 lazy입니다. heavy 조건에서 `load`가 ~1초에 떨어지고 1.4 MB 사진은 아직 6초를 더 받아야 하는데, 정적 창(1.5초)이 그사이 만료돼 **제목(352 ms)이 그 변형의 LCP로 발행**됐습니다. 3회 중 1회만 그랬기 때문에 중앙값에는 흔적이 남지 않고 CV 80%로만 보였습니다. 지금은 받는 중인 이미지가 하나라도 있으면 창을 닫지 않습니다.
+**(3) 프로브가 `load`에서 창을 닫아 히어로 이미지를 놓쳤습니다.** lazy 이미지는 `load`를 막지 않고 커머스 히어로는 다섯 변형 모두 lazy입니다. heavy 조건에서 `load`가 ~1초에 떨어지고 1.4 MB 사진은 아직 6초를 더 받아야 하는데, 정적 창(1.5초)이 그사이 만료돼 **제목(352 ms)이 그 변형의 LCP로 발행**됐습니다. 3회 중 1회만 그랬기 때문에 중앙값에는 흔적이 남지 않고 CV 80%로만 보였습니다. 지금은 소스를 선언한 이미지가 아직 완료되지 않았으면(시작 전이라 `currentSrc`가 비어 있어도) 창을 닫지 않습니다.
 
-세 개를 고친 뒤 홈 라우트는 번들 무게 순서대로 정렬됩니다: Kudzu 768 · Astro 932 · Next.js 1,088 · TanStack 1,092 · React Router 1,364 ms. 픽스처 마크업은 한 줄도 고치지 않았습니다(첫 타일에 `fetchpriority="high"`를 주는 안도 재봤는데, 이기는 타일은 고정되지만 히어로가 CSS·JS보다 앞줄에 서면서 편차가 CV 13%로 되레 늘어 채택하지 않았습니다). 남은 편차는 Kudzu 커머스 두 행(CV 13% · 17%, 그래서 15회 측정)인데, 원인은 모델이 아니라 브라우저의 요청 순서입니다 — 같은 12장을 받고 총 바이트도 같은데 스크립트와 이미지 중 무엇을 먼저 요청하는지가 회차마다 뒤집혀(`lastJS` 619 ms 대 973 ms) 첫 타일이 ~510 ms 또는 ~780 ms에 도착합니다.
+같은 증상이 0.9.0 heavy 행에서 한 번 더 나왔습니다. 이번엔 창이 아니라 브라우저입니다: 이미지가 창이 닫히기 1.5초 전에 완료됐는데도(`complete: true`, 800×800 표시, 640,000 px²) 그 회차에는 이미지 LCP 후보가 아예 발행되지 않고 200 ms 텍스트 후보가 마지막이었습니다 — 7회 중 3회, 이어진 세션에서는 4회 중 0회. 회차별 증거는 `LCP_DIAG=1 pnpm run lcp:bench -- --fixture shop --routes product`가 찍습니다(후보 목록 · 창이 닫힌 시각 · `visibilityState` 전이 · 이미지 완료 여부). 발행된 heavy 행은 이 증상이 한 번도 나오지 않은 5회 세션(7,168–7,172 ms · CV 0%)입니다.
+
+세 개를 고친 뒤 홈 라우트는 번들 무게 순서대로 정렬됩니다: Kudzu 792 · Astro 944 · TanStack 1,092 · Next.js 1,096 · React Router 1,364 ms. 픽스처 마크업은 한 줄도 고치지 않았습니다(첫 타일에 `fetchpriority="high"`를 주는 안도 재봤는데, 이기는 타일은 고정되지만 히어로가 CSS·JS보다 앞줄에 서면서 편차가 CV 13%로 되레 늘어 채택하지 않았습니다). 남은 편차는 Kudzu 커머스 두 행(홈 CV 13% · 검색 CV 17%)인데, 원인은 모델이 아니라 브라우저의 요청 순서입니다 — 같은 12장을 받고 총 바이트도 같은데 스크립트와 이미지 중 무엇을 먼저 요청하는지가 회차마다 뒤집혀 첫 타일이 ~570 ms 또는 ~790 ms에 도착합니다.
 
 <details>
 <summary>전 픽스처 · 전 라우트 LCP 측정치</summary>
@@ -184,38 +188,38 @@ LCP가 프레임워크를 실제로 가르는 곳은 **LCP 요소가 텍스트�
 <!-- lcp:start -->
 | 픽스처 | 라우트 | 이미지 | 변형 | FCP | LCP | 회차 · 범위 | LCP−FCP | LCP 요소 | LCP 자원 |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | ---: |
-| 커머스 | 홈 | 21 KB 타일 | Kudzu | 356 ms | 768 ms | 15회 · 568–800 ms · CV 13% | 412 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | Astro | 208 ms | 932 ms | 5회 · 920–932 ms · CV 1% | 724 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | Next.js | 352 ms | 1088 ms | 5회 · 1084–1104 ms · CV 1% | 736 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 홈 | 21 KB 타일 | TanStack | 356 ms | 1092 ms | 5회 · 1084–1100 ms · CV 1% | 740 ms | 이미지 `img` | 21.3 KB |
-| 커머스 | 홈 | 21 KB 타일 | React Router | 612 ms | 1364 ms | 5회 · 1252–1368 ms · CV 4% | 752 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | Astro | 208 ms | 320 ms | 5회 · 316–332 ms · CV 2% | 108 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | Next.js | 348 ms | 348 ms | 5회 · 348–352 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | Kudzu | 352 ms | 356 ms | 5회 · 348–360 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | TanStack | 348 ms | 360 ms | 5회 · 348–360 ms · CV 2% | 8 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 21 KB 타일 | React Router | 600 ms | 600 ms | 5회 · 592–600 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Kudzu | 356 ms | 748 ms | 15회 · 528–816 ms · CV 17% | 392 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Astro | 212 ms | 912 ms | 5회 · 904–916 ms · CV 0% | 700 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | Next.js | 352 ms | 1096 ms | 5회 · 1088–1096 ms · CV 0% | 740 ms | 이미지 `img` | 21.7 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | TanStack | 356 ms | 1104 ms | 5회 · 1096–1116 ms · CV 1% | 748 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 검색 리스팅 | 21 KB 타일 | React Router | 600 ms | 1356 ms | 5회 · 1204–1372 ms · CV 6% | 760 ms | 이미지 `img` | 20.5 KB |
-| 커머스 | 상품 상세 | 1.4 MB 사진 | Kudzu | 352 ms | 7168 ms | 3회 · 7168–7168 ms · CV 0% | 6816 ms | 이미지 `img` | 1448.8 KB |
+| 커머스 | 홈 | 21 KB 타일 | Kudzu | 364 ms | 792 ms | 5회 · 572–792 ms · CV 13% | 428 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | Astro | 220 ms | 944 ms | 5회 · 940–964 ms · CV 1% | 728 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | TanStack | 356 ms | 1092 ms | 5회 · 1088–1100 ms · CV 0% | 736 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | Next.js | 360 ms | 1096 ms | 5회 · 1088–1120 ms · CV 1% | 736 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 홈 | 21 KB 타일 | React Router | 612 ms | 1364 ms | 5회 · 1268–1388 ms · CV 4% | 752 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Astro | 208 ms | 320 ms | 5회 · 316–328 ms · CV 2% | 108 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | TanStack | 348 ms | 352 ms | 5회 · 348–356 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
+| 커머스 | 상품 상세 | 21 KB 타일 | Next.js | 352 ms | 352 ms | 5회 · 348–360 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | Kudzu | 360 ms | 360 ms | 5회 · 356–360 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 21 KB 타일 | React Router | 608 ms | 608 ms | 5회 · 604–616 ms · CV 1% | 0 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Kudzu | 364 ms | 616 ms | 5회 · 608–836 ms · CV 17% | 248 ms | 이미지 `img` | 22.0 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Astro | 212 ms | 912 ms | 5회 · 904–920 ms · CV 1% | 700 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | Next.js | 352 ms | 1100 ms | 5회 · 1096–1116 ms · CV 1% | 748 ms | 이미지 `img` | 21.7 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | TanStack | 356 ms | 1112 ms | 5회 · 1104–1132 ms · CV 1% | 760 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 검색 리스팅 | 21 KB 타일 | React Router | 612 ms | 1364 ms | 5회 · 1356–1404 ms · CV 1% | 752 ms | 이미지 `img` | 20.5 KB |
+| 커머스 | 상품 상세 | 1.4 MB 사진 | Kudzu | 360 ms | 7172 ms | 5회 · 7168–7172 ms · CV 0% | 6808 ms | 이미지 `img` | 1448.8 KB |
 | 커머스 | 상품 상세 | 1.4 MB 사진 | Astro | 212 ms | 8008 ms | 3회 · 8008–8008 ms · CV 0% | 7796 ms | 이미지 `img` | 1448.8 KB |
 | 커머스 | 상품 상세 | 1.4 MB 사진 | TanStack | 352 ms | 8636 ms | 3회 · 8636–8636 ms · CV 0% | 8284 ms | 이미지 `img` | 1448.8 KB |
 | 커머스 | 상품 상세 | 1.4 MB 사진 | React Router | 628 ms | 8656 ms | 3회 · 8652–8656 ms · CV 0% | 8028 ms | 이미지 `img` | 1448.8 KB |
 | 커머스 | 상품 상세 | 1.4 MB 사진 | Next.js | 352 ms | 10892 ms | 3회 · 10892–10896 ms · CV 0% | 10540 ms | 이미지 `img` | 1448.8 KB |
-| 문서 | 문서 딥링크 | — | Eleventy | 348 ms | 348 ms | 5회 · 348–352 ms · CV 1% | 0 ms | 텍스트 `article.doc-body` | — |
-| 문서 | 문서 딥링크 | — | Kudzu | 368 ms | 368 ms | 5회 · 368–376 ms · CV 1% | 0 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | Astro | 192 ms | 680 ms | 5회 · 676–684 ms · CV 0% | 488 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | Docusaurus | 688 ms | 688 ms | 15회 · 688–884 ms · CV 8% | 0 ms | 텍스트 `p` | — |
-| 문서 | 문서 딥링크 | — | VitePress | 1912 ms | 1912 ms | 5회 · 1908–1916 ms · CV 0% | 0 ms | 텍스트 `p` | — |
-| 폼 위저드 | 1단계 | — | Astro | 192 ms | 192 ms | 5회 · 192–196 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | Kudzu | 344 ms | 344 ms | 5회 · 340–360 ms · CV 2% | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | React Router | 344 ms | 344 ms | 5회 · 340–348 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | TanStack | 344 ms | 344 ms | 5회 · 344–360 ms · CV 2% | 0 ms | 텍스트 `h1` | — |
-| 폼 위저드 | 1단계 | — | Next.js | 344 ms | 344 ms | 5회 · 340–344 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
+| 문서 | 문서 딥링크 | — | Eleventy | 348 ms | 348 ms | 5회 · 348–348 ms · CV 0% | 0 ms | 텍스트 `article.doc-body` | — |
+| 문서 | 문서 딥링크 | — | Kudzu | 380 ms | 380 ms | 5회 · 376–384 ms · CV 1% | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Astro | 192 ms | 676 ms | 5회 · 676–676 ms · CV 0% | 484 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | Docusaurus | 732 ms | 732 ms | 5회 · 700–964 ms · CV 14% | 0 ms | 텍스트 `p` | — |
+| 문서 | 문서 딥링크 | — | VitePress | 1916 ms | 1916 ms | 5회 · 1908–1916 ms · CV 0% | 0 ms | 텍스트 `p` | — |
+| 폼 위저드 | 1단계 | — | Astro | 196 ms | 196 ms | 5회 · 192–204 ms · CV 3% | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | React Router | 344 ms | 344 ms | 5회 · 340–344 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | TanStack | 344 ms | 344 ms | 5회 · 340–348 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Next.js | 344 ms | 344 ms | 5회 · 340–348 ms · CV 1% | 0 ms | 텍스트 `h1` | — |
+| 폼 위저드 | 1단계 | — | Kudzu | 348 ms | 348 ms | 5회 · 348–348 ms · CV 0% | 0 ms | 텍스트 `h1` | — |
 
-_`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 각 행은 워밍업 1회를 버린 뒤 "회차 · 범위" 열의 회차만큼 재서 얻은 중앙값이며, 회차별 원본값은 `landing/lcp.json`의 `lcpSamples`, 회차별로 브라우저가 고른 요소는 `lcpSampleElements`에 있습니다. **범위와 CV를 중앙값과 함께 읽으십시오.** 커머스 홈·검색 라우트는 뷰포트에 같은 크기의 21 KB 타일이 여러 장 깔려 있어 LCP가 "가장 먼저 도착한 타일"이고, 그 승자는 회차마다 바뀝니다(`lcpSampleElements`). 2026-08-19까지 이 표가 세션마다 흔들린 원인은 픽스처가 아니라 하네스였습니다 — 토큰 버킷을 응답별로 폴링해서 대역폭이 "먼저 깨어난 응답"에게 갔고(React Router 홈 716–1900 ms, CV 40%, 공개 중앙값이 두 세션 사이 732 → 1680 ms), 청크가 16 KB여서 링크가 버스트로 흘렀고(Kudzu 홈이 16 KB=80 ms 계단으로 508·548·612·688 ms), 프로브가 `load`에서 창을 닫아 lazy 히어로를 놓쳤습니다(heavy 조건에서 3회 중 1회가 제목 352 ms로 발행). 도착 순서 단일 큐 + MTU(1460 B) 페이싱 + "받는 중인 이미지가 있으면 창을 열어 둔다"로 고친 뒤 같은 React Router 행이 1252–1368 ms(CV 4%)입니다. 지금 남은 두 자릿수 CV 행(Kudzu 커머스 홈·검색)은 브라우저의 요청 순서가 회차마다 뒤집혀서이며, 그래서 15회로 잽니다. LCP−FCP가 큰 행은 대역폭 경쟁을 읽는 자리입니다: 첫 타일이 도착하기 전에 자기 클라이언트 번들로 200 KB/s를 먼저 써버린 변형일수록 그만큼 늦게 그립니다(`bytesBeforeLcp`·`scriptBytesBeforeLcp` 참고). CPU가 아니라 링크가 병목이라, CDP 트레이스에서 LCP 항목은 매 회 승자 이미지의 `Network.loadingFinished` 뒤 ~10 ms에 붙고 그 앞에 롱태스크는 없습니다. 브라우저 정의 그대로 `PerformanceObserver('largest-contentful-paint')`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. "LCP 요소"·"LCP 자원" 열은 중앙값을 만든 회차의 것입니다(마지막 회차가 아니라). 하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). "이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(`OTW_IMAGE_WEIGHT`) — 기본은 21 KB 타일, `heavy`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. 대역폭은 CDP가 아니라 서버에서 모델링합니다(`Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — `scripts/lcp-bench.mjs` 주석에 측정표가 있습니다). 4x CPU · slow4g (server-paced) · 1280×900. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-19T01:13:09.267Z_
+_`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 각 행은 워밍업 1회를 버린 뒤 "회차 · 범위" 열의 회차만큼 재서 얻은 중앙값이며, 회차별 원본값은 `landing/lcp.json`의 `lcpSamples`, 회차별로 브라우저가 고른 요소는 `lcpSampleElements`에 있습니다. **범위와 CV를 중앙값과 함께 읽으십시오.** 커머스 홈·검색 라우트는 뷰포트에 같은 크기의 21 KB 타일이 여러 장 깔려 있어 LCP가 "가장 먼저 도착한 타일"이고, 그 승자는 회차마다 바뀝니다(`lcpSampleElements`). 2026-08-19까지 이 표가 세션마다 흔들린 원인은 픽스처가 아니라 하네스였습니다 — 토큰 버킷을 응답별로 폴링해서 대역폭이 "먼저 깨어난 응답"에게 갔고(React Router 홈 716–1900 ms, CV 40%, 공개 중앙값이 두 세션 사이 732 → 1680 ms), 청크가 16 KB여서 링크가 버스트로 흘렀고(Kudzu 홈이 16 KB=80 ms 계단으로 508·548·612·688 ms), 프로브가 `load`에서 창을 닫아 lazy 히어로를 놓쳤습니다(heavy 조건에서 3회 중 1회가 제목 352 ms로 발행). 도착 순서 단일 큐 + MTU(1460 B) 페이싱 + "받는 중인 이미지가 있으면 창을 열어 둔다"로 고친 뒤 같은 React Router 행이 1252–1368 ms(CV 4%)입니다. 지금 남은 두 자릿수 CV 행(Kudzu 커머스 홈·검색)은 브라우저의 요청 순서가 회차마다 뒤집혀서이며, 그래서 15회로 잽니다. LCP−FCP가 큰 행은 대역폭 경쟁을 읽는 자리입니다: 첫 타일이 도착하기 전에 자기 클라이언트 번들로 200 KB/s를 먼저 써버린 변형일수록 그만큼 늦게 그립니다(`bytesBeforeLcp`·`scriptBytesBeforeLcp` 참고). CPU가 아니라 링크가 병목이라, CDP 트레이스에서 LCP 항목은 매 회 승자 이미지의 `Network.loadingFinished` 뒤 ~10 ms에 붙고 그 앞에 롱태스크는 없습니다. 브라우저 정의 그대로 `PerformanceObserver('largest-contentful-paint')`의 **마지막 후보**를 씁니다 — 하이드레이션이 본문을 다시 그려 후보가 뒤로 밀리면 그 값이 잡힙니다. "LCP 요소"·"LCP 자원" 열은 중앙값을 만든 회차의 것입니다(마지막 회차가 아니라). 하네스는 페이지를 클릭·스크롤하지 않습니다(첫 입력이 LCP를 확정시키므로). "이미지" 열은 커머스 픽스처의 이미지 무게 조건입니다(`OTW_IMAGE_WEIGHT`) — 기본은 21 KB 타일, `heavy`는 1.4 MB 사진이고 두 조건 모두 다섯 변형이 md5까지 동일한 파일을 씁니다. 문서·폼 픽스처에는 이미지가 없습니다. 대역폭은 CDP가 아니라 서버에서 모델링합니다(`Network.emulateNetworkConditions`를 켜면 이 크로미움이 늦게 도착한 이미지를 LCP 후보로 보고하지 않습니다 — `scripts/lcp-bench.mjs` 주석에 측정표가 있습니다). 4x CPU · slow4g (server-paced) · 1280×900. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0. 측정 시각: 2026-08-20T11:16:55.368Z_
 <!-- lcp:end -->
 
 </details>
@@ -226,13 +230,13 @@ _`pnpm run lcp:bench`로 로컬 측정(수동 갱신). 각 행은 워밍업 1회
 
 | 변형 | 홈 | 검색 | 상품 | 결제 | 총 출력(이미지 제외) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | **4.7** | 9.4 | 4.9 | **4.7** | 1.14 MB |
+| Kudzu | **4.2** | 9.8 | 5.1 | **4.2** | 1.06 MB |
 | Astro | 60.6 | 61.0 | 61.1 | 60.6 | 1.72 MB |
-| React Router | 104.3 | 104.2 | 104.4 | 103.9 | 1.09 MB |
-| TanStack | 101.7 | 101.7 | 101.9 | 101.3 | 1.66 MB |
-| Next.js | 134.2 | 134.8 | 133.8 | 132.8 | 4.24 MB |
+| React Router | 104.3 | 104.1 | 104.2 | 103.7 | 1.09 MB |
+| TanStack | 101.7 | 101.7 | 101.8 | 101.3 | 1.66 MB |
+| Next.js | 134.1 | 134.8 | 133.8 | 132.8 | 4.24 MB |
 
-Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +4.7 KB). Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다. Next.js는 16.2 → 16.3에서 145 KB대 → 134 KB대로, TanStack은 vite 7 → 8 + @vitejs/plugin-react 6에서 104 KB대 → 101 KB대로 줄었습니다.
+Kudzu만 라우트에 따라 변합니다(검색 페이지의 keyed-list 런타임 +5.6 KB, 상품 상세의 native 핸들러 +0.9 KB). 0.8.39 → 0.9.0에서 홈·결제가 4.7 → 4.2 KB, 검색이 9.4 → 9.8 KB, 총 출력이 1.14 → 1.06 MB입니다 — 라우트마다 따로 굽던 capability 모듈이 시그니처 패밀리로 합쳐지면서(100개 카탈로그 기준 JS 파일 232개 → 29개) 라우트당 첫 바이트는 줄고, 검색 라우트만 keyed-list 패밀리를 통째로 받습니다. Astro의 아일랜드 분할은 실재하지만, 카트 배지가 전역 헤더에 있는 한 react-dom 런타임은 모든 라우트가 냅니다. Next.js는 16.2 → 16.3에서 145 KB대 → 134 KB대로, TanStack은 vite 7 → 8 + @vitejs/plugin-react 6에서 104 KB대 → 101 KB대로 줄었습니다.
 
 ### 열화 내성 (정보 읽기 · 카테고리 이동 · 상세 진입 · 필터 · 옵션 선택 · 담기)
 
@@ -252,13 +256,13 @@ TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐�
 
 | 변형 | 100개 | 1,000개 | 페이지당(1,000개) |
 | --- | ---: | ---: | ---: |
-| Astro | 1,373 / 1,328 ms | **1,818 / 1,875 ms** | 1.82 ms |
-| TanStack | 1,582 / 1,552 ms | 2,471 / 2,490 ms | 2.47 ms |
-| React Router | 1,820 / 1,860 ms | 3,073 / 2,996 ms | 3.07 ms |
-| Kudzu | **1,279 / 1,275 ms** | 3,557 / 3,568 ms | 3.56 ms |
-| Next.js | 4,314 / 3,213 ms | 5,624 / 5,000 ms | 5.62 ms |
+| Kudzu | **1,174 / 1,240 ms** | 2,075 / 2,088 ms | 2.07 ms |
+| Astro | 1,447 / 1,426 ms | **1,897 / 1,830 ms** | 1.90 ms |
+| TanStack | 1,623 / 1,604 ms | 2,530 / 2,553 ms | 2.53 ms |
+| React Router | 1,919 / 1,968 ms | 3,350 / 3,254 ms | 3.35 ms |
+| Next.js | 4,418 / 3,216 ms | 5,623 / 4,999 ms | 5.62 ms |
 
-여전히 Kudzu의 스케일 기울기가 제일 가파릅니다(100→1,000에서 2.8배, Astro 1.3배) — 상품마다 effect·native 핸들러 모듈을 따로 emit하므로 빌드 비용 동인이 라우트별 capability ESM emission이라서입니다. 다만 0.8.15 → 0.8.39에서 1,000개 절대값이 5.8초 → 3.6초로 개선돼 꼴찌 자리는 Next.js로 넘어갔고, TanStack은 vite 7 → 8에서 빌드가 약 15–20% 빨라져 1,000개 2위입니다. Next 16.3은 커머스에서도 cold와 warm이 갈라지기 시작했습니다(나머지 넷은 여전히 동일 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Astro뿐).
+0.9.0에서 Kudzu의 스케일 기울기가 평탄해졌습니다 — 100→1,000이 2.8배에서 **1.77배**로, 1,000개 절대값이 3,557 ms → 2,075 ms(-42%)입니다. 원인은 라우트 디스크립터 인터닝입니다: 0.8.39는 상품마다 effect·native 모듈을 따로 emit했고(100개 카탈로그에서 JS 파일 232개), 0.9.0은 같은 시그니처를 한 패밀리로 합쳐 29개만 냅니다 — 상품이 1,000개로 늘어도 새로 굽는 capability 모듈이 없습니다. 100개에서는 다섯 중 가장 빠르고, 1,000개에서는 Astro(1,897 ms) 다음 2위입니다. Next 16.3은 커머스에서도 cold와 warm이 갈라집니다(나머지 넷은 여전히 동일 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Astro뿐).
 
 ## 폼 위저드 벤치마크
 
@@ -274,13 +278,13 @@ pnpm run form:report    # 측정치를 landing/form.json으로 발행(그래프�
 
 | 변형 | 진입 contentReady | 조건부 필드 토글 | 다음 스텝 도착 | 상태 운반 완료 | 요약 렌더 |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Astro (inline script) | 198 ms | 0.8 ms | 180 ms | **200 ms** | 216 ms |
-| TanStack Start | 174 ms | 2.4 ms | 183 ms | **189 ms** | **173 ms** |
-| React Router v8 | 179 ms | 3.0 ms | **175 ms** | 399 ms | 370 ms |
-| Next.js App Router | 182 ms | 1.9 ms | 188 ms | 362 ms | 370 ms |
-| Kudzu | 180 ms | 0.7 ms | 179 ms | 702 ms | 520 ms |
+| Astro (inline script) | 199 ms | 0.6 ms | 175 ms | **196 ms** | 211 ms |
+| TanStack Start | 174 ms | 2.3 ms | 184 ms | **191 ms** | **173 ms** |
+| React Router v8 | 173 ms | 3.2 ms | **173 ms** | 395 ms | 375 ms |
+| Next.js App Router | 175 ms | 2.6 ms | 189 ms | 365 ms | 377 ms |
+| Kudzu | 175 ms | 0.7 ms | 178 ms | 700 ms | 502 ms |
 
-**Kudzu가 지는 축입니다.** 상태 운반(제출 → 다음 스텝의 hidden input이 채워지기까지)은 페이지별 effect 모듈이 도착해야 돌기 시작하는데, Slow 4G에서 모듈 체인 왕복이 그대로 비용이 됩니다(702 ms — 최하위). TanStack은 커머스에서 하이드레이션에 2.9초를 내지만, 여기서는 라우터가 제출을 가로채 같은 문서 안에서 전환하므로 아키텍처가 유리하게 작동합니다.
+**Kudzu가 지는 축입니다.** 상태 운반(제출 → 다음 스텝의 hidden input이 채워지기까지)은 페이지별 effect 모듈이 도착해야 돌기 시작하는데, Slow 4G에서 모듈 체인 왕복이 그대로 비용이 됩니다(700 ms — 최하위). 0.8.39와 0.9.0이 이 축에서는 같습니다(702 → 700 ms, 요약 520 → 502 ms). TanStack은 커머스에서 하이드레이션에 2.9초를 내지만, 여기서는 라우터가 제출을 가로채 같은 문서 안에서 전환하므로 아키텍처가 유리하게 작동합니다.
 
 ### 열화 내성 (스텝 이동 · 상태 운반 · 조건부 토글 · 요약 렌더 · 레퍼런스 렌더)
 
@@ -317,13 +321,13 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 
 | 변형 | 문서 contentReady | 초기 JS | 검색 첫 결과 | 검색 중 전송 |
 | --- | ---: | ---: | ---: | ---: |
-| Kudzu + Pagefind | **250 ms** | 119.1 KB | **1,800 ms** | **44.7 KB** |
-| Eleventy + Pagefind | 278 ms | 117.4 KB | **1,801 ms** | **44.7 KB** |
-| Astro + Pagefind | 990 ms | 117.4 KB | **1,801 ms** | **44.7 KB** |
-| Docusaurus + search-local | 1,220 ms | 719.6 KB | 6,803 ms | 190.7 KB |
-| VitePress + local search | 2,202 ms | 165.4 KB | 2,566 ms | 402.4 KB |
+| Kudzu + Pagefind | **249 ms** | 119.1 KB | **1,751 ms** | **44.7 KB** |
+| Eleventy + Pagefind | 277 ms | 117.4 KB | 1,758 ms | **44.7 KB** |
+| Astro + Pagefind | 982 ms | 117.4 KB | **1,750 ms** | **44.7 KB** |
+| Docusaurus + search-local | 1,223 ms | 719.6 KB | 6,820 ms | 190.7 KB |
+| VitePress + local search | 2,209 ms | 165.4 KB | 2,512 ms | 402.4 KB |
 
-검색 아키텍처가 그대로 드러납니다. Pagefind는 쿼리 시점에 필요한 인덱스 조각만 내려받아 세 변형이 정확히 같은 비용(44.7 KB, 1,800 ms)을 냅니다 — 프레임워크와 무관하게 검색은 Pagefind의 속성입니다. Docusaurus의 search-local은 전체 lunr 인덱스가 초기 JS에 묶여 오고(719.6 KB의 상당분) 첫 결과까지 6.8초. VitePress는 검색을 열 때 minisearch 인덱스 전체를 내려받습니다(402.4 KB — 인덱스가 코퍼스 크기에 비례해 자랍니다).
+검색 아키텍처가 그대로 드러납니다. Pagefind는 쿼리 시점에 필요한 인덱스 조각만 내려받아 세 변형이 정확히 같은 비용(44.7 KB, 1.75초)을 냅니다 — 프레임워크와 무관하게 검색은 Pagefind의 속성입니다. Docusaurus의 search-local은 전체 lunr 인덱스가 초기 JS에 묶여 오고(719.6 KB의 상당분) 첫 결과까지 6.8초. VitePress는 검색을 열 때 minisearch 인덱스 전체를 내려받습니다(402.4 KB — 인덱스가 코퍼스 크기에 비례해 자랍니다). Kudzu는 0.8.39와 0.9.0이 이 픽스처에서 동률입니다(250 → 249 ms, 초기 JS 119.1 KB 그대로 — 문서 라우트의 capability는 검색 스크립트 하나뿐이라 런타임 패밀리 재편이 닿지 않습니다).
 
 <details>
 <summary>측정 세부</summary>
@@ -353,10 +357,12 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
    basename은 배포 경로 전체여야 클라이언트 라우팅이 서빙 URL과 맞는데, prerender 플러그인이 그 basename을 출력 경로에도 적용해 실제 페이지가 `build/client/<basename>/<route>/index.html`로 들어갑니다. `build/client` 루트에는 SPA 폴백 셸이 대신 놓여서, 그 디렉터리를 문서 루트로 서빙하면 홈이 빈 셸이 됩니다. 후처리로 끌어올려 우회했습니다(`apps/shop-react-router/scripts/flatten-build.mjs`, `apps/form-react-router`도 동일).
 7. **TanStack Start — 정적 출력이 `dist/client`에 들어감**
    기본 다중 환경 빌드가 `dist/client`(정적)와 `dist/server`(쓰지 않는 서버 번들)로 나눕니다. 정적 호스트에 그대로 올리면 한 단계 어긋납니다. `environments.client.build.outDir`로 고정했습니다(`apps/shop-tanstack/vite.config.ts`). 덤으로 `dist/server` 번들에는 빌드 머신의 절대 경로가 그대로 구워집니다.
-8. **Kudzu 0.8.x — 커머스·폼·문서를 컴파일하며 만난 문법 경계 7개**
+8. **Kudzu 0.8.39 — 커머스·폼·문서를 컴파일하며 만난 문법 경계 7개**
    전부 `apps/shop-kudzu`·`apps/form-kudzu`·`apps/docs-kudzu` 소스에 주석으로 남겼습니다. 요약: (a) JSX 이벤트 핸들러 밖의 패키지 import 전면 거부 → 빌드 타임 데이터를 codegen으로 상대 모듈화해야 함, (b) imported 배열의 `.map()`은 JSX 밖에서도 keyed-list로 가로채여 거부 → `for` 루프, (c) 행 컴포넌트에 객체 prop 불가 → intrinsic 마크업 인라인, (d) 선택자 파이프라인(`filter`/`toSorted`)의 소스는 literal로 emit된 상대 import 배열만 가능, (e) `new CustomEvent` 거부로 컴포넌트 간 상태 통지 불가, (f) `navigation` 그룹이 멤버 라우트 전수 열거를 요구해 `getStaticPaths` 카탈로그에 적용 불가, (g) 핸들러·effect 안의 자유 식별자를 빌드 타임 캡처로 평가 — 지역 헬퍼 함수는 "not serializable"로, `instanceof HTMLElement` 같은 DOM 전역 참조는 빌드 렌더 중 `ReferenceError`로 거부. 핸들러 본문은 인라인 + 속성 조작(`setAttribute`)으로 내려가야 합니다.
 9. **Astro — 아일랜드 스크립트 실패 시 쿼리스트링을 붙여 재요청(측정 하네스를 조용히 무력화)**
    아일랜드 로더는 실패한 스크립트를 `client.<hash>.js?astro-retry=<timestamp>`로 다시 요청합니다. 이 URL은 `.js`로 끝나지 않으므로 `page.route("**/*.js")`류의 글롭 차단을 그대로 통과하고, 광고 차단·CDN 장애를 모델링하는 조건에서 180 KB 아일랜드 런타임이 전부 도착합니다. 이 저장소의 `shop-bench.mjs`·`form-bench.mjs` 열화 내성 트랙이 이 글롭을 쓰고 있었고, 실측으로 확인한 뒤(차단 시도 후에도 스크립트 바이트 190 KB 도착) **경로(pathname) 매칭으로 고쳤습니다**. 다시 측정한 결과 점수 자체는 변하지 않았습니다(커머스 Astro 12/18, 폼 Astro 15/15, 대조군 폼 TanStack 7/15 — 전부 기존 게시값과 동일) — 재요청이 도착해도 1.5초 관측 창 안에서 기능이 되살아나지는 않았기 때문입니다. 프레임워크 버그는 아니지만, 요청 차단으로 열화를 모델링하는 어떤 측정에도 영향을 주는 문서화되지 않은 동작입니다.
+10. **Kudzu 0.8.53+ — 스타일시트가 소스 그래프 의존이 되면서 CSS가 조용히 사라짐(0.8.39 → 0.9.0 업그레이드 실측)**
+    0.8.39까지는 `src/` 아래 모든 CSS 파일이 모든 페이지에 경로 정렬 순으로 링크됐습니다. 0.8.53의 "route-aware CSS closure" 이후로는 **라우트의 도달 가능한 소스 그래프가 `import "./x.css"`로 그 파일을 가져와야** 링크됩니다(`framework/compiler/source-compiler.mjs`의 `orderSourceStyles`, 또는 `kudzu.config.styles`). 이 저장소의 네 Kudzu 앱은 전자에 의존하고 있었고, 0.9.0으로 올리자 빌드는 성공하고 페이지 수·라우트 계약도 그대로인데 **스타일시트가 단 한 장도 emit되지 않았습니다** — 에러도 경고도 없습니다. 무스타일 빌드는 벤치까지 조용히 오염시킵니다: 커머스 홈 LCP가 이미지 792 ms에서 텍스트 196 ms로 바뀌고(레이아웃이 없으니 최대 요소가 달라짐), 뉴스레터 산출물이 141 → 139 파일로 줄고, 문서 딥링크 LCP가 380 → 196 ms로 "개선"됩니다. 각 앱의 공유 컴포넌트에서 전역 시트를 import하고(`apps/*/src/components/Header.tsx`·`Shell.tsx`, 폼은 스텝 페이지 4개), 포스트 본문 시트는 그것을 쓰는 라우트에서만 import하도록 고쳤습니다(`apps/kudzu/src/pages/news/post/[slug].tsx`). 프레임워크 버그는 아니지만, 마이너 업그레이드에서 정적 출력이 조용히 달라지는 종류의 계약 변경입니다.
 
 ## 검증 도구 (로컬 전용)
 
@@ -370,7 +376,7 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 - `pnpm run docs:bench -- --variant docs-kudzu` — 문서 검색 → `bench/docs-<variant>.json`.
 - `pnpm run shop:report` — 커머스 측정치를 `landing/commerce.json`으로 병합.
 - `pnpm run form:report` — 폼 위저드 측정치를 `landing/form.json`으로 발행(`bench/`는 커밋되지 않으므로 그래프는 이 파일을 읽는다).
-- `pnpm run lcp:bench` — 커머스·문서·폼 진입 라우트의 FCP/LCP + 브라우저가 고른 LCP 요소 → `landing/lcp.json`, README `LCP` 표 갱신. `--routes product --runs 3`으로 라우트를 좁히고, `OTW_IMAGE_WEIGHT=heavy`로 빌드하면 1.4 MB 사진 조건을 잰다. `--readme-only`는 재측정 없이 표만 다시 렌더.
+- `pnpm run lcp:bench` — 커머스·문서·폼 진입 라우트의 FCP/LCP + 브라우저가 고른 LCP 요소 → `landing/lcp.json`, README `LCP` 표 갱신. `--routes product --runs 3`으로 라우트를 좁히고, `OTW_IMAGE_WEIGHT=heavy`로 빌드하면 1.4 MB 사진 조건을 잰다. `--block-scripts`는 `*.js` 요청을 전부 차단한 대조군을 재서 `landing/lcp-blocked.json`에 따로 쓰고(발행 표는 건드리지 않는다), `LCP_DIAG=1`은 회차마다 후보 목록·창이 닫힌 시각·`visibilityState` 전이·이미지 완료 여부를 찍는다. `--readme-only`는 재측정 없이 표만 다시 렌더.
 - `pnpm run charts` — 커밋된 측정치에서 README용 SVG 막대 그래프 재생성 → `assets/charts/{ko,en}/`. 각 그림에는 픽스처·측정 명령·읽은 파일·측정 날짜가 하단에 박힌다.
 
 ## 개발

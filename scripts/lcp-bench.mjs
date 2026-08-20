@@ -57,6 +57,7 @@
  *   node scripts/lcp-bench.mjs --fixture docs --variant docs-vitepress
  *   node scripts/lcp-bench.mjs --runs 7 --cpu 6 --net fast4g
  *   node scripts/lcp-bench.mjs --no-throttle --skip-readme
+ *   node scripts/lcp-bench.mjs --fixture docs --block-scripts   # control run
  */
 import { createReadStream, existsSync, mkdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { readFile, writeFile } from "node:fs/promises";
@@ -146,7 +147,7 @@ const LABELS = {
 const labelFor = variant => LABELS[variant.replace(/^(shop|docs|form)-/, "")] ?? variant;
 
 function parseArgs(argv) {
-  const options = { fixture: null, variant: null, routes: null, runs: 5, cpu: 4, net: "slow4g", throttle: true, readme: true, readmeOnly: false };
+  const options = { fixture: null, variant: null, routes: null, runs: 5, cpu: 4, net: "slow4g", throttle: true, readme: true, readmeOnly: false, blockScripts: false };
   for (let index = 0; index < argv.length; index++) {
     const flag = argv[index];
     if (flag === "--fixture") options.fixture = argv[++index];
@@ -165,6 +166,14 @@ function parseArgs(argv) {
     // the table format changes more often than the measurements do, and a
     // full run is seven minutes.
     else if (flag === "--readme-only") options.readmeOnly = true;
+    // The control condition behind the README's "LCP measures bandwidth, not
+    // rendering" claim: same build, same pacing, every `*.js` request aborted.
+    // Writes landing/lcp-blocked.json and never touches the published table —
+    // a blocked row is a different experiment, not a better measurement.
+    else if (flag === "--block-scripts") {
+      options.blockScripts = true;
+      options.readme = false;
+    }
     else throw new Error(`unknown flag ${flag}`);
   }
   if (!NETWORK[options.net]) throw new Error(`--net must be one of ${Object.keys(NETWORK).join(", ")}`);
@@ -373,6 +382,11 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
 
   let lastCandidateAt = performance.now();
   const candidates = [];
+  // LCP is frozen the moment the document is backgrounded, so a run that was
+  // never visible cannot be compared with one that was: record every
+  // transition instead of trusting the state at close.
+  const visibility = [document.visibilityState];
+  addEventListener("visibilitychange", () => visibility.push(document.visibilityState));
   const observer = new PerformanceObserver(list => {
     for (const entry of list.getEntries()) {
       candidates.push({
@@ -424,7 +438,23 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
       // Timing-Allow-Origin dance.
       lcpBytes: resource ? resource.encodedBodySize || resource.transferSize || null : null,
       bytesBeforeLcp: sum(before),
-      scriptBytesBeforeLcp: sum(before.filter(entry => entry.initiatorType === "script" || /\\.m?js(\\?|$)/.test(entry.name)))
+      scriptBytesBeforeLcp: sum(before.filter(entry => entry.initiatorType === "script" || /\\.m?js(\\?|$)/.test(entry.name))),
+      // Why the window closed, for diagnosing a truncated row: a run that
+      // published a text candidate while the hero was still in flight shows up
+      // here as an incomplete image at finish time.
+      images: Array.prototype.map.call(document.images, image => {
+        const rect = image.getBoundingClientRect();
+        return {
+          complete: image.complete,
+          currentSrc: image.currentSrc ? image.currentSrc.split("/").pop() : null,
+          loading: image.getAttribute("loading"),
+          naturalWidth: image.naturalWidth,
+          box: [Math.round(rect.width), Math.round(rect.height), Math.round(rect.top)],
+          connected: image.isConnected
+        };
+      }),
+      closedAtMs: +performance.now().toFixed(1),
+      visibility
     });
   };
 
@@ -443,8 +473,18 @@ const LCP_PROBE = `(settleMs, budgetMs) => new Promise(resolve => {
   // (one sample in three, which is exactly how it hid). Any image that has
   // started fetching and not finished can still take the candidacy, so the
   // window stays open while one exists.
+  // currentSrc alone is not enough: it stays empty until the browser has
+  // actually selected a source and begun the fetch, and a lazy hero under
+  // server-paced Slow 4G regularly has not started when the load event fires.
+  // Measured on the heavy commerce condition with the currentSrc-only guard:
+  // one run in three closed the window at 196 ms and published the product
+  // title as that variant's LCP (CV 83% for the row). An image that declares a
+  // source and has not completed is pending, whether or not it has started.
   const imagesPending = () =>
-    Array.prototype.some.call(document.images, image => image.currentSrc && !image.complete);
+    Array.prototype.some.call(
+      document.images,
+      image => !image.complete && (image.currentSrc || image.getAttribute("src") || image.getAttribute("srcset"))
+    );
   const tick = () => {
     const anchor = Math.max(lastCandidateAt, loadAt ?? 0);
     const settled =
@@ -464,12 +504,25 @@ async function runLoad(browser, origin, variant, route, options) {
   const context = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await context.newPage();
   await applyThrottling(page, options);
+  // Matched on the pathname, like scripts/shop-bench.mjs's degradation track:
+  // an ad blocker or a CDN outage drops a URL by path, not by query string, and
+  // a glob on the full URL silently lets `?v=hash` module requests through.
+  let blockedScripts = 0;
+  if (options.blockScripts) {
+    await page.route(
+      requestUrl => /\.m?js$/.test(requestUrl.pathname),
+      route_ => {
+        blockedScripts++;
+        return route_.abort();
+      }
+    );
+  }
   try {
     await page.goto(`${origin}${BASE_PATH}/${variant}${route.path}`, { waitUntil: "commit" });
     const sample = await page.evaluate(`(${LCP_PROBE})(1500, 30000)`);
     if (!sample.lcp) throw new Error(`${variant} ${route.path}: no LCP candidate within 30000 ms`);
     if (sample.fcpMs === null) throw new Error(`${variant} ${route.path}: no first-contentful-paint entry`);
-    return sample;
+    return { ...sample, blockedScripts };
   } finally {
     await context.close();
   }
@@ -535,7 +588,18 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
       await runLoad(browser, origin, variant, route, options);
 
       const samples = [];
-      for (let run = 0; run < options.runs; run++) samples.push(await runLoad(browser, origin, variant, route, options));
+      for (let run = 0; run < options.runs; run++) {
+        const sample = await runLoad(browser, origin, variant, route, options);
+        samples.push(sample);
+        // Per-run visibility for a row whose samples disagree: LCP_DIAG=1 prints
+        // what the probe saw when it closed, which is the only way to tell a
+        // slow variant from a truncated window.
+        if (process.env.LCP_DIAG) {
+          console.log(
+            `    run${run} lcp ${sample.lcp.ms} ms (${sample.lcp.element}) closed ${sample.closedAtMs} ms load ${sample.loadEventMs} ms vis ${sample.visibility.join(">")} images ${JSON.stringify(sample.images)} cands ${JSON.stringify(sample.candidates.map(c=>`${c.element}@${c.ms}:${c.size}`))}`
+          );
+        }
+      }
 
       const lcpMs = +median(samples.map(sample => sample.lcp.ms)).toFixed(1);
       // Element and resource fields come from the run that produced the
@@ -547,6 +611,10 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
         Math.abs(sample.lcp.ms - lcpMs) < Math.abs(best.lcp.ms - lcpMs) ? sample : best
       );
       const row = {
+        // Populated only under --block-scripts: how many `*.js` requests the
+        // condition actually aborted, so a row that blocked nothing cannot be
+        // mistaken for one that survived without its scripts.
+        blockedScripts: options.blockScripts ? median(samples.map(sample => sample.blockedScripts)) : null,
         fixture: fixtureKey,
         fixtureLabel: fixture.label,
         variant,
@@ -586,7 +654,8 @@ async function benchVariant(browser, fixtureKey, fixture, variant, routes, optio
         `  ${row.route.padEnd(8)} FCP ${String(row.fcpMs).padStart(8)} ms   LCP ${String(row.lcpMs).padStart(8)} ms   ` +
           `${spread.n}회 ${Math.round(spread.min)}–${Math.round(spread.max)} ms (CV ${spread.cvPct}%)   ` +
           `${row.lcpKind} ${row.lcpElement}${row.lcpBytes ? ` (${(row.lcpBytes / 1024).toFixed(1)} KB)` : ""}` +
-          `   LCP 전 ${(row.bytesBeforeLcp / 1024).toFixed(1)} KB(스크립트 ${(row.scriptBytesBeforeLcp / 1024).toFixed(1)} KB)`
+          `   LCP 전 ${(row.bytesBeforeLcp / 1024).toFixed(1)} KB(스크립트 ${(row.scriptBytesBeforeLcp / 1024).toFixed(1)} KB)` +
+          (row.blockedScripts === null ? "" : `   차단 스크립트 ${row.blockedScripts}개`)
       );
     }
   } finally {
@@ -732,7 +801,11 @@ async function main() {
   // Merge, don't clobber: re-measuring one variant after a fix must not drop
   // the two dozen rows this run never visited. A row is identified by
   // fixture + variant + route, and carries its own measuredAt.
-  const publishedPath = path.join(repoRoot, "landing", "lcp.json");
+  // The script-blocked control condition keeps its own file: merging it into
+  // the published table would silently replace a shipped row with a row
+  // measured without the scripts that row exists to account for.
+  const fileName = options.blockScripts ? "lcp-blocked.json" : "lcp.json";
+  const publishedPath = path.join(repoRoot, "landing", fileName);
   // The image-weight condition is part of a row's identity: the light and
   // heavy commerce measurements are two different experiments, not two
   // attempts at one.
@@ -758,7 +831,7 @@ async function main() {
   };
   mkdirSync(path.join(repoRoot, "landing"), { recursive: true });
   writeFileSync(publishedPath, `${JSON.stringify(report, null, 2)}\n`);
-  console.log(`\nwrote landing/lcp.json (${rows.length} measured, ${merged.length} total rows)`);
+  console.log(`\nwrote landing/${fileName} (${rows.length} measured, ${merged.length} total rows)`);
   if (options.readme) await injectReadmeTables(report);
 
   if (failures.length) {

@@ -47,13 +47,13 @@
 <text x="616.9073603236832" y="417.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">589 KB</text>
 <line x1="32" y1="433" x2="848" y2="433" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="458" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
-<rect x="204.8" y="442" width="490.37" height="22" rx="4" fill="#3e3e44"/>
-<text x="703.1712931851924" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.2 MB</text>
+<rect x="204.8" y="442" width="490.29" height="22" rx="4" fill="#3e3e44"/>
+<text x="703.0861816278693" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.2 MB</text>
 <line x1="32" y1="473" x2="848" y2="473" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="498" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
-<rect x="204.8" y="482" width="535.81" height="22" rx="4" fill="#3e3e44"/>
-<text x="748.6147726217523" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
-<text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: newsletter fixture, 10 variants (apps/) · pnpm run build:stats → landing/benchmark.json · measured 2026-08-12 · Apple M4 ·</text>
+<rect x="204.8" y="482" width="535.72" height="22" rx="4" fill="#3e3e44"/>
+<text x="748.5160366667627" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
+<text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: newsletter fixture, 10 variants (apps/) · pnpm run build:stats → landing/benchmark.json · measured 2026-08-20 · Apple M4 ·</text>
 <text x="32" y="591" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0</text>
 <text x="32" y="559" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">The x axis is logarithmic — one gridline is 10x. 15 KB to 4.6 MB is a 300x spread.</text>
 </svg>

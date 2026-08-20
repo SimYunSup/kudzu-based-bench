@@ -1,40 +1,11 @@
 {
-  "measuredAt": "2026-08-12T05:03:43.802Z",
+  "measuredAt": "2026-08-20T11:00:55.519Z",
   "runs": 3,
   "machine": {
     "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
     "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
   },
   "rows": [
-    {
-      "label": "Eleventy",
-      "version": "3.1.6",
-      "name": "Eleventy 3.1.6",
-      "based": "Node (Nunjucks)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "cold": 702,
-      "warm": 691,
-      "coldSamples": [
-        699,
-        702,
-        727
-      ],
-      "warmSamples": [
-        711,
-        691,
-        673
-      ],
-      "totalBytes": 2782099,
-      "jsBytes": 15331,
-      "totalSize": "2.7 MB",
-      "jsSize": "15.0 KB",
-      "fileCount": 142,
-      "originDiff": "0.400%"
-    },
     {
       "label": "Hugo",
       "version": "0.161.0",
@@ -45,19 +16,19 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 710,
-      "warm": 691,
+      "cold": 682,
+      "warm": 680,
       "coldSamples": [
-        681,
-        736,
-        710
+        690,
+        682,
+        677
       ],
       "warmSamples": [
-        684,
-        738,
-        691
+        680,
+        683,
+        669
       ],
-      "totalBytes": 2688541,
+      "totalBytes": 2685381,
       "jsBytes": 15158,
       "totalSize": "2.6 MB",
       "jsSize": "14.8 KB",
@@ -65,28 +36,57 @@
       "originDiff": "0.395%"
     },
     {
+      "label": "Eleventy",
+      "version": "3.1.6",
+      "name": "Eleventy 3.1.6",
+      "based": "Node (Nunjucks)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "cold": 730,
+      "warm": 707,
+      "coldSamples": [
+        700,
+        792,
+        730
+      ],
+      "warmSamples": [
+        701,
+        753,
+        707
+      ],
+      "totalBytes": 2778939,
+      "jsBytes": 15331,
+      "totalSize": "2.7 MB",
+      "jsSize": "15.0 KB",
+      "fileCount": 142,
+      "originDiff": "0.400%"
+    },
+    {
       "label": "Kudzu",
-      "version": "0.8.39",
-      "name": "Kudzu 0.8.39",
+      "version": "0.9.0",
+      "name": "Kudzu 0.9.0",
       "based": "Kudzu (JSX, no vDOM)",
       "kind": {
         "ko": "SSG 특화",
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 785,
-      "warm": 789,
+      "cold": 859,
+      "warm": 865,
       "coldSamples": [
-        775,
-        792,
-        785
+        855,
+        860,
+        859
       ],
       "warmSamples": [
-        777,
-        791,
-        789
+        858,
+        881,
+        865
       ],
-      "totalBytes": 2702694,
+      "totalBytes": 2698764,
       "jsBytes": 15329,
       "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
@@ -103,20 +103,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 1638,
-      "warm": 1644,
+      "cold": 1684,
+      "warm": 1695,
       "coldSamples": [
-        1638,
-        1629,
-        1658
+        1684,
+        1653,
+        1716
       ],
       "warmSamples": [
-        1637,
-        1644,
-        1648
+        1717,
+        1676,
+        1695
       ],
-      "totalBytes": 8919107,
-      "jsBytes": 4822620,
+      "totalBytes": 8908437,
+      "jsBytes": 4815110,
       "totalSize": "8.5 MB",
       "jsSize": "4.6 MB",
       "fileCount": 416,
@@ -132,19 +132,19 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 2161,
-      "warm": 2122,
+      "cold": 2229,
+      "warm": 2250,
       "coldSamples": [
-        2292,
-        2161,
-        2142
+        2219,
+        2242,
+        2229
       ],
       "warmSamples": [
-        2185,
-        2122,
-        2106
+        2255,
+        2209,
+        2250
       ],
-      "totalBytes": 7138346,
+      "totalBytes": 7127206,
       "jsBytes": 330794,
       "totalSize": "6.8 MB",
       "jsSize": "323.0 KB",
@@ -161,19 +161,19 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 3660,
-      "warm": 2687,
+      "cold": 3770,
+      "warm": 2744,
       "coldSamples": [
-        3699,
-        3648,
-        3660
+        3770,
+        3857,
+        3665
       ],
       "warmSamples": [
-        2687,
-        2667,
-        2726
+        2829,
+        2744,
+        2697
       ],
-      "totalBytes": 6744251,
+      "totalBytes": 6733271,
       "jsBytes": 542639,
       "totalSize": "6.4 MB",
       "jsSize": "529.9 KB",
@@ -190,19 +190,19 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 4491,
-      "warm": 2961,
+      "cold": 4347,
+      "warm": 3112,
       "coldSamples": [
-        4285,
-        4491,
-        4696
+        4224,
+        4347,
+        4552
       ],
       "warmSamples": [
-        3023,
-        2926,
-        2961
+        3112,
+        3729,
+        3112
       ],
-      "totalBytes": 14402635,
+      "totalBytes": 14377835,
       "jsBytes": 603164,
       "totalSize": "13.7 MB",
       "jsSize": "589.0 KB",
@@ -219,53 +219,24 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 4847,
-      "warm": 4898,
+      "cold": 5012,
+      "warm": 5047,
       "coldSamples": [
-        4690,
-        4847,
-        5071
+        4878,
+        5012,
+        5035
       ],
       "warmSamples": [
-        5160,
-        4898,
-        4763
+        5195,
+        5047,
+        4893
       ],
-      "totalBytes": 6798051,
+      "totalBytes": 6788731,
       "jsBytes": 333908,
       "totalSize": "6.5 MB",
       "jsSize": "326.1 KB",
       "fileCount": 146,
       "originDiff": "0.399%"
-    },
-    {
-      "label": "Docusaurus",
-      "version": "3.10.2",
-      "name": "Docusaurus 3.10.2",
-      "based": "React",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "cold": 4919,
-      "warm": 1574,
-      "coldSamples": [
-        4919,
-        4916,
-        5177
-      ],
-      "warmSamples": [
-        1678,
-        1574,
-        1520
-      ],
-      "totalBytes": 5246449,
-      "jsBytes": 2353804,
-      "totalSize": "5.0 MB",
-      "jsSize": "2.2 MB",
-      "fileCount": 284,
-      "originDiff": "0.403%"
     },
     {
       "label": "Astro",
@@ -277,24 +248,53 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 6013,
-      "warm": 2483,
+      "cold": 5081,
+      "warm": 3746,
       "coldSamples": [
-        6040,
-        4300,
-        6013
+        10476,
+        3762,
+        5081
       ],
       "warmSamples": [
-        2591,
-        2483,
-        2445
+        3746,
+        4816,
+        2700
       ],
-      "totalBytes": 3209286,
+      "totalBytes": 4920079,
       "jsBytes": 102257,
-      "totalSize": "3.1 MB",
+      "totalSize": "4.7 MB",
       "jsSize": "99.9 KB",
       "fileCount": 152,
       "originDiff": "0.320%"
+    },
+    {
+      "label": "Docusaurus",
+      "version": "3.10.2",
+      "name": "Docusaurus 3.10.2",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "cold": 5234,
+      "warm": 1780,
+      "coldSamples": [
+        5234,
+        5203,
+        5255
+      ],
+      "warmSamples": [
+        1780,
+        1628,
+        1827
+      ],
+      "totalBytes": 5238629,
+      "jsBytes": 2350644,
+      "totalSize": "5.0 MB",
+      "jsSize": "2.2 MB",
+      "fileCount": 284,
+      "originDiff": "0.403%"
     }
   ]
 }

@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>kudzu-based-bench — 같은 사이트, 15가지 빌드</title>
+  <meta name="description" content="같은 뉴스레터 사이트를 열 가지 프레임워크로 각각 빌드한 리팩토링 실험장입니다." />
+  <link rel="icon" href="/kudzu-based-bench/astro/favicon.svg" type="image/svg+xml" />
+  <style>
+    /* Same editorial token system as the variant apps (apps/web global.css). */
+    :root {
+      --font-sans: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --line: #e2e8f0;
+      --ink: #0f172a;
+      --muted: #475569;
+      --accent: #4f46e5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0f172a;
+        --surface: #1e293b;
+        --line: #334155;
+        --ink: #f8fafc;
+        --muted: #94a3b8;
+        --accent: #818cf8;
+      }
+    }
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      font-family: var(--font-sans);
+      background: var(--bg);
+      color: var(--ink);
+    }
+    main {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 96px 32px;
+    }
+    .mono-eyebrow {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      letter-spacing: 0.04em;
+      color: var(--accent);
+      margin: 0 0 20px;
+    }
+    h1 {
+      font-size: 44px;
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin: 0 0 16px;
+      text-wrap: pretty;
+    }
+    .sub {
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--muted);
+      margin: 0 0 48px;
+      word-break: keep-all;
+    }
+    .variants {
+      display: grid;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .variant {
+      display: flex;
+      align-items: baseline;
+      gap: 16px;
+      padding: 20px 24px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      text-decoration: none;
+      color: inherit;
+      transition: border-color 0.15s ease, background-color 0.15s ease;
+    }
+    .variant:hover {
+      border-color: var(--accent);
+      background: var(--surface);
+    }
+    .variant .name {
+      font-family: var(--font-mono);
+      font-weight: 600;
+      font-size: 16px;
+      color: var(--accent);
+      min-width: 130px;
+    }
+    .variant .desc {
+      font-size: 14.5px;
+      color: var(--muted);
+      word-break: keep-all;
+    }
+    footer {
+      margin-top: 64px;
+      font-size: 13px;
+      color: var(--muted);
+    }
+    footer a { color: var(--accent); }
+    @media (max-width: 640px) {
+      main { padding: 64px 24px; }
+      h1 { font-size: 32px; }
+      .variant { flex-direction: column; gap: 6px; }
+    }
+    /* Benchmark section — reuses the editorial tokens above so it matches the
+       variant cards. The table is wrapped in an overflow-x container so wide
+       columns scroll horizontally on mobile instead of stretching the page. */
+    .bench {
+      margin-top: 72px;
+    }
+    .bench-head {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 8px;
+    }
+    .bench-title {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+    .bench-repo {
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+    .bench-note {
+      font-size: 13.5px;
+      line-height: 1.6;
+      color: var(--muted);
+      margin: 0 0 20px;
+      word-break: keep-all;
+    }
+    .bench-scroll {
+      overflow-x: auto;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+    }
+    table.bench-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13.5px;
+    }
+    .bench-table th,
+    .bench-table td {
+      padding: 10px 14px;
+      text-align: left;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--line);
+    }
+    .bench-table thead th {
+      font-family: var(--font-mono);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--muted);
+      letter-spacing: 0.02em;
+    }
+    .bench-table tbody tr:last-child td {
+      border-bottom: 0;
+    }
+    .bench-table tbody tr:hover {
+      background: var(--surface);
+    }
+    .bench-table .col-name {
+      font-weight: 600;
+      color: var(--ink);
+    }
+    .bench-table .col-num {
+      text-align: right;
+      font-family: var(--font-mono);
+    }
+    .bench-kind {
+      display: inline-block;
+      font-family: var(--font-mono);
+      font-size: 11px;
+      color: var(--accent);
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 1px 7px;
+    }
+    .bench-foot {
+      font-size: 12px;
+      color: var(--muted);
+      margin: 14px 0 0;
+      line-height: 1.6;
+      word-break: keep-all;
+    }
+    .bench-empty {
+      padding: 24px 8px;
+      font-family: var(--font-mono);
+      font-size: 13px;
+      color: var(--muted);
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <p class="mono-eyebrow">// same site, fifteen builds</p>
+    <h1>kudzu-based<br />bench</h1>
+    <p class="sub">
+      같은 사이트를 여러 프레임워크로 정적 빌드해 무엇이 실제로 달라지는지 재는
+      곳입니다. 뉴스레터 픽스처 열 가지는 아래에서 골라 들어가고, 상호작용을 재는
+      커머스 픽스처 다섯 가지는 페이지 아래 표에 있습니다.
+    </p>
+    <ul class="variants">
+      <li>
+        <a class="variant" href="/kudzu-based-bench/astro/">
+          <span class="name">astro</span>
+          <span class="desc">원본 구현 — Content Layer + 정적 빌드, RSS·사이트맵·검색 포함</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/react-router/">
+          <span class="name">react-router</span>
+          <span class="desc">React Router v8 framework mode, ssr:false + prerender</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/tanstack/">
+          <span class="name">tanstack</span>
+          <span class="desc">TanStack Start, 정적 prerender + static server functions</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/kudzu/">
+          <span class="name">kudzu</span>
+          <span class="desc">HTML-first TSX 실험 프레임워크, getStaticPaths 정적 출력</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/hugo/">
+          <span class="name">hugo</span>
+          <span class="desc">Go 바이너리 SSG — 데이터 파일 + Go 템플릿, 비-Node 툴체인</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/vitepress/">
+          <span class="name">vitepress</span>
+          <span class="desc">Vite + Vue 커스텀 테마, 동적 라우트 paths 로더</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/docusaurus/">
+          <span class="name">docusaurus</span>
+          <span class="desc">React 문서 프레임워크 — 커스텀 플러그인으로 라우트 생성</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/eleventy/">
+          <span class="name">eleventy</span>
+          <span class="desc">11ty v3 — Nunjucks 템플릿 + 전역 데이터 파일, 클라이언트 JS 0</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/next-app/">
+          <span class="name">next-app</span>
+          <span class="desc">Next.js App Router, output:export + generateStaticParams</span>
+        </a>
+      </li>
+      <li>
+        <a class="variant" href="/kudzu-based-bench/next-pages/">
+          <span class="name">next-pages</span>
+          <span class="desc">Next.js Pages Router, output:export + getStaticPaths</span>
+        </a>
+      </li>
+    </ul>
+    <section class="bench" aria-labelledby="bench-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="bench-title">뉴스레터 빌드 벤치마크</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#readme">전체 표 →</a>
+      </div>
+      <p class="bench-note">
+        같은 콘텐츠를 열 가지 프레임워크로 정적 빌드한 결과입니다.
+        <strong>cold</strong>는 프레임워크 빌드 캐시까지 지운 상태(CI 캐시 미스),
+        <strong>warm</strong>은 캐시를 남긴 상태(CI 캐시 히트) — 둘의 차이가 그
+        도구의 캐시가 실제로 벌어주는 시간입니다. cold 오름차순. 총 크기·파일 수는
+        이미지 자산을 제외합니다(변형별 이미지 처리 방식이 달라 공정 비교를 위함).
+      </p>
+      <div class="bench-scroll">
+        <table class="bench-table">
+          <thead>
+            <tr>
+              <th scope="col">변형</th>
+              <th scope="col">기반</th>
+              <th scope="col">특징</th>
+              <th scope="col" class="col-num">cold(ms)</th>
+              <th scope="col" class="col-num">warm(ms)</th>
+              <th scope="col" class="col-num">총 크기</th>
+              <th scope="col" class="col-num">JS 크기</th>
+              <th scope="col" class="col-num">파일 수</th>
+              <th scope="col" class="col-num">원본 diff</th>
+            </tr>
+          </thead>
+          <tbody id="bench-body">
+            <tr><td class="bench-empty" colspan="9">벤치마크 데이터를 불러오는 중…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-foot" id="bench-foot"></p>
+    </section>
+    <section class="bench" aria-labelledby="shop-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="shop-title">커머스 벤치마크</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#커머스-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        같은 상점(홈·검색·상품·결제)을 다섯 프레임워크로 빌드하고 실제 세션을
+        재생해 측정합니다. Cold/Warm LCP 대신 <strong>내용이 보이기까지</strong>와
+        <strong>실제로 눌리기까지</strong>를 나눠 잽니다. 첫 신뢰 클릭은 첫 페인트
+        이후 담기 버튼이 100% 동작하기 시작하는 시점 — 그 전에 누른 건 유실됩니다.
+        4x CPU · Slow 4G, 5세션 중앙값.
+      </p>
+      <div class="bench-scroll">
+        <table class="bench-table">
+          <thead>
+            <tr>
+              <th scope="col">변형</th>
+              <th scope="col">기반</th>
+              <th scope="col" class="col-num">내용 표시</th>
+              <th scope="col" class="col-num">조작 가능</th>
+              <th scope="col" class="col-num">첫 신뢰 클릭</th>
+              <th scope="col" class="col-num">홈 JS</th>
+              <th scope="col" class="col-num">열화 내성</th>
+            </tr>
+          </thead>
+          <tbody id="shop-body">
+            <tr><td class="bench-empty" colspan="7">커머스 데이터를 불러오는 중…</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="bench-foot" id="shop-foot"></p>
+    </section>
+    <section class="bench" aria-labelledby="form-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="form-title">폼 위저드 픽스처</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#폼-위저드-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        같은 3단계 신청 위저드(네이티브 GET 폼 체인 + 쿼리스트링 상태 운반)를 다섯
+        프레임워크로 구현했습니다. 점진적 향상 — 스크립트가 늦거나 빠졌을 때 무엇이
+        살아남는지 — 이 판정 기준입니다. 완주 결과 레퍼런스 코드는 다섯 변형이
+        바이트 동일해야 합니다.
+      </p>
+      <ul class="variants">
+        <li><a class="variant" href="/kudzu-based-bench/form-kudzu/"><span class="name">form-kudzu</span><span class="desc">네이티브 폼 + effect 모듈 프리필</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-astro/"><span class="name">form-astro</span><span class="desc">정적 마크업 + 페이지별 인라인 스크립트</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-react-router/"><span class="name">form-react-router</span><span class="desc">언컨트롤드 폼 + useEffect 프리필, 전 라우트 prerender</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-tanstack/"><span class="name">form-tanstack</span><span class="desc">validateSearch 타입드 서치 파라미터 + 커스텀 서치 코덱</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/form-next-app/"><span class="name">form-next-app</span><span class="desc">App Router 클라이언트 컴포넌트 + Suspense 경계 useSearchParams</span></a></li>
+      </ul>
+    </section>
+    <section class="bench" aria-labelledby="docs-title">
+      <div class="bench-head">
+        <h2 class="bench-title" id="docs-title">문서 + 검색 픽스처</h2>
+        <a class="bench-repo" href="https://github.com/SimYunSup/kudzu-based-bench#문서--검색-벤치마크">방법론 →</a>
+      </div>
+      <p class="bench-note">
+        결정론 코퍼스(기본 120페이지)로 만든 같은 문서 사이트에 클라이언트 검색을
+        얹었습니다. 검색 첫 결과까지의 지연과 그때까지 내려받은 인덱스 바이트가
+        판정 기준입니다. kudzu·astro·eleventy는 Pagefind, docusaurus·vitepress는
+        각자의 내장 로컬 검색.
+      </p>
+      <ul class="variants">
+        <li><a class="variant" href="/kudzu-based-bench/docs-kudzu/"><span class="name">docs-kudzu</span><span class="desc">codegen 상대 모듈 + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-astro/"><span class="name">docs-astro</span><span class="desc">getStaticPaths + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-eleventy/"><span class="name">docs-eleventy</span><span class="desc">pagination 전역 데이터 + Pagefind</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-docusaurus/"><span class="name">docs-docusaurus</span><span class="desc">표준 docs 플러그인 + @easyops-cn 로컬 검색</span></a></li>
+        <li><a class="variant" href="/kudzu-based-bench/docs-vitepress/"><span class="name">docs-vitepress</span><span class="desc">기본 테마 + 내장 local search (minisearch)</span></a></li>
+      </ul>
+    </section>
+    <footer>
+      <a href="https://github.com/SimYunSup/kudzu-based-bench">GitHub 저장소</a>
+      · 원본: <a href="https://ones-to-watch.ethansup.net">ones-to-watch.ethansup.net</a>
+    </footer>
+  </main>
+  <script>
+    // Render the build benchmark from landing/benchmark.json, regenerated by
+    // `pnpm run build:stats`. Kept as a runtime fetch (not baked into the HTML)
+    // so the table refreshes with each measurement without hand-editing markup.
+    // benchmark.json sits next to this file, so a relative URL resolves under
+    // the Pages base prefix regardless of deploy path.
+    (async () => {
+      const body = document.getElementById("bench-body");
+      const foot = document.getElementById("bench-foot");
+      const cell = (text, cls) => {
+        const td = document.createElement("td");
+        if (cls) td.className = cls;
+        td.textContent = text;
+        return td;
+      };
+      try {
+        const res = await fetch("./benchmark.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        body.replaceChildren();
+        for (const row of data.rows) {
+          const tr = document.createElement("tr");
+          tr.appendChild(cell(row.name, "col-name"));
+          tr.appendChild(cell(row.based));
+          const kindTd = document.createElement("td");
+          const kindSpan = document.createElement("span");
+          kindSpan.className = "bench-kind";
+          kindSpan.textContent = row.kind && row.kind.ko ? row.kind.ko : "";
+          kindTd.appendChild(kindSpan);
+          tr.appendChild(kindTd);
+          tr.appendChild(cell(row.ok && row.cold != null ? String(row.cold) : "-", "col-num"));
+          tr.appendChild(cell(row.ok && row.warm != null ? String(row.warm) : "-", "col-num"));
+          tr.appendChild(cell(row.ok ? (row.totalSize ?? "-") : "❌", "col-num"));
+          tr.appendChild(cell(row.ok ? (row.jsSize ?? "-") : "❌", "col-num"));
+          tr.appendChild(cell(row.ok && row.fileCount != null ? String(row.fileCount) : "-", "col-num"));
+          tr.appendChild(cell(row.originDiff ?? "-", "col-num"));
+          body.appendChild(tr);
+        }
+        const note = data.note && data.note.ko ? data.note.ko + " " : "";
+        const machine = data.machine && data.machine.ko ? "측정 머신: " + data.machine.ko + ". " : "";
+        const at = data.measuredAt ? "측정 시각: " + data.measuredAt : "";
+        foot.textContent = note + machine + at;
+      } catch (err) {
+        body.replaceChildren();
+        const tr = document.createElement("tr");
+        tr.appendChild(cell("벤치마크 데이터를 불러오지 못했습니다. README의 표를 참고하세요.", "bench-empty"));
+        tr.firstChild.colSpan = 9;
+        body.appendChild(tr);
+        foot.textContent = "";
+      }
+    })();
+
+    // Commerce table from landing/commerce.json, joined by
+    // `pnpm run shop:report` out of the three bench/ outputs.
+    (async () => {
+      const body = document.getElementById("shop-body");
+      const foot = document.getElementById("shop-foot");
+      const cell = (text, cls) => {
+        const td = document.createElement("td");
+        if (cls) td.className = cls;
+        td.textContent = text;
+        return td;
+      };
+      const ms = (value) => (value == null ? "-" : `${Math.round(value)} ms`);
+      try {
+        const res = await fetch("./commerce.json", { cache: "no-cache" });
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        const data = await res.json();
+        body.replaceChildren();
+        for (const row of data.rows) {
+          const tr = document.createElement("tr");
+          const nameTd = document.createElement("td");
+          nameTd.className = "col-name";
+          // Every commerce variant is deployed as a sibling of this page, so
+          // the name doubles as the way in. Relative, because the deploy base
+          // is a repo-name prefix this file should not have to know.
+          const link = document.createElement("a");
+          link.href = "." + row.path;
+          link.textContent = row.label;
+          nameTd.appendChild(link);
+          tr.appendChild(nameTd);
+          tr.appendChild(cell(row.based));
+          tr.appendChild(cell(ms(row.entryContentReadyMs), "col-num"));
+          tr.appendChild(cell(ms(row.listingActReadyMs), "col-num"));
+          tr.appendChild(cell(
+            row.firstReliableClickMs == null ? "5s 내 없음" : `+${row.firstReliableClickMs} ms`,
+            "col-num"
+          ));
+          tr.appendChild(cell(
+            row.homeJsGzip == null ? "-" : `${(row.homeJsGzip / 1024).toFixed(1)} KB`,
+            "col-num"
+          ));
+          tr.appendChild(cell(
+            row.resilienceTotal == null ? "-" : `${row.resilienceTotal}/${row.resilienceMax}`,
+            "col-num"
+          ));
+          body.appendChild(tr);
+        }
+        foot.textContent =
+          "내용 표시 = 상품명·가격이 DOM에 나타나기까지. 조작 가능 = 목록 페이지의 첫 조작이 실제로 먹히기까지. " +
+          "홈 JS = 브라우저가 실제로 받은 초기 JavaScript(gzip). 열화 내성 = JS 차단·2초 지연·스크립트 1개 유실 세 조건에서 살아남는 기능 수. " +
+          (data.measuredAt ? "측정 시각: " + data.measuredAt : "");
+      } catch {
+        body.replaceChildren();
+        const tr = document.createElement("tr");
+        tr.appendChild(cell("커머스 데이터를 불러오지 못했습니다. README를 참고하세요.", "bench-empty"));
+        tr.firstChild.colSpan = 7;
+        body.appendChild(tr);
+        foot.textContent = "";
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,1 @@
+function p(n,o,d,l={},i=()=>!0,u){let r=new Set,s=!1,a=()=>{if(s=!1,!i())return r.clear();let e=[...r];r.clear();for(let t of e)d(t,n.get(t))},f=(e,t)=>{if(!i())return;let c=n.get(e);n.set(e,typeof t=="function"?t(c):t),r.add(e),s||(s=!0,queueMicrotask(a))},_=void 0;return{get(e){return n.get(o[e])},scope(e){},set(e,t){f(o[e],t)}}}export{p as createEffectContext};

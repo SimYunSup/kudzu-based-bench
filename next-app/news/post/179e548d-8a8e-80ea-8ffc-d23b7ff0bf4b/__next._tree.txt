@@ -1,0 +1,3 @@
+:HL["/kudzu-based-bench/next-app/_next/static/chunks/0prtqbbo4n2ct.css","style"]
+:HL["/kudzu-based-bench/assets/notion/78e587d084b0f99e.png","image"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"news","param":null,"prefetchHints":4192,"slots":{"children":{"name":"post","param":null,"prefetchHints":4192,"slots":{"children":{"name":"id","param":{"type":"d","key":"179e548d-8a8e-80ea-8ffc-d23b7ff0bf4b","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"FJQXoMDvtQ-HRn18Tjcwc"}

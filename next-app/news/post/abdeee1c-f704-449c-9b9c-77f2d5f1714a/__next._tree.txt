@@ -1,0 +1,2 @@
+:HL["/kudzu-based-bench/next-app/_next/static/chunks/0prtqbbo4n2ct.css","style"]
+0:{"tree":{"name":"","param":null,"prefetchHints":4176,"slots":{"children":{"name":"news","param":null,"prefetchHints":4192,"slots":{"children":{"name":"post","param":null,"prefetchHints":4192,"slots":{"children":{"name":"id","param":{"type":"d","key":"abdeee1c-f704-449c-9b9c-77f2d5f1714a","siblings":[]},"prefetchHints":4192,"slots":{"children":{"name":"__PAGE__","param":null,"prefetchHints":4256,"slots":null}}}}}}}}},"staleTime":300,"buildId":"FJQXoMDvtQ-HRn18Tjcwc"}

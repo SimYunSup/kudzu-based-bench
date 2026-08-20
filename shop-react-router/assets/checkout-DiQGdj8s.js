@@ -1,0 +1,1 @@
+import{w as s,j as e}from"./jsx-runtime-hyFHz5QZ.js";const c=s(function(){return e.jsxs("main",{className:"checkout",children:[e.jsx("h1",{children:"결제"}),e.jsx("p",{children:"벤치마크 픽스처입니다. 실제 결제는 진행되지 않습니다."})]})});export{c as default};

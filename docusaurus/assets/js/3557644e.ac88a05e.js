@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunk_otw_web_docusaurus=self.webpackChunk_otw_web_docusaurus||[]).push([[4092],{1134(e){e.exports=JSON.parse('{"name":"newsletter-plugin","id":"default"}')}}]);

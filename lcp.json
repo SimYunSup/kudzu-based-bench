@@ -1,0 +1,1293 @@
+{
+  "measuredAt": "2026-08-20T11:16:55.368Z",
+  "throttling": {
+    "cpu": "4x",
+    "network": "slow4g (server-paced)"
+  },
+  "machine": {
+    "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v24.17.0",
+    "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0"
+  },
+  "rows": [
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-astro",
+      "label": "Astro",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-19T00:39:00.254Z",
+      "fcpMs": 212,
+      "lcpMs": 8008,
+      "lcpSamples": [
+        8008,
+        8008,
+        8008
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 7796,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:61629/kudzu-based-bench/shop-astro/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 212,
+      "bytesBeforeLcp": 1678468,
+      "scriptBytesBeforeLcp": 194893
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-react-router",
+      "label": "React Router",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-19T00:39:41.376Z",
+      "fcpMs": 628,
+      "lcpMs": 8656,
+      "lcpSamples": [
+        8652,
+        8656,
+        8656
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 8028,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:61679/kudzu-based-bench/shop-react-router/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 628,
+      "bytesBeforeLcp": 1813784,
+      "scriptBytesBeforeLcp": 326590
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-tanstack",
+      "label": "TanStack",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-19T00:40:22.361Z",
+      "fcpMs": 352,
+      "lcpMs": 8636,
+      "lcpSamples": [
+        8636,
+        8636,
+        8636
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 8284,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:61715/kudzu-based-bench/shop-tanstack/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 352,
+      "bytesBeforeLcp": 1809844,
+      "scriptBytesBeforeLcp": 322665
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-next-app",
+      "label": "Next.js",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-19T00:41:12.306Z",
+      "fcpMs": 352,
+      "lcpMs": 10892,
+      "lcpSamples": [
+        10896,
+        10892,
+        10892
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 10540,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:61755/kudzu-based-bench/shop-next-app/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 352,
+      "bytesBeforeLcp": 2068531,
+      "scriptBytesBeforeLcp": 464526
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-astro",
+      "label": "Astro",
+      "route": "home",
+      "routeLabel": {
+        "ko": "홈",
+        "en": "Home"
+      },
+      "path": "/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:31:05.612Z",
+      "fcpMs": 220,
+      "lcpMs": 944,
+      "lcpSamples": [
+        940,
+        952,
+        944,
+        944,
+        964
+      ],
+      "lcpSampleElements": [
+        "img p-07.png",
+        "img p-07.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 728,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64435/kudzu-based-bench/shop-astro/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 220,
+      "bytesBeforeLcp": 43907,
+      "scriptBytesBeforeLcp": 1111
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-astro",
+      "label": "Astro",
+      "route": "search",
+      "routeLabel": {
+        "ko": "검색 리스팅",
+        "en": "Search listing"
+      },
+      "path": "/search/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:34:06.047Z",
+      "fcpMs": 212,
+      "lcpMs": 912,
+      "lcpSamples": [
+        912,
+        904,
+        912,
+        912,
+        920
+      ],
+      "lcpSampleElements": [
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png"
+      ],
+      "lcpDeltaFcpMs": 700,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64435/kudzu-based-bench/shop-astro/commerce/p-03.png",
+      "lcpBytes": 21003,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 212,
+      "bytesBeforeLcp": 23379,
+      "scriptBytesBeforeLcp": 2376
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-astro",
+      "label": "Astro",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:34:17.733Z",
+      "fcpMs": 208,
+      "lcpMs": 320,
+      "lcpSamples": [
+        328,
+        316,
+        328,
+        320,
+        320
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 108,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64435/kudzu-based-bench/shop-astro/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 208,
+      "bytesBeforeLcp": 20963,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-react-router",
+      "label": "React Router",
+      "route": "home",
+      "routeLabel": {
+        "ko": "홈",
+        "en": "Home"
+      },
+      "path": "/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:34:38.251Z",
+      "fcpMs": 612,
+      "lcpMs": 1364,
+      "lcpSamples": [
+        1268,
+        1364,
+        1364,
+        1388,
+        1376
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-07.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 752,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64613/kudzu-based-bench/shop-react-router/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 612,
+      "bytesBeforeLcp": 79083,
+      "scriptBytesBeforeLcp": 54501
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-react-router",
+      "label": "React Router",
+      "route": "search",
+      "routeLabel": {
+        "ko": "검색 리스팅",
+        "en": "Search listing"
+      },
+      "path": "/search/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:37:38.925Z",
+      "fcpMs": 612,
+      "lcpMs": 1364,
+      "lcpSamples": [
+        1404,
+        1356,
+        1364,
+        1368,
+        1364
+      ],
+      "lcpSampleElements": [
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png"
+      ],
+      "lcpDeltaFcpMs": 752,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64613/kudzu-based-bench/shop-react-router/commerce/p-03.png",
+      "lcpBytes": 21003,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 612,
+      "bytesBeforeLcp": 78961,
+      "scriptBytesBeforeLcp": 54339
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-react-router",
+      "label": "React Router",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:37:55.506Z",
+      "fcpMs": 608,
+      "lcpMs": 608,
+      "lcpSamples": [
+        616,
+        604,
+        608,
+        604,
+        616
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64613/kudzu-based-bench/shop-react-router/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 608,
+      "bytesBeforeLcp": 35170,
+      "scriptBytesBeforeLcp": 10588
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-tanstack",
+      "label": "TanStack",
+      "route": "home",
+      "routeLabel": {
+        "ko": "홈",
+        "en": "Home"
+      },
+      "path": "/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:38:20.257Z",
+      "fcpMs": 356,
+      "lcpMs": 1092,
+      "lcpSamples": [
+        1092,
+        1088,
+        1092,
+        1092,
+        1100
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-07.png"
+      ],
+      "lcpDeltaFcpMs": 736,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64767/kudzu-based-bench/shop-tanstack/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 356,
+      "bytesBeforeLcp": 64964,
+      "scriptBytesBeforeLcp": 39527
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-tanstack",
+      "label": "TanStack",
+      "route": "search",
+      "routeLabel": {
+        "ko": "검색 리스팅",
+        "en": "Search listing"
+      },
+      "path": "/search/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:41:20.593Z",
+      "fcpMs": 356,
+      "lcpMs": 1112,
+      "lcpSamples": [
+        1104,
+        1112,
+        1108,
+        1116,
+        1132
+      ],
+      "lcpSampleElements": [
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png",
+        "img p-03.png"
+      ],
+      "lcpDeltaFcpMs": 760,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64767/kudzu-based-bench/shop-tanstack/commerce/p-03.png",
+      "lcpBytes": 21003,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 356,
+      "bytesBeforeLcp": 63950,
+      "scriptBytesBeforeLcp": 39343
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-tanstack",
+      "label": "TanStack",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:41:40.040Z",
+      "fcpMs": 348,
+      "lcpMs": 352,
+      "lcpSamples": [
+        356,
+        352,
+        352,
+        348,
+        352
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "h1",
+        "img p-00.png",
+        "h1",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 348,
+      "bytesBeforeLcp": 27497,
+      "scriptBytesBeforeLcp": 2930
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-next-app",
+      "label": "Next.js",
+      "route": "home",
+      "routeLabel": {
+        "ko": "홈",
+        "en": "Home"
+      },
+      "path": "/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:42:09.025Z",
+      "fcpMs": 360,
+      "lcpMs": 1096,
+      "lcpSamples": [
+        1120,
+        1096,
+        1100,
+        1096,
+        1088
+      ],
+      "lcpSampleElements": [
+        "img p-07.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 736,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64951/kudzu-based-bench/shop-next-app/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 360,
+      "bytesBeforeLcp": 90502,
+      "scriptBytesBeforeLcp": 44099
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-next-app",
+      "label": "Next.js",
+      "route": "search",
+      "routeLabel": {
+        "ko": "검색 리스팅",
+        "en": "Search listing"
+      },
+      "path": "/search/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:45:09.731Z",
+      "fcpMs": 352,
+      "lcpMs": 1100,
+      "lcpSamples": [
+        1116,
+        1104,
+        1100,
+        1096,
+        1096
+      ],
+      "lcpSampleElements": [
+        "img p-05.png",
+        "img p-05.png",
+        "img p-05.png",
+        "img p-05.png",
+        "img p-05.png"
+      ],
+      "lcpDeltaFcpMs": 748,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64951/kudzu-based-bench/shop-next-app/commerce/p-05.png",
+      "lcpBytes": 22260,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 352,
+      "bytesBeforeLcp": 95568,
+      "scriptBytesBeforeLcp": 69701
+    },
+    {
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-next-app",
+      "label": "Next.js",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T09:45:33.450Z",
+      "fcpMs": 352,
+      "lcpMs": 352,
+      "lcpSamples": [
+        352,
+        348,
+        348,
+        352,
+        360
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:64951/kudzu-based-bench/shop-next-app/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 352,
+      "bytesBeforeLcp": 29934,
+      "scriptBytesBeforeLcp": 5364
+    },
+    {
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-astro",
+      "label": "Astro",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:46:01.178Z",
+      "fcpMs": 192,
+      "lcpMs": 676,
+      "lcpSamples": [
+        676,
+        676,
+        676,
+        676,
+        676
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 484,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 192,
+      "bytesBeforeLcp": 134469,
+      "scriptBytesBeforeLcp": 119987
+    },
+    {
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-eleventy",
+      "label": "Eleventy",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:46:14.607Z",
+      "fcpMs": 348,
+      "lcpMs": 348,
+      "lcpSamples": [
+        348,
+        348,
+        348,
+        348,
+        348
+      ],
+      "lcpSampleElements": [
+        "article.doc-body",
+        "article.doc-body",
+        "article.doc-body",
+        "article.doc-body",
+        "article.doc-body"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "article.doc-body",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 348,
+      "bytesBeforeLcp": 17317,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-docusaurus",
+      "label": "Docusaurus",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:46:47.649Z",
+      "fcpMs": 732,
+      "lcpMs": 732,
+      "lcpSamples": [
+        732,
+        704,
+        796,
+        700,
+        964
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 732,
+      "bytesBeforeLcp": 96758,
+      "scriptBytesBeforeLcp": 10369
+    },
+    {
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-vitepress",
+      "label": "VitePress",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:47:09.205Z",
+      "fcpMs": 1916,
+      "lcpMs": 1916,
+      "lcpSamples": [
+        1916,
+        1908,
+        1912,
+        1916,
+        1916
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 1916,
+      "bytesBeforeLcp": 350370,
+      "scriptBytesBeforeLcp": 168440
+    },
+    {
+      "fixture": "form",
+      "fixtureLabel": {
+        "ko": "폼 위저드",
+        "en": "Form wizard"
+      },
+      "variant": "form-astro",
+      "label": "Astro",
+      "route": "step1",
+      "routeLabel": {
+        "ko": "1단계",
+        "en": "Step 1"
+      },
+      "path": "/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:47:33.280Z",
+      "fcpMs": 196,
+      "lcpMs": 196,
+      "lcpSamples": [
+        200,
+        192,
+        204,
+        196,
+        192
+      ],
+      "lcpSampleElements": [
+        "h1",
+        "h1",
+        "h1",
+        "h1",
+        "h1"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 196,
+      "bytesBeforeLcp": 0,
+      "scriptBytesBeforeLcp": 0
+    },
+    {
+      "fixture": "form",
+      "fixtureLabel": {
+        "ko": "폼 위저드",
+        "en": "Form wizard"
+      },
+      "variant": "form-react-router",
+      "label": "React Router",
+      "route": "step1",
+      "routeLabel": {
+        "ko": "1단계",
+        "en": "Step 1"
+      },
+      "path": "/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:47:48.954Z",
+      "fcpMs": 344,
+      "lcpMs": 344,
+      "lcpSamples": [
+        344,
+        340,
+        344,
+        344,
+        344
+      ],
+      "lcpSampleElements": [
+        "h1",
+        "h1",
+        "h1",
+        "h1",
+        "h1"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 344,
+      "bytesBeforeLcp": 14462,
+      "scriptBytesBeforeLcp": 13286
+    },
+    {
+      "fixture": "form",
+      "fixtureLabel": {
+        "ko": "폼 위저드",
+        "en": "Form wizard"
+      },
+      "variant": "form-tanstack",
+      "label": "TanStack",
+      "route": "step1",
+      "routeLabel": {
+        "ko": "1단계",
+        "en": "Step 1"
+      },
+      "path": "/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:48:07.643Z",
+      "fcpMs": 344,
+      "lcpMs": 344,
+      "lcpSamples": [
+        344,
+        340,
+        344,
+        348,
+        340
+      ],
+      "lcpSampleElements": [
+        "h1",
+        "h1",
+        "h1",
+        "h1",
+        "h1"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 344,
+      "bytesBeforeLcp": 10719,
+      "scriptBytesBeforeLcp": 9543
+    },
+    {
+      "fixture": "form",
+      "fixtureLabel": {
+        "ko": "폼 위저드",
+        "en": "Form wizard"
+      },
+      "variant": "form-next-app",
+      "label": "Next.js",
+      "route": "step1",
+      "routeLabel": {
+        "ko": "1단계",
+        "en": "Step 1"
+      },
+      "path": "/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T09:48:30.264Z",
+      "fcpMs": 344,
+      "lcpMs": 344,
+      "lcpSamples": [
+        348,
+        340,
+        344,
+        344,
+        340
+      ],
+      "lcpSampleElements": [
+        "h1",
+        "h1",
+        "h1",
+        "h1",
+        "h1"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 344,
+      "bytesBeforeLcp": 16753,
+      "scriptBytesBeforeLcp": 15577
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "docs",
+      "fixtureLabel": {
+        "ko": "문서",
+        "en": "Docs"
+      },
+      "variant": "docs-kudzu",
+      "label": "Kudzu",
+      "route": "doc",
+      "routeLabel": {
+        "ko": "문서 딥링크",
+        "en": "Doc deep link"
+      },
+      "path": "/guide/routing/routing-01/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:55:44.510Z",
+      "fcpMs": 380,
+      "lcpMs": 380,
+      "lcpSamples": [
+        376,
+        380,
+        384,
+        376,
+        380
+      ],
+      "lcpSampleElements": [
+        "p",
+        "p",
+        "p",
+        "p",
+        "p"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "p",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 380,
+      "bytesBeforeLcp": 4371,
+      "scriptBytesBeforeLcp": 1461
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "form",
+      "fixtureLabel": {
+        "ko": "폼 위저드",
+        "en": "Form wizard"
+      },
+      "variant": "form-kudzu",
+      "label": "Kudzu",
+      "route": "step1",
+      "routeLabel": {
+        "ko": "1단계",
+        "en": "Step 1"
+      },
+      "path": "/",
+      "imageWeight": "none",
+      "heroImageBytes": null,
+      "measuredAt": "2026-08-20T10:55:58.111Z",
+      "fcpMs": 348,
+      "lcpMs": 348,
+      "lcpSamples": [
+        348,
+        348,
+        348,
+        348,
+        348
+      ],
+      "lcpSampleElements": [
+        "h1",
+        "h1",
+        "h1",
+        "h1",
+        "h1"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "text",
+      "lcpElement": "h1",
+      "lcpUrl": null,
+      "lcpBytes": null,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 348,
+      "bytesBeforeLcp": 4360,
+      "scriptBytesBeforeLcp": 2992
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-kudzu",
+      "label": "Kudzu",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "heavy",
+      "heroImageBytes": 1483575,
+      "measuredAt": "2026-08-20T10:57:01.815Z",
+      "fcpMs": 360,
+      "lcpMs": 7172,
+      "lcpSamples": [
+        7172,
+        7168,
+        7172,
+        7172,
+        7168
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 6808,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:55123/kudzu-based-bench/shop-kudzu/commerce/p-00.png",
+      "lcpBytes": 1483575,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 360,
+      "bytesBeforeLcp": 1502377,
+      "scriptBytesBeforeLcp": 13927
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-kudzu",
+      "label": "Kudzu",
+      "route": "home",
+      "routeLabel": {
+        "ko": "홈",
+        "en": "Home"
+      },
+      "path": "/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T11:13:42.271Z",
+      "fcpMs": 364,
+      "lcpMs": 792,
+      "lcpSamples": [
+        792,
+        792,
+        792,
+        784,
+        572
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-07.png",
+        "img p-07.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 428,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:58620/kudzu-based-bench/shop-kudzu/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 364,
+      "bytesBeforeLcp": 34987,
+      "scriptBytesBeforeLcp": 8514
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-kudzu",
+      "label": "Kudzu",
+      "route": "search",
+      "routeLabel": {
+        "ko": "검색 리스팅",
+        "en": "Search listing"
+      },
+      "path": "/search/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T11:16:42.700Z",
+      "fcpMs": 364,
+      "lcpMs": 616,
+      "lcpSamples": [
+        608,
+        616,
+        608,
+        836,
+        828
+      ],
+      "lcpSampleElements": [
+        "img p-10.png",
+        "img p-10.png",
+        "img p-10.png",
+        "img p-05.png",
+        "img p-03.png"
+      ],
+      "lcpDeltaFcpMs": 248,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:58620/kudzu-based-bench/shop-kudzu/commerce/p-10.png",
+      "lcpBytes": 22564,
+      "lcpCandidates": 2,
+      "lcpFirstCandidateMs": 364,
+      "bytesBeforeLcp": 52616,
+      "scriptBytesBeforeLcp": 25177
+    },
+    {
+      "blockedScripts": null,
+      "fixture": "shop",
+      "fixtureLabel": {
+        "ko": "커머스",
+        "en": "Commerce"
+      },
+      "variant": "shop-kudzu",
+      "label": "Kudzu",
+      "route": "product",
+      "routeLabel": {
+        "ko": "상품 상세",
+        "en": "Product detail"
+      },
+      "path": "/product/p-00000/",
+      "imageWeight": "light",
+      "heroImageBytes": 20963,
+      "measuredAt": "2026-08-20T11:16:55.368Z",
+      "fcpMs": 360,
+      "lcpMs": 360,
+      "lcpSamples": [
+        356,
+        360,
+        356,
+        360,
+        360
+      ],
+      "lcpSampleElements": [
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png",
+        "img p-00.png"
+      ],
+      "lcpDeltaFcpMs": 0,
+      "lcpKind": "image",
+      "lcpElement": "img",
+      "lcpUrl": "http://127.0.0.1:58620/kudzu-based-bench/shop-kudzu/commerce/p-00.png",
+      "lcpBytes": 20963,
+      "lcpCandidates": 1,
+      "lcpFirstCandidateMs": 360,
+      "bytesBeforeLcp": 34662,
+      "scriptBytesBeforeLcp": 8824
+    }
+  ]
+}

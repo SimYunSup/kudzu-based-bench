@@ -1,0 +1,35 @@
+1:"$Sreact.fragment"
+3:I[36540,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"OutletBoundary"]
+4:"$Sreact.suspense"
+8:I[36540,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"ViewportBoundary"]
+9:I[36540,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"MetadataBoundary"]
+a:I[80480,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"IconMark"]
+c:I[52144,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"default"]
+d:I[94186,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],"default"]
+12:I[72559,["/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js"],""]
+:HL["/kudzu-based-bench/next-app/_next/static/chunks/0prtqbbo4n2ct.css","style"]
+2:T91e,<h2 data-notion-block-id="668d4766-6bb0-4066-b308-fb5f79d95b0d" id="668d4766-6bb0-4066-b308-fb5f79d95b0d">상호작용 범위 더 좋게 만들기</h2><a href="https://ishadeed.com/article/target-size" class="bookmark-link" target="_blank" rel="noreferrer">https://ishadeed.com/article/target-size</a><p data-notion-block-id="37dd96c0-d278-4103-a237-6d7a3ed0ae8a"><b>심윤섭</b>: 상호작용하지 않는 UI가 없는 웹 서비스는 없다시피 할 정도로 상호작용은 매우 중요합니다. 그 상호작용에는 가장 기본적인 Clickable UI가 있습니다. 이 글은 디자인부터 시작해서 코드까지 적용할 수 있는 더 좋은 상호작용 범위의 예시를 보여주고 있습니다. 디자이너 뿐만 아니라 개발자에게 적용되는 예시도 많이 있어서 가져왔습니다.</p><p data-notion-block-id="c8012ee7-6d2d-495c-86f3-2a4bf739f611"><b>최원빈</b>: 클릭 영역의 시각적 - 비 시각적인 영역까지 관리하는 점이 상당히 인상적인 글이네요. 디자인된 작업물에 이러한 점들이 고려된 상태가 아닐 수 있습니다. 주어진 대로만 만드는 것이 아닌, UX를 챙기기 위해 함께 두 눈 크게 뜨고 확인해야 하는 부분이라고 생각해요. 여기에 UI 컴포넌트의 웹 접근성까지 챙겨주는 것은 프론트엔드 개발자의 역할이고 역량일테죠.</p><h2 data-notion-block-id="5e16c43a-28c7-4497-b656-96ac1c8494c1" id="5e16c43a-28c7-4497-b656-96ac1c8494c1">ReScript는 TypeScript의 꿈을 꾸는가</h2><a href="https://rescript-lang.org/blog/release-11-0-0" class="bookmark-link" target="_blank" rel="noreferrer">https://rescript-lang.org/blog/release-11-0-0</a><p data-notion-block-id="365a88b8-b886-4523-80a7-ffa6bf2aad5e"><b>심윤섭</b>: TypeScript 지원이 원활하지 않으면 라이브러리를 쓸 수 없을 정도로 개발환경에서 JavaScript 대신 TypeScript를 사용하는 사람들이 많아졌습니다. 하지만 TypeScript는 JavaScript의 superset을 지향하다보니 아쉬운 부분이 많습니다. 그에 비해 ReScript는 JavaScript의 subset을 지향하고 Type 시스템을 강화시켜서 runtime일 때의 오류를 줄였습니다. JS/TS와 호환성을 향상했다고 하니 이를 통해 생태계가 활성화 되었으면 좋겠네요.</p>7:X
+f:X
+f:C
+0:{"buildId":"FJQXoMDvtQ-HRn18Tjcwc","data":[{"rsc":["$","$1","c",{"children":[["$","main",null,{"className":"post-page","children":[null,["$","h1",null,{"className":"title","children":"상호작용 범위 더 좋게 만들기"}],["$","div",null,{"className":"description","children":["$","p",null,{"children":"2024. 1. 23."}]}],["$","article",null,{"className":"markdown-body","dangerouslySetInnerHTML":{"__html":"$2"}}]]}],null,["$","$L3",null,{"children":["$","$4",null,{"name":"Next.MetadataOutlet","children":"$@5"}]}]]}],"isPartial":"$@6","staleTime":"$7","varyParams":null},{"rsc":["$","$1","h",{"children":[null,["$","$L8",null,{"children":[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]}],["$","div",null,{"hidden":true,"children":["$","$L9",null,{"children":["$","$4",null,{"name":"Next.Metadata","children":[["$","title","0",{"children":"상호작용 범위 더 좋게 만들기 | OTW for FE"}],["$","meta","1",{"name":"description","content":"매주 프론트엔드 소식을 정리해서 보내드립니다."}],["$","link","2",{"rel":"icon","href":"/kudzu-based-bench/next-app/favicon.svg"}],["$","$La","3",{}]]}]}]}],null]}],"isPartial":"$@b","staleTime":"$7","varyParams":null},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@e","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@10","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[null,["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}]}]]}],"isPartial":"$@11","staleTime":"$7","varyParams":"$f"},{"rsc":["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/kudzu-based-bench/next-app/_next/static/chunks/0prtqbbo4n2ct.css","precedence":"next"}],["$","script","script-0",{"src":"/kudzu-based-bench/next-app/_next/static/chunks/33932uk7jm8_0.js","async":true}]],["$","html",null,{"lang":"ko","children":["$","body",null,{"children":[["$","header",null,{"className":"header","children":["$","div",null,{"className":"container","children":[["$","$L12",null,{"className":"logo","href":"/","children":["OTW ",["$","span",null,{"className":"logo-sub","children":"for"}]," FE"]}],["$","$L12",null,{"className":"link","href":"/news/list/1","children":"Archive"}]]}]}],["$","$Lc",null,{"parallelRouterKey":"children","template":["$","$Ld",null,{}],"notFound":[["$","main",null,{"className":"error-page","children":[["$","p",null,{"className":"mono-eyebrow","children":"// 404"}],["$","h1",null,{"children":"페이지를 찾을 수 없습니다"}]]}],[]]}],["$","footer",null,{"className":"site-footer","children":[["$","nav",null,{"className":"variant-switch","aria-label":"프레임워크 변형 전환","children":[["$","a","astro",{"href":"https://simyunsup.github.io/kudzu-based-bench/astro/home","className":"variant-link","children":"astro"}],"$L13","$L14","$L15","$L16","$L17","$L18","$L19","$L1a","$L1b"]}],"$L1c"]}]]}]}]]}],"isPartial":"$@1d","staleTime":"$7","varyParams":null}],"isUpgradeableISRFallback":false,"a":"$@1e","rootVaryParams":null,"needsRuntimeRequest":"$@1f"}
+5:null
+13:["$","a","react-router",{"href":"https://simyunsup.github.io/kudzu-based-bench/react-router/","className":"variant-link","children":"react-router"}]
+14:["$","a","tanstack",{"href":"https://simyunsup.github.io/kudzu-based-bench/tanstack/","className":"variant-link","children":"tanstack"}]
+15:["$","a","kudzu",{"href":"https://simyunsup.github.io/kudzu-based-bench/kudzu/","className":"variant-link","children":"kudzu"}]
+16:["$","a","hugo",{"href":"https://simyunsup.github.io/kudzu-based-bench/hugo/","className":"variant-link","children":"hugo"}]
+17:["$","a","vitepress",{"href":"https://simyunsup.github.io/kudzu-based-bench/vitepress/","className":"variant-link","children":"vitepress"}]
+18:["$","a","docusaurus",{"href":"https://simyunsup.github.io/kudzu-based-bench/docusaurus/","className":"variant-link","children":"docusaurus"}]
+19:["$","a","eleventy",{"href":"https://simyunsup.github.io/kudzu-based-bench/eleventy/","className":"variant-link","children":"eleventy"}]
+1a:["$","a","next-app",{"href":"https://simyunsup.github.io/kudzu-based-bench/next-app/","className":"variant-link is-active","aria-current":"page","children":"next-app"}]
+1b:["$","a","next-pages",{"href":"https://simyunsup.github.io/kudzu-based-bench/next-pages/","className":"variant-link","children":"next-pages"}]
+1c:["$","p",null,{"children":["© ",2026," OTW for FE All rights reserved."]}]
+7:300
+1f:true
+7:C
+1e:0
+b:"$undefined"
+e:"$undefined"
+10:"$undefined"
+11:"$undefined"
+1d:"$undefined"
+6:"$undefined"

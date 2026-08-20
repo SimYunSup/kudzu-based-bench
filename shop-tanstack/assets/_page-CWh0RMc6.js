@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BkSabwWG.js";import{r as t}from"./index-YTBhTm6Y.js";var n=e();function r(){let e=t.useLoaderData();return(0,n.jsxs)(`main`,{className:`policy`,children:[(0,n.jsx)(`h1`,{children:e.title}),(0,n.jsx)(`article`,{dangerouslySetInnerHTML:{__html:e.bodyHtml}})]})}export{r as component};

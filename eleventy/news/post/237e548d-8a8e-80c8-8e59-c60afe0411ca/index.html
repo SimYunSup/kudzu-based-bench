@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>height 애니메이션, 하지마세요. | OTW for FE</title>
+    <link rel="icon" href="/kudzu-based-bench/eleventy/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/kudzu-based-bench/eleventy/style.css" />
+    <link rel="stylesheet" href="/kudzu-based-bench/eleventy/content.css" />
+  </head>
+  <body>
+<header class="header">
+  <div class="container">
+    <a class="logo" href="/kudzu-based-bench/eleventy/">
+      OTW <span class="logo-sub">for</span> FE
+    </a>
+    <a class="link" href="/kudzu-based-bench/eleventy/news/list/1/"> Archive </a>
+  </div>
+</header>
+
+    <main class="post-page">
+  <div class="image-container">
+    <img src="/kudzu-based-bench/assets/notion/18dab5d7e29b5dd5.png" alt="" />
+  </div>
+  <h1 class="title">height 애니메이션, 하지마세요.</h1>
+  <div class="description">
+    <p>2025. 7. 29.</p>
+  </div>
+  <article class="markdown-body"><h1 data-notion-block-id="237e548d-8a8e-801a-bb93-da378743d6c2">Beyond the Article: 한 걸음 더</h1><h2 data-notion-block-id="23de548d-8a8e-808e-a08e-ddef6bea0022" id="23de548d-8a8e-808e-a08e-ddef6bea0022">height 애니메이션, 하지마세요.</h2><a href="https://www.granola.ai/blog/dont-animate-height" class="bookmark-link" target="_blank" rel="noreferrer">https://www.granola.ai/blog/dont-animate-height</a><p data-notion-block-id="23de548d-8a8e-8009-80e6-fb7576bba5ec">어플리케이션에서 CPU와 GPU 자원을 계속 잡아먹었던 이유를 height 기반 애니메이션에서 찾았고, 어떻게 해결했는지 보여주는 글입니다. 최근 height 기반 애니메이션의 편의성을 늘려주는 기능까지 나왔지만(<a href="https://ones-to-watch.ethansup.net/news/post/109e548d-8a8e-8006-bd2d-e5cd889b8dc5#109e548d-8a8e-8033-a90c-e3ad6ea49f73"><code>height: auto;</code></a><a href="https://ones-to-watch.ethansup.net/news/post/109e548d-8a8e-8006-bd2d-e5cd889b8dc5#109e548d-8a8e-8033-a90c-e3ad6ea49f73">가 애니메이션 작동이 안되요</a>), <a href="https://developer.chrome.com/blog/performant-expand-and-collapse">성능상 이슈</a>가 있고, 이를 <a href="https://github.com/GoogleChromeLabs/ui-element-samples/tree/gh-pages/animated-clip">정공법으로 해결하기</a>에는 비용이 발생하는 점은 어쩔 수 없으니까요.</p><h2 data-notion-block-id="23de548d-8a8e-8048-afa5-e1c3e0f824c1" id="23de548d-8a8e-8048-afa5-e1c3e0f824c1">React SPA는 어떻게 되고 있을까</h2><a href="https://www.felgus.dev/blog/future-spa" class="bookmark-link" target="_blank" rel="noreferrer">https://www.felgus.dev/blog/future-spa</a><p data-notion-block-id="23de548d-8a8e-8048-9207-c4782c30f83f">예전에는 Render-as-you-fetch, Fetch-then-render, Fetch-on-render, Fallback Markup…(세부적으로 나눈 글은 <a href="https://ones-to-watch.ethansup.net/news/post/5ca5c5cc-3d5f-4c16-bb30-9df937ea2199#a176ae33-902a-4127-bd50-3ebcca67c906">SPA에서 데이터는 어떻게 받아올까</a>를 참고하세요!), 여러 방식으로 SPA에서 데이터를 받아왔습니다. 그런데 SPA의 발전은 어디로 가는 것일까에 대한 글입니다.</p><h2 data-notion-block-id="23de548d-8a8e-8062-969c-d6d39c0553db" id="23de548d-8a8e-8062-969c-d6d39c0553db">성능 최적화 체크리스트(2025)</h2><a href="https://crystallize.com/blog/frontend-performance-checklist" class="bookmark-link" target="_blank" rel="noreferrer">https://crystallize.com/blog/frontend-performance-checklist</a><p data-notion-block-id="237e548d-8a8e-8050-b53f-d19bf924abf8">예전의 <a href="https://ones-to-watch.ethansup.net/news/post/19523e0a-ffac-42f8-ba8e-b7bb0f77b2fa#98e76aa9-cd98-4c55-9b45-2d4e46328d94">성능 최적화 체크리스트</a> 글과 비슷하게, 프론트엔드에서 성능 최적화할 수 있는 부분 중 상당수를 알려주는 글입니다. 빠르게 사용할 수 있는 성능 최적화도 있지만, 지엽적인 부분(<code>@import</code>는 render-blocking 문법이다, hydration cost도 주의해야 한다)도 소개하고 있으니, 가볍게 모두 보길 추천드립니다. 추가로, <a href="https://csswizardry.com/2024/08/blocking-render-why-whould-you-do-that/"><code>blocking="render"</code></a><a href="https://csswizardry.com/2024/08/blocking-render-why-whould-you-do-that/">를 설명하면서 render-blocking과 parser-blocking의 차이를 설명하는 글</a>도 있으니 같이 보시면 좋겠네요 🙂</p><h2 data-notion-block-id="23de548d-8a8e-8096-a512-ec471dd6d85b" id="23de548d-8a8e-8096-a512-ec471dd6d85b">TypeScript는 Go로 바뀐다. Linter들은 어떻게 대비하고 있을까</h2><a href="https://www.solberg.is/fast-type-aware-linting" class="bookmark-link" target="_blank" rel="noreferrer">https://www.solberg.is/fast-type-aware-linting</a><p data-notion-block-id="23de548d-8a8e-808a-a25a-f91beff068a0">TypeScript는 7버전에서 Go로 바뀔 준비를 하고 있습니다. 이를 대비해서 Biome 팀과 Oxlint 팀은 어떻게 대비하고 있는지 보여주는 글입니다. 재밌게도, typescript-eslint팀도 대비하고 있습니다(<a href="https://github.com/typescript-eslint/tsgolint">tsgolint</a>, oxlint팀이 fork해서 oxlint에 맞게 수정함.)</p><h1 data-notion-block-id="237e548d-8a8e-806e-ae6a-e088711b1743">Straight to the Article: 빛나는 인사이트</h1><h2 data-notion-block-id="23de548d-8a8e-80c6-848f-f28192dcbd4e" id="23de548d-8a8e-80c6-848f-f28192dcbd4e">친절한 SVG 인터렉티브 가이드</h2><a href="https://www.joshwcomeau.com/svg/friendly-introduction-to-svg/" class="bookmark-link" target="_blank" rel="noreferrer">https://www.joshwcomeau.com/svg/friendly-introduction-to-svg/</a><h2 data-notion-block-id="23de548d-8a8e-80be-9e6f-ddf7b5b935eb" id="23de548d-8a8e-80be-9e6f-ddf7b5b935eb">정보 아키텍쳐 또한 중요하다.</h2><a href="https://www.uxmatters.com/mt/archives/2025/07/the-hidden-cost-of-poor-navigation-how-information-architecture-directly-impacts-business-metrics.php" class="bookmark-link" target="_blank" rel="noreferrer">https://www.uxmatters.com/mt/archives/2025/07/the-hidden-cost-of-poor-navigation-how-information-architecture-directly-impacts-business-metrics.php</a><p data-notion-block-id="23fe548d-8a8e-802e-8a6f-c476a14f5769">정보 아키텍쳐(ex. 제품 정책의 위치)가 비지니스 지표에서 왜 중요한지 보여주는 글입니다. 친절하게 보여줬으면 좋겠지만, 일부러 안티패턴으로 가려놓았을 수도 있다는 생각에 슬프네요.</p><h2 data-notion-block-id="23de548d-8a8e-805b-aa89-d7d3d3a0df8d" id="23de548d-8a8e-805b-aa89-d7d3d3a0df8d">Storybook 9, 엄청난 다이어트 성공</h2><a href="https://storybook.js.org/blog/storybook-bloat-fixed/" class="bookmark-link" target="_blank" rel="noreferrer">https://storybook.js.org/blog/storybook-bloat-fixed/</a><p data-notion-block-id="23fe548d-8a8e-8061-b634-fc95da410b92">물론 ESLint 9버전 마이그레이션처럼 <a href="https://github.com/storybookjs/storybook/issues/30944">커뮤니티 플러그인이 따라오고 있지 못하</a>고 있지만, 패키지 크기가 작아졌다는 것은 좋은 소식입니다.</p><h2 data-notion-block-id="23de548d-8a8e-801d-8a91-d8326903260a" id="23de548d-8a8e-801d-8a91-d8326903260a">정적 사이트 생성기, 11ty 사용 후기</h2><a href="https://etch.co/blog/we-migrated-our-site-to-eleventy-and-increased-performance-by-24-percent" class="bookmark-link" target="_blank" rel="noreferrer">https://etch.co/blog/we-migrated-our-site-to-eleventy-and-increased-performance-by-24-percent</a><h2 data-notion-block-id="23de548d-8a8e-80c9-b9a6-c0b97842b526" id="23de548d-8a8e-80c9-b9a6-c0b97842b526">폴더폰(갤럭시 플립 아님) 시장 탐색하기</h2><a href="https://www.smashingmagazine.com/2025/07/tiny-screens-big-impact-developing-web-apps-feature-phones/" class="bookmark-link" target="_blank" rel="noreferrer">https://www.smashingmagazine.com/2025/07/tiny-screens-big-impact-developing-web-apps-feature-phones/</a><p data-notion-block-id="239e548d-8a8e-80c2-a473-eb70f3c780c0">폴더폰을 위한 UI는 왜 만들어야 하는지, 간단하게 어떻게 지원할 수 있는지 소개하는 글입니다.</p><h1 data-notion-block-id="23de548d-8a8e-80c4-9975-df1d358e8b93">Additional: Tech-verse 2025</h1><p data-notion-block-id="23de548d-8a8e-804b-82dd-ca8e62cb36b2">하나는 일본어 발표기에.. 자동번역 자막을 키고 보시는것을 추천드립니다.</p><h2 data-notion-block-id="390e548d-8a8e-8073-a0e8-e162786457e1" id="390e548d-8a8e-8073-a0e8-e162786457e1">Web Vitals, 모든 상황에서 중요할까?</h2><a href="https://www.youtube.com/watch?v=ahtRhgCPm18" class="bookmark-link" target="_blank" rel="noreferrer">https://www.youtube.com/watch?v=ahtRhgCPm18</a><p data-notion-block-id="23de548d-8a8e-80c3-9e9f-c732c702c726">LY 내부 데이터에서 LCP, CLS, INP와 CVR, 바운스률(즉시이탈률), 이탈률과 상관관계가 있는지 직접 보여주는 발표여서 흥미로워서 가져왔습니다. 상관관계는 LCP와 CVR로만 직접적으로 나타났지만, 페이지 유형별, 사용자의 목적이 무엇이였는지에 따라 달라지는 것을 보여준 것이 인상적이였습니다.</p><h2 data-notion-block-id="390e548d-8a8e-80e2-99fe-d123158bbc8d" id="390e548d-8a8e-80e2-99fe-d123158bbc8d">Next.js에서 마주친 문제들</h2><a href="https://www.youtube.com/watch?v=ecH8Kt2DxFM" class="bookmark-link" target="_blank" rel="noreferrer">https://www.youtube.com/watch?v=ecH8Kt2DxFM</a><p data-notion-block-id="23de548d-8a8e-8090-a021-ffd8623216df">Multi tenant를 쿠버네티스와 배포 아키텍쳐(ArgoCD, Helm chart)를 어떻게 구성했는지, 그리고 Next.js로 옮기면서 <a href="https://www.industrialempathy.com/posts/version-skew/">Version Skew</a> 문제 해결(와 다른 장점 및 이슈)을<b> </b>보여주는 발표입니다. 특히 Node.js 서버 리소스 최적화는 좋은 팁이네요.</p><h2 data-notion-block-id="23fe548d-8a8e-804d-a44f-c2fbdc64141f" id="23fe548d-8a8e-804d-a44f-c2fbdc64141f">번외: npm 라이브러리 추가하는 것처럼 DB 실행하기</h2><a href="https://endor.dev/blog/node-postgres" class="bookmark-link" target="_blank" rel="noreferrer">https://endor.dev/blog/node-postgres</a></article>
+</main>
+
+<footer class="site-footer">
+  <nav class="variant-switch" aria-label="프레임워크 변형 전환">
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/astro/home"
+      class="variant-link"
+      >astro</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/react-router/"
+      class="variant-link"
+      >react-router</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/tanstack/"
+      class="variant-link"
+      >tanstack</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/kudzu/"
+      class="variant-link"
+      >kudzu</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/hugo/"
+      class="variant-link"
+      >hugo</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/vitepress/"
+      class="variant-link"
+      >vitepress</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/docusaurus/"
+      class="variant-link"
+      >docusaurus</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/eleventy/"
+      class="variant-link is-active" aria-current="page"
+      >eleventy</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/next-app/"
+      class="variant-link"
+      >next-app</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/next-pages/"
+      class="variant-link"
+      >next-pages</a
+    >
+  </nav>
+  <p>&copy; 2026 OTW for FE All rights reserved.</p>
+</footer>
+
+  </body>
+</html>

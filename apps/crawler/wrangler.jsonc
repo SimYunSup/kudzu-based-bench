@@ -6,7 +6,7 @@
 	"$schema": "./node_modules/wrangler/config-schema.json",
 	"name": "newsletter-queuing",
 	"main": "./index.ts",
-	"compatibility_date": "2025-05-04",
+	"compatibility_date": "2026-09-21",
 	"compatibility_flags": [
 		"nodejs_compat_v2"
 	],

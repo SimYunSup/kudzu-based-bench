@@ -145,15 +145,20 @@ export class NotionPageRenderer {
     this.client = client;
     this.page = page;
     // Create a sub-logger labelled with the page name
-    const pageTitle = transformedPropertySchema.title.safeParse(
-      page.properties.Name
+    const titleProperty = Object.values(page.properties).find(
+      (property: unknown) =>
+        typeof property === "object" &&
+        property !== null &&
+        "type" in property &&
+        property.type === "title"
     );
+    const pageTitle = transformedPropertySchema.title.safeParse(titleProperty);
     this.#logger = parentLogger.fork(
-      `page ${page.id} (Name ${pageTitle.success ? pageTitle.data : "unknown"})`
+      `page ${page.id} (${pageTitle.success ? pageTitle.data : "title unknown"})`
     );
     if (!pageTitle.success) {
       this.#logger.warn(
-        `Failed to parse property Name as title: ${pageTitle.error.toString()}`
+        `Failed to locate a title property: ${pageTitle.error.toString()}`
       );
     }
   }

@@ -67,11 +67,14 @@ const escapeText = value =>
 /**
  * Rough advance width. Used only for right-aligning legends and sizing the
  * label column, so an estimate is enough — but CJK glyphs are full-width and
- * ASCII is roughly half, and ignoring that difference overlaps text.
+ * ASCII is roughly half, and ignoring that difference overlaps text. Monospace
+ * ASCII is wider than proportional (0.60 em in SF Mono/Menlo): estimating the
+ * provenance line with the proportional factor ran it ~50 px past the card.
  */
-function estWidth(value, size) {
+function estWidth(value, size, { mono = false } = {}) {
+  const ascii = mono ? 0.62 : 0.56;
   let units = 0;
-  for (const char of String(value)) units += /[\u1100-\u11ff\u3000-\u9fff\uac00-\ud7af]/.test(char) ? 1 : 0.56;
+  for (const char of String(value)) units += /[\u1100-\u11ff\u3000-\u9fff\uac00-\ud7af]/.test(char) ? 1 : ascii;
   return units * size;
 }
 
@@ -95,22 +98,22 @@ const round = value => Math.round(Number(value) * 100) / 100;
 const SERIES_FILLS = [T.accent, "#828fff", T.bar];
 
 /** Greedy wrap on spaces, falling back to hard slicing for unbroken CJK runs. */
-function wrapText(value, size, maxWidth) {
+function wrapText(value, size, maxWidth, metrics = {}) {
   const words = String(value).split(" ");
   const lines = [];
   let current = "";
   for (const word of words) {
     const candidate = current ? `${current} ${word}` : word;
-    if (current && estWidth(candidate, size) > maxWidth) {
+    if (current && estWidth(candidate, size, metrics) > maxWidth) {
       lines.push(current);
       current = word;
     } else {
       current = candidate;
     }
     // A single CJK "word" can already exceed the width; slice it.
-    while (estWidth(current, size) > maxWidth) {
+    while (estWidth(current, size, metrics) > maxWidth) {
       let cut = current.length;
-      while (cut > 1 && estWidth(current.slice(0, cut), size) > maxWidth) cut--;
+      while (cut > 1 && estWidth(current.slice(0, cut), size, metrics) > maxWidth) cut--;
       lines.push(current.slice(0, cut));
       current = current.slice(cut);
     }
@@ -136,7 +139,7 @@ const SOURCE_LEADING = 15;
  */
 function footerLayout({ footnote, source }) {
   const footnoteLines = footnote ? wrapText(footnote, 12, WIDTH - PAD * 2) : [];
-  const sourceLines = source ? wrapText(source, SOURCE_SIZE, WIDTH - PAD * 2) : [];
+  const sourceLines = source ? wrapText(source, SOURCE_SIZE, WIDTH - PAD * 2, { mono: true }) : [];
   const height =
     footnoteLines.length * FOOTNOTE_LEADING +
     (sourceLines.length ? (sourceLines.length - 1) * SOURCE_LEADING + FOOTNOTE_LEADING : 0);

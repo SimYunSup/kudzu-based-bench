@@ -30,6 +30,7 @@
     "perf:bench": "node ./scripts/perf-bench.mjs",
     "lcp:bench": "node ./scripts/lcp-bench.mjs",
     "charts": "node ./scripts/charts.mjs",
+    "landing": "node ./scripts/landing.mjs",
     "deploy:pages": "node ./scripts/deploy-pages.mjs",
     "test:e2e": "playwright test"
   },
@@ -39,6 +40,8 @@
     "@types/node": "^26.6.2",
     "eslint": "^10.11.0",
     "lighthouse": "^13.5.0",
+    "marked": "^18.0.14",
+    "marked-gfm-heading-id": "^4.1.4",
     "pixelmatch": "^7.2.0",
     "playwright": "^1.63.0",
     "pngjs": "^7.0.0",

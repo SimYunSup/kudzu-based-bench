@@ -195,8 +195,12 @@ export function assembleSite(repoRoot, siteDir, opts = {}) {
   rmSync(siteDir, { recursive: true, force: true });
   mkdirSync(siteDir, { recursive: true });
 
-  // Root: static landing hub linking to the framework variants.
+  // Root: static landing hub linking to the framework variants. Its results
+  // section is rendered from the README (scripts/landing.mjs) and embeds the
+  // README's charts, which live under assets/charts so the README can show
+  // them on GitHub; they are served from charts/ next to the landing pages.
   cpSync(landingDir, siteDir, { recursive: true });
+  cpSync(path.join(repoRoot, "assets", "charts"), path.join(siteDir, "charts"), { recursive: true });
 
   for (const [key, dir] of Object.entries(distSources)) {
     mkdirSync(path.join(siteDir, key), { recursive: true });

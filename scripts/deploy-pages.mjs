@@ -11,9 +11,10 @@
 //      notion-cache/news-entries.json, then build all variants with
 //      NOTION_CONTENT_CACHE pointing at it (astro still fetches live via
 //      notion-loader — its own pipeline).
-//   2. Assemble the Pages artifact into site/ (same layout the bench/e2e
-//      tools serve) + .nojekyll (Next.js emits _next/ which Jekyll would
-//      otherwise drop).
+//   2. Render the landing pages' results section from the READMEs
+//      (scripts/landing.mjs), then assemble the Pages artifact into site/
+//      (same layout the bench/e2e tools serve) + .nojekyll (Next.js emits
+//      _next/ which Jekyll would otherwise drop).
 //   3. Commit site/ as the root tree of the gh-pages branch (fresh orphan
 //      commit each deploy — no history accumulation) and push it.
 //
@@ -80,15 +81,20 @@ if (!skipBuild) {
   // takes no Notion input — its catalog is generated deterministically — so
   // it builds after, independent of the prefetch above.
   run("pnpm", ["run", "build:shop"]);
-  // Refresh the landing page's commerce table from whatever measurements are
-  // already in bench/. Missing ones are skipped rather than fatal, so a
-  // deploy never depends on having just run the browser benchmarks.
+  // Republish landing/commerce.json — the committed copy `pnpm run charts`
+  // reads — from whatever measurements are already in bench/. Missing ones
+  // are skipped rather than fatal, so a deploy never depends on having just
+  // run the browser benchmarks.
   run("pnpm", ["run", "shop:report"], { allowFail: true });
-  // Same for the form wizard: landing/form.json is what the charts and the
-  // landing page read, and bench/ is gitignored, so the publish step has to
-  // run here too or a deploy ships a stale copy.
+  // Same for the form wizard: bench/ is gitignored, so landing/form.json is
+  // the only copy the charts can read.
   run("pnpm", ["run", "form:report"], { allowFail: true });
 }
+
+// The landing pages' results section is rendered from the READMEs. Rendered
+// on every deploy, --skip-build included: skipping the build reuses build
+// output, and must not ship prose older than the README it came from.
+run("pnpm", ["run", "landing"]);
 
 assembleSite(repoRoot, siteDir, { toolName: "deploy-pages" });
 // Next.js emits _next/ — Jekyll (Pages' default processor) drops _-prefixed

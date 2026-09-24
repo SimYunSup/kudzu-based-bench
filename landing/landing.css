@@ -1,0 +1,292 @@
+/* Shared by the Korean (index.html) and English (en/index.html) landing pages.
+   Same editorial token system as the variant apps (apps/web global.css). The
+   results section is rendered from the README by scripts/landing.mjs and is
+   styled under .readme. */
+:root {
+  --font-sans: "Pretendard", "Pretendard Variable", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --bg: #ffffff;
+  --surface: #f8fafc;
+  --line: #e2e8f0;
+  --ink: #0f172a;
+  --muted: #475569;
+  --accent: #4f46e5;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg: #0f172a;
+    --surface: #1e293b;
+    --line: #334155;
+    --ink: #f8fafc;
+    --muted: #94a3b8;
+    --accent: #818cf8;
+  }
+}
+* { box-sizing: border-box; }
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-sans);
+  background: var(--bg);
+  color: var(--ink);
+}
+main {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 40px 32px 96px;
+}
+.lang {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin: 0 0 56px;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  color: var(--muted);
+}
+.lang a { color: var(--accent); }
+.lang [aria-current="page"] { color: var(--ink); font-weight: 600; }
+.mono-eyebrow {
+  font-family: var(--font-mono);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--accent);
+  margin: 0 0 20px;
+}
+h1 {
+  font-size: 44px;
+  line-height: 1.15;
+  letter-spacing: -0.03em;
+  margin: 0 0 16px;
+  text-wrap: pretty;
+}
+.sub {
+  max-width: 720px;
+  font-size: 17px;
+  line-height: 1.7;
+  color: var(--muted);
+  margin: 0 0 48px;
+  word-break: keep-all;
+}
+
+/* Variant directory: one group per fixture, every card opens the deployed build. */
+.fixtures {
+  display: grid;
+  gap: 32px;
+  margin: 0 0 72px;
+}
+.fixture-title {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  margin: 0 0 12px;
+}
+.fixture-title .count {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 500;
+  color: var(--muted);
+}
+.variants {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(210px, 1fr));
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.variant {
+  display: block;
+  height: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  text-decoration: none;
+  color: inherit;
+  transition: border-color 0.15s ease, background-color 0.15s ease;
+}
+.variant:hover {
+  border-color: var(--accent);
+  background: var(--surface);
+}
+.variant .name {
+  display: block;
+  font-family: var(--font-mono);
+  font-weight: 600;
+  font-size: 14px;
+  color: var(--accent);
+}
+.variant .desc {
+  display: block;
+  margin-top: 4px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--muted);
+  word-break: keep-all;
+}
+
+/* Contents list generated from the README headings. */
+.toc {
+  margin: 0 0 56px;
+  padding: 20px 24px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--surface);
+}
+.toc-title {
+  margin: 0 0 10px;
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.toc ol {
+  margin: 0;
+  padding-left: 20px;
+  line-height: 1.8;
+  font-size: 15px;
+}
+.toc ol ol {
+  padding-left: 18px;
+  font-size: 14px;
+}
+.toc a { color: var(--ink); text-decoration: none; }
+.toc a:hover { color: var(--accent); text-decoration: underline; }
+
+/* README-rendered results. */
+.readme {
+  font-size: 16px;
+  line-height: 1.75;
+  word-break: keep-all;
+  overflow-wrap: anywhere;
+}
+.readme h2 {
+  margin: 80px 0 16px;
+  padding-top: 32px;
+  border-top: 1px solid var(--line);
+  font-size: 28px;
+  line-height: 1.3;
+  letter-spacing: -0.02em;
+  scroll-margin-top: 16px;
+}
+.readme h3 {
+  margin: 48px 0 12px;
+  font-size: 20px;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  scroll-margin-top: 16px;
+}
+.readme p,
+.readme ul,
+.readme ol { margin: 0 0 16px; }
+.readme li { margin: 0 0 8px; }
+.readme ol > li { margin-bottom: 14px; }
+/* The contents list sits inside .readme but is navigation, not prose. */
+.readme .toc ol { margin: 0; }
+.readme .toc li { margin: 0; }
+.readme a { color: var(--accent); }
+.readme strong { font-weight: 700; }
+.readme em { color: var(--muted); font-size: 14px; }
+.readme code {
+  font-family: var(--font-mono);
+  font-size: 0.86em;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 5px;
+  padding: 0.08em 0.35em;
+}
+.readme pre {
+  margin: 0 0 20px;
+  padding: 14px 16px;
+  overflow-x: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  line-height: 1.6;
+}
+.readme pre code {
+  background: none;
+  border: 0;
+  padding: 0;
+}
+.readme img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  margin: 28px 0;
+  border-radius: 12px;
+}
+.table-scroll {
+  margin: 0 0 20px;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.readme table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+  line-height: 1.55;
+  /* Cells wrap at spaces only; a wide table scrolls inside .table-scroll
+     instead of squeezing names into one-letter columns. */
+  overflow-wrap: normal;
+  word-break: keep-all;
+}
+.readme th,
+.readme td {
+  padding: 9px 12px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+.readme th[align="right"],
+.readme td[align="right"] {
+  text-align: right;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+.readme thead th {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--muted);
+  white-space: nowrap;
+}
+.readme tbody tr:last-child td { border-bottom: 0; }
+.readme tbody tr:hover { background: var(--surface); }
+.readme details {
+  margin: 0 0 20px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.readme summary {
+  padding: 12px 0;
+  font-weight: 600;
+  cursor: pointer;
+}
+.readme details[open] > summary {
+  margin-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+footer {
+  margin-top: 96px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.7;
+  color: var(--muted);
+}
+footer a { color: var(--accent); }
+footer code { font-family: var(--font-mono); font-size: 12px; }
+@media (max-width: 640px) {
+  main { padding: 28px 20px 72px; }
+  .lang { margin-bottom: 40px; }
+  h1 { font-size: 32px; }
+  .readme h2 { font-size: 23px; }
+  .readme h3 { font-size: 18px; }
+}

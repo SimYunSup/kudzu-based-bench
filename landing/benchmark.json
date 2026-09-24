@@ -1,40 +1,11 @@
 {
-  "measuredAt": "2026-09-24T09:26:53.612Z",
+  "measuredAt": "2026-09-24T10:09:58.714Z",
   "runs": 3,
   "machine": {
     "ko": "Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v26.10.0",
     "en": "Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v26.10.0"
   },
   "rows": [
-    {
-      "label": "Hugo",
-      "version": "0.163.0",
-      "name": "Hugo 0.163.0",
-      "based": "Go (templates)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "cold": 550,
-      "warm": 602,
-      "coldSamples": [
-        550,
-        531,
-        605
-      ],
-      "warmSamples": [
-        646,
-        602,
-        588
-      ],
-      "totalBytes": 2686801,
-      "jsBytes": 15158,
-      "totalSize": "2.6 MB",
-      "jsSize": "14.8 KB",
-      "fileCount": 142,
-      "originDiff": "0.395%"
-    },
     {
       "label": "Eleventy",
       "version": "3.1.6",
@@ -45,24 +16,53 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 566,
+      "cold": 538,
       "warm": 543,
       "coldSamples": [
-        605,
-        550,
-        566
+        544,
+        535,
+        538
       ],
       "warmSamples": [
-        544,
-        543,
-        535
+        548,
+        542,
+        543
       ],
-      "totalBytes": 2780359,
+      "totalBytes": 2778007,
       "jsBytes": 15331,
-      "totalSize": "2.7 MB",
+      "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
       "fileCount": 142,
       "originDiff": "0.400%"
+    },
+    {
+      "label": "Hugo",
+      "version": "0.163.0",
+      "name": "Hugo 0.163.0",
+      "based": "Go (templates)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "cold": 549,
+      "warm": 548,
+      "coldSamples": [
+        549,
+        577,
+        543
+      ],
+      "warmSamples": [
+        548,
+        565,
+        547
+      ],
+      "totalBytes": 2684449,
+      "jsBytes": 15158,
+      "totalSize": "2.6 MB",
+      "jsSize": "14.8 KB",
+      "fileCount": 142,
+      "originDiff": "0.395%"
     },
     {
       "label": "Kudzu",
@@ -74,53 +74,24 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 717,
-      "warm": 786,
+      "cold": 746,
+      "warm": 735,
       "coldSamples": [
-        717,
-        712,
-        787
+        732,
+        746,
+        747
       ],
       "warmSamples": [
         735,
-        786,
-        786
+        728,
+        739
       ],
-      "totalBytes": 2700184,
+      "totalBytes": 2697832,
       "jsBytes": 15329,
       "totalSize": "2.6 MB",
       "jsSize": "15.0 KB",
       "fileCount": 141,
       "originDiff": "0.395%"
-    },
-    {
-      "label": "Astro",
-      "version": "7.3.4",
-      "name": "Astro 7.3.4",
-      "based": "Astro islands (vanilla)",
-      "kind": {
-        "ko": "SSG 특화",
-        "en": "SSG-focused"
-      },
-      "ok": true,
-      "cold": 1313,
-      "warm": 1198,
-      "coldSamples": [
-        1369,
-        1276,
-        1313
-      ],
-      "warmSamples": [
-        1198,
-        1167,
-        1375
-      ],
-      "totalBytes": 5113357,
-      "jsBytes": 111350,
-      "totalSize": "4.9 MB",
-      "jsSize": "108.7 KB",
-      "fileCount": 153,
-      "originDiff": "0.320%"
     },
     {
       "label": "React Router",
@@ -132,19 +103,19 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 1367,
-      "warm": 1301,
+      "cold": 1218,
+      "warm": 1271,
       "coldSamples": [
-        1399,
-        1367,
-        1328
+        1223,
+        1218,
+        1215
       ],
       "warmSamples": [
-        1288,
-        1324,
-        1301
+        1271,
+        1284,
+        1226
       ],
-      "totalBytes": 7163898,
+      "totalBytes": 7155602,
       "jsBytes": 362850,
       "totalSize": "6.8 MB",
       "jsSize": "354.3 KB",
@@ -161,24 +132,53 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 1473,
-      "warm": 1510,
+      "cold": 1476,
+      "warm": 1470,
       "coldSamples": [
-        1440,
-        1650,
-        1473
+        1476,
+        1468,
+        1504
       ],
       "warmSamples": [
-        1400,
-        1510,
-        1555
+        1467,
+        1502,
+        1470
       ],
-      "totalBytes": 8914193,
-      "jsBytes": 4819446,
+      "totalBytes": 8906286,
+      "jsBytes": 4813891,
       "totalSize": "8.5 MB",
       "jsSize": "4.6 MB",
       "fileCount": 416,
       "originDiff": "0.402%"
+    },
+    {
+      "label": "Astro",
+      "version": "7.3.5",
+      "name": "Astro 7.3.5",
+      "based": "Astro islands (vanilla)",
+      "kind": {
+        "ko": "SSG 특화",
+        "en": "SSG-focused"
+      },
+      "ok": true,
+      "cold": 1494,
+      "warm": 1152,
+      "coldSamples": [
+        2047,
+        1425,
+        1494
+      ],
+      "warmSamples": [
+        1206,
+        1152,
+        1144
+      ],
+      "totalBytes": 5115759,
+      "jsBytes": 111350,
+      "totalSize": "4.9 MB",
+      "jsSize": "108.7 KB",
+      "fileCount": 153,
+      "originDiff": "0.320%"
     },
     {
       "label": "Next.js Pages Router",
@@ -190,53 +190,24 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 3461,
-      "warm": 2463,
+      "cold": 3391,
+      "warm": 2380,
       "coldSamples": [
-        3461,
-        3519,
-        3352
+        3405,
+        3374,
+        3391
       ],
       "warmSamples": [
-        2463,
-        2406,
-        2546
+        2354,
+        2380,
+        2463
       ],
-      "totalBytes": 6769545,
+      "totalBytes": 6761377,
       "jsBytes": 573983,
-      "totalSize": "6.5 MB",
+      "totalSize": "6.4 MB",
       "jsSize": "560.5 KB",
       "fileCount": 304,
       "originDiff": "0.403%"
-    },
-    {
-      "label": "Next.js App Router",
-      "version": "16.3.6",
-      "name": "Next.js App Router 16.3.6",
-      "based": "React",
-      "kind": {
-        "ko": "SSG 지원",
-        "en": "SSG-capable"
-      },
-      "ok": true,
-      "cold": 4071,
-      "warm": 2675,
-      "coldSamples": [
-        4013,
-        4359,
-        4071
-      ],
-      "warmSamples": [
-        2632,
-        2675,
-        2679
-      ],
-      "totalBytes": 14438458,
-      "jsBytes": 604642,
-      "totalSize": "13.8 MB",
-      "jsSize": "590.5 KB",
-      "fileCount": 698,
-      "originDiff": "0.401%"
     },
     {
       "label": "TanStack Start",
@@ -248,24 +219,53 @@
         "en": "SSG-capable"
       },
       "ok": true,
-      "cold": 4312,
-      "warm": 4170,
+      "cold": 4182,
+      "warm": 4512,
       "coldSamples": [
-        4159,
-        4713,
-        4312
+        4148,
+        4241,
+        4182
       ],
       "warmSamples": [
-        4170,
-        4307,
-        4164
+        4512,
+        4644,
+        4242
       ],
-      "totalBytes": 6841401,
+      "totalBytes": 6834473,
       "jsBytes": 360523,
       "totalSize": "6.5 MB",
       "jsSize": "352.1 KB",
       "fileCount": 146,
       "originDiff": "0.399%"
+    },
+    {
+      "label": "Next.js App Router",
+      "version": "16.3.6",
+      "name": "Next.js App Router 16.3.6",
+      "based": "React",
+      "kind": {
+        "ko": "SSG 지원",
+        "en": "SSG-capable"
+      },
+      "ok": true,
+      "cold": 4243,
+      "warm": 2762,
+      "coldSamples": [
+        4243,
+        3999,
+        4326
+      ],
+      "warmSamples": [
+        2863,
+        2762,
+        2687
+      ],
+      "totalBytes": 14420026,
+      "jsBytes": 604642,
+      "totalSize": "13.8 MB",
+      "jsSize": "590.5 KB",
+      "fileCount": 698,
+      "originDiff": "0.401%"
     },
     {
       "label": "Docusaurus",
@@ -277,20 +277,20 @@
         "en": "SSG-focused"
       },
       "ok": true,
-      "cold": 4485,
-      "warm": 1392,
+      "cold": 4295,
+      "warm": 1339,
       "coldSamples": [
-        4485,
-        4644,
-        4379
+        4292,
+        4351,
+        4295
       ],
       "warmSamples": [
-        1449,
-        1344,
-        1392
+        1343,
+        1320,
+        1339
       ],
-      "totalBytes": 5271042,
-      "jsBytes": 2380967,
+      "totalBytes": 5265226,
+      "jsBytes": 2378615,
       "totalSize": "5.0 MB",
       "jsSize": "2.3 MB",
       "fileCount": 284,

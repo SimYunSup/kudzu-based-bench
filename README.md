@@ -21,11 +21,11 @@
 
 - **내용이 보이기까지는 동률, 조작 가능해지기까지는 최대 2.2배.** 커머스 다섯 변형은 전부 완성된 HTML을 보내 진입이 175–235 ms에 붙습니다. 차이는 컨트롤이 살아나는 시점에서 납니다 — 하이드레이션 프레임워크는 라우트당 69–135 KB(gzip) 런타임이 도착·실행돼야 하고(리스팅 첫 조작 2.4–3.5초, 첫 신뢰 클릭 +1.5–3.0초), Kudzu는 라우트가 쓰는 기능 모듈 3.4–9.1 KB만 보내 첫 페인트 +300 ms부터 클릭이 먹힙니다.
 - **열화 내성은 픽스처마다 순위가 뒤집힙니다.** 커머스는 Kudzu 15/18이 1위, 폼 위저드는 Astro 15/15가 1위(Kudzu 7/15)입니다. 폼의 Astro는 페이지 로직을 인라인 스크립트로 실어 `*.js` 요청 차단이 닿지 않습니다.
-- **빌드는 템플릿형 SSG가 1.8–8.2배 빠릅니다.** Hugo 550 · Eleventy 566 · Kudzu 717 ms 대 번들러를 도는 일곱 변형 1.3–4.5초. 캐시가 실제로 일하는 건 Docusaurus(cold 4,485 → warm 1,392 ms)와 Next.js뿐입니다.
+- **빌드는 템플릿형 SSG가 1.6–8.0배 빠릅니다.** Eleventy 538 · Hugo 549 · Kudzu 746 ms 대 번들러를 도는 일곱 변형 1.2–4.3초. 캐시가 크게 일하는 건 Docusaurus(cold 4,295 → warm 1,339 ms)와 Next.js, 그리고 콘텐츠 레이어 저장소를 쓰는 Astro입니다.
 - **LCP는 이미지가 LCP인 곳에서 프레임워크를 가르지 못합니다.** 커머스 LCP는 md5까지 같은 사진이 링크를 얼마나 기다리느냐이고(스크립트를 전부 막으면 1.4 MB 조건 다섯 변형이 7,084–7,108 ms로 붙음), 텍스트가 LCP인 문서 픽스처에서만 Eleventy 352 ms 대 VitePress 1,936 ms로 5.5배 갈립니다 — 차단 자원 체인과 하이드레이션 뒤 재렌더가 원인입니다.
 - **검색 비용은 검색 도구의 속성입니다.** Pagefind를 쓰는 세 변형은 프레임워크와 무관하게 44.7 KB · 1.75초로 같고, 인덱스를 초기 JS에 묶는 Docusaurus search-local은 748 KB · 6.8초입니다.
 
-2026-08-20 측정 대비 달라진 것: React 19.3으로 React 기반 커머스 번들이 7–8 KB대로 늘었고(Next.js는 자체 번들 React라 그대로), React Router 앱은 Vite 8 전환과 함께 빌드가 28–39% 빨라졌습니다. Kudzu 리스팅 첫 조작 450 → 1,601 ms는 런타임 회귀가 아니라 0.9.0에도 있던 모듈 발견 경쟁이고([커머스](#세션-재생-5세션-중앙값-4x-cpu--slow-4g)), Astro 뉴스레터 cold 5,081 → 1,313 ms는 빌드가 빨라진 게 아니라 Notion 네트워크를 측정에서 뺀 결과입니다([뉴스레터](#뉴스레터-빌드-벤치마크)).
+2026-08-20 측정 대비 달라진 것: React 19.3으로 React 기반 커머스 번들이 7–8 KB대로 늘었고(Next.js는 자체 번들 React라 그대로), React Router 앱은 Vite 8 전환과 함께 빌드가 28–45% 빨라졌습니다. Kudzu 리스팅 첫 조작 450 → 1,601 ms는 런타임 회귀가 아니라 0.9.0에도 있던 모듈 발견 경쟁이고([커머스](#세션-재생-5세션-중앙값-4x-cpu--slow-4g)), Astro 뉴스레터 cold 5,081 → 1,494 ms는 빌드가 빨라진 게 아니라 Notion 네트워크를 측정에서 뺀 결과입니다([뉴스레터](#뉴스레터-빌드-벤치마크)). 측정 도중 나온 Astro 7.3.5는 네 Astro 앱의 HTML·JS·CSS를 `<meta name="generator">` 한 줄 말고는 바꾸지 않아(커머스·폼·문서 앱은 바이트 동일, 뉴스레터는 같은 Notion 응답으로 빌드해 비교) 뉴스레터 빌드 표만 7.3.5로 다시 쟀습니다.
 
 <img src="assets/charts/ko/commerce-session.svg" width="880" alt="커머스: 진입 contentReady와 리스팅 actReady 비교">
 
@@ -63,21 +63,21 @@ LCP는 [LCP](#lcp) 절에 두 조건으로 따로 있습니다. 전부 커밋된
 <!-- build-stats:start -->
 | 변형 | 기반 | 특징 | cold(ms) | warm(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Hugo 0.163.0 | Go (templates) | SSG 특화 | 550 | 602 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 566 | 543 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Kudzu 0.16.40 | Kudzu (JSX, no vDOM) | SSG 특화 | 717 | 786 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| Astro 7.3.4 | Astro islands (vanilla) | SSG 특화 | 1313 | 1198 | 4.9 MB | 108.7 KB | 153 | 0.320% |
-| React Router 8.4.0 | React | SSG 지원 | 1367 | 1301 | 6.8 MB | 354.3 KB | 285 | 0.405% |
-| VitePress 1.6.4 | Vue | SSG 특화 | 1473 | 1510 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| Next.js Pages Router 16.3.6 | React | SSG 지원 | 3461 | 2463 | 6.5 MB | 560.5 KB | 304 | 0.403% |
-| Next.js App Router 16.3.6 | React | SSG 지원 | 4071 | 2675 | 13.8 MB | 590.5 KB | 698 | 0.401% |
-| TanStack Start 1.168.58 | React | SSG 지원 | 4312 | 4170 | 6.5 MB | 352.1 KB | 146 | 0.399% |
-| Docusaurus 3.10.2 | React | SSG 특화 | 4485 | 1392 | 5.0 MB | 2.3 MB | 284 | 0.403% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG 특화 | 538 | 543 | 2.6 MB | 15.0 KB | 142 | 0.400% |
+| Hugo 0.163.0 | Go (templates) | SSG 특화 | 549 | 548 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Kudzu 0.16.40 | Kudzu (JSX, no vDOM) | SSG 특화 | 746 | 735 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| React Router 8.4.0 | React | SSG 지원 | 1218 | 1271 | 6.8 MB | 354.3 KB | 285 | 0.405% |
+| VitePress 1.6.4 | Vue | SSG 특화 | 1476 | 1470 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| Astro 7.3.5 | Astro islands (vanilla) | SSG 특화 | 1494 | 1152 | 4.9 MB | 108.7 KB | 153 | 0.320% |
+| Next.js Pages Router 16.3.6 | React | SSG 지원 | 3391 | 2380 | 6.4 MB | 560.5 KB | 304 | 0.403% |
+| TanStack Start 1.168.58 | React | SSG 지원 | 4182 | 4512 | 6.5 MB | 352.1 KB | 146 | 0.399% |
+| Next.js App Router 16.3.6 | React | SSG 지원 | 4243 | 2762 | 13.8 MB | 590.5 KB | 698 | 0.401% |
+| Docusaurus 3.10.2 | React | SSG 특화 | 4295 | 1339 | 5.0 MB | 2.3 MB | 284 | 0.403% |
 
-_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. Astro는 빌드 중에 Notion을 직접 조회하는 유일한 변형이라 워밍업 빌드가 기록한 Notion API 응답을 재생해 잽니다(나머지 아홉은 prefetch한 콘텐츠 파일을 읽음 — 둘 다 측정 빌드에서 네트워크를 뺀 조건). "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v26.10.0. 측정 시각: 2026-09-24T09:26:53.612Z_
+_로컬에서 `pnpm run build:stats`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 3회를 잰 중앙값이며, 회차별 원본값은 `landing/benchmark.json`의 `coldSamples`·`warmSamples`에 있습니다. cold 오름차순 정렬. Astro는 빌드 중에 Notion을 직접 조회하는 유일한 변형이라 워밍업 빌드가 기록한 Notion API 응답을 재생해 잽니다(나머지 아홉은 prefetch한 콘텐츠 파일을 읽음 — 둘 다 측정 빌드에서 네트워크를 뺀 조건). "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 `pnpm run origin:diff`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 `-`. 측정 머신: Apple M4 · 10코어 · RAM 16 GB · darwin/arm64 · Node v26.10.0. 측정 시각: 2026-09-24T10:09:58.714Z_
 <!-- build-stats:end -->
 
-템플릿을 채워 HTML만 쓰는 셋(Hugo 550 · Eleventy 566 · Kudzu 717 ms)이 번들러를 도는 나머지 일곱(1,313–4,485 ms)보다 1.8–8.2배 빠르고, 출력 JS도 15 KB 안팎입니다 — 셋 다 페이지에 붙는 스크립트가 검색(`search.js` + `munja.js`) 하나뿐입니다. cold와 warm이 크게 갈리는 건 Docusaurus(4,485 → 1,392 ms — `.docusaurus` 생성 캐시가 대부분이라는 실측이 `scripts/lib/build-cache.mjs` 주석에 있습니다)와 Next.js(Pages 3,461 → 2,463 · App 4,071 → 2,675 ms)뿐이고, 나머지 일곱은 ±10% 안이라 캐시가 거의 일하지 않습니다. React Router는 Vite 7 → 8(Rolldown) 전환과 함께 cold 2,229 → 1,367 ms가 됐습니다. Astro의 cold는 지난 게시값 5,081 ms에서 1,313 ms로 내려갔는데, 빌드가 빨라진 게 아니라 측정을 고친 결과입니다. Astro는 빌드 중에 Notion을 직접 조회하는 유일한 변형이라 cold 세 번이 연달아 전 페이지를 다시 받았고, 이번 세션에서는 Notion의 rate limit에 걸려 cold 중앙값이 58초(재시도 대기)가 됐습니다. 지금은 워밍업 빌드가 받은 Notion 응답을 기록해 재생하므로(`packages/notion-loader/src/http-cache.ts`), 다른 아홉 변형이 prefetch 파일을 읽는 것과 같은 무네트워크 조건입니다 — 재생 없는 cold 5초 중 3초 남짓이 Notion 네트워크였습니다.
+템플릿을 채워 HTML만 쓰는 셋(Eleventy 538 · Hugo 549 · Kudzu 746 ms)이 번들러를 도는 나머지 일곱(1,218–4,295 ms)보다 1.6–8.0배 빠르고, 출력 JS도 15 KB 안팎입니다 — 셋 다 페이지에 붙는 스크립트가 검색(`search.js` + `munja.js`) 하나뿐입니다. cold와 warm이 크게 갈리는 건 Docusaurus(4,295 → 1,339 ms — `.docusaurus` 생성 캐시가 대부분이라는 실측이 `scripts/lib/build-cache.mjs` 주석에 있습니다), Next.js(Pages 3,391 → 2,380 · App 4,243 → 2,762 ms), Astro(1,494 → 1,152 ms — 콘텐츠 레이어 저장소가 남아 있으면 로더가 `last_edited_time`이 그대로인 페이지를 다시 렌더하지 않습니다)이고, 나머지 여섯은 ±10% 안이라 캐시가 거의 일하지 않습니다. React Router는 Vite 7 → 8(Rolldown) 전환과 함께 cold 2,229 → 1,218 ms가 됐습니다. Astro의 cold는 지난 게시값 5,081 ms에서 1,494 ms로 내려갔는데, 빌드가 빨라진 게 아니라 측정을 고친 결과입니다. Astro는 빌드 중에 Notion을 직접 조회하는 유일한 변형이라 cold 세 번이 연달아 전 페이지를 다시 받았고, 이번 세션에서는 Notion의 rate limit에 걸려 cold 중앙값이 58초(재시도 대기)가 됐습니다. 지금은 워밍업 빌드가 받은 Notion 응답을 기록해 재생하므로(`packages/notion-loader/src/http-cache.ts`), 다른 아홉 변형이 prefetch 파일을 읽는 것과 같은 무네트워크 조건입니다 — 재생 없는 cold 5초 중 3초 남짓이 Notion 네트워크였습니다.
 
 <details>
 <summary>변형 → 디렉터리 매핑</summary>
@@ -280,7 +280,7 @@ TanStack의 "스크립트 1개 유실" 셀은 어떤 청크가 유실되느냐�
 | TanStack | 1,333 / 1,330 ms | 1,994 / 2,259 ms | 1.99 ms |
 | Next.js | 4,232 / 2,857 ms | 5,096 / 4,336 ms | 5.10 ms |
 
-100개에서는 Kudzu가 가장 빠르고, 1,000개에서는 Astro(1,690 ms) · TanStack(1,994 ms) 다음 3위(2,307 ms)입니다. 100→1,000 기울기는 Next.js 1.20배 · Astro 1.36배 · TanStack 1.50배 · React Router 1.88배 · Kudzu 2.00배 — Next.js는 기울기가 가장 작지만 고정비(100개에서 4.2초)가 커서 절대값은 여전히 최하위입니다. 가장 크게 움직인 건 React Router입니다: 100개 1,919 → 1,280 ms, 1,000개 3,350 → 2,405 ms. 이번 업데이트에서 React Router 앱 셋이 Vite 7 → 8(Rolldown)로 올라간 것과 겹치고(TanStack도 8월에 Vite 8로 옮기며 같은 방향으로 빨라졌습니다), 뉴스레터 픽스처에서도 cold 2,229 → 1,367 ms입니다. Kudzu는 0.9.0에서 평탄해진 기울기(1.77배)가 2.00배로 조금 되돌아갔는데(1,000개 2,075 → 2,307 ms), 원인은 분리하지 않았습니다. Next 16.3은 커머스에서도 cold와 warm이 갈라지는 유일한 변형입니다 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Next.js와 여기의 Next.js뿐입니다.
+100개에서는 Kudzu가 가장 빠르고, 1,000개에서는 Astro(1,690 ms) · TanStack(1,994 ms) 다음 3위(2,307 ms)입니다. 100→1,000 기울기는 Next.js 1.20배 · Astro 1.36배 · TanStack 1.50배 · React Router 1.88배 · Kudzu 2.00배 — Next.js는 기울기가 가장 작지만 고정비(100개에서 4.2초)가 커서 절대값은 여전히 최하위입니다. 가장 크게 움직인 건 React Router입니다: 100개 1,919 → 1,280 ms, 1,000개 3,350 → 2,405 ms. 이번 업데이트에서 React Router 앱 셋이 Vite 7 → 8(Rolldown)로 올라간 것과 겹치고(TanStack도 8월에 Vite 8로 옮기며 같은 방향으로 빨라졌습니다), 뉴스레터 픽스처에서도 cold 2,229 → 1,218 ms입니다. Kudzu는 0.9.0에서 평탄해진 기울기(1.77배)가 2.00배로 조금 되돌아갔는데(1,000개 2,075 → 2,307 ms), 원인은 분리하지 않았습니다. Next 16.3은 커머스에서도 cold와 warm이 갈라지는 유일한 변형입니다 — 캐시가 크게 일하는 건 뉴스레터 픽스처의 Docusaurus·Next.js·Astro와 여기의 Next.js뿐입니다.
 
 ## 폼 위저드 벤치마크
 

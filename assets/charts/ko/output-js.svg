@@ -47,12 +47,12 @@
 <text x="617.0624159500529" y="417.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">590 KB</text>
 <line x1="32" y1="433" x2="848" y2="433" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="458" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
-<rect x="204.8" y="442" width="491.1" height="22" rx="4" fill="#3e3e44"/>
-<text x="703.8982248399016" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.3 MB</text>
+<rect x="204.8" y="442" width="491.04" height="22" rx="4" fill="#3e3e44"/>
+<text x="703.8356098087562" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.3 MB</text>
 <line x1="32" y1="473" x2="848" y2="473" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="498" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
-<rect x="204.8" y="482" width="535.77" height="22" rx="4" fill="#3e3e44"/>
-<text x="748.5730619773173" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
+<rect x="204.8" y="482" width="535.7" height="22" rx="4" fill="#3e3e44"/>
+<text x="748.4999956261734" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
 <text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">측정: 뉴스레터 픽스처 10변형(apps/) · pnpm run build:stats → landing/benchmark.json · 2026-09-24 측정 · Apple M4 · 10코어 ·</text>
 <text x="32" y="591" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">RAM 16 GB · darwin/arm64 · Node v26.10.0</text>
 <text x="32" y="559" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">가로축은 로그 스케일 — 눈금 한 칸이 10배다. 15 KB와 4.6 MB는 300배 차이다.</text>

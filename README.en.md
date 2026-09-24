@@ -385,7 +385,7 @@ Only things worth filing upstream against the framework itself — genuine upstr
 Node.js is required (fnm recommended, see `.nvmrc`). The Hugo binary is fetched automatically by `hugo-bin` on install.
 
 ```bash
-corepack enable   # if pnpm is missing
+npm install -g corepack && corepack enable   # if pnpm is missing (Node 25+ no longer bundles corepack)
 pnpm install
 pnpm dev          # apps/web
 ```

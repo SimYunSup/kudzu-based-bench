@@ -384,7 +384,7 @@ pnpm run docs:bench     # 문서 도착 + 검색 첫 결과 + 인덱스 전송�
 Node.js(fnm 권장, `.nvmrc` 참고)가 필요합니다. Hugo 바이너리는 `hugo-bin`이 설치 시 자동으로 받습니다.
 
 ```bash
-corepack enable   # pnpm이 없다면
+npm install -g corepack && corepack enable   # pnpm이 없다면 (Node 25+는 corepack을 번들하지 않음)
 pnpm install
 pnpm dev          # apps/web
 ```

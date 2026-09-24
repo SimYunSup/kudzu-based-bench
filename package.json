@@ -23,7 +23,7 @@
     "build:docs": "pnpm run build:docs-data && pnpm --filter @otw/docs-kudzu build && pnpm --filter @otw/docs-astro build && pnpm --filter @otw/docs-eleventy build && pnpm --filter @otw/docs-docusaurus build && pnpm --filter @otw/docs-vitepress build",
     "docs:bench": "node ./scripts/docs-bench.mjs",
     "build:variants": "pnpm run build:content && pnpm --filter @otw/web-react-router build && pnpm --filter @otw/web-tanstack build && pnpm --filter @otw/web-kudzu build && pnpm --filter @otw/web-hugo build && pnpm --filter @otw/web-vitepress build && pnpm --filter @otw/web-docusaurus build && pnpm --filter @otw/web-eleventy build && pnpm --filter @otw/web-next-app build && pnpm --filter @otw/web-next-pages build",
-    "build:all": "pnpm run build && pnpm run build:variants",
+    "build:all": "node ./scripts/build-all.mjs",
     "build:stats": "node ./scripts/build-stats.mjs",
     "visual:diff": "node ./scripts/visual-diff.mjs",
     "origin:diff": "node ./scripts/origin-diff.mjs",

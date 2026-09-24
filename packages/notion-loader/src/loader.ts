@@ -1,5 +1,6 @@
 import { Client, isFullPage, iteratePaginatedAPI } from "@notionhq/client";
 import type { Loader } from "astro/loaders";
+import { recordingFetch } from "./http-cache";
 import { buildProcessor, NotionPageRenderer } from "./render";
 import { htmlToText, writeSearchIndex, type SearchDoc } from "./search/index-writer";
 
@@ -33,7 +34,13 @@ export function notionLoader({
   // Default maxRetries above the SDK's 2 so transient 429s back off and retry
   // (the SDK honors retry-after) instead of failing the build. Spread
   // clientOptions last so an explicit caller-supplied `retry` still wins.
-  const notionClient = new Client({ retry: { maxRetries: 5 }, ...clientOptions });
+  // NOTION_HTTP_CACHE is set by scripts/build-stats.mjs only (see http-cache).
+  const httpCache = process.env.NOTION_HTTP_CACHE;
+  const notionClient = new Client({
+    retry: { maxRetries: 5 },
+    ...(httpCache ? { fetch: recordingFetch(httpCache) } : {}),
+    ...clientOptions,
+  });
 
   // A Notion database can contain multiple data sources; query the first one.
   // Resolved lazily and memoized so both schema() and load() share one lookup.

@@ -34,6 +34,17 @@ try {
 const contentCache = path.join(repoRoot, "notion-cache", "news-entries.json");
 if (existsSync(contentCache)) process.env.NOTION_CONTENT_CACHE = contentCache;
 
+// The astro variant is the one build that queries Notion itself (its content
+// loader, packages/notion-loader), so the cache above never reaches it and
+// every cold run re-fetched every page. Three of those back to back trip the
+// rate limit: the cold median became retry-after backoff (58 s against a 5 s
+// build). The loader instead records the warm-up build's Notion responses
+// here and replays them, which keeps network out of astro's measured builds
+// the same way the prefetched file keeps it out of the other nine.
+const notionHttpCache = path.join(os.tmpdir(), "kudzu-based-bench-notion-http");
+rmSync(notionHttpCache, { recursive: true, force: true });
+process.env.NOTION_HTTP_CACHE = notionHttpCache;
+
 const skipBuild = process.argv.includes("--skip-build");
 
 // Measured clean builds per variant, after one discarded warm-up.
@@ -355,12 +366,12 @@ async function main() {
     ko: {
       header: "| 변형 | 기반 | 특징 | cold(ms) | warm(ms) | 총 출력 크기 | JS 크기 | 파일 수 | 원본 대비 diff |",
       kind: (v) => v.kind.ko,
-      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 ${runs}회를 잰 중앙값이며, 회차별 원본값은 \`landing/benchmark.json\`의 \`coldSamples\`·\`warmSamples\`에 있습니다. cold 오름차순 정렬. "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
+      footnote: `_로컬에서 \`pnpm run build:stats\`로 측정(수동 갱신). **cold**는 출력과 프레임워크 빌드 캐시를 모두 지운 상태(CI 캐시 미스), **warm**은 출력만 지우고 캐시는 남긴 상태(CI 캐시 히트, 또는 로컬 두 번째 빌드)입니다. 둘의 차이가 그 도구의 캐시가 실제로 벌어주는 시간입니다. 각각 워밍업 1회를 버리고 ${runs}회를 잰 중앙값이며, 회차별 원본값은 \`landing/benchmark.json\`의 \`coldSamples\`·\`warmSamples\`에 있습니다. cold 오름차순 정렬. Astro는 빌드 중에 Notion을 직접 조회하는 유일한 변형이라 워밍업 빌드가 기록한 Notion API 응답을 재생해 잽니다(나머지 아홉은 prefetch한 콘텐츠 파일을 읽음 — 둘 다 측정 빌드에서 네트워크를 뺀 조건). "총 출력 크기"·"파일 수"는 이미지 파일 제외(변형별 이미지 처리 방식 차이로 인한 불공정 비교 방지). "원본 대비 diff"는 \`pnpm run origin:diff\`가 만든 홈 화면 픽셀 diff(라이브 원본 대비, 이미지·분석 스크립트 차단 상태)이며 없으면 \`-\`. 측정 머신: ${specKo}. 측정 시각: ${measuredAt}_`,
     },
     en: {
       header: "| Variant | Based | Type | Cold (ms) | Warm (ms) | Total size | JS size | Files | Origin diff |",
       kind: (v) => v.kind.en,
-      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of ${runs} runs after one discarded warm-up; per-run values are in \`coldSamples\`/\`warmSamples\` in \`landing/benchmark.json\`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
+      footnote: `_Measured locally via \`pnpm run build:stats\` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of ${runs} runs after one discarded warm-up; per-run values are in \`coldSamples\`/\`warmSamples\` in \`landing/benchmark.json\`. Sorted by cold asc. Astro is the one variant that queries Notion from inside its build, so it replays the Notion API responses recorded by its warm-up build (the other nine read the prefetched content file — either way the measured builds exclude network). "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from \`pnpm run origin:diff\` (images/analytics blocked), or \`-\` if not run. Machine: ${specEn}. Measured at: ${measuredAt}_`,
     },
   };
   const divider = "| --- | --- | --- | --- | --- | --- | --- | --- | --- |";

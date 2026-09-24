@@ -27,33 +27,33 @@
 <text x="384.24846447911136" y="217.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">15 KB</text>
 <line x1="32" y1="233" x2="848" y2="233" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="258" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Astro</text>
-<rect x="204.8" y="242" width="291.67" height="22" rx="4" fill="#3e3e44"/>
-<text x="504.47146406744696" y="257.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">100 KB</text>
+<rect x="204.8" y="242" width="297.07" height="22" rx="4" fill="#3e3e44"/>
+<text x="509.8686118188483" y="257.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">109 KB</text>
 <line x1="32" y1="273" x2="848" y2="273" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="298" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
-<rect x="204.8" y="282" width="366.05" height="22" rx="4" fill="#3e3e44"/>
-<text x="578.8505084622685" y="297.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">323 KB</text>
+<text x="32" y="298" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack Start</text>
+<rect x="204.8" y="282" width="371.5" height="22" rx="4" fill="#3e3e44"/>
+<text x="584.302824905112" y="297.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">352 KB</text>
 <line x1="32" y1="313" x2="848" y2="313" stroke="#23252a" stroke-width="1"/>
-<text x="32" y="338" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">TanStack Start</text>
-<rect x="204.8" y="322" width="366.64" height="22" rx="4" fill="#3e3e44"/>
-<text x="579.4441234554562" y="337.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">326 KB</text>
+<text x="32" y="338" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">React Router</text>
+<rect x="204.8" y="322" width="371.91" height="22" rx="4" fill="#3e3e44"/>
+<text x="584.7104356730581" y="337.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">354 KB</text>
 <line x1="32" y1="353" x2="848" y2="353" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="378" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js Pages Router</text>
-<rect x="204.8" y="362" width="397.41" height="22" rx="4" fill="#3e3e44"/>
-<text x="610.2079075480495" y="377.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">530 KB</text>
+<rect x="204.8" y="362" width="400.97" height="22" rx="4" fill="#3e3e44"/>
+<text x="613.7656327966015" y="377.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">561 KB</text>
 <line x1="32" y1="393" x2="848" y2="393" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="418" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Next.js App Router</text>
-<rect x="204.8" y="402" width="404.11" height="22" rx="4" fill="#3e3e44"/>
-<text x="616.9073603236832" y="417.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">589 KB</text>
+<rect x="204.8" y="402" width="404.26" height="22" rx="4" fill="#3e3e44"/>
+<text x="617.0624159500529" y="417.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">590 KB</text>
 <line x1="32" y1="433" x2="848" y2="433" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="458" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">Docusaurus</text>
-<rect x="204.8" y="442" width="490.29" height="22" rx="4" fill="#3e3e44"/>
-<text x="703.0861816278693" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.2 MB</text>
+<rect x="204.8" y="442" width="491.1" height="22" rx="4" fill="#3e3e44"/>
+<text x="703.8982248399016" y="457.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">2.3 MB</text>
 <line x1="32" y1="473" x2="848" y2="473" stroke="#23252a" stroke-width="1"/>
 <text x="32" y="498" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="14" font-weight="400" fill="#d0d6e0">VitePress</text>
-<rect x="204.8" y="482" width="535.72" height="22" rx="4" fill="#3e3e44"/>
-<text x="748.5160366667627" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
-<text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: newsletter fixture, 10 variants (apps/) · pnpm run build:stats → landing/benchmark.json · measured 2026-08-20 · Apple M4 ·</text>
-<text x="32" y="591" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0</text>
+<rect x="204.8" y="482" width="535.77" height="22" rx="4" fill="#3e3e44"/>
+<text x="748.5730619773173" y="497.5" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="13" font-weight="400" fill="#d0d6e0">4.6 MB</text>
+<text x="32" y="576" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">Measured: newsletter fixture, 10 variants (apps/) · pnpm run build:stats → landing/benchmark.json · measured 2026-09-24</text>
+<text x="32" y="591" font-family="ui-monospace, SFMono-Regular, 'SF Mono', Menlo, monospace" font-size="11" font-weight="400" fill="#62666d">· Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v26.10.0</text>
 <text x="32" y="559" font-family="-apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Inter, Roboto, sans-serif" font-size="12" font-weight="400" fill="#62666d">The x axis is logarithmic — one gridline is 10x. 15 KB to 4.6 MB is a 300x spread.</text>
 </svg>

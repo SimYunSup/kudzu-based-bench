@@ -2,6 +2,8 @@
 
 **English** · [한국어](./README.md)
 
+<!-- landing:start -->
+
 A pnpm workspace monorepo that statically builds the same site with several frameworks to measure **what actually differs**. Synthetic operations (a 1,000-row reverse, ops/sec) are not measured — real sessions are replayed instead, and only what a user can observe counts as the verdict.
 
 There are four fixtures.
@@ -14,6 +16,16 @@ There are four fixtures.
 | [Docs + Search](#docs--search-benchmark) | 5 | Client-side search latency, index cost | `build:docs` · `docs:bench` |
 
 ## At a glance
+
+A summary of the 2026-09-24 measurements (Apple M4 · Node 26.10.0). The evidence and method behind every number are in the sections below.
+
+- **Visible content is a tie; time to operable spreads up to 2.2x.** All five commerce variants ship complete HTML, so entry lands at 175–235 ms. The difference is when the controls come alive: hydration frameworks need a 69–135 KB (gzip) runtime per route to arrive and execute (first listing interaction 2.4–3.5 s, first reliable click +1.5–3.0 s), while Kudzu ships only the capability modules a route uses, 3.4–9.1 KB, so clicks land from first paint +300 ms.
+- **Degradation resilience inverts between fixtures.** Kudzu leads commerce at 15/18; Astro leads the form wizard at 15/15 (Kudzu 7/15). The form's Astro variant carries its page logic as inline scripts, which `*.js` request blocking cannot reach.
+- **Template SSGs build 1.8–8.2x faster.** Hugo 550 · Eleventy 566 · Kudzu 717 ms against 1.3–4.5 s for the seven that run a bundler. Only Docusaurus (cold 4,485 → warm 1,392 ms) and Next.js get real work out of their caches.
+- **LCP cannot separate frameworks where the LCP element is an image.** Commerce LCP is how long an md5-identical photo waits on the link (block every script and all five collapse to 7,084–7,108 ms on the 1.4 MB photo); only the docs fixture, where LCP is text, splits 5.5x (Eleventy 352 ms vs VitePress 1,936 ms) — from the render-blocking resource chain and re-rendering after hydration.
+- **Search cost belongs to the search tool.** The three Pagefind variants cost the same regardless of framework (44.7 KB · 1.75 s); Docusaurus search-local, which bundles its index into the initial JS, costs 748 KB · 6.8 s.
+
+What changed since the 2026-08-20 measurements: React 19.3 grew the React-based commerce bundles by 7–8 KB each (Next.js is unchanged — it ships its own vendored React), and the React Router apps build 28–39% faster alongside their move to Vite 8. Kudzu's first listing interaction going from 450 to 1,601 ms is not a runtime regression but a module-discovery race that 0.9.0 has too ([commerce](#session-replay-median-of-5-sessions-4x-cpu--slow-4g)), and Astro's newsletter cold build going from 5,081 to 1,313 ms is not a faster build but Notion network time taken out of the measurement ([newsletter](#newsletter-build-benchmark)).
 
 <img src="assets/charts/en/commerce-session.svg" width="880" alt="Commerce: entry contentReady against listing actReady">
 
@@ -51,19 +63,21 @@ Same Notion content, built ten ways. Running `pnpm run build:stats` locally refr
 <!-- build-stats:start -->
 | Variant | Based | Type | Cold (ms) | Warm (ms) | Total size | JS size | Files | Origin diff |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| Hugo 0.161.0 | Go (templates) | SSG-focused | 682 | 680 | 2.6 MB | 14.8 KB | 142 | 0.395% |
-| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 730 | 707 | 2.7 MB | 15.0 KB | 142 | 0.400% |
-| Kudzu 0.9.0 | Kudzu (JSX, no vDOM) | SSG-focused | 859 | 865 | 2.6 MB | 15.0 KB | 141 | 0.395% |
-| VitePress 1.6.4 | Vue | SSG-focused | 1684 | 1695 | 8.5 MB | 4.6 MB | 416 | 0.402% |
-| React Router 8.3.0 | React | SSG-capable | 2229 | 2250 | 6.8 MB | 323.0 KB | 285 | 0.405% |
-| Next.js Pages Router 16.3.0 | React | SSG-capable | 3770 | 2744 | 6.4 MB | 529.9 KB | 304 | 0.403% |
-| Next.js App Router 16.3.0 | React | SSG-capable | 4347 | 3112 | 13.7 MB | 589.0 KB | 698 | 0.401% |
-| TanStack Start 1.168.42 | React | SSG-capable | 5012 | 5047 | 6.5 MB | 326.1 KB | 146 | 0.399% |
-| Astro 7.2.1 | Astro islands (vanilla) | SSG-focused | 5081 | 3746 | 4.7 MB | 99.9 KB | 152 | 0.320% |
-| Docusaurus 3.10.2 | React | SSG-focused | 5234 | 1780 | 5.0 MB | 2.2 MB | 284 | 0.403% |
+| Hugo 0.163.0 | Go (templates) | SSG-focused | 550 | 602 | 2.6 MB | 14.8 KB | 142 | 0.395% |
+| Eleventy 3.1.6 | Node (Nunjucks) | SSG-focused | 566 | 543 | 2.7 MB | 15.0 KB | 142 | 0.400% |
+| Kudzu 0.16.40 | Kudzu (JSX, no vDOM) | SSG-focused | 717 | 786 | 2.6 MB | 15.0 KB | 141 | 0.395% |
+| Astro 7.3.4 | Astro islands (vanilla) | SSG-focused | 1313 | 1198 | 4.9 MB | 108.7 KB | 153 | 0.320% |
+| React Router 8.4.0 | React | SSG-capable | 1367 | 1301 | 6.8 MB | 354.3 KB | 285 | 0.405% |
+| VitePress 1.6.4 | Vue | SSG-focused | 1473 | 1510 | 8.5 MB | 4.6 MB | 416 | 0.402% |
+| Next.js Pages Router 16.3.6 | React | SSG-capable | 3461 | 2463 | 6.5 MB | 560.5 KB | 304 | 0.403% |
+| Next.js App Router 16.3.6 | React | SSG-capable | 4071 | 2675 | 13.8 MB | 590.5 KB | 698 | 0.401% |
+| TanStack Start 1.168.58 | React | SSG-capable | 4312 | 4170 | 6.5 MB | 352.1 KB | 146 | 0.399% |
+| Docusaurus 3.10.2 | React | SSG-focused | 4485 | 1392 | 5.0 MB | 2.3 MB | 284 | 0.403% |
 
-_Measured locally via `pnpm run build:stats` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of 3 runs after one discarded warm-up; per-run values are in `coldSamples`/`warmSamples` in `landing/benchmark.json`. Sorted by cold asc. "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at: 2026-08-20T11:00:55.519Z_
+_Measured locally via `pnpm run build:stats` (manual refresh). **Cold** deletes the output and every framework build cache (a CI cache miss); **warm** deletes only the output and keeps the caches (a CI cache hit, or your second local build). The gap between them is what that tool's cache actually buys. Each is the median of 3 runs after one discarded warm-up; per-run values are in `coldSamples`/`warmSamples` in `landing/benchmark.json`. Sorted by cold asc. Astro is the one variant that queries Notion from inside its build, so it replays the Notion API responses recorded by its warm-up build (the other nine read the prefetched content file — either way the measured builds exclude network). "Total size"/"Files" exclude image files (image handling differs per variant, so counting them would be an unfair comparison). "Origin diff" is the home-page pixel delta vs the live origin from `pnpm run origin:diff` (images/analytics blocked), or `-` if not run. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v26.10.0. Measured at: 2026-09-24T09:26:53.612Z_
 <!-- build-stats:end -->
+
+The three that fill templates and write HTML (Hugo 550 · Eleventy 566 · Kudzu 717 ms) build 1.8–8.2x faster than the seven that run a bundler (1,313–4,485 ms), and ship ~15 KB of JS — in all three the only script on the page is search (`search.js` + `munja.js`). Cold and warm only split far apart for Docusaurus (4,485 → 1,392 ms — the `.docusaurus` generated cache is most of it, measured in the comment in `scripts/lib/build-cache.mjs`) and Next.js (Pages 3,461 → 2,463 · App 4,071 → 2,675 ms); the other seven stay within ±10%, so their caches do little. React Router's cold build went from 2,229 to 1,367 ms alongside its move from Vite 7 to 8 (Rolldown). Astro's cold build dropped from the previously published 5,081 ms to 1,313 ms, and that is a measurement fix, not a faster build. Astro is the one variant that queries Notion from inside its build, so each of three back-to-back cold runs re-fetched every page; in this session that tripped Notion's rate limit and the cold median became 58 s of retry-after backoff. The loader now records the warm-up build's Notion responses and replays them (`packages/notion-loader/src/http-cache.ts`), the same no-network footing the other nine get from the prefetched file — a little over 3 of the 5 seconds of an unreplayed cold build were Notion network.
 
 <details>
 <summary>Variant → directory mapping</summary>
@@ -86,7 +100,7 @@ Automated CI measurement was removed — shared-runner performance variance made
 
 ## Commerce Benchmark
 
-The same storefront built five ways (`apps/shop-*`, deploy path `/shop-*/`): Kudzu 0.9.0 · Astro 7 + React islands · React Router v8 · TanStack Start · Next.js App Router. All of them ship complete HTML, so "time to visible content" is a tie — every difference concentrates in **time to operable**.
+The same storefront built five ways (`apps/shop-*`, deploy path `/shop-*/`): Kudzu 0.16.40 · Astro 7 + React islands · React Router v8 · TanStack Start · Next.js App Router. All of them ship complete HTML, so "time to visible content" is a tie — every difference concentrates in **time to operable**.
 
 ```bash
 pnpm run build:shop     # OTW_CATALOG_SIZE=100|1000|10000
@@ -99,13 +113,15 @@ pnpm run shop:scale     # build time by catalog size
 
 | Variant | Entry contentReady | First listing actReady | Sort stepLatency | Add stepLatency | First reliable click |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | 172 ms | **450 ms** | 2.4 ms | 0.7 ms | **first paint +300 ms** |
-| Astro (islands) | 235 ms | 2,220 ms | 9.8 ms | 1.8 ms | +1,500 ms |
-| TanStack Start | 178 ms | 2,900 ms | 7.6 ms | 1.5 ms | +2,000 ms |
-| React Router v8 | 179 ms | 2,958 ms | 30.4 ms | 1.3 ms | +2,000 ms |
-| Next.js App Router | 172 ms | 3,541 ms | 29.3 ms | 1.2 ms | +3,000 ms |
+| Kudzu | 175 ms | **1,601 ms** | 2.2 ms | 1.0 ms | **first paint +300 ms** |
+| Astro (islands) | 235 ms | 2,376 ms | 10.7 ms | 2.0 ms | +1,500 ms |
+| TanStack Start | 181 ms | 2,998 ms | 12.0 ms | 1.2 ms | +2,000 ms |
+| React Router v8 | 182 ms | 3,109 ms | 28.5 ms | 1.5 ms | +2,000 ms |
+| Next.js App Router | 177 ms | 3,549 ms | 31.7 ms | 1.8 ms | +3,000 ms |
 
-Kudzu 0.8.39 → 0.9.0 pushed first listing interaction from 250 ms to 450 ms. It is a regression confirmed by rebuilding 0.8.39 on the same machine in the same session (0.8.39 re-measured: entry 173 ms · actReady 251 ms · variant select 150 ms / 0.9.0: 172 · 450 · 301 ms). The cause is the runtime-family reshuffle described under [catalog scaling](#catalog-scaling-cold--warm-medians): per-route initial JS went down, but the five routes a session walks through now get different signature families, so the session pays more script round trips. The other four are within ±2% of their previously published values in the same session.
+Entry lands at 175–235 ms for all five — each ships HTML with the product name and price already in it. What separates them is **when that HTML starts accepting input**. The four hydration frameworks need a 69–135 KB (gzip) runtime per route to arrive and execute before any control comes alive, and an add-to-cart press before that is lost (first reliable click +1,500 to +3,000 ms). Kudzu ships only the capability modules the route uses, 3.4–9.1 KB, and clicks land from first paint +300 ms.
+
+Kudzu's first listing interaction went from the published 450 ms to 1,601 ms. To tell whether the runtime regressed, 0.9.0 was rebuilt the same day and measured with the same harness (A/B): one session gave 0.9.0 451 ms against 0.16.40 1,351 ms, but a rerun with resource timing attached split **0.9.0 into two modes as well: 350 · 1,300 · 1,701 ms** (0.16.40: 1,351 · 1,401 · 1,411 ms). What decides the value is module discovery order, not the version. The search route's `<link rel="modulepreload">` covers only its five `<script type="module">` entries; `kudzu-collection-selector.js` (2.4 KB), which `kudzu-list.js` imports statically, is only requested once the 14 KB `kudzu-list.js` has fully arrived (~525 ms). If the viewport's lazy tiles (21 KB, up to 12) were requested first, that module queues behind the photos on the 200 KB/s link and arrives at ~1.85 s — and since an ES module graph is evaluated only once every import has arrived, the sort control stays dead until then. Runs where the tiles are requested late land at ~350–450 ms. Both versions share the structure (only entries are preloaded), so the race existed in 0.9.0 too — see [defects & constraints](#real-world-defects--constraints-found) no. 11. Variant-select actReady (300 ms) and the first reliable click (+300 ms) are identical in both versions.
 
 ### Navigation contract — click transitions · back button · session transfer
 
@@ -113,13 +129,13 @@ A session doesn't only move forward. Products are opened from the listing with a
 
 | Variant | Listing→detail (click) | Back button | Filter survives | Sort survives | Total session transfer | Of which scripts |
 | --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | 229 ms | 38 ms | 0/5 | 5/5 | **302.1 KB** | **47.3 KB** |
-| Astro (islands) | 227 ms | 37 ms | 0/5 | 5/5 | 541.0 KB | 193.1 KB |
-| React Router v8 | **186 ms** | 19 ms | 0/5 | 0/5 | 616.9 KB | 322.3 KB |
-| TanStack Start | **186 ms** | 15 ms | 0/5 | 0/5 | 616.3 KB | 317.6 KB |
-| Next.js App Router | 359 ms | 46 ms | 0/5 | 5/5 | 792.1 KB | 455.5 KB |
+| Kudzu | 198 ms | 36 ms | 0/5 | 5/5 | **361.6 KB** | **42.6 KB** |
+| Astro (islands) | 225 ms | 37 ms | 0/5 | 5/5 | 569.5 KB | 221.7 KB |
+| React Router v8 | 189 ms | 17 ms | 0/5 | 0/5 | 647.5 KB | 352.9 KB |
+| TanStack Start | **186 ms** | 14 ms | 0/5 | 0/5 | 642.5 KB | 343.4 KB |
+| Next.js App Router | 360 ms | 48 ms | 0/5 | 5/5 | 793.9 KB | 456.9 KB |
 
-Client-side transitions are the one axis where SPA routers genuinely win (React Router and TanStack both at 186 ms). In exchange, they drop sort state on back navigation — the component remounts and the select resets, whereas the document-navigation variants keep it because Chrome's form restoration carries it over. Session transfer is CDP-measured across the whole session, so it includes prefetch waste, and the script gap between Kudzu and Next is 9.6x over the full session (13x on 0.8.39 — Kudzu's session scripts grew from 34.4 to 47.3 KB).
+Client-side transitions are the axis where SPA routers win (TanStack 186 ms · React Router 189 ms), but only by 12–39 ms over Kudzu (198 ms) and Astro (225 ms), which load a new document; only Next.js falls behind, at 360 ms. In exchange, the two SPAs drop sort state on back navigation — the component remounts and the select resets, whereas the document-navigation variants keep it because Chrome's form restoration carries it over. Session transfer is CDP-measured across the whole session, so it includes prefetch waste, and the script gap between Kudzu and Next is 10.7x over the full session. Kudzu's total session transfer grew from 0.9.0's 302.1 KB to 361.6 KB while its scripts shrank from 47.3 to 42.6 KB (the `kudzu-style.js` runtime module is gone and the binding runtime went from 5.6 to 4.6 KB) — the extra 59 KB came from outside the scripts (59 → 68 requests).
 
 <details>
 <summary>Measurement detail: metric definitions, why this fixture isn't split into cold/warm, back-button footnote</summary>
@@ -147,23 +163,23 @@ Back-button state is sampled 300 ms after arrival. The filter (search input valu
 
 <img src="assets/charts/en/lcp-vs-actready.svg" width="880" alt="Commerce product detail: LCP under a 21 KB tile and a 1.4 MB photo, against listing actReady">
 
-The data confirms why LCP was never the headline. In the default fixture (21 KB tiles) product-detail LCP clusters between 320 and 608 ms — a 1.9x spread — while the same five builds are 450 ms and 3,541 ms apart on "time to usable", a **7.9x** spread. LCP measures when the photograph arrives, and that photograph is the same file down to its md5 in all five variants (`584e3d7f`, 1,483,575 B).
+The data confirms why LCP was never the headline. In the default fixture (21 KB tiles) product-detail LCP clusters between 320 and 608 ms (1.9x), while the same five builds become usable between 1,601 and 3,549 ms. By spread alone 1.9x and 2.2x look alike, but **the order differs**: LCP runs Astro 320 < Next.js and TanStack 360 < Kudzu 364 < React Router 608 ms, actReady runs Kudzu < Astro < TanStack < React Router < Next.js. LCP measures when the photograph arrives, and that photograph is the same file down to its md5 in all five variants (`9af37064`, 20,963 B).
 
-So the photo was raised to a real storefront weight (1.4 MB) and measured again (`OTW_IMAGE_WEIGHT=heavy`). LCP jumps to 7.2–10.9 s, but what orders the variants is not rendering — it is **bandwidth contention**, and that is measured two ways rather than asserted.
+So the photo was raised to a real storefront weight (1.4 MB, md5 `584e3d7f`, 1,483,575 B) and measured again (`OTW_IMAGE_WEIGHT=heavy`). LCP jumps to 7.2–10.9 s, but what orders the variants is not rendering — it is **bandwidth contention**, and that is measured two ways rather than asserted.
 
-First, the photo lands when the total bytes downloaded before it, divided by the link rate, say it will. `bytesBeforeLcp` in `landing/lcp.json` checks the arithmetic: Kudzu 1,467 KB / 7,172 ms, Astro 1,639 KB / 8,008 ms, TanStack 1,767 KB / 8,636 ms and React Router 1,771 KB / 8,656 ms all come out at **205 KB/s** against the server's 200 KB/s budget. Only Next.js sits about a second above the line at 2,020 KB / 10,892 ms = 185 KB/s (it makes 7 script requests, so more round trips, but that second was not isolated further). Every row measures CV 0%: one 1.4 MB file owns the link, so there is no arrival order left to shuffle. Only the Kudzu row was re-measured on the 0.9.0 build (5 loads); the other four are from the 2026-08-19 session.
+First, the photo lands when the total bytes downloaded before it, divided by the link rate, say it will. `bytesBeforeLcp` in `landing/lcp.json` checks the arithmetic: Kudzu 1,465 KB / 7,160 ms, Astro 1,668 KB / 8,148 ms, TanStack 1,793 KB / 8,764 ms and React Router 1,802 KB / 8,804 ms all come out at **205 KB/s** against the server's 200 KB/s budget. Only Next.js sits about a second above the line at 2,021 KB / 10,912 ms = 185 KB/s (it makes 7 script requests, so more round trips, but that second was not isolated further). Every load in which the photo arrived measures CV 0%: one 1.4 MB file owns the link, so there is no arrival order left to shuffle. One of React Router's five loads (620 ms) is the browser symptom described after (3) below, a load that emitted no image candidate — it shows only in that row's range and CV.
 
-Second, abort every script request and the five collapse to **7,092–7,112 ms, a 1.00x spread** (same builds, same pacing, blocked by URL pathname — `pnpm run lcp:bench -- --block-scripts` writes them to `landing/lcp-blocked.json`). Scripts aborted: Kudzu 4 (0.9.0; 3 on 0.8.39), Astro 13, React Router 8, TanStack 4, Next.js 7, and Kudzu 0.9.0's blocked LCP is 7,108 ms — inside that range. If rendering were the cause, deleting the scripts would not bring five different architectures within 20 ms of each other. LCP here is an indirect measure of how much JavaScript you ship, and the direct measure is already in the table below.
+Second, abort every script request and the five collapse to **7,084–7,108 ms, a 1.00x spread** (same builds, same pacing, blocked by URL pathname — `pnpm run lcp:bench --block-scripts` writes them to `landing/lcp-blocked.json`). Scripts aborted: Kudzu 4, Astro 6 (13 on Astro 7.2 with `@astrojs/react` 6), React Router 8, TanStack 4, Next.js 7. If rendering were the cause, deleting the scripts would not bring five different architectures within 24 ms of each other. LCP here is an indirect measure of how much JavaScript you ship, and the direct measure is already in the table below.
 
 The heavy photograph is not applied to the listing grid. Measured, one home load pulls 9 photographs and 12.7 MB and reaches its `load` event at **63.7 s** — no real store ships originals into a grid, so the heavy condition covers the product detail route only.
 
 <img src="assets/charts/en/lcp-by-fixture.svg" width="880" alt="LCP element and timing the browser actually chose at each fixture's entry route">
 
-Where LCP does separate frameworks is the fixtures whose **LCP element is text**. On a docs deep link the browser picks a body `p` (`article.doc-body` for Eleventy), and Eleventy's 348 ms against VitePress's 1,916 ms is a 5.5x gap. Two different things produce that gap, and blocking every script separates them (same builds, same pacing, same bandwidth model, `--block-scripts`, median of 3).
+Where LCP does separate frameworks is the fixtures whose **LCP element is text**. On a docs deep link the browser picks a body `p` (`article.doc-body` for Eleventy), and Eleventy's 352 ms against VitePress's 1,936 ms is a 5.5x gap. Two different things produce that gap, and blocking every script separates them (same builds, same pacing, same bandwidth model, `--block-scripts`, median of 3).
 
-The first is when the render-blocking chain finishes. Counting only resources whose `renderBlockingStatus === "blocking"`, plus the document, that chain is 3 requests for Eleventy (2 css), 2 for Kudzu (1 css), 2 for Docusaurus (1 css) and 3 for VitePress (2 css) — and in the 2026-08-19 session its last byte landed at 312 ms, 312 ms, 608 ms and 1,824 ms respectively. LCP follows 40–85 ms later every time. What makes the number is not the request **count** but how long a blocking resource waits its turn on a 200 KB/s link. Kudzu 0.9.0 still has the same two blocking resources — the document plus `style.css` (since 0.8.53 a stylesheet is linked only where a route's source graph imports it: `apps/docs-kudzu/src/components/Shell.tsx`) — and its LCP moved 368 → 380 ms.
+The first is when the render-blocking chain finishes. Counting only resources whose `renderBlockingStatus === "blocking"`, plus the document, that chain is 3 requests for Eleventy (2 css), 2 for Kudzu (1 css), 2 for Docusaurus (1 css) and 3 for VitePress (2 css) — and in the 2026-08-19 session its last byte landed at 312 ms, 312 ms, 608 ms and 1,824 ms respectively. LCP follows 40–85 ms later every time. What makes the number is not the request **count** but how long a blocking resource waits its turn on a 200 KB/s link. Kudzu 0.16.40 still has the same two blocking resources — the document plus `style.css` (since 0.8.53 a stylesheet is linked only where a route's source graph imports it: `apps/docs-kudzu/src/components/Shell.tsx`) — and its LCP is 372 ms.
 
-The second is the scripts. All five variants ship the article text in static HTML and still paint it with every script blocked, but blocking pulls LCP in for exactly the hydrating ones: Astro 676 → 352 ms, Docusaurus 732 → 492 ms, VitePress 1,916 → 1,164 ms — a post-hydration re-render pushing the candidate out by that much. Eleventy (348 → 356 ms) and Kudzu (380 → 376 ms) do not move. That is also why Astro reads 676 ms with only one blocking resource (its CSS is inlined).
+The second is the scripts. All five variants ship the article text in static HTML and still paint it with every script blocked, but blocking pulls LCP in for exactly the hydrating ones: Astro 680 → 356 ms, Docusaurus 704 → 504 ms, VitePress 1,936 → 1,168 ms — a post-hydration re-render pushing the candidate out by that much. Eleventy (352 → 360 ms) and Kudzu (372 → 388 ms) barely move. That is also why Astro reads 680 ms with only one blocking resource (its CSS is inlined).
 
 The newsletter fixture is excluded from this bench. Its largest element is a Notion image and every variant runs a different image pipeline (sharp / unoptimized / raw copy), so LCP there would compare image tooling rather than frameworks. Its Lighthouse LCP comes from `pnpm run perf:bench`.
 
@@ -177,9 +193,9 @@ Three more harness defects turned up in the same place. All three are the kind t
 
 **(3) The probe closed its window at `load` and missed the hero.** Lazy images do not block `load`, and the commerce hero is lazy in all five variants. On the heavy condition `load` fired around 1 s with six seconds of photograph still to come, the 1.5 s quiet window expired in between, and **the product title at 352 ms was published as that variant's LCP**. It happened in one load out of three, so it left no trace in the median — only a CV of 80%. The window now stays open while any image that declares a source has not completed — even one that has not started, so `currentSrc` is still empty.
 
-The same symptom surfaced once more on the 0.9.0 heavy row, and this time it is the browser, not the window: the image completed 1.5 s before the window closed (`complete: true`, displayed 800×800 = 640,000 px²) and yet that load emitted no image LCP candidate at all, leaving a 200 ms text candidate as the last one — 3 loads out of 7, then 0 out of 4 in the following session. Per-load evidence comes from `LCP_DIAG=1 pnpm run lcp:bench -- --fixture shop --routes product` (candidate list, when the window closed, `visibilityState` transitions, image completion). The published heavy row is the 5-load session in which the symptom never appeared (7,168–7,172 ms · CV 0%).
+The same symptom returns on the heavy rows, and this time it is the browser, not the window: the image completed 1.5 s before the window closed (`complete: true`, displayed 800×800 = 640,000 px²) and yet that load emitted no image LCP candidate at all, leaving a text candidate as the last one. On 0.9.0 it hit Kudzu in 3 loads out of 7, then 0 out of 4 in the following session; in the 2026-09-24 session it hit React Router in 2 of 3 and TanStack in 1 of 3, so both rows were re-measured over 5 loads with `LCP_DIAG=1` (React Router 1 of 5, TanStack 0). Per-load evidence comes from `LCP_DIAG=1 pnpm run lcp:bench --fixture shop --routes product` (candidate list, when the window closed, `visibilityState` transitions, image completion). Those two published rows are the re-measurement; the other three are 3-load runs in which the symptom never appeared.
 
-With all three fixed, the home route sorts by bundle weight: Kudzu 792, Astro 944, TanStack 1,092, Next.js 1,096, React Router 1,364 ms. Not one line of fixture markup changed (giving the first tile `fetchpriority="high"` was measured too: it pins which tile wins, but the hero then queues ahead of CSS and JS and the spread grows to CV 13%, so it was not adopted). What is left is Kudzu's two commerce rows (home CV 13%, search CV 17%), and their cause is browser request ordering, not the model: the same 12 tiles and the same total bytes every load, but whether Chrome asks for scripts or images first flips per load, landing the first tile at either ~570 ms or ~790 ms.
+With all three fixed, the home route runs Kudzu 764, Astro 944, Next.js 1,092, TanStack 1,112, React Router 1,368 ms, and apart from Astro that is exactly the order of bytes downloaded before LCP (`bytesBeforeLcp`: 32, 68, 71, 79 KB). Astro gets to 944 ms having downloaded only 22 KB; that gap was not isolated. Not one line of fixture markup changed (giving the first tile `fetchpriority="high"` was measured too: it pins which tile wins, but the hero then queues ahead of CSS and JS and the spread grows to CV 13%, so it was not adopted). What is left is Kudzu's search row (CV 18%, 528–808 ms), and its cause is browser request ordering, not the model: the same tiles and the same total bytes every load, but whether Chrome asks for scripts or images first flips per load. It is the same kind of race that splits Kudzu's listing actReady in the session replay above.
 
 <details>
 <summary>LCP across every fixture and route</summary>
@@ -188,38 +204,38 @@ With all three fixed, the home route sorts by bundle weight: Kudzu 792, Astro 94
 <!-- lcp:start -->
 | Fixture | Route | Image | Variant | FCP | LCP | Runs · range | LCP−FCP | LCP element | LCP resource |
 | --- | --- | --- | --- | ---: | ---: | ---: | ---: | --- | ---: |
-| Commerce | Home | 21 KB tile | Kudzu | 364 ms | 792 ms | 5 · 572–792 ms · CV 13% | 428 ms | image `img` | 20.5 KB |
-| Commerce | Home | 21 KB tile | Astro | 220 ms | 944 ms | 5 · 940–964 ms · CV 1% | 728 ms | image `img` | 20.5 KB |
-| Commerce | Home | 21 KB tile | TanStack | 356 ms | 1092 ms | 5 · 1088–1100 ms · CV 0% | 736 ms | image `img` | 20.5 KB |
-| Commerce | Home | 21 KB tile | Next.js | 360 ms | 1096 ms | 5 · 1088–1120 ms · CV 1% | 736 ms | image `img` | 20.5 KB |
-| Commerce | Home | 21 KB tile | React Router | 612 ms | 1364 ms | 5 · 1268–1388 ms · CV 4% | 752 ms | image `img` | 20.5 KB |
-| Commerce | Product detail | 21 KB tile | Astro | 208 ms | 320 ms | 5 · 316–328 ms · CV 2% | 108 ms | image `img` | 20.5 KB |
-| Commerce | Product detail | 21 KB tile | TanStack | 348 ms | 352 ms | 5 · 348–356 ms · CV 1% | 0 ms | text `h1` | — |
-| Commerce | Product detail | 21 KB tile | Next.js | 352 ms | 352 ms | 5 · 348–360 ms · CV 1% | 0 ms | image `img` | 20.5 KB |
-| Commerce | Product detail | 21 KB tile | Kudzu | 360 ms | 360 ms | 5 · 356–360 ms · CV 1% | 0 ms | image `img` | 20.5 KB |
-| Commerce | Product detail | 21 KB tile | React Router | 608 ms | 608 ms | 5 · 604–616 ms · CV 1% | 0 ms | image `img` | 20.5 KB |
-| Commerce | Search listing | 21 KB tile | Kudzu | 364 ms | 616 ms | 5 · 608–836 ms · CV 17% | 248 ms | image `img` | 22.0 KB |
-| Commerce | Search listing | 21 KB tile | Astro | 212 ms | 912 ms | 5 · 904–920 ms · CV 1% | 700 ms | image `img` | 20.5 KB |
-| Commerce | Search listing | 21 KB tile | Next.js | 352 ms | 1100 ms | 5 · 1096–1116 ms · CV 1% | 748 ms | image `img` | 21.7 KB |
-| Commerce | Search listing | 21 KB tile | TanStack | 356 ms | 1112 ms | 5 · 1104–1132 ms · CV 1% | 760 ms | image `img` | 20.5 KB |
-| Commerce | Search listing | 21 KB tile | React Router | 612 ms | 1364 ms | 5 · 1356–1404 ms · CV 1% | 752 ms | image `img` | 20.5 KB |
-| Commerce | Product detail | 1.4 MB photo | Kudzu | 360 ms | 7172 ms | 5 · 7168–7172 ms · CV 0% | 6808 ms | image `img` | 1448.8 KB |
-| Commerce | Product detail | 1.4 MB photo | Astro | 212 ms | 8008 ms | 3 · 8008–8008 ms · CV 0% | 7796 ms | image `img` | 1448.8 KB |
-| Commerce | Product detail | 1.4 MB photo | TanStack | 352 ms | 8636 ms | 3 · 8636–8636 ms · CV 0% | 8284 ms | image `img` | 1448.8 KB |
-| Commerce | Product detail | 1.4 MB photo | React Router | 628 ms | 8656 ms | 3 · 8652–8656 ms · CV 0% | 8028 ms | image `img` | 1448.8 KB |
-| Commerce | Product detail | 1.4 MB photo | Next.js | 352 ms | 10892 ms | 3 · 10892–10896 ms · CV 0% | 10540 ms | image `img` | 1448.8 KB |
-| Docs | Doc deep link | — | Eleventy | 348 ms | 348 ms | 5 · 348–348 ms · CV 0% | 0 ms | text `article.doc-body` | — |
-| Docs | Doc deep link | — | Kudzu | 380 ms | 380 ms | 5 · 376–384 ms · CV 1% | 0 ms | text `p` | — |
-| Docs | Doc deep link | — | Astro | 192 ms | 676 ms | 5 · 676–676 ms · CV 0% | 484 ms | text `p` | — |
-| Docs | Doc deep link | — | Docusaurus | 732 ms | 732 ms | 5 · 700–964 ms · CV 14% | 0 ms | text `p` | — |
-| Docs | Doc deep link | — | VitePress | 1916 ms | 1916 ms | 5 · 1908–1916 ms · CV 0% | 0 ms | text `p` | — |
-| Form wizard | Step 1 | — | Astro | 196 ms | 196 ms | 5 · 192–204 ms · CV 3% | 0 ms | text `h1` | — |
-| Form wizard | Step 1 | — | React Router | 344 ms | 344 ms | 5 · 340–344 ms · CV 1% | 0 ms | text `h1` | — |
-| Form wizard | Step 1 | — | TanStack | 344 ms | 344 ms | 5 · 340–348 ms · CV 1% | 0 ms | text `h1` | — |
-| Form wizard | Step 1 | — | Next.js | 344 ms | 344 ms | 5 · 340–348 ms · CV 1% | 0 ms | text `h1` | — |
-| Form wizard | Step 1 | — | Kudzu | 348 ms | 348 ms | 5 · 348–348 ms · CV 0% | 0 ms | text `h1` | — |
+| Commerce | Home | 21 KB tile | Kudzu | 360 ms | 764 ms | 5 · 684–784 ms · CV 5% | 404 ms | image `img` | 20.5 KB |
+| Commerce | Home | 21 KB tile | Astro | 220 ms | 944 ms | 5 · 932–956 ms · CV 1% | 724 ms | image `img` | 20.5 KB |
+| Commerce | Home | 21 KB tile | Next.js | 360 ms | 1092 ms | 5 · 1088–1100 ms · CV 0% | 732 ms | image `img` | 20.5 KB |
+| Commerce | Home | 21 KB tile | TanStack | 364 ms | 1112 ms | 5 · 1104–1116 ms · CV 0% | 744 ms | image `img` | 20.5 KB |
+| Commerce | Home | 21 KB tile | React Router | 616 ms | 1368 ms | 5 · 1244–1376 ms · CV 4% | 752 ms | image `img` | 21.3 KB |
+| Commerce | Product detail | 21 KB tile | Astro | 212 ms | 320 ms | 5 · 316–320 ms · CV 1% | 108 ms | image `img` | 20.5 KB |
+| Commerce | Product detail | 21 KB tile | TanStack | 356 ms | 360 ms | 5 · 356–364 ms · CV 1% | 0 ms | image `img` | 20.5 KB |
+| Commerce | Product detail | 21 KB tile | Next.js | 360 ms | 360 ms | 5 · 356–364 ms · CV 1% | 0 ms | image `img` | 20.5 KB |
+| Commerce | Product detail | 21 KB tile | Kudzu | 360 ms | 364 ms | 5 · 360–384 ms · CV 3% | 0 ms | image `img` | 20.5 KB |
+| Commerce | Product detail | 21 KB tile | React Router | 608 ms | 608 ms | 5 · 596–640 ms · CV 3% | 0 ms | image `img` | 20.5 KB |
+| Commerce | Search listing | 21 KB tile | Kudzu | 360 ms | 784 ms | 5 · 528–808 ms · CV 18% | 428 ms | image `img` | 22.0 KB |
+| Commerce | Search listing | 21 KB tile | Astro | 220 ms | 920 ms | 5 · 912–948 ms · CV 2% | 700 ms | image `img` | 20.5 KB |
+| Commerce | Search listing | 21 KB tile | Next.js | 360 ms | 1096 ms | 5 · 1096–1104 ms · CV 0% | 736 ms | image `img` | 21.7 KB |
+| Commerce | Search listing | 21 KB tile | TanStack | 364 ms | 1132 ms | 5 · 1112–1152 ms · CV 1% | 768 ms | image `img` | 20.5 KB |
+| Commerce | Search listing | 21 KB tile | React Router | 616 ms | 1380 ms | 5 · 1372–1392 ms · CV 1% | 768 ms | image `img` | 20.5 KB |
+| Commerce | Product detail | 1.4 MB photo | Kudzu | 364 ms | 7160 ms | 3 · 7160–7160 ms · CV 0% | 6796 ms | image `img` | 1448.8 KB |
+| Commerce | Product detail | 1.4 MB photo | Astro | 212 ms | 8148 ms | 3 · 8148–8148 ms · CV 0% | 7936 ms | image `img` | 1448.8 KB |
+| Commerce | Product detail | 1.4 MB photo | TanStack | 356 ms | 8764 ms | 5 · 8760–8772 ms · CV 0% | 8408 ms | image `img` | 1448.8 KB |
+| Commerce | Product detail | 1.4 MB photo | React Router | 628 ms | 8804 ms | 5 · 620–8804 ms · CV 51% | 8116 ms | image `img` | 1448.8 KB |
+| Commerce | Product detail | 1.4 MB photo | Next.js | 352 ms | 10912 ms | 3 · 10912–10912 ms · CV 0% | 10560 ms | image `img` | 1448.8 KB |
+| Docs | Doc deep link | — | Eleventy | 352 ms | 352 ms | 5 · 352–376 ms · CV 3% | 0 ms | text `article.doc-body` | — |
+| Docs | Doc deep link | — | Kudzu | 372 ms | 372 ms | 5 · 372–376 ms · CV 1% | 0 ms | text `p` | — |
+| Docs | Doc deep link | — | Astro | 192 ms | 680 ms | 5 · 676–700 ms · CV 1% | 488 ms | text `p` | — |
+| Docs | Doc deep link | — | Docusaurus | 704 ms | 704 ms | 5 · 700–864 ms · CV 10% | 0 ms | text `p` | — |
+| Docs | Doc deep link | — | VitePress | 1932 ms | 1936 ms | 5 · 1924–1960 ms · CV 1% | 0 ms | text `p` | — |
+| Form wizard | Step 1 | — | Astro | 200 ms | 200 ms | 5 · 196–216 ms · CV 4% | 0 ms | text `h1` | — |
+| Form wizard | Step 1 | — | Kudzu | 348 ms | 348 ms | 5 · 344–352 ms · CV 1% | 0 ms | text `h1` | — |
+| Form wizard | Step 1 | — | React Router | 348 ms | 348 ms | 5 · 348–372 ms · CV 3% | 0 ms | text `h1` | — |
+| Form wizard | Step 1 | — | TanStack | 348 ms | 348 ms | 5 · 344–364 ms · CV 3% | 0 ms | text `h1` | — |
+| Form wizard | Step 1 | — | Next.js | 348 ms | 348 ms | 5 · 344–352 ms · CV 1% | 0 ms | text `h1` | — |
 
-_Measured locally via `pnpm run lcp:bench` (manual refresh). Each row is the median of the loads counted in its "Runs · range" cell after one discarded warm-up; per-run values are in `lcpSamples` and the element the browser picked on each run is in `lcpSampleElements`, both in `landing/lcp.json`. **Read the range and CV together with the median.** On the commerce home and search routes the viewport holds several equally sized 21 KB tiles, so LCP is "the first tile that arrived" and the element behind it is whichever tile won that load (`lcpSampleElements`). What made this table move between sessions until 2026-08-19 was the harness, not the fixture: the token bucket was polled per response, so bandwidth went to whichever response woke first (React Router's home route 716–1900 ms, CV 40%, its published median flipping 732 -> 1680 ms between two sessions); the 16 KB chunk let the link run in bursts (Kudzu's home route stepped in 16 KB = 80 ms stairs: 508, 548, 612, 688 ms); and the probe closed its window at `load`, missing the lazy hero (on the heavy condition one load in three published the title at 352 ms). With arrival-order queueing, MTU-sized (1460 B) pacing and a window that stays open while an image is still arriving, that same React Router row measures 1252–1368 ms (CV 4%). The double-digit CV rows that remain — Kudzu's commerce home and search — come from Chrome flipping its request order per load, which is why they are measured at 15 loads. A large LCP−FCP is where bandwidth contention shows: a variant that spends the 200 KB/s link on its own client bundle before the first tile finishes paints exactly that much later (see `bytesBeforeLcp` and `scriptBytesBeforeLcp`). The link, not the CPU, is the bottleneck here — on the CDP trace the LCP entry lands ~10 ms after the winning image's `Network.loadingFinished` in every run, with no long task before it. Uses the browser's own definition — the **final** `PerformanceObserver('largest-contentful-paint')` candidate, so a hydration re-render that pushes the candidate later shows up here. The "LCP element" and "LCP resource" columns come from the run that produced the published median, not from the last run. The harness never clicks or scrolls (the first input freezes LCP). The "Image" column is the commerce fixture's image-weight condition (`OTW_IMAGE_WEIGHT`): the default is a 21 KB tile, `heavy` is a 1.4 MB photograph, and in both conditions all five variants serve a file identical down to its md5. The docs and form fixtures have no images. Bandwidth is modelled in the server rather than through CDP (with `Network.emulateNetworkConditions` on, this Chromium never reports a late-arriving image as an LCP candidate — the measurement table is in `scripts/lcp-bench.mjs`). 4x CPU · slow4g (server-paced) · 1280×900. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v24.17.0. Measured at 2026-08-20T11:16:55.368Z_
+_Measured locally via `pnpm run lcp:bench` (manual refresh). Each row is the median of the loads counted in its "Runs · range" cell after one discarded warm-up; per-run values are in `lcpSamples` and the element the browser picked on each run is in `lcpSampleElements`, both in `landing/lcp.json`. **Read the range and CV together with the median.** On the commerce home and search routes the viewport holds several equally sized 21 KB tiles, so LCP is "the first tile that arrived" and the element behind it is whichever tile won that load (`lcpSampleElements`). What made this table move between sessions until 2026-08-19 was the harness, not the fixture: the token bucket was polled per response, so bandwidth went to whichever response woke first (React Router's home route 716–1900 ms, CV 40%, its published median flipping 732 -> 1680 ms between two sessions); the 16 KB chunk let the link run in bursts (Kudzu's home route stepped in 16 KB = 80 ms stairs: 508, 548, 612, 688 ms); and the probe closed its window at `load`, missing the lazy hero (on the heavy condition one load in three published the title at 352 ms). With arrival-order queueing, MTU-sized (1460 B) pacing and a window that stays open while an image is still arriving, that same React Router row measures 1252–1368 ms (CV 4%). The double-digit CV rows that remain — Kudzu's commerce home and search — come from Chrome flipping its request order per load, which is why they are measured at 15 loads. A large LCP−FCP is where bandwidth contention shows: a variant that spends the 200 KB/s link on its own client bundle before the first tile finishes paints exactly that much later (see `bytesBeforeLcp` and `scriptBytesBeforeLcp`). The link, not the CPU, is the bottleneck here — on the CDP trace the LCP entry lands ~10 ms after the winning image's `Network.loadingFinished` in every run, with no long task before it. Uses the browser's own definition — the **final** `PerformanceObserver('largest-contentful-paint')` candidate, so a hydration re-render that pushes the candidate later shows up here. The "LCP element" and "LCP resource" columns come from the run that produced the published median, not from the last run. The harness never clicks or scrolls (the first input freezes LCP). The "Image" column is the commerce fixture's image-weight condition (`OTW_IMAGE_WEIGHT`): the default is a 21 KB tile, `heavy` is a 1.4 MB photograph, and in both conditions all five variants serve a file identical down to its md5. The docs and form fixtures have no images. Bandwidth is modelled in the server rather than through CDP (with `Network.emulateNetworkConditions` on, this Chromium never reports a late-arriving image as an LCP candidate — the measurement table is in `scripts/lcp-bench.mjs`). 4x CPU · slow4g (server-paced) · 1280×900. Machine: Apple M4 · 10 cores · 16 GB RAM · darwin/arm64 · Node v26.10.0. Measured at 2026-09-24T09:29:12.715Z_
 <!-- lcp:end -->
 
 </details>
@@ -230,13 +246,15 @@ Bytes the browser actually downloaded. Static import-graph analysis gives a diff
 
 | Variant | Home | Search | Product | Checkout | Total output (images excluded) |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Kudzu | **4.2** | 9.8 | 5.1 | **4.2** | 1.06 MB |
-| Astro | 60.6 | 61.0 | 61.1 | 60.6 | 1.72 MB |
-| React Router | 104.3 | 104.1 | 104.2 | 103.7 | 1.09 MB |
-| TanStack | 101.7 | 101.7 | 101.8 | 101.3 | 1.66 MB |
-| Next.js | 134.1 | 134.8 | 133.8 | 132.8 | 4.24 MB |
+| Kudzu | **3.4** | 9.1 | 4.2 | **3.4** | 1.06 MB |
+| Astro | 68.9 | 69.4 | 69.5 | 68.9 | 1.75 MB |
+| React Router | 111.4 | 111.4 | 111.8 | 111.1 | 1.12 MB |
+| TanStack | 109.6 | 109.6 | 109.7 | 109.3 | 1.72 MB |
+| Next.js | 134.6 | 135.3 | 134.2 | 133.4 | 4.25 MB |
 
-Only Kudzu varies by route (the search page's keyed-list runtime, +5.6 KB; the product page's native handler, +0.9 KB). From 0.8.39 to 0.9.0 home and checkout went 4.7 → 4.2 KB, search 9.4 → 9.8 KB and total output 1.14 → 1.06 MB: the capability modules that used to be baked per route are now merged into signature families (232 → 29 JS files for a 100-product catalog), so each route's first bytes shrink and only the search route pulls a whole keyed-list family. Astro's island split is real, but as long as the cart badge lives in the global header, every route pays for the react-dom runtime. Next.js dropped from the 145 KB range to the 134 KB range going 16.2 → 16.3, and TanStack from the 104 KB range to the 101 KB range with vite 7 → 8 + @vitejs/plugin-react 6.
+Only Kudzu varies by route (the search page's keyed-list runtime, +5.7 KB; the product page's native handler, +0.8 KB). From 0.9.0 to 0.16.40 home and checkout went 4.2 → 3.4 KB, search 9.8 → 9.1 KB and product 5.1 → 4.2 KB: the binding runtime baked per route family now keeps only the attributes that family actually binds (just `value` for the search family, where 0.9.0 carried `class`, `disabled`, `value`, `checked` and `style`), which took it from 5.6 to 4.6 KB, and the style-serialization module (`kudzu-style.js`) is gone (29 → 26 JS files for a 100-product catalog). Astro's island split is real, but as long as the cart badge lives in the global header, every route pays for the react-dom runtime.
+
+The three React-based variants grew by the same amount this time — Astro 60.6 → 68.9 KB, React Router 104.3 → 111.4 KB, TanStack 101.7 → 109.6 KB. What those three frameworks have in common is react/react-dom 19.2.8 → 19.3.0 (the react-dom client production build alone went 93.5 → 109.0 KB gzip), and only Next.js stays put at 134.1 → 134.6 KB: Next ships its own vendored React (`19.3.0-canary-cbb046ab-20260731`), so the app's react upgrade never reaches it.
 
 ### Degradation resilience (read info · browse category · open detail · filter · select option · add to cart)
 
@@ -256,13 +274,13 @@ TanStack's "1 script lost" cell wobbles ±1 between runs (3–4/6) depending on 
 
 | Variant | 100 items | 1,000 items | Per page (1,000) |
 | --- | ---: | ---: | ---: |
-| Kudzu | **1,174 / 1,240 ms** | 2,075 / 2,088 ms | 2.07 ms |
-| Astro | 1,447 / 1,426 ms | **1,897 / 1,830 ms** | 1.90 ms |
-| TanStack | 1,623 / 1,604 ms | 2,530 / 2,553 ms | 2.53 ms |
-| React Router | 1,919 / 1,968 ms | 3,350 / 3,254 ms | 3.35 ms |
-| Next.js | 4,418 / 3,216 ms | 5,623 / 4,999 ms | 5.62 ms |
+| Kudzu | **1,156 / 1,083 ms** | 2,307 / 2,257 ms | 2.31 ms |
+| Astro | 1,241 / 1,233 ms | **1,690 / 1,740 ms** | 1.69 ms |
+| React Router | 1,280 / 1,208 ms | 2,405 / 2,461 ms | 2.41 ms |
+| TanStack | 1,333 / 1,330 ms | 1,994 / 2,259 ms | 1.99 ms |
+| Next.js | 4,232 / 2,857 ms | 5,096 / 4,336 ms | 5.10 ms |
 
-0.9.0 flattened Kudzu's scaling slope: 100 → 1,000 items went from 2.8x to **1.77x**, and the 1,000-item absolute time from 3,557 ms to 2,075 ms (-42%). The cause is route-descriptor interning: 0.8.39 emitted a separate effect and native-handler module per product (232 JS files for a 100-product catalog), 0.9.0 merges equal signatures into one family and emits 29 — growing the catalog to 1,000 products bakes no new capability module. Kudzu is now the fastest of the five at 100 items and second to Astro (1,897 ms) at 1,000. Next 16.3 is the only variant whose commerce cold and warm builds diverge (the other four still tie — the only caches that do real work remain Docusaurus and Astro in the newsletter fixture).
+Kudzu is the fastest at 100 items and third at 1,000 (2,307 ms), behind Astro (1,690 ms) and TanStack (1,994 ms). The 100 → 1,000 slopes are Next.js 1.20x · Astro 1.36x · TanStack 1.50x · React Router 1.88x · Kudzu 2.00x — Next.js has the flattest slope but such a large fixed cost (4.2 s at 100 items) that it is still last in absolute terms. React Router moved the most: 1,919 → 1,280 ms at 100 items and 3,350 → 2,405 ms at 1,000. That coincides with its three apps moving from Vite 7 to 8 (Rolldown) in this update (TanStack sped up the same way when it moved to Vite 8 in August), and the newsletter fixture shows the same, cold 2,229 → 1,367 ms. Kudzu's slope, flattened to 1.77x by 0.9.0, crept back to 2.00x (2,075 → 2,307 ms at 1,000 items); the cause was not isolated. Next 16.3 is the only variant whose commerce cold and warm builds diverge — the only caches doing real work are Docusaurus and Next.js in the newsletter fixture, and Next.js here.
 
 ## Form Wizard Benchmark
 
@@ -278,13 +296,13 @@ pnpm run form:report    # publish the measurements to landing/form.json (what th
 
 | Variant | Entry contentReady | Conditional field toggle | Next-step arrival | State transport complete | Summary render |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Astro (inline script) | 199 ms | 0.6 ms | 175 ms | **196 ms** | 211 ms |
-| TanStack Start | 174 ms | 2.3 ms | 184 ms | **191 ms** | **173 ms** |
-| React Router v8 | 173 ms | 3.2 ms | **173 ms** | 395 ms | 375 ms |
-| Next.js App Router | 175 ms | 2.6 ms | 189 ms | 365 ms | 377 ms |
-| Kudzu | 175 ms | 0.7 ms | 178 ms | 700 ms | 502 ms |
+| Astro (inline script) | 201 ms | 0.9 ms | **177 ms** | **199 ms** | 211 ms |
+| TanStack Start | 174 ms | 2.7 ms | 190 ms | **198 ms** | **177 ms** |
+| React Router v8 | 173 ms | 3.7 ms | 181 ms | 407 ms | 377 ms |
+| Next.js App Router | 175 ms | 2.4 ms | 190 ms | 371 ms | 374 ms |
+| Kudzu | 175 ms | 0.8 ms | **177 ms** | 703 ms | 519 ms |
 
-**This is the axis Kudzu loses.** State transport (submit → the next step's hidden inputs are filled) only starts once the page's effect module arrives, and on Slow 4G that module-chain round trip becomes pure cost (700 ms — last place). 0.8.39 and 0.9.0 tie on this axis (702 → 700 ms; summary render 520 → 502 ms). TanStack burns 2.9 s on hydration in commerce, but here the router intercepts the submit and transitions within the same document, so the architecture works in its favor.
+**This is the axis Kudzu loses.** State transport (submit → the next step's hidden inputs are filled) only starts once the page's effect module arrives, and on Slow 4G that module-chain round trip becomes pure cost (703 ms — last place). 0.9.0 and 0.16.40 tie on this axis (700 → 703 ms; summary render 502 → 519 ms). React Router's and Next.js's 370–410 ms come from the `useEffect` that fills the hidden inputs running only after hydration, while Astro does the same job in an inline script right after parsing (199 ms). TanStack burns 3.0 s on hydration in commerce, but here the router intercepts the submit and transitions within the same document, so the architecture works in its favor (198 ms).
 
 ### Degradation resilience (step navigation · state transport · conditional toggle · summary render · reference render)
 
@@ -321,13 +339,13 @@ pnpm run docs:bench     # doc arrival + first search result + index transfer
 
 | Variant | Doc contentReady | Initial JS | First search result | Search transfer |
 | --- | ---: | ---: | ---: | ---: |
-| Kudzu + Pagefind | **249 ms** | 119.1 KB | **1,751 ms** | **44.7 KB** |
-| Eleventy + Pagefind | 277 ms | 117.4 KB | 1,758 ms | **44.7 KB** |
-| Astro + Pagefind | 982 ms | 117.4 KB | **1,750 ms** | **44.7 KB** |
-| Docusaurus + search-local | 1,223 ms | 719.6 KB | 6,820 ms | 190.7 KB |
-| VitePress + local search | 2,209 ms | 165.4 KB | 2,512 ms | 402.4 KB |
+| Kudzu + Pagefind | **242 ms** | 119.1 KB | **1,752 ms** | **44.7 KB** |
+| Eleventy + Pagefind | 278 ms | 117.4 KB | 1,754 ms | **44.7 KB** |
+| Astro + Pagefind | 991 ms | 117.4 KB | 1,753 ms | **44.7 KB** |
+| Docusaurus + search-local | 1,216 ms | 747.9 KB | 6,820 ms | 190.7 KB |
+| VitePress + local search | 2,209 ms | 166.4 KB | 2,508 ms | 402.4 KB |
 
-The search architecture shows through directly. Pagefind only downloads the index shard a query actually needs, so all three variants pay exactly the same cost (44.7 KB, 1.75 s) — regardless of framework, search is a property of Pagefind. Docusaurus's search-local ships the entire lunr index bundled into initial JS (a large share of that 719.6 KB), taking 6.8 s to the first result. VitePress downloads the whole minisearch index when search opens (402.4 KB — the index grows in proportion to corpus size). Kudzu 0.8.39 and 0.9.0 tie on this fixture (250 → 249 ms, initial JS unchanged at 119.1 KB — a docs route's only capability is the search script, so the runtime-family reshuffle does not reach it).
+The search architecture shows through directly. Pagefind only downloads the index shard a query actually needs, so all three variants pay exactly the same cost (44.7 KB, 1.75 s) — regardless of framework, search is a property of Pagefind. Docusaurus's search-local ships the entire lunr index bundled into initial JS (a large share of that 747.9 KB — up from 719.6 KB with React 19.3), taking 6.8 s to the first result. VitePress downloads the whole minisearch index when search opens (402.4 KB — the index grows in proportion to corpus size). Doc arrival is fastest for Kudzu and Eleventy (242–278 ms), and Docusaurus and VitePress arrive as late as the render-blocking chain from the [LCP](#lcp) section implies (their FCPs are 704 and 1,932 ms). Why Astro (991 ms) diverges so far from its FCP in the LCP bench (192 ms) was not isolated — the two benches model bandwidth differently to begin with (CDP throttling vs server pacing). Kudzu is unchanged on this fixture from 0.9.0 to 0.16.40 (249 → 242 ms, initial JS 119.1 KB — a docs route's only capability is the search script, so runtime changes do not reach it).
 
 <details>
 <summary>Measurement detail</summary>
@@ -365,20 +383,28 @@ Only things worth filing upstream against the framework itself — genuine upstr
 10. **Kudzu 0.8.53+ — stylesheets became source-graph dependent, and CSS vanished silently (measured on the 0.8.39 → 0.9.0 upgrade)**
     Through 0.8.39 every CSS file under `src/` was linked on every page in path-sorted order. Since 0.8.53's "route-aware CSS closure" a stylesheet is linked only when the route's reachable source graph imports it with `import "./x.css"` (`orderSourceStyles` in `framework/compiler/source-compiler.mjs`, or `kudzu.config.styles`). All four Kudzu apps here relied on the former, so upgrading to 0.9.0 produced builds that succeeded, kept every page and route contract — and **emitted no stylesheet at all**, with no error and no warning. An unstyled build quietly corrupts the benchmarks too: commerce home LCP switched from a 792 ms image to a 196 ms text node (no layout, so the largest element changes), the newsletter output dropped from 141 to 139 files, and the docs deep link "improved" from 380 ms to 196 ms. Fixed by importing the global sheet from each app's shared component (`apps/*/src/components/Header.tsx`, `Shell.tsx`, and the form's four step pages) and the post-body sheet only from the route that renders it (`apps/kudzu/src/pages/news/post/[slug].tsx`). Not a framework bug, but the kind of contract change that alters static output silently across a minor upgrade.
 
+11. **Kudzu 0.9.0–0.16.40 — `modulepreload` covers only a route's entry modules, so transitive imports queue behind lazy images**
+    Route HTML adds a `<link rel="modulepreload">` for every `<script type="module">` entry, but the runtime pieces those entries import statically (for the commerce search route: `kudzu-collection-selector.js`, `kudzu-serialization.js`, `kudzu-native.js`, `kudzu-effect.js`, and two handler modules) are not in the preload list. The browser only discovers them once the entries have downloaded and parsed; if the viewport's lazy images were requested in the meantime, those modules queue behind the images on a narrow link, and because an ES module graph is evaluated only once every import has arrived, every capability on the route waits with them. Measured on the commerce listing with resource timing, the 2.4 KB `kudzu-collection-selector.js` is requested at ~525 ms and arrives at ~1.85 s, and the sort control's actReady splits into ~350–450 ms and ~1.3–1.7 s modes (Slow 4G · 4x CPU, on both 0.9.0 and 0.16.40). Preloading the entries' whole static import closure (what Vite does for entry chunks) would remove the discovery delay altogether. Less a bug than an omission in the output, but it is the kind that cancels this framework's advantage — few, small requests — on a slow link.
+
+<!-- landing:end -->
+
 ## Verification tools (local only)
 
 - `pnpm run build:stats` — newsletter clean-build time/output size → refreshes the README tables.
 - `pnpm run perf:bench` — Lighthouse desktop + routing-transition measurement → `bench/report.md`.
 - `pnpm run origin:diff` / `pnpm run visual:diff` — pixel diff (vs. the live origin / across variants).
 - `pnpm run test:e2e` — Playwright e2e (newsletter variants × 5 scenarios).
-- `pnpm run shop:bench -- --variant shop-kudzu` — commerce session replay → `bench/<variant>.json`.
-- `pnpm run shop:assets` / `pnpm run shop:scale -- --sizes 100,1000,10000` — per-route JS · scale build.
-- `pnpm run form:bench -- --variant form-kudzu` — form wizard → `bench/form-<variant>.json`.
-- `pnpm run docs:bench -- --variant docs-kudzu` — docs search → `bench/docs-<variant>.json`.
+- `pnpm run shop:bench --variant shop-kudzu` — commerce session replay → `bench/<variant>.json`.
+- `pnpm run shop:assets` / `pnpm run shop:scale --sizes 100,1000,10000` — per-route JS · scale build.
+- `pnpm run form:bench --variant form-kudzu` — form wizard → `bench/form-<variant>.json`.
+- `pnpm run docs:bench --variant docs-kudzu` — docs search → `bench/docs-<variant>.json`.
 - `pnpm run shop:report` — merges commerce measurements into `landing/commerce.json`.
 - `pnpm run form:report` — publishes form-wizard measurements to `landing/form.json` (`bench/` is not committed, so this is what the charts read).
 - `pnpm run lcp:bench` — FCP/LCP plus the LCP element the browser chose, at the commerce, docs and form entry routes → `landing/lcp.json` and the README `LCP` table. Narrow it with `--routes product --runs 3`; build with `OTW_IMAGE_WEIGHT=heavy` to measure the 1.4 MB photograph condition. `--block-scripts` measures the control condition with every `*.js` request aborted and writes it to `landing/lcp-blocked.json` without touching the published table; `LCP_DIAG=1` prints, per load, the candidate list, when the probe closed, `visibilityState` transitions and whether images completed. `--readme-only` re-renders the table without measuring.
 - `pnpm run charts` — regenerates the README's SVG bar charts from the committed measurements → `assets/charts/{ko,en}/`. Each card is stamped with its fixture, the command that measured it, the file it was read from, and the measurement dates.
+- `pnpm run landing` — renders the part of this README between its `landing:start` and `landing:end` comments into the landing page → `landing/en/index.html` (English), and `README.md` into `landing/index.html` (Korean). The charts are deployed alongside under `site/charts/`, and every deploy re-renders the pages.
+
+Pass flags without `--`: pnpm 10 forwards a literal `--` to the script, and the bench scripts reject flags they do not know.
 
 ## Development
 
@@ -397,11 +423,11 @@ pnpm dev          # apps/web
 The CI deploy workflow was removed — deploys run locally.
 
 ```bash
-pnpm run deploy:pages              # prefetch → build:all → assemble site/ → push gh-pages
-pnpm run deploy:pages -- --skip-build  # assemble & push from already-built output only
+pnpm run deploy:pages              # prefetch → build:all → render landing → assemble site/ → push gh-pages
+pnpm run deploy:pages --skip-build     # assemble & push from already-built output only
 ```
 
-`scripts/deploy-pages.mjs` builds every variant, assembles `site/` with the `assembleSite()` layout, then force-pushes an orphan commit to `gh-pages`. The commerce, form, and docs fixtures are included automatically if already built, and skipped otherwise.
+`scripts/deploy-pages.mjs` builds every variant, renders the landing pages (Korean and English) from the READMEs, assembles `site/` with the `assembleSite()` layout, then force-pushes an orphan commit to `gh-pages`. The commerce, form, and docs fixtures are included automatically if already built, and skipped otherwise.
 
 ## Content
 

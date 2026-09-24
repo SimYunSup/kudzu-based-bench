@@ -1,0 +1,562 @@
+{
+  "measuredAt": "2026-09-24T10:13:23.286Z",
+  "benchMeasuredFrom": "2026-09-24T08:30:15.946Z",
+  "benchMeasuredAt": "2026-09-24T08:39:36.352Z",
+  "sources": {
+    "bench": [
+      "shop-kudzu",
+      "shop-astro",
+      "shop-react-router",
+      "shop-tanstack",
+      "shop-next-app"
+    ],
+    "assets": "2026-09-24T08:26:02.830Z",
+    "scale": "2026-09-24T08:39:36.429Z"
+  },
+  "sizes": [
+    100,
+    1000
+  ],
+  "rows": [
+    {
+      "key": "shop-kudzu",
+      "label": "Kudzu",
+      "based": "Kudzu (JSX, no vDOM)",
+      "path": "/shop-kudzu/",
+      "measuredAt": "2026-09-24T08:30:15.946Z",
+      "entryContentReadyMs": 174.8,
+      "listingActReadyMs": 1600.7,
+      "sortLatencyMs": 2.2,
+      "addLatencyMs": 1,
+      "firstReliableClickMs": 300,
+      "clickLoss": [
+        {
+          "delay": 0,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 100,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 300,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 500,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 1000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 1500,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 2000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 3000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 5000,
+          "attempts": 5,
+          "lossPct": 0
+        }
+      ],
+      "resilience": {
+        "js-blocked": 3,
+        "js-slow": 6,
+        "chunk-404": 6
+      },
+      "resilienceTotal": 15,
+      "resilienceMax": 18,
+      "homeJsGzip": 3435,
+      "searchJsGzip": 9369,
+      "checkoutJsGzip": 3432,
+      "outputBytes": 1106788,
+      "scale": [
+        {
+          "size": 100,
+          "coldMs": 1156,
+          "warmMs": 1083,
+          "coldSamples": [
+            1255,
+            1156,
+            1125
+          ],
+          "warmSamples": [
+            1162,
+            1083,
+            1081
+          ],
+          "msPerPage": 11.56,
+          "outputMB": 1.06,
+          "files": 138
+        },
+        {
+          "size": 1000,
+          "coldMs": 2307,
+          "warmMs": 2257,
+          "coldSamples": [
+            2420,
+            2307,
+            2222
+          ],
+          "warmSamples": [
+            2243,
+            2257,
+            2276
+          ],
+          "msPerPage": 2.31,
+          "outputMB": 9.41,
+          "files": 1038
+        }
+      ]
+    },
+    {
+      "key": "shop-astro",
+      "label": "Astro",
+      "based": "Astro + React islands",
+      "path": "/shop-astro/",
+      "measuredAt": "2026-09-24T08:32:24.968Z",
+      "entryContentReadyMs": 235.1,
+      "listingActReadyMs": 2375.9,
+      "sortLatencyMs": 10.7,
+      "addLatencyMs": 2,
+      "firstReliableClickMs": 1500,
+      "clickLoss": [
+        {
+          "delay": 0,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 100,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 300,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1000,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1500,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 2000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 3000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 5000,
+          "attempts": 5,
+          "lossPct": 0
+        }
+      ],
+      "resilience": {
+        "js-blocked": 3,
+        "js-slow": 3,
+        "chunk-404": 6
+      },
+      "resilienceTotal": 12,
+      "resilienceMax": 18,
+      "homeJsGzip": 70595,
+      "searchJsGzip": 71015,
+      "checkoutJsGzip": 70598,
+      "outputBytes": 1834769,
+      "scale": [
+        {
+          "size": 100,
+          "coldMs": 1241,
+          "warmMs": 1233,
+          "coldSamples": [
+            1241,
+            1232,
+            1254
+          ],
+          "warmSamples": [
+            1302,
+            1198,
+            1233
+          ],
+          "msPerPage": 12.41,
+          "outputMB": 1.75,
+          "files": 118
+        },
+        {
+          "size": 1000,
+          "coldMs": 1690,
+          "warmMs": 1740,
+          "coldSamples": [
+            1717,
+            1634,
+            1690
+          ],
+          "warmSamples": [
+            1740,
+            1743,
+            1549
+          ],
+          "msPerPage": 1.69,
+          "outputMB": 13.98,
+          "files": 1018
+        }
+      ]
+    },
+    {
+      "key": "shop-react-router",
+      "label": "React Router",
+      "based": "React",
+      "path": "/shop-react-router/",
+      "measuredAt": "2026-09-24T08:34:49.130Z",
+      "entryContentReadyMs": 181.8,
+      "listingActReadyMs": 3109,
+      "sortLatencyMs": 28.5,
+      "addLatencyMs": 1.5,
+      "firstReliableClickMs": 2000,
+      "clickLoss": [
+        {
+          "delay": 0,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 100,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 300,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1000,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 2000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 3000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 5000,
+          "attempts": 5,
+          "lossPct": 0
+        }
+      ],
+      "resilience": {
+        "js-blocked": 3,
+        "js-slow": 2,
+        "chunk-404": 3
+      },
+      "resilienceTotal": 8,
+      "resilienceMax": 18,
+      "homeJsGzip": 114083,
+      "searchJsGzip": 114116,
+      "checkoutJsGzip": 113811,
+      "outputBytes": 1170903,
+      "scale": [
+        {
+          "size": 100,
+          "coldMs": 1280,
+          "warmMs": 1208,
+          "coldSamples": [
+            1280,
+            1310,
+            1215
+          ],
+          "warmSamples": [
+            1208,
+            1206,
+            1230
+          ],
+          "msPerPage": 12.8,
+          "outputMB": 1.12,
+          "files": 125
+        },
+        {
+          "size": 1000,
+          "coldMs": 2405,
+          "warmMs": 2461,
+          "coldSamples": [
+            2405,
+            2366,
+            2500
+          ],
+          "warmSamples": [
+            2623,
+            2461,
+            2439
+          ],
+          "msPerPage": 2.41,
+          "outputMB": 7.07,
+          "files": 1025
+        }
+      ]
+    },
+    {
+      "key": "shop-tanstack",
+      "label": "TanStack Start",
+      "based": "React",
+      "path": "/shop-tanstack/",
+      "measuredAt": "2026-09-24T08:37:09.816Z",
+      "entryContentReadyMs": 180.7,
+      "listingActReadyMs": 2997.5,
+      "sortLatencyMs": 12,
+      "addLatencyMs": 1.2,
+      "firstReliableClickMs": 2000,
+      "clickLoss": [
+        {
+          "delay": 0,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 100,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 300,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1000,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 2000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 3000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 5000,
+          "attempts": 5,
+          "lossPct": 0
+        }
+      ],
+      "resilience": {
+        "js-blocked": 3,
+        "js-slow": 2,
+        "chunk-404": 3
+      },
+      "resilienceTotal": 8,
+      "resilienceMax": 18,
+      "homeJsGzip": 112218,
+      "searchJsGzip": 112217,
+      "checkoutJsGzip": 111878,
+      "outputBytes": 1803565,
+      "scale": [
+        {
+          "size": 100,
+          "coldMs": 1333,
+          "warmMs": 1330,
+          "coldSamples": [
+            1335,
+            1333,
+            1329
+          ],
+          "warmSamples": [
+            1319,
+            1330,
+            1414
+          ],
+          "msPerPage": 13.33,
+          "outputMB": 1.72,
+          "files": 133
+        },
+        {
+          "size": 1000,
+          "coldMs": 1994,
+          "warmMs": 2259,
+          "coldSamples": [
+            1994,
+            1986,
+            2135
+          ],
+          "warmSamples": [
+            2348,
+            2233,
+            2259
+          ],
+          "msPerPage": 1.99,
+          "outputMB": 10.37,
+          "files": 1033
+        }
+      ]
+    },
+    {
+      "key": "shop-next-app",
+      "label": "Next.js App Router",
+      "based": "React",
+      "path": "/shop-next-app/",
+      "measuredAt": "2026-09-24T08:39:36.352Z",
+      "entryContentReadyMs": 177.4,
+      "listingActReadyMs": 3548.8,
+      "sortLatencyMs": 31.7,
+      "addLatencyMs": 1.8,
+      "firstReliableClickMs": 3000,
+      "clickLoss": [
+        {
+          "delay": 0,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 100,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 300,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1000,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 1500,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 2000,
+          "attempts": 5,
+          "lossPct": 100
+        },
+        {
+          "delay": 3000,
+          "attempts": 5,
+          "lossPct": 0
+        },
+        {
+          "delay": 5000,
+          "attempts": 5,
+          "lossPct": 0
+        }
+      ],
+      "resilience": {
+        "js-blocked": 3,
+        "js-slow": 2,
+        "chunk-404": 3
+      },
+      "resilienceTotal": 8,
+      "resilienceMax": 18,
+      "homeJsGzip": 137826,
+      "searchJsGzip": 138572,
+      "checkoutJsGzip": 136556,
+      "outputBytes": 4461584,
+      "scale": [
+        {
+          "size": 100,
+          "coldMs": 4232,
+          "warmMs": 2857,
+          "coldSamples": [
+            4232,
+            4125,
+            4389
+          ],
+          "warmSamples": [
+            2820,
+            2857,
+            3089
+          ],
+          "msPerPage": 42.32,
+          "outputMB": 4.25,
+          "files": 576
+        },
+        {
+          "size": 1000,
+          "coldMs": 5096,
+          "warmMs": 4336,
+          "coldSamples": [
+            5096,
+            5001,
+            5524
+          ],
+          "warmSamples": [
+            4413,
+            4336,
+            4332
+          ],
+          "msPerPage": 5.1,
+          "outputMB": 32.31,
+          "files": 5076
+        }
+      ]
+    }
+  ]
+}

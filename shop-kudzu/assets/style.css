@@ -1,0 +1,306 @@
+/* Storefront styling for the commerce fixture.
+   Kept deliberately plain and shared verbatim by every variant: layout must
+   be identical so LCP element, layout shift, and paint work are comparable. */
+:root {
+  --ink: #16150f;
+  --muted: #6c6a5e;
+  --line: #e3e0d6;
+  --bg: #fbfaf6;
+  --accent: #2f5d3a;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: system-ui, -apple-system, "Apple SD Gothic Neo", sans-serif;
+  line-height: 1.55;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+  height: auto;
+}
+
+a {
+  color: inherit;
+}
+
+/* Header */
+.site-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+  padding: 0.9rem 1.25rem;
+  border-bottom: 1px solid var(--line);
+  background: #fff;
+  position: relative;
+}
+
+.logo {
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  gap: 0.85rem;
+  flex: 1;
+  flex-wrap: wrap;
+}
+
+.menu-link {
+  color: var(--muted);
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.cart-button,
+.cart-close,
+.option,
+.add-to-cart,
+.hero-cta {
+  font: inherit;
+  cursor: pointer;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+  padding: 0.45rem 0.8rem;
+}
+
+.cart-count {
+  display: inline-block;
+  min-width: 1.4em;
+  text-align: center;
+  border-radius: 999px;
+  background: var(--accent);
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.cart-drawer {
+  position: absolute;
+  top: 100%;
+  right: 1.25rem;
+  z-index: 10;
+  display: grid;
+  gap: 0.6rem;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  min-width: 15rem;
+}
+
+/* Layout blocks */
+main {
+  max-width: 76rem;
+  margin: 0 auto;
+  padding: 1.5rem 1.25rem 3rem;
+}
+
+.hero {
+  padding: 2.5rem 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.hero h1 {
+  font-size: clamp(2rem, 5vw, 3rem);
+  margin: 0 0 0.5rem;
+}
+
+.hero-cta {
+  display: inline-block;
+  margin-top: 0.75rem;
+  text-decoration: none;
+}
+
+.collection-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(15rem, 1fr));
+  gap: 0.75rem;
+}
+
+.collection-card {
+  display: block;
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  text-decoration: none;
+}
+
+.collection-card h3 {
+  margin: 0 0 0.25rem;
+}
+
+.collection-card p {
+  margin: 0;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Product grid — fixed aspect box so images never shift layout. */
+.tile-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(14rem, 1fr));
+  gap: 1rem;
+}
+
+.tile {
+  display: block;
+  text-decoration: none;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #fff;
+  overflow: hidden;
+}
+
+.tile-image {
+  aspect-ratio: 1 / 1;
+  background: var(--line);
+}
+
+.tile-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.tile-title {
+  margin: 0.6rem 0.75rem 0.2rem;
+  font-size: 0.95rem;
+}
+
+.tile-price,
+.tile-sold-out {
+  margin: 0 0.75rem 0.75rem;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.search-controls {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.search-controls input,
+.search-controls select {
+  font: inherit;
+  padding: 0.4rem 0.6rem;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: #fff;
+}
+
+.collection-header {
+  margin-bottom: 1.25rem;
+}
+
+/* Product detail */
+.product {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: 2rem;
+  align-items: start;
+}
+
+.product-gallery {
+  aspect-ratio: 1 / 1;
+  background: var(--line);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.product-gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-detail h1 {
+  margin: 0 0 0.35rem;
+}
+
+.product-price {
+  margin: 0 0 1.25rem;
+  font-size: 1.2rem;
+}
+
+.option-group {
+  border: 0;
+  padding: 0;
+  margin: 0 0 1rem;
+  display: flex;
+  gap: 0.4rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.option-group legend {
+  padding: 0;
+  margin-bottom: 0.35rem;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+.option[aria-pressed="true"] {
+  border-color: var(--accent);
+  box-shadow: inset 0 0 0 1px var(--accent);
+}
+
+.option[disabled] {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+.add-to-cart {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  padding: 0.6rem 1.2rem;
+}
+
+.add-confirm {
+  margin: 0.5rem 0 0;
+  color: var(--accent);
+}
+
+.product-description {
+  margin-top: 1.5rem;
+  color: var(--muted);
+}
+
+/* Footer */
+.site-footer {
+  border-top: 1px solid var(--line);
+  padding: 1.5rem 1.25rem;
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  align-items: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+.site-footer nav {
+  display: flex;
+  gap: 0.85rem;
+  flex: 1;
+}
+
+@media (max-width: 48rem) {
+  .product {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

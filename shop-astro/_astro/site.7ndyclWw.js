@@ -1,0 +1,1 @@
+function e(e){return`${`/kudzu-based-bench/shop-astro`.replace(/\/$/,``)}/${e.replace(/^\//,``)}`}var t=`otw-cart`;export{e as n,t};

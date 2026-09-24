@@ -1,0 +1,190 @@
+/* Post detail — markdown body styling. Ported verbatim from
+   apps/kudzu/src/content.css. */
+@import url("https://tetunori.github.io/fluent-emoji-webfont/dist/FluentEmojiFlat.css");
+
+.post-page {
+  max-width: 760px;
+  margin: 0 auto;
+  padding-top: 1.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 769px) {
+  .post-page {
+    padding-left: 0;
+    padding-right: 0;
+  }
+}
+
+.post-page .title {
+  margin: 1rem 0;
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+.post-page .description {
+  margin-bottom: 1rem;
+  padding: 0 0 8px;
+  border-bottom: 1px solid var(--border-color);
+  text-align: center;
+}
+
+.post-page .image-container {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin: 0 auto;
+}
+@media (min-width: 769px) {
+  .post-page .image-container {
+    width: 70%;
+  }
+}
+
+.post-page .image-container img {
+  width: 100%;
+  height: 100%;
+}
+
+.markdown-body {
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 760px;
+  padding: 0 0.5rem;
+  font-family: var(--font-sans), "Fluent Emoji Flat";
+}
+@media (min-width: 769px) {
+  .markdown-body {
+    padding: 0 1rem;
+  }
+}
+
+.markdown-body code {
+  margin: 0;
+  font-size: 85%;
+  white-space: break-spaces;
+  background-color: #818b981f;
+  border-radius: 6px;
+  padding: 0 0.2em;
+}
+
+.markdown-body pre {
+  position: relative;
+  margin: 1rem 0;
+  padding: 1rem;
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  border-radius: 0.5rem;
+  overflow-x: auto;
+}
+
+.markdown-body pre code {
+  background: transparent;
+  padding: 0;
+  font-size: inherit;
+}
+
+.markdown-body h1 {
+  position: relative;
+  margin: 1rem 0 0;
+  font-size: 1.7rem;
+  line-height: 2.5rem;
+}
+
+.markdown-body h2 {
+  position: relative;
+  margin: 0.5rem 0 0;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  transition: color 0.2s ease;
+  scroll-margin-top: 100px;
+}
+.markdown-body h2:hover {
+  color: var(--primary-color);
+}
+.markdown-body h2:hover::after {
+  content: "🔗";
+  position: relative;
+  float: left;
+  font-size: 1rem;
+  line-height: 1.75rem;
+  animation: fadeIn 0.2s ease-in;
+}
+@media (min-width: 769px) {
+  .markdown-body h2:hover::after {
+    left: -1.5rem;
+    top: 0;
+    font-size: 1rem;
+    position: absolute;
+  }
+}
+
+.markdown-body p {
+  margin: 0.5rem 0 0;
+  word-break: keep-all;
+  overflow-wrap: break-word;
+  line-height: 1.45;
+}
+.markdown-body p + h2 {
+  margin: 1.5rem 0 0;
+}
+
+.markdown-body a {
+  text-decoration: none;
+  border-radius: 0.375rem;
+  padding: 0.125rem 0.375rem;
+  font-size: 1rem;
+  color: var(--primary-color);
+  background: var(--hover-bg);
+  transition: all 0.2s ease-in-out;
+  border: 1px solid transparent;
+}
+.markdown-body a:hover {
+  background: var(--card-bg);
+  border-color: var(--border-color);
+  box-shadow: var(--shadow-sm);
+}
+
+.markdown-body > .bookmark-link {
+  cursor: pointer;
+  width: 100%;
+  display: flex;
+  font-family: inherit;
+  margin: 1rem 0 0;
+  padding: 1rem;
+  text-decoration: none;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: var(--foreground);
+  background: var(--card-bg);
+  border: 1px solid var(--card-border);
+  transition: all 0.2s ease-in-out;
+  box-shadow: var(--shadow-sm);
+}
+.markdown-body > .bookmark-link:has(+ .bookmark-link) {
+  margin-top: 1.25rem;
+}
+.markdown-body > .bookmark-link + p {
+  margin-top: 1rem;
+}
+.markdown-body > .bookmark-link:hover {
+  background: var(--hover-bg);
+  border-color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* @keyframes must live at the top level — nesting it inside a rule breaks
+   most CSS minifiers. */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateX(-5px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}

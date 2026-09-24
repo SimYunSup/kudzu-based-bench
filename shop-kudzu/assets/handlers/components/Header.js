@@ -1,0 +1,1 @@
+function r(t){const e=localStorage.getItem("otw-cart"),o=e?JSON.parse(e):[];let n=0;for(const i of o)n=n+i.quantity;t.set("count",n)}function c(t){return t.scope("link").href}function l(t){return t.scope("link").title}export{c as binding0,l as binding1,r as effect0};

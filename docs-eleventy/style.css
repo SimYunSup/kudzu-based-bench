@@ -1,0 +1,181 @@
+/* Vine 문서 사이트 — docs+search 벤치 픽스처. 뉴스레터 sibling
+   (apps/eleventy/src/style.css)과 콘텐츠 도메인이 달라 처음부터 새로 작성. */
+html {
+  color-scheme: light;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, "Pretendard", "Apple SD Gothic Neo", sans-serif;
+  color: #1a1a1a;
+  background: #fff;
+  line-height: 1.6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: #1a1a1a;
+  text-decoration: none;
+}
+
+/* Header */
+.doc-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.doc-header-home {
+  font-weight: 700;
+  font-size: 1.05rem;
+  white-space: nowrap;
+}
+
+.doc-header #search {
+  flex: 1;
+  max-width: 22rem;
+}
+
+/* Home */
+.home {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 2.5rem 1.5rem 4rem;
+}
+
+.site-title {
+  font-size: 2rem;
+  margin: 0 0 2rem;
+}
+
+.section-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.section-card {
+  display: block;
+  border: 1px solid #e5e5e5;
+  border-radius: 10px;
+  padding: 1.25rem;
+  transition: border-color 0.15s ease;
+}
+
+.section-card:hover {
+  border-color: #1a1a1a;
+}
+
+.section-card h2 {
+  margin: 0 0 0.4rem;
+  font-size: 1.1rem;
+}
+
+.section-card p {
+  margin: 0;
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Doc page — sidebar + content */
+.doc-page {
+  display: grid;
+  grid-template-columns: 240px minmax(0, 1fr);
+  gap: 2.5rem;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 2rem 1.5rem 4rem;
+  align-items: start;
+}
+
+.sidebar {
+  position: sticky;
+  top: 1rem;
+  font-size: 0.9rem;
+}
+
+.sidebar-group + .sidebar-group {
+  margin-top: 1.25rem;
+}
+
+.sidebar-section-title {
+  margin: 0 0 0.4rem;
+  font-weight: 600;
+  color: #888;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.sidebar ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.sidebar li a {
+  display: block;
+  padding: 0.25rem 0;
+  color: #555;
+}
+
+.sidebar li a:hover {
+  color: #1a1a1a;
+}
+
+.sidebar li a[aria-current="page"] {
+  color: #1a1a1a;
+  font-weight: 600;
+}
+
+/* Doc content */
+.doc-title {
+  margin: 0 0 1.5rem;
+  font-size: 1.75rem;
+}
+
+.doc-body h2 {
+  margin: 2rem 0 0.75rem;
+  font-size: 1.25rem;
+  border-top: 1px solid #eee;
+  padding-top: 1.5rem;
+}
+
+.doc-body p {
+  margin: 0 0 1rem;
+  color: #333;
+}
+
+.doc-body pre {
+  background: #1a1a1a;
+  color: #f5f5f5;
+  padding: 1rem;
+  border-radius: 8px;
+  overflow-x: auto;
+  font-size: 0.85rem;
+}
+
+.doc-body code {
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+}
+
+.doc-pager {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 3rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #eee;
+  font-size: 0.9rem;
+}
+
+.doc-next {
+  margin-left: auto;
+  text-align: right;
+}

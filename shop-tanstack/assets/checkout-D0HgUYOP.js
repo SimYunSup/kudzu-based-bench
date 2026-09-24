@@ -1,0 +1,1 @@
+import{t as e}from"./jsx-runtime-BkSabwWG.js";var t=e();function n(){return(0,t.jsxs)(`main`,{className:`checkout`,children:[(0,t.jsx)(`h1`,{children:`결제`}),(0,t.jsx)(`p`,{children:`벤치마크 픽스처입니다. 실제 결제는 진행되지 않습니다.`})]})}export{n as component};

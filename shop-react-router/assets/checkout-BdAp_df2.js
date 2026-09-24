@@ -1,0 +1,1 @@
+import{o as e,t}from"./jsx-runtime-BNB5mRva.js";var n=t(),r=e(function(){return(0,n.jsxs)(`main`,{className:`checkout`,children:[(0,n.jsx)(`h1`,{children:`결제`}),(0,n.jsx)(`p`,{children:`벤치마크 픽스처입니다. 실제 결제는 진행되지 않습니다.`})]})});export{r as default};

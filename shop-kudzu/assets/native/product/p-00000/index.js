@@ -1,0 +1,1 @@
+import{registerNativeModules as e}from"/kudzu-based-bench/shop-kudzu/assets/runtime/5468dbec738bbfd3/kudzu-native.js";import*as s from"/kudzu-based-bench/shop-kudzu/assets/handlers/pages/product/[handle].js";e([["/kudzu-based-bench/shop-kudzu/assets/handlers/pages/product/[handle].js",s]]);

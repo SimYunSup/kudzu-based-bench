@@ -1,0 +1,1 @@
+import{registerNativeModules as e}from"/kudzu-based-bench/form-kudzu/assets/runtime/93a4bed9a4272e91/kudzu-native.js";import*as s from"/kudzu-based-bench/form-kudzu/assets/handlers/pages/index.js";e([["/kudzu-based-bench/form-kudzu/assets/handlers/pages/index.js",s]]);

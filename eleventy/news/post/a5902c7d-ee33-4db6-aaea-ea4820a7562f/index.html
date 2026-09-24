@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Tanstack Query 쿼리 무효화 추상화 | OTW for FE</title>
+    <link rel="icon" href="/kudzu-based-bench/eleventy/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/kudzu-based-bench/eleventy/style.css" />
+    <link rel="stylesheet" href="/kudzu-based-bench/eleventy/content.css" />
+  </head>
+  <body>
+<header class="header">
+  <div class="container">
+    <a class="logo" href="/kudzu-based-bench/eleventy/">
+      OTW <span class="logo-sub">for</span> FE
+    </a>
+    <a class="link" href="/kudzu-based-bench/eleventy/news/list/1/"> Archive </a>
+  </div>
+</header>
+
+    <main class="post-page">
+  <h1 class="title">Tanstack Query 쿼리 무효화 추상화</h1>
+  <div class="description">
+    <p>2024. 6. 5.</p>
+  </div>
+  <article class="markdown-body"><h2 data-notion-block-id="ae718169-2e0a-40ae-b6d1-39181a4534f2" id="ae718169-2e0a-40ae-b6d1-39181a4534f2">Tanstack Query 쿼리 무효화 추상화</h2><a href="https://tkdodo.eu/blog/automatic-query-invalidation-after-mutations" class="bookmark-link" target="_blank" rel="noreferrer">https://tkdodo.eu/blog/automatic-query-invalidation-after-mutations</a><p data-notion-block-id="3be722a4-a961-4d88-b6ee-08d5399d09fb"><b>심윤섭</b>: Tanstack Query에서 Mutation 이후 Query Invalidation 자동화를 추상화하는 과정을 통해 Tanstack Query에 기본값으로 Mutation 이후 Query Invalidation 자동화를 구현하는 것은 쉽지만 모든 상황을 대응하도록 추상화하는 것은 어렵다는 것을 알려줍니다. 그리고 invalidateQueries와 callback에 대한것도요!</p><h2 data-notion-block-id="bd09632a-7805-48c6-a538-fde6442ffd02" id="bd09632a-7805-48c6-a538-fde6442ffd02">RSC의 함정</h2><a href="https://frontendmasters.com/blog/combining-react-server-components-with-react-query-for-easy-data-management/" class="bookmark-link" target="_blank" rel="noreferrer">https://frontendmasters.com/blog/combining-react-server-components-with-react-query-for-easy-data-management/</a><p data-notion-block-id="d8723722-6382-47bb-9e9d-5075dd1d748e"><b>심윤섭</b>: 저자는 Next.js의 RSC 구현에서 캐시 동작이 이상하다는 것을 알려줍니다(그리고 Server Action이 순차적으로만 동작한다는 것도요 - 물론 <a href="https://react.dev/reference/rsc/use-server#caveats">의도된 동작</a>이라고는 하네요). 그리고 그의 대안으로 클라이언트의 <code>@tanstack/query</code>와 <code>@tanstack/react-query-next-experimental</code>을 추천합니다. 번들 사이즈가 늘어나도 UX가 강화되는 이점을 강조하면서요. 이전에 <a href="https://ones-to-watch.ethansup.net/news/post/bafbcbbf-9100-45c9-b683-a1a5134930fa">Next.js App Router는 시기상조다</a> 글을 읽었을 때와 비슷하게 Next.js의 많은 곳에서 동작이 잘 되지 않아 보여서 아쉽네요.</p><h2 data-notion-block-id="c6a20aa3-4844-479b-bcfb-6abace7c64d9" id="c6a20aa3-4844-479b-bcfb-6abace7c64d9">디자인 시스템 회고</h2><a href="https://kyleshevlin.com/design-system-retrospective/" class="bookmark-link" target="_blank" rel="noreferrer">https://kyleshevlin.com/design-system-retrospective/</a><p data-notion-block-id="8ebb7be8-4423-4269-ad78-25c03de0359d"><b>심윤섭</b>: 저자가 한 회사의 디자인 시스템을 만들게 되면서, Chakra UI와 비슷한 합성 컴포넌트 방식으로 만들었는데, 실패한 경험을 회고한 글입니다. 이전에 가져온 <a href="https://ones-to-watch.ethansup.net/news/post/f51019e1-e38c-4b60-a636-aab2334f6e8b#db3ef69e-93d7-422a-a3e0-d5816a79be50">진화하는 디자인 시스템</a>에도 보였듯이, 여러가지 접근 방식이 있고, 회사에서 선호하는 방식에 맞게 구현하는 것이 중요하다고 생각합니다. 적당한 내부 개발자를 상대로 한 마케팅과 문서화도요.</p><h2 data-notion-block-id="07099ebc-2b97-45b4-9f1c-83a0dcf4935f" id="07099ebc-2b97-45b4-9f1c-83a0dcf4935f">React Aria의 장단점</h2><a href="https://argos-ci.com/blog/react-aria-migration" class="bookmark-link" target="_blank" rel="noreferrer">https://argos-ci.com/blog/react-aria-migration</a><p data-notion-block-id="9bccb58e-3400-4c42-b51c-143dcf1c104c"><b>심윤섭</b>: React Aria의 다양한 방식(<a href="https://ones-to-watch.ethansup.net/news/post/f51019e1-e38c-4b60-a636-aab2334f6e8b#db3ef69e-93d7-422a-a3e0-d5816a79be50">진화하는 디자인 시스템</a>과 같이 React spectrum / React Aria - React Stately로 제공중입니다.)으로 접근성 좋은 컴포넌트를 제공하는 것은 매우 좋다고 생각합니다. 저자도 그렇게 생각하여 UI 라이브러리를 React Aria로 바꾸기로 결정하였고, 진행하면서 겪은 장단점을 소개합니다. 저도 UI 방식을 React Aria식으로 변경해야 하지만, 수많은 접근성을 대신 만들어준다는 점에서 좋은 라이브러리라고 생각합니다. 문서화도 꽤 잘 되어있구요.</p><h2 data-notion-block-id="74f4eb91-3e62-42f4-a1e1-4e4d6ad3375c" id="74f4eb91-3e62-42f4-a1e1-4e4d6ad3375c">GraphQL은 정말 쓰레기인가요?</h2><a href="https://graphql.org/conf/2023/sessions/de1472b4294ac91745f3648d9228d8f2/" class="bookmark-link" target="_blank" rel="noreferrer">https://graphql.org/conf/2023/sessions/de1472b4294ac91745f3648d9228d8f2/</a><p data-notion-block-id="c4190a58-233b-4736-9623-0decc62ebf43"><b>심윤섭</b>: <a href="https://bessey.dev/blog/2024/05/24/why-im-over-graphql/">6년동안 GraphQL을 써보고 GraphQL를 버린 이유</a>를 보고 생각이 들어서 GraphQL의 도입이 디자이너와 PM에게 어떠한 좋은 점을 가지는지 발표한 영상을 가져왔습니다. 사실 이전에 가져온 <a href="https://ones-to-watch.ethansup.net/news/post/7a30f3669a2840449643c6c7f14270d8">당신은 GraphQL이 필요하지 않습니다</a>가 더 넓은 시야를 가질 수 있도록 돕는 글인 것 같지만.. 이미 가져왔으니까요 :) Database에서 직접 GraphQL API를 만드는 Hasura, GraphQL 관련된 툴을 제공하는 Apollo와 The Guild, 보안을 제공하는 Escape(<a href="https://escape.tech/academy/">GraphQL 보안을 알려주는 사이트</a>도 만들었네요!)… 여러 툴이 많으니 자신에게 맞는 툴을 알맞게 쓰는게 중요하겠네요.</p><h2 data-notion-block-id="969cfc7b-5f89-42de-896d-eacff8b32799" id="969cfc7b-5f89-42de-896d-eacff8b32799">React에서의 메모리 누수</h2><a href="https://schiener.io/2024-03-03/react-closures" class="bookmark-link" target="_blank" rel="noreferrer">https://schiener.io/2024-03-03/react-closures</a><p data-notion-block-id="a00e188a-5a9d-4f55-b915-40712c906dc9"><b>심윤섭</b>: memoization에서 Closure으로 두개의 함수 외부 변수를 가졌을 경우 발생하는 메모리 누수를 설명한 영상입니다. 이러한 상황(두 개 이상 외부 함수를 한 곳에서 memoization하는 상황)을 많이 마주치진 않겠지만 이를 위해 <a href="https://ko.javascript.info/closure">변수의 유효범위와 클로저</a> 문서를 통해 클로저에 대해 알아둘 필요는 있겠네요.</p><h2 data-notion-block-id="8b2611a5-2c03-46e9-b023-1a903533615a" id="8b2611a5-2c03-46e9-b023-1a903533615a">Real World 성능 최적화</h2><a href="https://www.iamtk.co/optimizing-inp-for-a-react-app-and-performance-learnings" class="bookmark-link" target="_blank" rel="noreferrer">https://www.iamtk.co/optimizing-inp-for-a-react-app-and-performance-learnings</a><p data-notion-block-id="18cab4a2-e059-4928-b169-f26be98245a9"><b>심윤섭</b>: 성능 최적화하는 구체적인 예시를 적어낸 글입니다. 그리고 가장 강조해도 지나치지 않은 것은 상태를 최대한 적게 관리하고, 시간이 오래 걸리는 작업이 있다면, 렌더링을 막지 않도록 만들어주세요.</p><h2 data-notion-block-id="de888686-3d72-4003-8a20-e36af601960c" id="de888686-3d72-4003-8a20-e36af601960c">단골면접: 브라우저에 주소를 입력하면 어떤 일이 일어나나요?</h2><a href="https://devonperoutky.super.site/blog-posts/mediocre-engineers-guide-to-https" class="bookmark-link" target="_blank" rel="noreferrer">https://devonperoutky.super.site/blog-posts/mediocre-engineers-guide-to-https</a><p data-notion-block-id="be73fed9-4ead-4dc2-97bd-ef3ccb46221f">신입에게 물어보는 단골 질문인 "브라우저에 주소를 입력하면 어떤 일이 일어나요?"를 HTTP 파트에서 깊게 파보는 글입니다. 구조에 대한 파악과 더불어서 최신 버전인 TLS 1.3에서는 어떻게 작동하는지도 보여줍니다.</p><h2 data-notion-block-id="f2bcbd5c-166a-41c4-b8f2-c765de5ab298" id="f2bcbd5c-166a-41c4-b8f2-c765de5ab298"><code>&#x3C;script></code> 태그의 동작 방식</h2><a href="https://webdeveloper.beehiiv.com/p/html-script-element-attributes-async-vs-defer-vs-typemodule" class="bookmark-link" target="_blank" rel="noreferrer">https://webdeveloper.beehiiv.com/p/html-script-element-attributes-async-vs-defer-vs-typemodule</a><p data-notion-block-id="6887222d-9a86-4e68-a6d5-47405202ee71"><code>&#x3C;script></code> 태그에서 <code>type="module"</code>이 추가되었을 때 동작이 어떻게 바뀌는지 설명합니다.</p><h2 data-notion-block-id="a980d441-0568-492a-aa16-0d90310cf0d6" id="a980d441-0568-492a-aa16-0d90310cf0d6">200줄로 Virtual DOM 구현하기</h2><a href="https://lazamar.github.io/virtual-dom/" class="bookmark-link" target="_blank" rel="noreferrer">https://lazamar.github.io/virtual-dom/</a><p data-notion-block-id="381f532a-7a19-4864-a831-310f2787f6e2">React같은 Virtual DOM의 개념을 이해하기에 좋은 Virtual DOM 구현기입니다. 간단하게 이해하기 좋게 구성되어 있습니다.</p><h2 data-notion-block-id="ccb52d39-e6f9-4680-807e-c56f6ec851b3" id="ccb52d39-e6f9-4680-807e-c56f6ec851b3">반응형 웹 브라우저 테스트 팁</h2><a href="https://www.jenchan.biz/blog/stop-resizing-your-browser-improve-responsive-testing" class="bookmark-link" target="_blank" rel="noreferrer">https://www.jenchan.biz/blog/stop-resizing-your-browser-improve-responsive-testing</a><p data-notion-block-id="776fa8f6-4eb6-47b7-9535-a26fb48af259">간단한 브라우저에서 반응형 웹을 테스트하는 팁을 알려줍니다.</p><h2 data-notion-block-id="70abc794-b4c1-4d3e-8c01-fb60f6b76068" id="70abc794-b4c1-4d3e-8c01-fb60f6b76068">Next.js 15 RC</h2><a href="https://nextjs.org/blog/next-15-rc" class="bookmark-link" target="_blank" rel="noreferrer">https://nextjs.org/blog/next-15-rc</a><p data-notion-block-id="abba4932-4b95-43b4-a16e-c7346f1acc44">Next.js에서 15 출시 전 버전을 발표했습니다. React 신 기능에 대한 지원과 부분 프리렌더링… 여러 기능에 대한 소개합니다. RSC의 함정 기사에도 나왔듯이 캐시 API와 기본값을 바꾼다고 하니 알아두면 좋습니다!</p><h2 data-notion-block-id="40711796-00d7-43e8-b52a-1f0b0f9d4cae" id="40711796-00d7-43e8-b52a-1f0b0f9d4cae">Partial Prerendering 구현하기</h2><a href="https://developers.netlify.com/guides/partial-prerendering-without-a-framework/" class="bookmark-link" target="_blank" rel="noreferrer">https://developers.netlify.com/guides/partial-prerendering-without-a-framework/</a><p data-notion-block-id="3ac0ca3f-ef16-474f-be85-98aee3235b23">위에서 나온 신기능인 Partial Prerendering을 순수 JS로 구현하는 과정을 보여줍니다.</p></article>
+</main>
+
+<footer class="site-footer">
+  <nav class="variant-switch" aria-label="프레임워크 변형 전환">
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/astro/home"
+      class="variant-link"
+      >astro</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/react-router/"
+      class="variant-link"
+      >react-router</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/tanstack/"
+      class="variant-link"
+      >tanstack</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/kudzu/"
+      class="variant-link"
+      >kudzu</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/hugo/"
+      class="variant-link"
+      >hugo</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/vitepress/"
+      class="variant-link"
+      >vitepress</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/docusaurus/"
+      class="variant-link"
+      >docusaurus</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/eleventy/"
+      class="variant-link is-active" aria-current="page"
+      >eleventy</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/next-app/"
+      class="variant-link"
+      >next-app</a
+    >
+    <a
+      href="https://simyunsup.github.io/kudzu-based-bench/next-pages/"
+      class="variant-link"
+      >next-pages</a
+    >
+  </nav>
+  <p>&copy; 2026 OTW for FE All rights reserved.</p>
+</footer>
+
+  </body>
+</html>

@@ -8,10 +8,10 @@
     "build": "astro build"
   },
   "dependencies": {
-    "astro": "^7.2.1"
+    "astro": "^7.3.4"
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
+    "@types/node": "^26.6.2",
     "typescript": "^7.0.2"
   }
 }

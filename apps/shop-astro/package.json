@@ -8,16 +8,16 @@
     "build": "node scripts/gen-assets.mjs && astro build"
   },
   "dependencies": {
-    "@astrojs/react": "^6.0.2",
+    "@astrojs/react": "^7.0.0",
     "@otw/commerce-data": "workspace:*",
-    "astro": "^7.2.1",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8"
+    "astro": "^7.3.4",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0"
   },
   "devDependencies": {
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.4",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "typescript": "^7.0.2"
   }
 }

@@ -10,7 +10,7 @@
   "dependencies": {
     "@astrojs/react": "^7.0.0",
     "@otw/commerce-data": "workspace:*",
-    "astro": "^7.3.4",
+    "astro": "^7.3.5",
     "react": "^19.3.0",
     "react-dom": "^19.3.0"
   },
